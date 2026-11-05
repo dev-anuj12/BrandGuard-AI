@@ -24,3 +24,16 @@ frontend/.env.local
 .DS_Store
 Thumbs.db
 
+# Agent & GSD (Get Shit Done) Framework Extensions
+.agent/
+.agents/
+.gemini/
+.gsd/
+adapters/
+PROJECT_RULES.md
+GSD-STYLE.md
+model_capabilities.yaml
+scripts/search_repo.*
+scripts/setup_search.*
+scripts/validate-*
+*.tsbuildinfo
