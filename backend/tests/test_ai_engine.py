@@ -52,3 +52,4 @@ async def test_full_ai_review_pipeline(db):
     assert len(result["findings"]) >= 3
     assert result["overall_score"] < 80.0
     assert result["overall_status"] == "Changes Required"
+

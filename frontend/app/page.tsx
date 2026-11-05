@@ -1,328 +1,436 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
-  ShieldCheck, ArrowRight, Sparkles, FileText, CheckCircle2, 
-  AlertTriangle, Lock, Search, Cpu, Users, Building, ChevronRight, BarChart3
+  ShieldCheck, ArrowRight, CheckCircle2, AlertTriangle, 
+  Search, Cpu, Users, Building, BarChart3, Lock, 
+  FileText, Check, ChevronRight, Moon, Sun, Sliders, Globe
 } from 'lucide-react';
+import { useTheme } from '../components/ThemeProvider';
+import { getCurrentUser } from '../lib/api';
+import BrandLogo from '../components/BrandLogo';
 
 export default function LandingPage() {
-  return (
-    <div className="space-y-24 py-8">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-16 text-center">
-        {/* Background glow effects */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none -z-10" />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[200px] bg-purple-500/15 blur-[100px] rounded-full pointer-events-none -z-10" />
+  const { resolvedTheme, toggleTheme } = useTheme();
+  const [user, setUser] = useState<any>(null);
 
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-950/70 border border-indigo-800/60 text-xs font-semibold text-indigo-300 mb-6 shadow-sm">
-          <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-          <span>CodeNexus India 2026 National Hackathon Showcase</span>
+  useEffect(() => {
+    setUser(getCurrentUser());
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 transition-colors duration-200">
+      {/* 1. Professional Navigation Bar */}
+      <header className="sticky top-0 z-50 bg-white/80 dark:bg-[#0B0F19]/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <BrandLogo size="md" showSubtitle={true} href="/" />
+
+          <nav className="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-600 dark:text-slate-300">
+            <a href="#features" className="hover:text-indigo-600 dark:hover:text-white transition">Capabilities</a>
+            <a href="#workflow" className="hover:text-indigo-600 dark:hover:text-white transition">Workflow Engine</a>
+            <a href="#governance" className="hover:text-indigo-600 dark:hover:text-white transition">Governance &amp; RBAC</a>
+            <a href="#security" className="hover:text-indigo-600 dark:hover:text-white transition">Security &amp; Audit</a>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              title="Toggle theme"
+            >
+              {resolvedTheme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
+            </button>
+
+            {user ? (
+              <Link
+                href={`/dashboard/${user.role?.toLowerCase() || 'creator'}`}
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition flex items-center gap-1.5"
+              >
+                <span>Go to Workspace</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* 2. Hero Section */}
+      <section className="relative overflow-hidden pt-16 pb-20 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/60 text-xs font-semibold text-indigo-700 dark:text-indigo-300 mb-6">
+          <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+          <span>Intelligent Content Governance &amp; Brand Safety</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
-          AI-Powered Brand Compliance &amp; Content Review Platform
+        <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.12]">
+          Brand Compliance, <br />
+          <span className="text-indigo-600 dark:text-indigo-400">Made Intelligent.</span>
         </h1>
 
-        <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
-          Safeguard your corporate reputation with instant violation detection, explainable AI suggestions, grounded citation validation, and a human-controlled 4-stage approval workflow.
+        <p className="mt-6 text-base sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          Review content, enforce brand guidelines, validate citations, and manage approvals through one intelligent compliance platform.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+        {/* Core Product Promise */}
+        <div className="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-50/80 via-purple-50/80 to-blue-50/80 dark:from-indigo-950/40 dark:via-purple-950/40 dark:to-blue-950/40 border border-indigo-200/80 dark:border-indigo-800/60 shadow-xs">
+          <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+            Core Promise: &ldquo;Every content decision should be explainable, evidence-backed and human-controlled.&rdquo;
+          </span>
+        </div>
+
+        {/* Primary and Secondary CTAs */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
-            href="/login"
-            className="px-7 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 text-white shadow-xl shadow-indigo-600/25 hover:from-indigo-500 hover:to-purple-500 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2"
+            href="/register"
+            className="px-6 py-3 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 transition flex items-center gap-2"
           >
-            <span>Launch Live Platform</span>
+            <span>Get Started</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
-            href="/submit"
-            className="px-7 py-3.5 rounded-xl font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2"
+            href="/login"
+            className="px-6 py-3 rounded-xl text-sm font-semibold bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-800 transition flex items-center gap-2"
           >
-            <FileText className="w-4 h-4 text-slate-400" />
-            <span>Submit Content for Review</span>
+            <span>Explore Platform</span>
           </Link>
         </div>
 
-        {/* FinNova Demo Pill */}
-        <div className="mt-8 inline-flex items-center gap-2 text-xs text-slate-400 bg-slate-900/60 border border-slate-800/80 px-4 py-2 rounded-xl">
-          <Building className="w-4 h-4 text-indigo-400" />
-          <span>Fictional Demonstration Profile:</span>
-          <span className="font-semibold text-slate-200">FinNova Financial Technologies</span>
-          <span className="text-slate-500">(Sample Compliance Guidelines Active)</span>
+        {/* Enterprise Demonstration Scenario Notice */}
+        <div className="mt-6 inline-flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 px-3.5 py-1.5 rounded-xl">
+          <Building className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+          <span>Active Enterprise Context:</span>
+          <span className="font-semibold text-slate-800 dark:text-slate-200">FinNova Financial Technologies</span>
+          <span className="text-slate-400 dark:text-slate-500">(Sample Brand Guidelines)</span>
         </div>
 
-        {/* Live UI Preview Card */}
-        <div className="mt-14 max-w-4xl mx-auto rounded-2xl border border-slate-800 bg-slate-900/50 p-4 shadow-2xl backdrop-blur-xl">
-          <div className="rounded-xl border border-slate-800/80 bg-slate-950 p-6 text-left space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
-              <div className="flex items-center space-x-3">
-                <span className="w-3 h-3 rounded-full bg-rose-500"></span>
-                <span className="w-3 h-3 rounded-full bg-amber-500"></span>
-                <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
-                <span className="text-xs font-mono text-slate-400 ml-2">BrandGuard Review Engine v1.0.0</span>
+        {/* 4. Product Dashboard Preview */}
+        <div className="mt-14 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-4 shadow-card text-left backdrop-blur-xl">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#070A10] p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+              <div className="flex items-center space-x-2">
+                <span className="w-3 h-3 rounded-full bg-rose-500/80" />
+                <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+                <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400 ml-2">BrandGuard Review Workspace</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-950 text-rose-300 border border-rose-800/60">
-                  Compliance Score: 42% (Changes Required)
-                </span>
-              </div>
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-50 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/60">
+                Compliance Score: 42% (Changes Mandated)
+              </span>
             </div>
 
-            <div className="p-4 rounded-lg bg-slate-900/70 border border-slate-800 text-sm leading-relaxed text-slate-300 font-mono">
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm leading-relaxed font-mono text-slate-800 dark:text-slate-200 shadow-inner">
               FinNova is an ultra-fast{' '}
-              <span className="bg-amber-950/80 text-amber-300 px-1 py-0.5 rounded border border-amber-800 font-bold">
-                money app [Incorrect Term]
+              <span className="bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 px-1.5 py-0.5 rounded border border-amber-300 dark:border-amber-800 font-bold">
+                money app [Incorrect Terminology]
               </span>{' '}
               that promises{' '}
-              <span className="bg-rose-950/80 text-rose-300 px-1 py-0.5 rounded border border-rose-800 font-bold">
+              <span className="bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300 px-1.5 py-0.5 rounded border border-rose-300 dark:border-rose-800 font-bold">
                 guaranteed returns [Banned Expression]
               </span>{' '}
               for every customer! Our platform provides a{' '}
-              <span className="bg-rose-950/80 text-rose-300 px-1 py-0.5 rounded border border-rose-800 font-bold">
+              <span className="bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300 px-1.5 py-0.5 rounded border border-rose-300 dark:border-rose-800 font-bold">
                 risk-free investment [Prohibited Claim]
               </span>{' '}
               with 100% profit guaranteed.
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-xs">
-              <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 flex items-start gap-2.5">
-                <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-semibold text-rose-300 block">Prohibited Financial Guarantee</span>
-                  <span className="text-slate-400">Violates FinNova Regulatory Claims Guideline ID #1</span>
+              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="flex items-center gap-1.5 font-bold text-rose-600 dark:text-rose-400">
+                  <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                  <span>Regulatory Violation</span>
                 </div>
+                <p className="text-slate-600 dark:text-slate-400 text-[11px]">
+                  Unconditional yield promise violates FinNova Financial Claims Policy.
+                </p>
               </div>
-              <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 flex items-start gap-2.5">
-                <Search className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-semibold text-blue-300 block">Citation Grounding</span>
-                  <span className="text-slate-400">Zero approved sources found for claims</span>
+
+              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="flex items-center gap-1.5 font-bold text-blue-600 dark:text-blue-400">
+                  <Search className="w-3.5 h-3.5 shrink-0" />
+                  <span>Citation Validation</span>
                 </div>
+                <p className="text-slate-600 dark:text-slate-400 text-[11px]">
+                  Zero grounding evidence found in approved regulatory filings.
+                </p>
               </div>
-              <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-semibold text-emerald-300 block">One-Click AI Correction</span>
-                  <span className="text-slate-400">&quot;digital financial services designed for you&quot;</span>
+
+              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400">
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                  <span>Suggested Correction</span>
                 </div>
+                <p className="text-slate-600 dark:text-slate-400 text-[11px]">
+                  &quot;market-competitive returns designed around your risk profile&quot;
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="space-y-12">
+      {/* 5. Main Features */}
+      <section id="features" className="py-20 border-t border-slate-200 dark:border-slate-800/80 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
         <div className="text-center space-y-3">
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">How BrandGuard AI Works</h2>
-          <p className="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
-            From raw marketing drafts to audited, executive-approved copy in four systematic stages.
+          <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 dark:text-indigo-400">Product Capabilities</span>
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Built for Enterprise Scale and Brand Integrity
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm">
+            Everything your organization needs to protect brand voice, satisfy regulatory scrutiny, and streamline publication.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[
-            {
-              step: '01',
-              title: 'Ingest Guidelines',
-              desc: 'Admin uploads corporate brand tone, banned terminology, product facts, and approved regulatory sources into PostgreSQL.',
-              icon: Building,
-              color: 'text-indigo-400'
-            },
-            {
-              step: '02',
-              title: 'AI Multi-Engine Audit',
-              desc: 'Content passes through deterministic Rule Engine, LLM Tone Analysis, Citation Validator, and Confidence Calibration.',
-              icon: Cpu,
-              color: 'text-purple-400'
-            },
-            {
-              step: '03',
-              title: 'Creator Revision',
-              desc: 'Marketing creators accept or reject explainable AI corrections with full version history tracking. No blind overwrites.',
-              icon: FileText,
-              color: 'text-blue-400'
-            },
-            {
-              step: '04',
-              title: 'Human Governance',
-              desc: 'Reviewers inspect unresolved findings, add notes, and Compliance Managers grant final audited sign-off.',
-              icon: ShieldCheck,
-              color: 'text-emerald-400'
-            }
-          ].map((item, idx) => (
-            <div key={idx} className="relative p-6 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-black text-slate-700">{item.step}</span>
-                  <item.icon className={`w-6 h-6 ${item.color}`} />
-                </div>
-                <h3 className="font-bold text-white text-lg mb-2">{item.title}</h3>
-                <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-subtle space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+              <Sliders className="w-5 h-5" />
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 4 Core Intelligence Modules */}
-      <section className="space-y-12 bg-slate-950/60 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16 border-y border-slate-900">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center space-y-3">
-            <span className="text-xs uppercase font-bold tracking-widest text-indigo-400">Core Architecture</span>
-            <h2 className="text-3xl font-extrabold text-white tracking-tight">Four Independent Intelligence Engines</h2>
-            <p className="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
-              Engineered with deterministic safety rails, factual grounding, and explainable AI confidence.
+            <h3 className="font-bold text-base text-slate-900 dark:text-white">Deterministic Rule Engine</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              Instant regex-level detection of prohibited expressions, non-compliant naming, and omitted legal disclosures with zero false-negative tolerance.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-rose-950/80 border border-rose-800/80 flex items-center justify-center text-rose-400 font-bold">
-                  A
+          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-subtle space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/80 border border-purple-200 dark:border-purple-800 flex items-center justify-center text-purple-600 dark:text-purple-400">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white">Contextual LLM Analysis</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              Analyzes brand tone nuances, sensationalized marketing claims, and inappropriate collateral against your active corporate guidelines.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-subtle space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/80 border border-blue-200 dark:border-blue-800 flex items-center justify-center text-blue-600 dark:text-blue-400">
+              <Search className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white">Citation Grounding</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              Cross-references claims against verified regulatory registries, preventing unsubstantiated superlatives from reaching the public.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. AI-assisted compliance workflow & 7. Human review & approval process */}
+      <section id="workflow" className="py-20 bg-slate-100/60 dark:bg-[#070A10] border-t border-slate-200 dark:border-slate-800/80 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="text-center space-y-3">
+            <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 dark:text-indigo-400">Governance Pipeline</span>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              AI Efficiency With Human Authority
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm">
+              AI provides rapid diagnostic evidence, but authorized human personnel retain complete decision-making control at every gate.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[
+              {
+                step: 'Stage 01',
+                title: 'Draft Submission',
+                role: 'Creator',
+                desc: 'Marketing teams draft content and submit collateral for automated compliance review.',
+              },
+              {
+                step: 'Stage 02',
+                title: 'Automated Audit',
+                role: 'BrandGuard AI',
+                desc: 'Multi-engine pipeline scans for terminology, tone deviations, and citation verification.',
+              },
+              {
+                step: 'Stage 03',
+                title: 'Quality Verification',
+                role: 'Reviewer',
+                desc: 'Compliance specialists inspect flagged issues, examine evidence, and add auditor notes.',
+              },
+              {
+                step: 'Stage 04',
+                title: 'Executive Sign-Off',
+                role: 'Manager',
+                desc: 'Department leadership reviews verified material and grants formal approval or rejects.',
+              },
+            ].map((st, i) => (
+              <div key={i} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3 shadow-subtle">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-slate-400 font-mono">{st.step}</span>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                    {st.role}
+                  </span>
                 </div>
-                <div>
-                  <h3 className="font-bold text-white text-base">Module A: Deterministic Rule Engine</h3>
-                  <span className="text-xs text-rose-400 font-medium">Banned Phrases &amp; Required Disclaimers</span>
-                </div>
+                <h4 className="font-bold text-sm text-slate-900 dark:text-white">{st.title}</h4>
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{st.desc}</p>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed">
-                Matches prohibited terms (&quot;guaranteed returns&quot;, &quot;risk-free investment&quot;), flags incorrect naming, and checks mandatory risk disclosure presence using zero-latency regex tokenization.
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Analytics and Governance */}
+      <section id="governance" className="py-20 border-t border-slate-200 dark:border-slate-800/80 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div className="space-y-5">
+            <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 dark:text-indigo-400">Enterprise Analytics</span>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              Real-Time Compliance Telemetry &amp; Decision History
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Track organization-wide compliance performance over time. View violation frequencies, suggestion acceptance rates, and average review turnaround directly from live database metrics.
+            </p>
+            <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300">
+              <li className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Zero fabricated metrics — telemetry generated directly from relational records</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Categorized frequency charts for proactive copywriter training</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Immutable version history preserved across all content revisions</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+              <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <span>Compliance KPI Overview</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-mono">Live PostgreSQL Engine</span>
+            </div>
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <span className="text-[10px] text-slate-500 block">Passing Benchmark</span>
+                <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">80.0%</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <span className="text-[10px] text-slate-500 block">Turnaround Time</span>
+                <span className="text-xl font-black text-slate-900 dark:text-white">~3.2s</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <span className="text-[10px] text-slate-500 block">Strict Banned Rules</span>
+                <span className="text-xl font-black text-rose-600 dark:text-rose-400">5 Active</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <span className="text-[10px] text-slate-500 block">Governance Roles</span>
+                <span className="text-xl font-black text-indigo-600 dark:text-indigo-400">4 Stakeholders</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Security and Administration */}
+      <section id="security" className="py-20 bg-slate-100/60 dark:bg-[#070A10] border-t border-slate-200 dark:border-slate-800/80 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-12 text-center">
+          <div className="space-y-3">
+            <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 dark:text-indigo-400">Enterprise Security</span>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              Complete Auditability &amp; Role-Based Access Control
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm">
+              Every status transition, content modification, and managerial sign-off is cryptographically tracked in an immutable audit ledger.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <Lock className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">JWT Authentication</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Tokens signed with HS256 and salted bcrypt password hashing across all user sessions.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-950/80 border border-purple-800/80 flex items-center justify-center text-purple-400 font-bold">
-                  B
-                </div>
-                <div>
-                  <h3 className="font-bold text-white text-base">Module B: Contextual LLM Engine</h3>
-                  <span className="text-xs text-purple-400 font-medium">Tone &amp; Subtle Misleading Claims</span>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm leading-relaxed">
-                Evaluates communication tone (Professional, Trustworthy, Customer-friendly vs Hype) using configured OpenAI/Gemini providers with an automatic deterministic semantic fallback.
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <Users className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Backend RBAC</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Four distinct permission boundaries strictly validated at the API layer for all operations.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-950/80 border border-blue-800/80 flex items-center justify-center text-blue-400 font-bold">
-                  C
-                </div>
-                <div>
-                  <h3 className="font-bold text-white text-base">Module C: Citation Validator</h3>
-                  <span className="text-xs text-blue-400 font-medium">Evidence Grounding &amp; Source Verification</span>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm leading-relaxed">
-                Extracts citations, checks against approved regulatory URLs, and differentiates between verified evidence, unverified domains, and completely unsupported numerical superlatives.
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Immutable Audit Trail</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Timestamped snapshots recording user ID, action, prior state, and resulting state.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-800/80 flex items-center justify-center text-emerald-400 font-bold">
-                  D
-                </div>
-                <div>
-                  <h3 className="font-bold text-white text-base">Module D: Confidence Scorer</h3>
-                  <span className="text-xs text-emerald-400 font-medium">Calibrated Confidence &amp; Compliance Index</span>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm leading-relaxed">
-                Calculates transparent confidence tiers (High 90%+, Medium, Low) and generates a unified 0-100% Brand Compliance Score with severity-weighted deductions.
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <Globe className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Privacy First</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Zero client credential leakage and deterministic fallback capability for sensitive air-gapped environments.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Role-Based Workflows Showcase */}
-      <section className="space-y-12">
-        <div className="text-center space-y-3">
-          <span className="text-xs uppercase font-bold tracking-widest text-indigo-400">Enterprise Governance</span>
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">Four Distinct Stakeholder Roles</h2>
-          <p className="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
-            Granular permissions enforced via backend JWT tokens and database access control.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              role: 'Creator',
-              member: 'Nakshatra Titarmare',
-              actions: ['Submit marketing campaigns', 'Inspect AI problem flags', 'Accept/reject suggestions', 'Submit revision v2+']
-            },
-            {
-              role: 'Reviewer',
-              member: 'Anuj Vishwakarma',
-              actions: ['Examine unresolved findings', 'Verify creator corrections', 'Add verification notes', 'Request additional changes']
-            },
-            {
-              role: 'Manager',
-              member: 'Compliance Lead',
-              actions: ['Executive approval sign-off', 'One-click content rejection', 'Mandate regulatory changes', 'Audit decision logs']
-            },
-            {
-              role: 'Admin',
-              member: 'Lakshita Bisen',
-              actions: ['Configure brand guidelines', 'Manage banned words registry', 'Verify approved sources', 'Monitor live system audit']
-            }
-          ].map((r, i) => (
-            <div key={i} className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-indigo-800/60 transition flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">{r.role}</span>
-                  <span className="text-[10px] text-slate-500">{r.member}</span>
-                </div>
-                <h4 className="font-bold text-white text-base mb-4">{r.role} Portal</h4>
-                <ul className="space-y-2 text-xs text-slate-300">
-                  {r.actions.map((act, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-                      <span>{act}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-800/80">
-                <Link
-                  href="/login"
-                  className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center justify-between"
-                >
-                  <span>Log in as {r.role}</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="p-10 rounded-3xl bg-gradient-to-b from-indigo-950/60 to-slate-900 border border-indigo-800/40 text-center space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-          Experience Intelligent Brand Compliance in Action
+      {/* 10. Call-to-Action Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Ready to Elevate Your Brand Governance?
         </h2>
-        <p className="text-slate-300 max-w-xl mx-auto text-sm sm:text-base">
-          Test real-time brand rule violation detection, one-click content correction, and human managerial approval with pre-loaded FinNova demonstration data.
+        <p className="text-slate-600 dark:text-slate-300 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
+          Experience how intelligent brand compliance and structured human oversight protect your organization from regulatory risk.
         </p>
-        <div className="pt-2">
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/register"
+            className="px-6 py-3 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 transition flex items-center gap-2"
+          >
+            <span>Get Started</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
           <Link
             href="/login"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold bg-white text-slate-900 hover:bg-slate-100 shadow-xl transition-all"
+            className="px-6 py-3 rounded-xl text-sm font-semibold bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-800 transition"
           >
-            <span>Explore Live Demo Portal</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>Explore Platform</span>
           </Link>
         </div>
       </section>
+
+      {/* 11. Professional Footer */}
+      <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#070A10] py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <BrandLogo size="sm" showSubtitle={false} href="/" />
+            <span className="text-slate-400">&copy; {new Date().getFullYear()} All rights reserved.</span>
+          </div>
+
+          <div className="flex items-center space-x-6 text-slate-600 dark:text-slate-400">
+            <Link href="/login" className="hover:text-indigo-600 dark:hover:text-white transition">Sign In</Link>
+            <Link href="/register" className="hover:text-indigo-600 dark:hover:text-white transition">Register</Link>
+            <a href="#features" className="hover:text-indigo-600 dark:hover:text-white transition">Capabilities</a>
+            <a href="#workflow" className="hover:text-indigo-600 dark:hover:text-white transition">Governance</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

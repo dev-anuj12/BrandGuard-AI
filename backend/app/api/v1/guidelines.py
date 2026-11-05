@@ -233,3 +233,4 @@ def delete_terminology(
     db.delete(term)
     db.commit()
     return None
+

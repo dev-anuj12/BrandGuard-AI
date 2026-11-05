@@ -75,3 +75,4 @@ class ApprovedTerminology(Base):
 
     # Relationships
     guideline = relationship("BrandGuideline", back_populates="terminologies")
+

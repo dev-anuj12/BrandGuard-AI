@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.database.session import Base, engine, SessionLocal
-from app.models.enums import UserRole, SeverityLevel, ContentStatus, FindingCategory
+from app.models.enums import UserRole, SeverityLevel, ContentStatus, FindingCategory, ThreatCategory, ThreatRiskLevel, ThreatStatus
 from app.models.user import User
 from app.models.guideline import (
     BrandGuideline,
@@ -12,6 +12,7 @@ from app.models.guideline import (
 from app.models.content import Content, ContentRevision
 from app.models.review import AIReview, Finding, Suggestion
 from app.models.audit import AuditLog
+from app.models.threat import ThreatItem, ThreatEvidence, DomainScan, BrandAsset, BrandProduct
 from app.core.security import get_password_hash
 
 def init_db(db: Session = None) -> None:
@@ -26,6 +27,7 @@ def init_db(db: Session = None) -> None:
     try:
         # Check if users already seeded
         if db.query(User).first():
+            seed_threat_data(db)
             return
 
         print("--- Seeding Database with FinNova Demo Data ---")
@@ -352,9 +354,161 @@ def init_db(db: Session = None) -> None:
         db.commit()
 
         print("--- Database seeding complete! ---")
+        seed_threat_data(db)
     finally:
         if close_db_at_end:
             db.close()
 
+def seed_threat_data(db: Session) -> None:
+    # Check if threat data already seeded
+    if db.query(ThreatItem).first():
+        return
+
+    print("--- Seeding Digital Brand Protection Baseline Records ---")
+
+    # 1. Official Brand Assets
+    assets = [
+        BrandAsset(
+            asset_name="FinNova Corporate Primary Logo",
+            asset_type="Primary Logo",
+            image_path="/assets/brand/finnova-logo-primary.svg",
+            perceptual_hash="d41d8cd98f00b204e9800998ecf8427e",
+            is_active=True
+        ),
+        BrandAsset(
+            asset_name="FinNova App Icon & Shield Mark",
+            asset_type="Icon Mark",
+            image_path="/assets/brand/finnova-shield-mark.svg",
+            perceptual_hash="9e107d9d372bb6826bd81d3542a419d6",
+            is_active=True
+        ),
+        BrandAsset(
+            asset_name="FinNova Verified Trust Badge",
+            asset_type="Watermark",
+            image_path="/assets/brand/finnova-trust-badge.png",
+            perceptual_hash="c4ca4238a0b923820dcc509a6f75849b",
+            is_active=True
+        )
+    ]
+    db.add_all(assets)
+    db.commit()
+
+    # 2. Official Brand Products
+    products = [
+        BrandProduct(
+            product_name="FinNova SmartGrowth Managed Portfolio",
+            sku="FNV-SGP-01",
+            official_msrp=10000.0,
+            authorized_distributors='["FinNova Web Platform", "FinNova Mobile App", "SEBI Registered Advisors"]',
+            reference_image_path="/assets/products/smartgrowth.png"
+        ),
+        BrandProduct(
+            product_name="FinNova Prime Yield Flexible Deposit",
+            sku="FNV-PYD-02",
+            official_msrp=25000.0,
+            authorized_distributors='["FinNova Wealth Portal", "HDFC Partner Branch Network"]',
+            reference_image_path="/assets/products/prime-yield.png"
+        )
+    ]
+    db.add_all(products)
+    db.commit()
+
+    # 3. Baseline Threat Incidents
+    threats = [
+        ThreatItem(
+            threat_code="THR-2026-001",
+            category=ThreatCategory.PHISHING_DOMAIN,
+            title="Credential Harvesting Portal — finnova-secure-login.cc",
+            source_url="https://finnova-secure-login.cc/auth/login",
+            target_brand="FinNova Financial Technologies",
+            risk_level=ThreatRiskLevel.CRITICAL,
+            confidence_score=95.0,
+            status=ThreatStatus.UNDER_INVESTIGATION,
+            explanation="Lookalike domain mimicking FinNova client portal styling with unauthorized credential capture scripts.",
+            recommended_action="Submit urgent registrar domain suspension notice to Cloudflare & Namecheap abuse desks."
+        ),
+        ThreatItem(
+            threat_code="THR-2026-002",
+            category=ThreatCategory.SOCIAL_IMPERSONATION,
+            title="Impersonation Support Account — @finnova_refund_help",
+            source_url="https://telegram.org/finnova_refund_help",
+            target_brand="FinNova Financial Technologies",
+            risk_level=ThreatRiskLevel.HIGH,
+            confidence_score=89.0,
+            status=ThreatStatus.NEW,
+            explanation="Telegram handle claiming to be 'FinNova Instant Refund Desk', actively soliciting customer OTPs and PAN details.",
+            recommended_action="File brand impersonation report with Telegram platform security team."
+        ),
+        ThreatItem(
+            threat_code="THR-2026-003",
+            category=ThreatCategory.COUNTERFEIT_PRODUCT,
+            title="Unauthorized Investment Note — 40% Guaranteed SmartGrowth Bond",
+            source_url="https://unregulated-p2p-market.in/listings/finnova-bonds-9842",
+            target_brand="FinNova Financial Technologies",
+            risk_level=ThreatRiskLevel.HIGH,
+            confidence_score=92.0,
+            status=ThreatStatus.VERIFIED_THREAT,
+            explanation="Unregistered third-party entity offering bogus fixed-return promissory notes using FinNova SmartGrowth trademark.",
+            recommended_action="Issue formal Cease & Desist letter and notify SEBI Market Intermediaries Regulation Department."
+        ),
+        ThreatItem(
+            threat_code="THR-2026-004",
+            category=ThreatCategory.UNAUTHORIZED_LOGO,
+            title="Fraudulent Partner Endorsement — crypto-wealth-advisor.biz",
+            source_url="https://crypto-wealth-advisor.biz/partners.html",
+            target_brand="FinNova Financial Technologies",
+            risk_level=ThreatRiskLevel.MEDIUM,
+            confidence_score=84.0,
+            status=ThreatStatus.RESOLVED,
+            explanation="Cryptocurrency advisory site displaying FinNova primary logo in 'Institutional Partners' banner without agreement.",
+            recommended_action="Takedown notice served; offending webmaster removed logo asset. Verified resolved."
+        )
+    ]
+    db.add_all(threats)
+    db.commit()
+
+    # 4. Threat Evidence Items
+    ev1 = ThreatEvidence(
+        threat_id=threats[0].id,
+        evidence_type="WHOIS",
+        data_payload='{"registrar": "Namecheap Inc.", "creation_date": "2026-10-28", "nameservers": ["dns1.registrar-servers.com"], "registrant_country": "PA"}'
+    )
+    ev2 = ThreatEvidence(
+        threat_id=threats[0].id,
+        evidence_type="DOM_SNAPSHOT",
+        data_payload='{"forms_detected": 1, "action": "/harvest.php", "title": "FinNova Client Portal - Sign In", "finnova_keywords_count": 8}'
+    )
+    ev3 = ThreatEvidence(
+        threat_id=threats[1].id,
+        evidence_type="PROFILE_METADATA",
+        data_payload='{"handle": "@finnova_refund_help", "bio": "Official 24/7 FinNova Grievance Desk. DM with registered phone number.", "verified": false}'
+    )
+    ev4 = ThreatEvidence(
+        threat_id=threats[2].id,
+        evidence_type="LISTING_DETAILS",
+        data_payload='{"listing_title": "FinNova SmartGrowth Bond Series IV", "promised_yield": "40% annual", "official_msrp_delta": "+300%", "seller": "Global Apex Capital"}'
+    )
+    db.add_all([ev1, ev2, ev3, ev4])
+    db.commit()
+
+    # 5. Initial Domain Scan
+    scan1 = DomainScan(
+        scanned_url="https://finnova-secure-login.cc/auth/login",
+        domain_name="finnova-secure-login.cc",
+        ip_address="198.51.100.42",
+        is_https=True,
+        ssl_valid=False,
+        status_code=200,
+        redirect_count=1,
+        similarity_score=87.5,
+        risk_score=94.0,
+        threat_id=threats[0].id
+    )
+    db.add(scan1)
+    db.commit()
+    print("--- Digital Brand Protection Seed Complete! ---")
+
+
 if __name__ == "__main__":
     init_db()
+

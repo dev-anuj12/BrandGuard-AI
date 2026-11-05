@@ -1,225 +1,558 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { 
-  CheckCircle2, XCircle, AlertTriangle, ShieldCheck, 
-  Clock, RefreshCw, Sparkles, MessageSquare, History
+import Link from 'next/link';
+import {
+  CheckCircle2,
+  XCircle,
+  MessageSquare,
+  RefreshCw,
+  FileText,
+  Eye,
+  Clock,
+  AlertTriangle,
+  ThumbsUp,
+  ThumbsDown,
+  ChevronDown,
+  ChevronUp,
+  Filter,
+  Award,
 } from 'lucide-react';
+
+import AppLayout from '../../../components/AppLayout';
+import { Button } from '../../../components/ui/Button';
+import { TableSkeleton } from '../../../components/ui/Skeleton';
+import { EmptyState } from '../../../components/ui/EmptyState';
+import { ConfirmDialog } from '../../../components/ui/Modal';
+import { StatusBadge, SeverityBadge } from '../../../components/Badges';
+import { useToast } from '../../../components/ui/Toast';
 import { api, getCurrentUser } from '../../../lib/api';
-import { StatusBadge } from '../../../components/Badges';
 
-export default function ManagerDashboard() {
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+interface ContentItem {
+  id: string;
+  title: string;
+  status: string;
+  channel?: string;
+  compliance_score?: number | null;
+  created_at?: string;
+  submitted_at?: string;
+  severity?: string;
+  [key: string]: unknown;
+}
+
+type FilterTab = 'all' | 'pending' | 'verified' | 'decided';
+
+type DecisionAction = 'Approved' | 'Changes Requested' | 'Rejected';
+
+// ─── KPI Card ────────────────────────────────────────────────────────────────
+
+interface KpiCardProps {
+  label: string;
+  value: number;
+  icon: React.ReactNode;
+  colorClass: string;
+  bgClass: string;
+}
+
+function KpiCard({ label, value, icon, colorClass, bgClass }: KpiCardProps) {
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 flex items-center gap-4 shadow-sm">
+      <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center ${bgClass}`}>
+        <span className={colorClass}>{icon}</span>
+      </div>
+      <div>
+        <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{value}</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{label}</p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function formatDate(dateStr?: string): string {
+  if (!dateStr) return '—';
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(new Date(dateStr));
+  } catch {
+    return dateStr;
+  }
+}
+
+function scoreColor(score?: number | null): string {
+  if (score == null) return 'text-slate-400 dark:text-slate-500';
+  if (score >= 80) return 'text-emerald-600 dark:text-emerald-400';
+  if (score >= 60) return 'text-amber-600 dark:text-amber-400';
+  return 'text-red-600 dark:text-red-400';
+}
+
+function matchesFilter(item: ContentItem, tab: FilterTab): boolean {
+  const s = item.status?.toLowerCase() ?? '';
+  if (tab === 'pending') return s.includes('pending') && s.includes('manager');
+  if (tab === 'verified') return s === 'verified';
+  if (tab === 'decided')
+    return s === 'approved' || s === 'rejected' || s.includes('changes requested');
+  return true;
+}
+
+// ─── Row Action Panel ─────────────────────────────────────────────────────────
+
+interface ActionPanelProps {
+  item: ContentItem;
+  onDecision: (id: string, action: DecisionAction, comments: string) => void;
+  onRejectRequest: (id: string, comments: string) => void;
+  loading: boolean;
+}
+
+function ActionPanel({ item, onDecision, onRejectRequest, loading }: ActionPanelProps) {
+  const [comments, setComments] = useState('');
+
+  const isDecided =
+    item.status?.toLowerCase() === 'approved' ||
+    item.status?.toLowerCase() === 'rejected' ||
+    item.status?.toLowerCase().includes('changes requested');
+
+  return (
+    <div className="px-4 py-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700">
+      <div className="max-w-3xl space-y-3">
+        {/* Comment */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1 uppercase tracking-wide">
+            Manager Comments
+          </label>
+          <textarea
+            rows={3}
+            value={comments}
+            onChange={(e) => setComments(e.target.value)}
+            disabled={isDecided || loading}
+            placeholder={isDecided ? 'Decision already recorded.' : 'Add comments or feedback for this submission…'}
+            className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"
+          />
+        </div>
+
+        {/* Action buttons */}
+        {!isDecided && (
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="primary"
+              size="sm"
+              disabled={loading}
+              onClick={() => onDecision(item.id, 'Approved', comments)}
+              className="bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-500 inline-flex items-center gap-1.5"
+            >
+              <ThumbsUp className="w-4 h-4" />
+              Approve
+            </Button>
+
+            <Button
+              variant="secondary"
+              size="sm"
+              disabled={loading}
+              onClick={() => onDecision(item.id, 'Changes Requested', comments)}
+              className="border-amber-400 text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 inline-flex items-center gap-1.5"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Request Changes
+            </Button>
+
+            <Button
+              variant="destructive"
+              size="sm"
+              disabled={loading}
+              onClick={() => onRejectRequest(item.id, comments)}
+              className="inline-flex items-center gap-1.5"
+            >
+              <ThumbsDown className="w-4 h-4" />
+              Reject
+            </Button>
+
+            <Link
+              href={`/review/${item.id}`}
+              className="ml-auto inline-flex items-center gap-1.5 text-sm text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+            >
+              <Eye className="w-4 h-4" />
+              Full Review
+            </Link>
+          </div>
+        )}
+
+        {isDecided && (
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <span className="text-sm text-slate-500 dark:text-slate-400">
+              Decision recorded — no further action required.
+            </span>
+            <Link
+              href={`/review/${item.id}`}
+              className="ml-auto inline-flex items-center gap-1.5 text-sm text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+            >
+              <Eye className="w-4 h-4" />
+              View Review
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Page ────────────────────────────────────────────────────────────────
+
+export default function ManagerDashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [contents, setContents] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState<number | null>(null);
-  const [managerComments, setManagerComments] = useState<Record<number, string>>({});
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const { showToast } = useToast();
 
-  const loadData = async () => {
+  const [content, setContent] = useState<ContentItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [search, setSearch] = useState('');
+  const [activeTab, setActiveTab] = useState<FilterTab>('all');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  // Reject confirm dialog
+  const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
+  const [pendingReject, setPendingReject] = useState<{ id: string; comments: string } | null>(null);
+
+  // ── Auth guard ──────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (!user) {
+      router.replace('/login');
+      return;
+    }
+    if (user.role !== 'MANAGER' && user.role !== 'ADMIN') {
+      router.replace('/dashboard');
+    }
+  }, [router]);
+
+  // ── Fetch data ──────────────────────────────────────────────────────────────
+  const fetchContent = async () => {
     setLoading(true);
     try {
       const data = await api.listContent();
-      setContents(data);
-    } catch (err: any) {
-      console.error(err);
+      setContent(data || []);
+    } catch (err) {
+      console.error('Failed to load content:', err);
+      showToast('Failed to load content. Please try again.', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    const curUser = getCurrentUser();
-    if (!curUser) {
-      router.push('/login');
-      return;
-    }
-    setUser(curUser);
-    loadData();
-  }, [router]);
+    fetchContent();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const handleDecision = async (
-    contentId: number,
-    action: 'Approved' | 'Rejected' | 'Changes Requested'
-  ) => {
-    setActionLoading(contentId);
-    setMessage(null);
+  // ── KPIs ────────────────────────────────────────────────────────────────────
+  const kpiPendingApproval = content.filter((c) =>
+    c.status?.toLowerCase().includes('pending') && c.status?.toLowerCase().includes('manager')
+  ).length;
+
+  const kpiVerified = content.filter((c) => c.status?.toLowerCase() === 'verified').length;
+
+  const kpiApproved = content.filter((c) => c.status?.toLowerCase() === 'approved').length;
+
+  const kpiRejected = content.filter((c) => c.status?.toLowerCase() === 'rejected').length;
+
+  // ── Filtering ───────────────────────────────────────────────────────────────
+  const filtered = content.filter((item) => {
+    const matchSearch = search.trim() === '' || item.title?.toLowerCase().includes(search.toLowerCase());
+    return matchSearch && matchesFilter(item, activeTab);
+  });
+
+  // ── Decision handler ────────────────────────────────────────────────────────
+  const handleDecision = async (id: string, action: DecisionAction, comments: string) => {
+    setActionLoading(true);
     try {
-      const comment = managerComments[contentId] || '';
-      await api.managerDecision(contentId, { action, comments: comment });
-      setMessage({
-        type: 'success',
-        text: `Content #${contentId} has been marked as ${action}. Action recorded in audit log.`,
-      });
-      await loadData();
-    } catch (err: any) {
-      setMessage({ type: 'error', text: err.message || 'Approval decision failed.' });
+      await api.managerDecision(id, { action, comments });
+      showToast(
+        action === 'Approved'
+          ? 'Content approved successfully.'
+          : action === 'Rejected'
+          ? 'Content rejected.'
+          : 'Changes requested successfully.',
+        action === 'Approved' ? 'success' : action === 'Rejected' ? 'error' : 'warning'
+      );
+      setExpandedId(null);
+      await fetchContent();
+    } catch (err) {
+      console.error('Decision failed:', err);
+      showToast('Failed to record decision. Please try again.', 'error');
     } finally {
-      setActionLoading(null);
+      setActionLoading(false);
     }
   };
 
-  const pendingApprovals = contents.filter(
-    (c) => c.status === 'Pending Manager Approval' || c.status === 'Verified'
-  );
-  const approvedList = contents.filter((c) => c.status === 'Approved');
-  const rejectedList = contents.filter((c) => c.status === 'Rejected');
+  // ── Reject flow (with confirm dialog) ───────────────────────────────────────
+  const handleRejectRequest = (id: string, comments: string) => {
+    setPendingReject({ id, comments });
+    setRejectDialogOpen(true);
+  };
+
+  const confirmReject = async () => {
+    if (!pendingReject) return;
+    setRejectDialogOpen(false);
+    await handleDecision(pendingReject.id, 'Rejected', pendingReject.comments);
+    setPendingReject(null);
+  };
+
+  // ── Tab definitions ─────────────────────────────────────────────────────────
+  const tabs: { key: FilterTab; label: string }[] = [
+    { key: 'all', label: 'All' },
+    { key: 'pending', label: 'Pending' },
+    { key: 'verified', label: 'Verified' },
+    { key: 'decided', label: 'Decided' },
+  ];
+
+  // ─────────────────────────────────────────────────────────────────────────────
 
   return (
-    <div className="space-y-8 py-4">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
-        <div>
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-purple-950/80 border border-purple-800 text-[11px] font-semibold text-purple-300 mb-2">
-            <span>Executive Manager Portal</span>
-            <span>•</span>
-            <span className="text-slate-400">Final Brand &amp; Legal Sign-Off</span>
+    <AppLayout
+      pageTitle="Approval Management"
+      breadcrumbs={[{ label: 'Approval Management' }]}
+    >
+      <div className="space-y-6">
+
+        {/* ── KPI Cards ──────────────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <KpiCard
+            label="Pending Approval"
+            value={kpiPendingApproval}
+            icon={<Clock className="w-6 h-6" />}
+            colorClass="text-amber-600 dark:text-amber-400"
+            bgClass="bg-amber-50 dark:bg-amber-900/30"
+          />
+          <KpiCard
+            label="Verified Items"
+            value={kpiVerified}
+            icon={<Award className="w-6 h-6" />}
+            colorClass="text-indigo-600 dark:text-indigo-400"
+            bgClass="bg-indigo-50 dark:bg-indigo-900/30"
+          />
+          <KpiCard
+            label="Approved"
+            value={kpiApproved}
+            icon={<CheckCircle2 className="w-6 h-6" />}
+            colorClass="text-emerald-600 dark:text-emerald-400"
+            bgClass="bg-emerald-50 dark:bg-emerald-900/30"
+          />
+          <KpiCard
+            label="Rejected"
+            value={kpiRejected}
+            icon={<XCircle className="w-6 h-6" />}
+            colorClass="text-red-600 dark:text-red-400"
+            bgClass="bg-red-50 dark:bg-red-900/30"
+          />
+        </div>
+
+        {/* ── Toolbar ────────────────────────────────────────────────────────── */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          {/* Search */}
+          <div className="relative flex-1 max-w-sm">
+            <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Search by title…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Compliance Management — {user?.full_name?.split(' ')[0] || 'Manager'}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Authorize verified marketing campaigns, mandate modifications, or reject non-compliant collateral.
-          </p>
-        </div>
 
-        <button
-          onClick={loadData}
-          className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition self-start sm:self-auto"
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-        </button>
-      </div>
-
-      {message && (
-        <div
-          className={`p-4 rounded-xl text-xs font-semibold flex items-center gap-2 ${
-            message.type === 'success'
-              ? 'bg-emerald-950 border border-emerald-800 text-emerald-300'
-              : 'bg-rose-950 border border-rose-800 text-rose-300'
-          }`}
-        >
-          {message.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
-          <span>{message.text}</span>
-        </div>
-      )}
-
-      {/* KPI Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span className="text-xs font-semibold text-slate-400">Pending Executive Approval</span>
-          <div className="text-3xl font-black text-purple-400 mt-2">{pendingApprovals.length}</div>
-          <span className="text-[11px] text-slate-500 mt-1 block">Verified by Reviewers</span>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span className="text-xs font-semibold text-slate-400">Approved Campaigns</span>
-          <div className="text-3xl font-black text-emerald-400 mt-2">{approvedList.length}</div>
-          <span className="text-[11px] text-slate-500 mt-1 block">Authorized for deployment</span>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span className="text-xs font-semibold text-slate-400">Rejected / Escalated</span>
-          <div className="text-3xl font-black text-rose-400 mt-2">{rejectedList.length}</div>
-          <span className="text-[11px] text-slate-500 mt-1 block">Prohibited material</span>
-        </div>
-      </div>
-
-      {/* Action Queue */}
-      <div className="space-y-4">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
-          <ShieldCheck className="w-5 h-5 text-purple-400" />
-          <span>Verified Submissions Awaiting Final Manager Decision</span>
-        </h2>
-
-        {pendingApprovals.length === 0 ? (
-          <div className="p-12 rounded-2xl border border-slate-800 bg-slate-900/30 text-center text-slate-400 text-sm">
-            <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-            <span>No pending submissions in the executive approval queue.</span>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {pendingApprovals.map((item) => (
-              <div
-                key={item.id}
-                className="p-5 rounded-2xl border border-purple-900/40 bg-slate-900/60 space-y-4 shadow-xl"
+          {/* Filter tabs */}
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <Filter className="w-4 h-4 text-slate-400 dark:text-slate-500 ml-1 mr-0.5" />
+            {tabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  activeTab === tab.key
+                    ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                }`}
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-                  <div>
-                    <span className="text-xs text-slate-500 font-mono">ID #{item.id} • Channel: {item.channel}</span>
-                    <h3 className="font-bold text-white text-base">{item.title}</h3>
-                    <span className="text-xs text-slate-400">Creator: {item.creator_name || 'FinNova Copywriter'}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <StatusBadge status={item.status} />
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 border border-slate-700 text-slate-200">
-                      Score: {item.latest_score !== null ? `${item.latest_score}%` : 'N/A'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 leading-relaxed font-mono">
-                  {item.current_body}
-                </div>
-
-                {/* Manager Comments & Decision Buttons */}
-                <div className="space-y-3 pt-1">
-                  <input
-                    type="text"
-                    value={managerComments[item.id] || ''}
-                    onChange={(e) =>
-                      setManagerComments({ ...managerComments, [item.id]: e.target.value })
-                    }
-                    placeholder="Enter executive sign-off comments or rejection rationale..."
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-500"
-                  />
-
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <Link
-                      href={`/review/${item.id}`}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 flex items-center gap-1.5"
-                    >
-                      <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-                      <span>Inspect AI Review Findings</span>
-                    </Link>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleDecision(item.id, 'Changes Requested')}
-                        disabled={actionLoading === item.id}
-                        className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-amber-950 hover:bg-amber-900 border border-amber-800 text-amber-300 transition"
-                      >
-                        Request Modifications
-                      </button>
-
-                      <button
-                        onClick={() => handleDecision(item.id, 'Rejected')}
-                        disabled={actionLoading === item.id}
-                        className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-rose-950 hover:bg-rose-900 border border-rose-800 text-rose-300 transition flex items-center gap-1.5"
-                      >
-                        <XCircle className="w-3.5 h-3.5" />
-                        <span>Reject Campaign</span>
-                      </button>
-
-                      <button
-                        onClick={() => handleDecision(item.id, 'Approved')}
-                        disabled={actionLoading === item.id}
-                        className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition flex items-center gap-1.5"
-                      >
-                        <CheckCircle2 className="w-4 h-4" />
-                        <span>Grant Official Approval</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                {tab.label}
+              </button>
             ))}
           </div>
+
+          {/* Refresh */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={fetchContent}
+            disabled={loading}
+            className="inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+        </div>
+
+        {/* ── Table / States ─────────────────────────────────────────────────── */}
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm overflow-hidden">
+
+          {loading ? (
+            <div className="p-4">
+              <TableSkeleton rows={6} />
+            </div>
+          ) : filtered.length === 0 ? (
+            <EmptyState
+              icon={AlertTriangle}
+              title="No items found"
+              description={
+                search
+                  ? `No content matching "${search}" in this category.`
+                  : 'There are no items in this category yet.'
+              }
+            />
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                <thead className="bg-slate-50 dark:bg-slate-900/50">
+                  <tr>
+                    {['Title', 'Status', 'Channel', 'Compliance Score', 'Submitted', ''].map(
+                      (col, i) => (
+                        <th
+                          key={i}
+                          scope="col"
+                          className="px-4 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap"
+                        >
+                          {col}
+                        </th>
+                      )
+                    )}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50">
+                  {filtered.map((item) => {
+                    const isExpanded = expandedId === item.id;
+                    return (
+                      <React.Fragment key={item.id}>
+                        {/* ── Main row ── */}
+                        <tr
+                          className={`group transition-colors cursor-pointer ${
+                            isExpanded
+                              ? 'bg-indigo-50/60 dark:bg-indigo-900/10'
+                              : 'hover:bg-slate-50 dark:hover:bg-slate-700/40'
+                          }`}
+                          onClick={() => setExpandedId(isExpanded ? null : item.id)}
+                        >
+                          {/* Title */}
+                          <td className="px-4 py-3 max-w-xs">
+                            <div className="flex items-center gap-2">
+                              <FileText className="w-4 h-4 text-slate-400 dark:text-slate-500 flex-shrink-0" />
+                              <span className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
+                                {item.title || '(Untitled)'}
+                              </span>
+                            </div>
+                          </td>
+
+                          {/* Status */}
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <StatusBadge status={item.status} />
+                          </td>
+
+                          {/* Channel */}
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-slate-600 dark:text-slate-400">
+                            {item.channel || '—'}
+                          </td>
+
+                          {/* Compliance Score */}
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            {item.compliance_score != null ? (
+                              <div className="flex items-center gap-1.5">
+                                <span
+                                  className={`text-sm font-semibold tabular-nums ${scoreColor(
+                                    item.compliance_score
+                                  )}`}
+                                >
+                                  {item.compliance_score}%
+                                </span>
+                                {item.severity && <SeverityBadge severity={item.severity} />}
+                              </div>
+                            ) : (
+                              <span className="text-sm text-slate-400 dark:text-slate-500">—</span>
+                            )}
+                          </td>
+
+                          {/* Submitted */}
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                            {formatDate(item.submitted_at ?? item.created_at)}
+                          </td>
+
+                          {/* Expand toggle */}
+                          <td className="px-4 py-3 whitespace-nowrap text-right">
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-indigo-600 dark:text-indigo-400 group-hover:underline">
+                              {isExpanded ? (
+                                <>
+                                  <ChevronUp className="w-4 h-4" /> Collapse
+                                </>
+                              ) : (
+                                <>
+                                  <ChevronDown className="w-4 h-4" /> Review
+                                </>
+                              )}
+                            </span>
+                          </td>
+                        </tr>
+
+                        {/* ── Expanded action panel ── */}
+                        {isExpanded && (
+                          <tr>
+                            <td
+                              colSpan={6}
+                              className="p-0"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <ActionPanel
+                                item={item}
+                                onDecision={handleDecision}
+                                onRejectRequest={handleRejectRequest}
+                                loading={actionLoading}
+                              />
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+
+        {/* Result count */}
+        {!loading && filtered.length > 0 && (
+          <p className="text-xs text-slate-400 dark:text-slate-500 text-right">
+            Showing {filtered.length} of {content.length} item{content.length !== 1 ? 's' : ''}
+          </p>
         )}
       </div>
-    </div>
+
+      {/* ── Reject Confirm Dialog ───────────────────────────────────────────── */}
+      <ConfirmDialog
+        isOpen={rejectDialogOpen}
+        title="Reject Content"
+        message="Are you sure you want to reject this submission? This action will notify the content creator."
+        confirmLabel="Reject"
+        variant="destructive"
+        onConfirm={confirmReject}
+        onClose={() => {
+          setRejectDialogOpen(false);
+          setPendingReject(null);
+        }}
+      />
+    </AppLayout>
   );
 }

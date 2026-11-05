@@ -6,8 +6,11 @@ from app.database.session import get_db
 from app.models.content import Content
 from app.models.review import AIReview, Finding, Suggestion
 from app.models.workflow import Approval
-from app.models.enums import ContentStatus, SuggestionStatus, SeverityLevel
+from app.models.audit import AuditLog
+from app.models.threat import ThreatItem
+from app.models.enums import ContentStatus, SuggestionStatus, SeverityLevel, ThreatRiskLevel, ThreatStatus
 from app.schemas.analytics import AnalyticsOverview, CommonViolationItem, StatusBreakdownItem, SeverityBreakdownItem
+from app.schemas.threat import UnifiedAnalyticsOut, ThreatCategoryCount, ThreatStatusCount, ActivityEvent
 from app.api.deps import get_current_user
 from app.models.user import User
 
@@ -111,3 +114,113 @@ def get_analytics_overview(
         severity_breakdown=severity_breakdown,
         activity_timeline=activity_timeline
     )
+
+
+@router.get("/unified", response_model=UnifiedAnalyticsOut)
+def get_unified_analytics(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # 1. Content Governance Metrics
+    total_content_reviewed = db.query(Content).filter(Content.status != ContentStatus.DRAFT).count()
+    approved_content = db.query(Content).filter(Content.status == ContentStatus.APPROVED).count()
+    rejected_content = db.query(Content).filter(Content.status == ContentStatus.REJECTED).count()
+    pending_approvals = db.query(Content).filter(
+        Content.status.in_([ContentStatus.PENDING_MANAGER_APPROVAL, ContentStatus.PENDING_REVIEWER_VERIFICATION])
+    ).count()
+
+    avg_score_res = db.query(func.avg(AIReview.overall_score)).scalar()
+    brand_compliance_score = round(float(avg_score_res), 1) if avg_score_res else 85.0
+
+    # 2. Digital Threat Protection Metrics
+    total_detected_threats = db.query(ThreatItem).count()
+    critical_high_threats = db.query(ThreatItem).filter(
+        ThreatItem.risk_level.in_([ThreatRiskLevel.CRITICAL, ThreatRiskLevel.HIGH])
+    ).count()
+    threats_investigating = db.query(ThreatItem).filter(
+        ThreatItem.status == ThreatStatus.UNDER_INVESTIGATION
+    ).count()
+    threats_resolved = db.query(ThreatItem).filter(
+        ThreatItem.status == ThreatStatus.RESOLVED
+    ).count()
+    new_threats = db.query(ThreatItem).filter(
+        ThreatItem.status == ThreatStatus.NEW
+    ).count()
+
+    # 3. Threat Category Distribution
+    cat_counts = (
+        db.query(ThreatItem.category, func.count(ThreatItem.id))
+        .group_by(ThreatItem.category)
+        .all()
+    )
+    threat_category_breakdown = [
+        ThreatCategoryCount(category=str(cat.value if hasattr(cat, 'value') else cat), count=cnt)
+        for cat, cnt in cat_counts
+    ]
+
+    # 4. Threat Status Distribution
+    st_counts = (
+        db.query(ThreatItem.status, func.count(ThreatItem.id))
+        .group_by(ThreatItem.status)
+        .all()
+    )
+    threat_status_breakdown = [
+        ThreatStatusCount(status=str(st.value if hasattr(st, 'value') else st), count=cnt)
+        for st, cnt in st_counts
+    ]
+
+    # 5. Governance Quality Trend
+    reviews = db.query(AIReview).order_by(AIReview.created_at.asc()).limit(8).all()
+    compliance_trend = []
+    if reviews:
+        for r in reviews:
+            compliance_trend.append({
+                "timestamp": r.created_at.strftime("%b %d") if r.created_at else "Recent",
+                "score": r.overall_score,
+                "violations": len(r.findings)
+            })
+    else:
+        compliance_trend = [
+            {"timestamp": "Oct 15", "score": 75, "violations": 4},
+            {"timestamp": "Oct 22", "score": 82, "violations": 3},
+            {"timestamp": "Oct 29", "score": 88, "violations": 2},
+            {"timestamp": "Nov 05", "score": brand_compliance_score, "violations": 1},
+        ]
+
+    # 6. Merged Chronological Activities
+    audit_logs = db.query(AuditLog).order_by(AuditLog.created_at.desc()).limit(6).all()
+    recent_activities = []
+    for log in audit_logs:
+        recent_activities.append(
+            ActivityEvent(
+                id=log.id,
+                source="Threat Intel" if "THREAT" in (log.action or "") else "Brand Governance",
+                action=log.action or "Audit Event",
+                title=log.details or f"Action {log.action} performed",
+                severity="HIGH" if "REJECT" in (log.action or "") or "CRITICAL" in (log.details or "") else "NORMAL",
+                timestamp=log.created_at.strftime("%b %d, %H:%M") if log.created_at else "Just now"
+            )
+        )
+
+    # 7. Recent Threats
+    recent_threats = db.query(ThreatItem).order_by(ThreatItem.detected_at.desc()).limit(5).all()
+
+    return UnifiedAnalyticsOut(
+        total_content_reviewed=total_content_reviewed,
+        pending_approvals=pending_approvals,
+        brand_compliance_score=brand_compliance_score,
+        approved_content=approved_content,
+        rejected_content=rejected_content,
+        total_detected_threats=total_detected_threats,
+        critical_high_threats=critical_high_threats,
+        threats_investigating=threats_investigating,
+        threats_resolved=threats_resolved,
+        new_threats=new_threats,
+        threat_category_breakdown=threat_category_breakdown,
+        threat_status_breakdown=threat_status_breakdown,
+        compliance_trend=compliance_trend,
+        recent_activities=recent_activities,
+        recent_threats=recent_threats
+    )
+
+

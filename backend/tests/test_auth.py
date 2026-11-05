@@ -40,3 +40,4 @@ def test_user_registration(client):
     })
     assert res.status_code == 201
     assert res.json()["user"]["email"] == "new_creator@finnova.com"
+

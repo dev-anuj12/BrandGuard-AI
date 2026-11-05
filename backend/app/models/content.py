@@ -41,3 +41,4 @@ class ContentRevision(Base):
     content = relationship("Content", back_populates="revisions")
     revised_by_user = relationship("User", back_populates="revisions")
     reviews = relationship("AIReview", back_populates="revision")
+

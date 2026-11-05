@@ -193,3 +193,4 @@ def get_audit_logs(
             l_out.user_email = l.user.email
         results.append(l_out)
     return results
+

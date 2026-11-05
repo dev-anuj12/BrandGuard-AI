@@ -44,3 +44,26 @@ class ApprovalAction(str, enum.Enum):
     APPROVED = "Approved"
     REJECTED = "Rejected"
     CHANGES_REQUESTED = "Changes Requested"
+
+class ThreatCategory(str, enum.Enum):
+    PHISHING_DOMAIN = "Phishing Domain"
+    LOOKALIKE_WEBSITE = "Lookalike Website"
+    SOCIAL_IMPERSONATION = "Social Impersonation"
+    COUNTERFEIT_PRODUCT = "Counterfeit Product"
+    UNAUTHORIZED_LOGO = "Unauthorized Logo"
+
+class ThreatRiskLevel(str, enum.Enum):
+    CRITICAL = "Critical"
+    HIGH = "High"
+    MEDIUM = "Medium"
+    LOW = "Low"
+    INFO = "Info"
+
+class ThreatStatus(str, enum.Enum):
+    NEW = "New"
+    UNDER_INVESTIGATION = "Under Investigation"
+    VERIFIED_THREAT = "Verified Threat"
+    FALSE_POSITIVE = "False Positive"
+    RESOLVED = "Resolved"
+
+

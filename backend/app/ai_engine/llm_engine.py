@@ -182,3 +182,4 @@ Return a strict JSON array of brand compliance findings for the user content."""
                 })
 
         return findings
+

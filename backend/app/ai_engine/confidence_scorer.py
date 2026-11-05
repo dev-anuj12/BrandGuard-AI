@@ -54,3 +54,4 @@ class ConfidenceScorer:
 
         score = max(0.0, 100.0 - deductions)
         return round(score, 1)
+

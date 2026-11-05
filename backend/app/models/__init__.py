@@ -6,6 +6,9 @@ from app.models.enums import (
     FindingCategory,
     SuggestionStatus,
     ApprovalAction,
+    ThreatCategory,
+    ThreatRiskLevel,
+    ThreatStatus,
 )
 from app.models.user import User
 from app.models.guideline import (
@@ -19,6 +22,7 @@ from app.models.content import Content, ContentRevision
 from app.models.review import AIReview, Finding, Suggestion
 from app.models.workflow import ReviewerAssignment, Approval, Comment
 from app.models.audit import AuditLog
+from app.models.threat import ThreatItem, ThreatEvidence, DomainScan, BrandAsset, BrandProduct
 
 __all__ = [
     "Base",
@@ -28,6 +32,9 @@ __all__ = [
     "FindingCategory",
     "SuggestionStatus",
     "ApprovalAction",
+    "ThreatCategory",
+    "ThreatRiskLevel",
+    "ThreatStatus",
     "User",
     "BrandGuideline",
     "ApprovedSource",
@@ -43,4 +50,10 @@ __all__ = [
     "Approval",
     "Comment",
     "AuditLog",
+    "ThreatItem",
+    "ThreatEvidence",
+    "DomainScan",
+    "BrandAsset",
+    "BrandProduct",
 ]
+

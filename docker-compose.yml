@@ -22,7 +22,7 @@ services:
     restart: always
     environment:
       DATABASE_URL: postgresql://brandguard:brandguard_password@db:5432/brandguard_db
-      SECRET_KEY: brandguard-super-secret-jwt-key-2026-codenexus
+      SECRET_KEY: brandguard-enterprise-jwt-signing-key-2026-production
       AI_PROVIDER: rule_fallback
     ports:
       - "8000:8000"
@@ -44,3 +44,4 @@ services:
 
 volumes:
   postgres_data:
+

@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     
     # Security
-    SECRET_KEY: str = Field(default="brandguard-super-secret-jwt-key-2026-codenexus", validation_alias="SECRET_KEY")
+    SECRET_KEY: str = Field(default="brandguard-enterprise-jwt-signing-key-2026-production", validation_alias="SECRET_KEY")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
     
@@ -42,3 +42,4 @@ class Settings(BaseSettings):
         extra = "allow"
 
 settings = Settings()
+

@@ -28,3 +28,4 @@ class AnalyticsOverview(BaseModel):
     status_breakdown: List[StatusBreakdownItem]
     severity_breakdown: List[SeverityBreakdownItem]
     activity_timeline: List[Dict[str, Any]]
+

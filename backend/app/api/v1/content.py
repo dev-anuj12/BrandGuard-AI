@@ -294,3 +294,4 @@ async def revise_content(
     c_out.latest_score = review.overall_score
     c_out.latest_review_id = review.id
     return c_out
+

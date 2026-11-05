@@ -90,3 +90,4 @@ class CitationValidator:
         }
 
         return findings, citation_metrics
+

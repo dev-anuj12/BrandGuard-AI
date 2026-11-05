@@ -58,3 +58,4 @@ class Suggestion(Base):
 
     # Relationships
     finding = relationship("Finding", back_populates="suggestions")
+

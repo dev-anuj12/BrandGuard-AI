@@ -49,3 +49,4 @@ def update_user(
     db.commit()
 
     return user
+

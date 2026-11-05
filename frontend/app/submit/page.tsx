@@ -1,219 +1,590 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { 
-  Send, Sparkles, AlertCircle, FileText, ArrowLeft, 
-  HelpCircle, CheckCircle2, Copy
+import {
+  FileText,
+  Send,
+  Save,
+  Sparkles,
+  Info,
+  ChevronDown,
+  X,
+  Lightbulb,
+  AlertCircle,
+  Loader2,
 } from 'lucide-react';
+
+import AppLayout from '../../components/AppLayout';
+import { Button } from '../../components/ui/Button';
+import { useToast } from '../../components/ui/Toast';
 import { api, getCurrentUser } from '../../lib/api';
 
-const FINNOVA_DEMO_SAMPLE = `FinNova is an ultra-fast money app that promises guaranteed returns for every customer! Our new wealth wizardry platform provides a risk-free investment opportunity with 100% profit guaranteed. Experience unhackable transfers and instant wealth today.`;
+// ─── Types ───────────────────────────────────────────────────────────────────
 
-export default function ContentSubmissionPage() {
+interface FormData {
+  title: string;
+  channel: string;
+  target_audience: string;
+  original_body: string;
+  auto_review: boolean;
+}
+
+interface FormErrors {
+  title?: string;
+  channel?: string;
+  target_audience?: string;
+  original_body?: string;
+}
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const CHANNELS = [
+  'Social Media',
+  'Email Marketing',
+  'Blog Post',
+  'Press Release',
+  'Product Page',
+  'Internal Communication',
+  'Advertisement',
+  'Website Copy',
+  'Video Script',
+  'Podcast Script',
+];
+
+const TARGET_AUDIENCES = [
+  'General Public',
+  'B2B Enterprise',
+  'Retail Investors',
+  'High Net Worth Individuals',
+  'SME Business Owners',
+  'Financial Advisors',
+  'Young Professionals',
+  'Existing Customers',
+];
+
+const DEMO_SAMPLE = {
+  title: 'Q4 Investment Campaign - Digital Newsletter',
+  channel: 'Email Marketing',
+  target_audience: 'Retail Investors',
+  original_body: `Introducing FinNova's Revolutionary Investment Platform — Guaranteed Wealth Ahead!
+
+Dear Valued Client,
+
+Are you tired of mediocre returns? FinNova's AI-powered portfolio management system guarantees 40% annual returns with zero risk. Our revolutionary technology has never failed a single client!
+
+Special Limited Offer: Invest ₹1 lakh today and earn ₹2 lakh within 6 months — a 100% return! This offer is only for the first 500 premium members.
+
+Our exclusive SmartGrowth Fund has outperformed every competitor in the market for 15 consecutive years. No other fintech in India can match our track record.
+
+Act now! This guaranteed opportunity closes at midnight. Miss it and lose forever!
+
+Sign up at finnova.com/invest. No terms, no conditions, just pure profit!
+
+FinNova Financial Technologies — Where Every Rupee Grows!`,
+};
+
+const GUIDELINES = [
+  {
+    icon: <Info className="h-4 w-4 text-indigo-500 flex-shrink-0 mt-0.5" />,
+    text: 'Use only approved FinNova brand terminology and registered product names.',
+  },
+  {
+    icon: <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />,
+    text: 'Avoid banned financial claims — no guaranteed returns or risk-free language.',
+  },
+  {
+    icon: <Lightbulb className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />,
+    text: 'Include all required regulatory disclaimers for the selected channel.',
+  },
+  {
+    icon: <Info className="h-4 w-4 text-indigo-500 flex-shrink-0 mt-0.5" />,
+    text: 'Match tone and vocabulary to the intended target audience.',
+  },
+  {
+    icon: <Lightbulb className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />,
+    text: 'Double-check all statistics and data points are sourced and accurate.',
+  },
+  {
+    icon: <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />,
+    text: 'Superlatives and comparative claims require supporting evidence.',
+  },
+  {
+    icon: <Info className="h-4 w-4 text-indigo-500 flex-shrink-0 mt-0.5" />,
+    text: 'High-risk channels (advertisements, press releases) undergo mandatory legal review.',
+  },
+];
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function countWords(text: string): number {
+  return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+}
+
+function validate(data: FormData): FormErrors {
+  const errors: FormErrors = {};
+  if (!data.title.trim() || data.title.trim().length < 5) {
+    errors.title = 'Title must be at least 5 characters.';
+  }
+  if (!data.channel) {
+    errors.channel = 'Please select a content channel.';
+  }
+  if (!data.target_audience) {
+    errors.target_audience = 'Please select a target audience.';
+  }
+  if (!data.original_body.trim() || data.original_body.trim().length < 50) {
+    errors.original_body = 'Content body must be at least 50 characters.';
+  }
+  return errors;
+}
+
+// ─── Custom Select ────────────────────────────────────────────────────────────
+
+interface SelectFieldProps {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (val: string) => void;
+  options: string[];
+  placeholder: string;
+  error?: string;
+  required?: boolean;
+}
+
+function SelectField({
+  id,
+  label,
+  value,
+  onChange,
+  options,
+  placeholder,
+  error,
+  required,
+}: SelectFieldProps) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label
+        htmlFor={id}
+        className="text-sm font-medium text-slate-700 dark:text-slate-300"
+      >
+        {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </label>
+      <div className="relative">
+        <select
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`w-full appearance-none rounded-lg border px-3 py-2.5 pr-10 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
+            error
+              ? 'border-red-400 dark:border-red-500'
+              : 'border-slate-200 dark:border-slate-700'
+          }`}
+        >
+          <option value="" disabled>
+            {placeholder}
+          </option>
+          {options.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+      </div>
+      {error && (
+        <p className="flex items-center gap-1 text-xs text-red-500">
+          <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ─── Page Component ───────────────────────────────────────────────────────────
+
+export default function SubmitPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [title, setTitle] = useState('');
-  const [channel, setChannel] = useState('Social Media');
-  const [targetAudience, setTargetAudience] = useState('Retail Investors');
-  const [body, setBody] = useState('');
-  const [autoReview, setAutoReview] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { showToast } = useToast();
 
-  useEffect(() => {
-    const curUser = getCurrentUser();
-    if (!curUser) {
-      router.push('/login');
+  const [form, setForm] = useState<FormData>({
+    title: '',
+    channel: '',
+    target_audience: '',
+    original_body: '',
+    auto_review: true,
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [savingDraft, setSavingDraft] = useState(false);
+  const [sampleLoaded, setSampleLoaded] = useState(false);
+
+  // Clear per-field error on change
+  function setField<K extends keyof FormData>(key: K, value: FormData[K]) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    if (errors[key as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [key]: undefined }));
+    }
+  }
+
+  function loadSample() {
+    setForm((prev) => ({
+      ...prev,
+      title: DEMO_SAMPLE.title,
+      channel: DEMO_SAMPLE.channel,
+      target_audience: DEMO_SAMPLE.target_audience,
+      original_body: DEMO_SAMPLE.original_body,
+    }));
+    setErrors({});
+    setSampleLoaded(true);
+  }
+
+  function clearSample() {
+    setForm({
+      title: '',
+      channel: '',
+      target_audience: '',
+      original_body: '',
+      auto_review: true,
+    });
+    setErrors({});
+    setSampleLoaded(false);
+  }
+
+  async function handleSubmit(isDraft: boolean) {
+    const validationErrors = validate(form);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
-    setUser(curUser);
-  }, [router]);
 
-  const handleLoadDemoSample = () => {
-    setTitle('FinNova Wealth Launch Campaign [Sample Draft]');
-    setChannel('Social Media');
-    setTargetAudience('Retail Investors & Young Professionals');
-    setBody(FINNOVA_DEMO_SAMPLE);
-  };
+    const autoReview = isDraft ? false : form.auto_review;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!body.trim()) {
-      setError('Please provide content copy for review.');
-      return;
+    if (isDraft) {
+      setSavingDraft(true);
+    } else {
+      setSubmitting(true);
     }
 
-    setError(null);
-    setLoading(true);
     try {
-      const result = await api.submitContent({
-        title,
-        original_body: body,
-        channel,
-        target_audience: targetAudience
-      }, autoReview);
+      const result = await api.submitContent(
+        {
+          title: form.title,
+          original_body: form.original_body,
+          channel: form.channel,
+          target_audience: form.target_audience,
+        },
+        autoReview
+      );
 
-      // Redirect directly to the interactive review results page
+      showToast(isDraft ? 'Draft saved successfully.' : 'Content submitted successfully.', 'success');
       router.push(`/review/${result.id}`);
     } catch (err: any) {
-      setError(err.message || 'Failed to submit content.');
-      setLoading(false);
+      const message =
+        err?.message || (isDraft ? 'Failed to save draft.' : 'Failed to submit content.');
+      showToast(message, 'error');
+    } finally {
+      setSubmitting(false);
+      setSavingDraft(false);
     }
-  };
+  }
 
-  const wordCount = body.trim() ? body.trim().split(/\s+/).length : 0;
-  const charCount = body.length;
+  const wordCount = countWords(form.original_body);
+  const charCount = form.original_body.length;
+  const isLoading = submitting || savingDraft;
 
   return (
-    <div className="max-w-4xl mx-auto py-6 space-y-6">
-      {/* Top Breadcrumb */}
-      <div className="flex items-center justify-between">
-        <Link
-          href="/dashboard/creator"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Dashboard</span>
-        </Link>
-
-        {/* Demo Data Injector */}
-        <button
-          type="button"
-          onClick={handleLoadDemoSample}
-          className="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-950/80 border border-indigo-700/80 text-indigo-300 hover:bg-indigo-900 transition flex items-center gap-1.5 shadow-sm"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-          <span>Load FinNova Demonstration Copy</span>
-        </button>
-      </div>
-
-      <div className="border-b border-slate-800 pb-4">
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-          Submit Marketing Content
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          BrandGuard AI will inspect your copy across tone, banned terminology, factual claims, and citation grounding.
-        </p>
-      </div>
-
-      {error && (
-        <div className="p-4 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-300 text-xs flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0" />
-          <span>{error}</span>
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-1 space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Campaign Title</label>
-            <input
-              type="text"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Q2 Wealth Launch Post"
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Marketing Channel</label>
-            <select
-              value={channel}
-              onChange={(e) => setChannel(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
-            >
-              <option value="Social Media">Social Media Campaign (LinkedIn/X/IG)</option>
-              <option value="Website/Blog">Website / Official Blog</option>
-              <option value="Press Release">Regulatory Press Release</option>
-              <option value="Email Newsletter">Email Newsletter</option>
-              <option value="Ad Campaign">Digital Ad / Search Copy</option>
-            </select>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Target Audience</label>
-            <select
-              value={targetAudience}
-              onChange={(e) => setTargetAudience(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
-            >
-              <option value="Retail Investors">Retail Investors</option>
-              <option value="Young Professionals">Young Professionals &amp; Tech Workers</option>
-              <option value="High Net Worth Individuals">High Net Worth Individuals (HNIs)</option>
-              <option value="Institutional Partners">Institutional Partners</option>
-              <option value="General Public">General Public</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Content Body */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-300">
-              Content Copy / Draft Body
-            </label>
-            <div className="text-[11px] text-slate-500 font-mono">
-              {wordCount} words • {charCount} characters
+    <AppLayout
+      pageTitle="Create Submission"
+      breadcrumbs={[
+        { label: 'Dashboard', href: '/dashboard/creator' },
+        { label: 'Create Submission' },
+      ]}
+    >
+      <div className="max-w-6xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        {/* Header row */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/30">
+              <FileText className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
             </div>
-          </div>
-
-          <textarea
-            required
-            rows={8}
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            placeholder="Paste your marketing draft or promotional text here for instant AI brand compliance review..."
-            className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 font-mono leading-relaxed shadow-inner"
-          />
-        </div>
-
-        {/* AI Options */}
-        <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <Sparkles className="w-5 h-5 text-indigo-400" />
             <div>
-              <span className="text-xs font-bold text-white block">Multi-Engine AI Audit</span>
-              <span className="text-[11px] text-slate-400">
-                Instantly check against FinNova Brand Guidelines, Banned Phrases &amp; Grounding Evidence.
-              </span>
+              <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+                Submit Content for Review
+              </h1>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                Fill in the details below and run an AI compliance check.
+              </p>
             </div>
           </div>
 
-          <label className="flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              checked={autoReview}
-              onChange={(e) => setAutoReview(e.target.checked)}
-              className="w-4 h-4 text-indigo-600 bg-slate-950 border-slate-800 rounded focus:ring-indigo-500"
-            />
-            <span className="ml-2 text-xs font-semibold text-slate-300">Run Review Now</span>
-          </label>
+          {/* Load / clear sample */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {sampleLoaded ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearSample}
+                className="text-slate-500 hover:text-red-500"
+              >
+                <X className="h-4 w-4 mr-1" />
+                Clear Sample
+              </Button>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={loadSample}
+                className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
+              >
+                <Sparkles className="h-4 w-4 mr-1.5" />
+                Load FinNova Sample Content
+              </Button>
+            )}
+          </div>
         </div>
 
-        {/* Submit Button */}
-        <div className="flex items-center justify-end gap-3 pt-2">
-          <button
-            type="button"
-            onClick={() => router.push('/dashboard/creator')}
-            className="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
-          >
-            Cancel
-          </button>
+        {/* Sample loaded banner */}
+        {sampleLoaded && (
+          <div className="mb-5 flex items-start gap-2 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 px-4 py-3 text-sm text-amber-800 dark:text-amber-300">
+            <Info className="h-4 w-4 flex-shrink-0 mt-0.5" />
+            <span>
+              Sample content loaded — this content intentionally contains compliance violations
+              to showcase AI detection. Submit it to see BrandGuard AI in action.
+            </span>
+          </div>
+        )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 text-white shadow-xl shadow-indigo-600/30 hover:from-indigo-500 hover:to-purple-500 transition text-sm flex items-center gap-2 disabled:opacity-50"
-          >
-            <Send className="w-4 h-4" />
-            <span>{loading ? 'Submitting & Reviewing...' : 'Submit & Execute BrandGuard Review'}</span>
-          </button>
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* ── Left: Form ── */}
+          <div className="lg:col-span-2">
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+              <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700">
+                <h2 className="font-semibold text-slate-900 dark:text-white text-base">
+                  Submission Details
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Fields marked <span className="text-red-500">*</span> are required.
+                </p>
+              </div>
+
+              <div className="p-6 space-y-5">
+                {/* Title */}
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="title"
+                    className="text-sm font-medium text-slate-700 dark:text-slate-300"
+                  >
+                    Submission Title <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="title"
+                    type="text"
+                    value={form.title}
+                    onChange={(e) => setField('title', e.target.value)}
+                    placeholder="e.g. Q4 Investment Newsletter — October 2024"
+                    className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
+                      errors.title
+                        ? 'border-red-400 dark:border-red-500'
+                        : 'border-slate-200 dark:border-slate-700'
+                    }`}
+                  />
+                  {errors.title && (
+                    <p className="flex items-center gap-1 text-xs text-red-500">
+                      <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                      {errors.title}
+                    </p>
+                  )}
+                </div>
+
+                {/* Channel + Audience — 2-col on sm */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <SelectField
+                    id="channel"
+                    label="Content Channel"
+                    value={form.channel}
+                    onChange={(val) => setField('channel', val)}
+                    options={CHANNELS}
+                    placeholder="Select a channel…"
+                    error={errors.channel}
+                    required
+                  />
+                  <SelectField
+                    id="target_audience"
+                    label="Target Audience"
+                    value={form.target_audience}
+                    onChange={(val) => setField('target_audience', val)}
+                    options={TARGET_AUDIENCES}
+                    placeholder="Select audience…"
+                    error={errors.target_audience}
+                    required
+                  />
+                </div>
+
+                {/* Body */}
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="original_body"
+                    className="text-sm font-medium text-slate-700 dark:text-slate-300"
+                  >
+                    Content Body <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <textarea
+                      id="original_body"
+                      rows={12}
+                      value={form.original_body}
+                      onChange={(e) => setField('original_body', e.target.value)}
+                      placeholder="Paste or type your content here. The AI compliance engine will analyse it for brand, legal, and regulatory issues…"
+                      className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y transition leading-relaxed ${
+                        errors.original_body
+                          ? 'border-red-400 dark:border-red-500'
+                          : 'border-slate-200 dark:border-slate-700'
+                      }`}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      {errors.original_body && (
+                        <p className="flex items-center gap-1 text-xs text-red-500">
+                          <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                          {errors.original_body}
+                        </p>
+                      )}
+                    </div>
+                    <span className="text-xs text-slate-400 dark:text-slate-500 tabular-nums">
+                      {wordCount} words / {charCount} characters
+                    </span>
+                  </div>
+                </div>
+
+                {/* Auto Review Toggle */}
+                <div className="flex items-center justify-between rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-indigo-500" />
+                    <div>
+                      <p className="text-sm font-medium text-slate-800 dark:text-slate-200">
+                        Run AI Compliance Check automatically
+                      </p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Analyses content immediately on submission
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={form.auto_review}
+                    onClick={() => setField('auto_review', !form.auto_review)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                      form.auto_review
+                        ? 'bg-indigo-600'
+                        : 'bg-slate-300 dark:bg-slate-600'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 rounded-full bg-white shadow transform transition-transform ${
+                        form.auto_review ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                {/* Action buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Button
+                    variant="outline"
+                    className="flex-1 sm:flex-none"
+                    onClick={() => handleSubmit(true)}
+                    disabled={isLoading}
+                  >
+                    {savingDraft ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Save className="h-4 w-4 mr-2" />
+                    )}
+                    {savingDraft ? 'Saving…' : 'Save as Draft'}
+                  </Button>
+
+                  <Button
+                    variant="primary"
+                    className="flex-1 sm:flex-none sm:ml-auto"
+                    onClick={() => handleSubmit(false)}
+                    disabled={isLoading}
+                  >
+                    {submitting ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4 mr-2" />
+                    )}
+                    {submitting ? 'Submitting…' : 'Submit for Review'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Right: Guidelines panel ── */}
+          <div className="lg:col-span-1 flex flex-col gap-5">
+            {/* Submission guidelines */}
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+              <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
+                <Lightbulb className="h-4 w-4 text-amber-500" />
+                <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
+                  Submission Guidelines
+                </h3>
+              </div>
+              <ul className="p-5 space-y-3">
+                {GUIDELINES.map((g, i) => (
+                  <li key={i} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                    {g.icon}
+                    {g.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Channel risk badge */}
+            {form.channel && (
+              <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm px-5 py-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                  Selected Channel
+                </p>
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-indigo-500 flex-shrink-0" />
+                  <span className="text-sm font-medium text-slate-800 dark:text-slate-200">
+                    {form.channel}
+                  </span>
+                </div>
+                {(['Advertisement', 'Press Release'].includes(form.channel)) && (
+                  <p className="mt-2 flex items-start gap-1.5 text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-md px-3 py-2">
+                    <AlertCircle className="h-3.5 w-3.5 flex-shrink-0 mt-0.5" />
+                    This channel requires mandatory legal review before publishing.
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* AI check note */}
+            <div className="rounded-xl border border-indigo-100 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-900/20 px-5 py-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-4 w-4 text-indigo-500" />
+                <p className="text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+                  AI Compliance Engine
+                </p>
+              </div>
+              <p className="text-xs text-indigo-600 dark:text-indigo-400 leading-relaxed">
+                When enabled, the AI engine scans for banned claims, missing disclaimers,
+                tone mismatches, and regulatory red flags — typically completing in under
+                30 seconds.
+              </p>
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

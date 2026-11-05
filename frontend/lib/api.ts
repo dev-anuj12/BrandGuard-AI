@@ -170,4 +170,114 @@ export const api = {
 
   // Analytics
   getAnalytics: () => request<any>('/api/v1/analytics/overview'),
+  getUnifiedAnalytics: () => request<any>('/api/v1/analytics/unified'),
+
+  // Threat Intelligence & Digital Protection
+  getThreats: (filters?: { category?: string; risk_level?: string; status_filter?: string; search?: string }) => {
+    const params = new URLSearchParams();
+    if (filters?.category && filters.category !== 'ALL') params.append('category', filters.category);
+    if (filters?.risk_level && filters.risk_level !== 'ALL') params.append('risk_level', filters.risk_level);
+    if (filters?.status_filter && filters.status_filter !== 'ALL') params.append('status_filter', filters.status_filter);
+    if (filters?.search) params.append('search', filters.search);
+    return request<any[]>(`/api/v1/threats/?${params.toString()}`);
+  },
+
+  getThreatById: (id: number | string) => request<any>(`/api/v1/threats/${id}`),
+
+  updateThreatStatus: (id: number | string, data: { status?: string; risk_level?: string; notes?: string; assigned_to_id?: number }) =>
+    request<any>(`/api/v1/threats/${id}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+
+  createThreat: (data: any) =>
+    request<any>('/api/v1/threats/', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  // Digital Protection - Website & Lookalike Domains
+  scanDomain: (url: string, autoCreateThreat: boolean = true) =>
+    request<any>('/api/v1/protection/domains/scan', {
+      method: 'POST',
+      body: JSON.stringify({ url, auto_create_threat: autoCreateThreat }),
+    }),
+
+  getDomainScanHistory: (limit: number = 50, skip: number = 0) =>
+    request<any[]>(`/api/v1/protection/domains/history?limit=${limit}&skip=${skip}`),
+
+  getDomainScanStats: () =>
+    request<any>('/api/v1/protection/domains/stats'),
+
+  getDomainScanDetail: (id: number) =>
+    request<any>(`/api/v1/protection/domains/${id}`),
+
+  // Digital Protection - Social Media Impersonation
+  scanSocialProfile: (data: {
+    platform: string;
+    handle: string;
+    display_name?: string;
+    bio_text?: string;
+    followers_count?: number;
+    following_count?: number;
+    is_verified?: boolean;
+    auto_create_threat?: boolean;
+  }) =>
+    request<any>('/api/v1/protection/social/scan', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  getSocialThreats: (status?: string, limit: number = 50) => {
+    const q = status ? `?status_filter=${status}&limit=${limit}` : `?limit=${limit}`;
+    return request<any[]>(`/api/v1/protection/social/threats${q}`);
+  },
+
+  getSocialStats: () =>
+    request<any>('/api/v1/protection/social/stats'),
+
+  // Digital Protection - Counterfeit & Brand Assets
+  scanProductListing: (data: {
+    marketplace: string;
+    listing_title: string;
+    listing_url: string;
+    seller_name: string;
+    listed_price: number;
+    sku_or_product_id?: string;
+    description?: string;
+    auto_create_threat?: boolean;
+  }) =>
+    request<any>('/api/v1/protection/products/scan', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  scanLogoMisuse: (data: {
+    partner_name: string;
+    host_url: string;
+    asset_name: string;
+    has_written_authorization?: boolean;
+    is_aspect_ratio_altered?: boolean;
+    is_color_palette_modified?: boolean;
+    missing_trademark_symbol?: boolean;
+    placed_on_unauthorized_collateral?: boolean;
+    auto_create_threat?: boolean;
+  }) =>
+    request<any>('/api/v1/protection/products/logo/scan', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  getProductCatalog: () =>
+    request<any[]>('/api/v1/protection/products/catalog'),
+
+  getBrandAssetCatalog: () =>
+    request<any[]>('/api/v1/protection/products/assets'),
+
+  getCounterfeitThreats: (limit: number = 50) =>
+    request<any[]>(`/api/v1/protection/products/threats?limit=${limit}`),
+
+  getCounterfeitStats: () =>
+    request<any>('/api/v1/protection/products/stats'),
 };
+

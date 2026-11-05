@@ -23,3 +23,4 @@ class User(Base):
     approvals = relationship("Approval", back_populates="manager")
     comments = relationship("Comment", back_populates="author")
     audit_logs = relationship("AuditLog", back_populates="user")
+

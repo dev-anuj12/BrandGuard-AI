@@ -155,3 +155,4 @@ def handle_suggestion_action(
     db.commit()
     db.refresh(sugg)
     return sugg
+

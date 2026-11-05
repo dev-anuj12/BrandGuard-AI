@@ -74,3 +74,4 @@ class AIReviewPipeline:
             "findings": merged_findings,
             "citation_metrics": citation_metrics
         }
+

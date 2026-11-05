@@ -111,3 +111,4 @@ class ApprovedTerminologyOut(ApprovedTerminologyBase):
 
     class Config:
         from_attributes = True
+

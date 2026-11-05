@@ -45,3 +45,4 @@ class Comment(Base):
     # Relationships
     content = relationship("Content", back_populates="comments")
     author = relationship("User", back_populates="comments")
+
