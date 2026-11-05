@@ -38,3 +38,4 @@ databases:
   - name: brandguard-db
     plan: free
     region: oregon
+
