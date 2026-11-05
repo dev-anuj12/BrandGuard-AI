@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: brandguard_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: brandguard
+      POSTGRES_PASSWORD: brandguard_password
+      POSTGRES_DB: brandguard_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: brandguard_backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://brandguard:brandguard_password@db:5432/brandguard_db
+      SECRET_KEY: brandguard-super-secret-jwt-key-2026-codenexus
+      AI_PROVIDER: rule_fallback
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: brandguard_frontend
+    restart: always
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

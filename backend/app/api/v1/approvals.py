@@ -1,0 +1,195 @@
+from datetime import datetime, timezone
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from app.database.session import get_db
+from app.models.content import Content
+from app.models.workflow import Approval, ReviewerAssignment, Comment
+from app.models.enums import ContentStatus, UserRole, ApprovalAction
+from app.schemas.workflow import (
+    ApprovalDecision, ApprovalOut,
+    ReviewerVerificationDecision, ReviewerAssignmentOut,
+    CommentCreate, CommentOut, AuditLogOut
+)
+from app.models.user import User
+from app.models.audit import AuditLog
+from app.api.deps import get_current_user, require_roles
+
+router = APIRouter(prefix="/approvals", tags=["Human Approval Workflow"])
+
+# 1. Reviewer Verification (Reviewer Role)
+@router.post("/verify/{content_id}", response_model=ContentStatus)
+def verify_content(
+    content_id: int,
+    decision: ReviewerVerificationDecision,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_roles([UserRole.REVIEWER, UserRole.ADMIN]))
+):
+    content = db.query(Content).filter(Content.id == content_id).first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    prev_status = content.status.value
+
+    if decision.action == "verify":
+        content.status = ContentStatus.PENDING_MANAGER_APPROVAL
+        audit_action = "REVIEWER_VERIFIED"
+        details = f"Reviewer {current_user.full_name} verified content. Ready for manager sign-off. Notes: {decision.comments or 'None'}"
+    elif decision.action == "request_changes":
+        content.status = ContentStatus.CHANGES_REQUIRED
+        audit_action = "REVIEWER_CHANGES_REQUESTED"
+        details = f"Reviewer {current_user.full_name} requested corrections. Notes: {decision.comments or 'None'}"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid action. Use 'verify' or 'request_changes'.")
+
+    # Record assignment completion
+    assignment = db.query(ReviewerAssignment).filter(
+        ReviewerAssignment.content_id == content_id,
+        ReviewerAssignment.reviewer_id == current_user.id
+    ).first()
+    if not assignment:
+        assignment = ReviewerAssignment(
+            content_id=content_id,
+            reviewer_id=current_user.id,
+            status=decision.action.capitalize(),
+            completed_at=datetime.now(timezone.utc)
+        )
+        db.add(assignment)
+    else:
+        assignment.status = decision.action.capitalize()
+        assignment.completed_at = datetime.now(timezone.utc)
+
+    # Add comment if provided
+    if decision.comments:
+        c_obj = Comment(
+            content_id=content_id,
+            user_id=current_user.id,
+            comment_text=f"[Verification Note] {decision.comments}"
+        )
+        db.add(c_obj)
+
+    # Record Audit
+    audit = AuditLog(
+        user_id=current_user.id,
+        action=audit_action,
+        entity_type="Content",
+        entity_id=content.id,
+        previous_state={"status": prev_status},
+        new_state={"status": content.status.value},
+        details=details
+    )
+    db.add(audit)
+    db.commit()
+
+    return content.status
+
+# 2. Manager Final Approval (Manager Role)
+@router.post("/decision/{content_id}", response_model=ApprovalOut)
+def manager_decision(
+    content_id: int,
+    decision: ApprovalDecision,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN]))
+):
+    content = db.query(Content).filter(Content.id == content_id).first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    prev_status = content.status.value
+
+    if decision.action == ApprovalAction.APPROVED:
+        content.status = ContentStatus.APPROVED
+        audit_action = "MANAGER_APPROVED"
+    elif decision.action == ApprovalAction.REJECTED:
+        content.status = ContentStatus.REJECTED
+        audit_action = "MANAGER_REJECTED"
+    else:
+        content.status = ContentStatus.CHANGES_REQUIRED
+        audit_action = "MANAGER_REQUESTED_CHANGES"
+
+    approval = Approval(
+        content_id=content_id,
+        manager_id=current_user.id,
+        action=decision.action,
+        comments=decision.comments
+    )
+    db.add(approval)
+
+    if decision.comments:
+        c_obj = Comment(
+            content_id=content_id,
+            user_id=current_user.id,
+            comment_text=f"[Manager Decision: {decision.action.value}] {decision.comments}"
+        )
+        db.add(c_obj)
+
+    audit = AuditLog(
+        user_id=current_user.id,
+        action=audit_action,
+        entity_type="Content",
+        entity_id=content.id,
+        previous_state={"status": prev_status},
+        new_state={"status": content.status.value},
+        details=f"Manager {current_user.full_name} set status to {decision.action.value}. Note: {decision.comments or 'None'}"
+    )
+    db.add(audit)
+    db.commit()
+    db.refresh(approval)
+
+    app_out = ApprovalOut.model_validate(approval)
+    app_out.manager_name = current_user.full_name
+    return app_out
+
+# 3. Content Comments
+@router.get("/{content_id}/comments", response_model=List[CommentOut])
+def get_content_comments(
+    content_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    comments = db.query(Comment).filter(Comment.content_id == content_id).order_by(Comment.created_at.asc()).all()
+    out = []
+    for c in comments:
+        c_out = CommentOut.model_validate(c)
+        if c.author:
+            c_out.user_name = c.author.full_name
+            c_out.user_role = c.author.role.value
+        out.append(c_out)
+    return out
+
+@router.post("/{content_id}/comments", response_model=CommentOut)
+def add_comment(
+    content_id: int,
+    comment_in: CommentCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    comment = Comment(
+        content_id=content_id,
+        user_id=current_user.id,
+        comment_text=comment_in.comment_text
+    )
+    db.add(comment)
+    db.commit()
+    db.refresh(comment)
+
+    c_out = CommentOut.model_validate(comment)
+    c_out.user_name = current_user.full_name
+    c_out.user_role = current_user.role.value
+    return c_out
+
+# 4. Audit Logs (Admin & Manager)
+@router.get("/audit-logs", response_model=List[AuditLogOut])
+def get_audit_logs(
+    limit: int = 50,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_roles([UserRole.ADMIN, UserRole.MANAGER]))
+):
+    logs = db.query(AuditLog).order_by(AuditLog.created_at.desc()).limit(limit).all()
+    results = []
+    for l in logs:
+        l_out = AuditLogOut.model_validate(l)
+        if l.user:
+            l_out.user_email = l.user.email
+        results.append(l_out)
+    return results
