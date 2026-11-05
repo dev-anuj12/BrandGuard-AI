@@ -410,27 +410,29 @@ export default function SocialProtectionPage() {
               </button>
             </div>
 
-            {/* Presets Row */}
-            <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
-              <span className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 block">
-                Quick Demonstration Scenarios:
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {PRESET_PROFILES.map((p, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => applyPreset(p)}
-                    className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition-colors"
-                  >
-                    <span className="font-medium text-slate-800 dark:text-slate-200">{p.name}</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 font-mono text-slate-600 dark:text-slate-400">
-                      {p.tag}
-                    </span>
-                  </button>
-                ))}
+            {/* Dev Presets Row */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 block">
+                  Quick Test Targets (Dev Only):
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {PRESET_PROFILES.map((p, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => applyPreset(p)}
+                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition-colors"
+                    >
+                      <span className="font-medium text-slate-800 dark:text-slate-200">{p.name}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 font-mono text-slate-600 dark:text-slate-400">
+                        {p.tag}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 

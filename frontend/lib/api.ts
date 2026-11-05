@@ -1,6 +1,9 @@
 function getApiBase(): string {
   let base = process.env.NEXT_PUBLIC_API_URL;
   if (!base) {
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      return 'https://brandguard-backend.onrender.com';
+    }
     return 'http://localhost:8000';
   }
   // Strip trailing slashes
@@ -56,7 +59,7 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
   try {
     response = await fetch(url, { ...options, headers });
   } catch (err: any) {
-    throw new Error(`Unable to reach backend API at ${base}. Please ensure backend is running and NEXT_PUBLIC_API_URL is configured.`);
+    throw new Error(`Unable to reach backend API at ${base}. If hosted on a cloud tier (e.g., Render), the service may take 30-60 seconds to wake up from cold start. Please retry shortly.`);
   }
 
   if (!response.ok) {
@@ -66,6 +69,9 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
       errorDetail = errJson.detail || errJson.message || errorDetail;
     } catch {
       // fallback text
+    }
+    if (response.status === 404 && (errorDetail === 'Not Found' || errorDetail.includes('404'))) {
+      errorDetail = `API route '${cleanEndpoint}' returned 404 from ${base}. Please verify that the backend is running the latest deployment and API version.`;
     }
     throw new Error(errorDetail);
   }

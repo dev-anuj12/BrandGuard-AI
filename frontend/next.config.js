@@ -2,6 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false, // Disables x-powered-by header to prevent fingerprinting
+  async rewrites() {
+    const backendUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://brandguard-backend.onrender.com').replace(/\/+$/, '');
+    return [
+      {
+        source: '/api/v1/:path*',
+        destination: `${backendUrl}/api/v1/:path*`,
+      },
+    ];
+  },
   async headers() {
     return [
       {

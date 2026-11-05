@@ -172,7 +172,7 @@ Execution command: `python scripts/verify_e2e_platform.py`
 ======================================================================
 [PASS] Authenticated ADMIN    [admin@finnova.com] -> JWT received (Lakshita Bisen (Admin))
 [PASS] Authenticated MANAGER  [manager@finnova.com] -> JWT received (Elena Vance (Compliance Manager))
-[PASS] Authenticated REVIEWER [reviewer@finnova.com] -> JWT received (Anuj Vishwakarma (Reviewer))
+[PASS] Authenticated REVIEWER [reviewer@finnova.com] -> JWT received (Sam Taylor (Reviewer))
 [PASS] Authenticated CREATOR  [creator@finnova.com] -> JWT received (Nakshatra Titarmare (Creator))
 
 ======================================================================

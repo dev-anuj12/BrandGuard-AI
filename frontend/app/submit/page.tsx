@@ -322,26 +322,28 @@ export default function SubmitPage() {
 
           {/* Load / clear sample */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            {sampleLoaded ? (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearSample}
-                className="text-slate-500 hover:text-red-500"
-              >
-                <X className="h-4 w-4 mr-1" />
-                Clear Sample
-              </Button>
-            ) : (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={loadSample}
-                className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
-              >
-                <Sparkles className="h-4 w-4 mr-1.5" />
-                Load FinNova Sample Content
-              </Button>
+            {process.env.NODE_ENV === 'development' && (
+              sampleLoaded ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearSample}
+                  className="text-slate-500 hover:text-red-500"
+                >
+                  <X className="h-4 w-4 mr-1" />
+                  Clear Sample
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={loadSample}
+                  className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
+                >
+                  <Sparkles className="h-4 w-4 mr-1.5" />
+                  Load Sample Copy (Dev Only)
+                </Button>
+              )
             )}
           </div>
         </div>

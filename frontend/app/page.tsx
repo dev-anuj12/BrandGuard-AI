@@ -133,14 +133,6 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        {/* Enterprise Demonstration Scenario Notice */}
-        <div className="mt-6 inline-flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 px-3.5 py-1.5 rounded-xl">
-          <Building className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-          <span>Active Enterprise Context:</span>
-          <span className="font-semibold text-slate-800 dark:text-slate-200">FinNova Financial Technologies</span>
-          <span className="text-slate-400 dark:text-slate-500">(Sample Brand Guidelines)</span>
-        </div>
-
         {/* 4. Product Dashboard Preview */}
         <div className="mt-14 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-4 shadow-card text-left backdrop-blur-xl">
           <div className="rounded-xl border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#070A10] p-6 space-y-4">

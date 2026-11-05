@@ -49,28 +49,28 @@ def init_db(db: Session = None) -> None:
         users = [
             User(
                 email="admin@finnova.com",
-                full_name="Lakshita Bisen (Admin)",
+                full_name="Alex Morgan (Admin)",
                 hashed_password=get_password_hash("Admin@123"),
                 role=UserRole.ADMIN,
                 is_active=True
             ),
             User(
                 email="creator@finnova.com",
-                full_name="Nakshatra Titarmare (Creator)",
+                full_name="Jordan Lee (Creator)",
                 hashed_password=get_password_hash("Creator@123"),
                 role=UserRole.CREATOR,
                 is_active=True
             ),
             User(
                 email="reviewer@finnova.com",
-                full_name="Anuj Vishwakarma (Reviewer)",
+                full_name="Sam Taylor (Reviewer)",
                 hashed_password=get_password_hash("Reviewer@123"),
                 role=UserRole.REVIEWER,
                 is_active=True
             ),
             User(
                 email="manager@finnova.com",
-                full_name="Elena Vance (Compliance Manager)",
+                full_name="Morgan Vance (Compliance Manager)",
                 hashed_password=get_password_hash("Manager@123"),
                 role=UserRole.MANAGER,
                 is_active=True

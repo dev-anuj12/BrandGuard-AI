@@ -90,30 +90,20 @@ export default function ContactPage() {
           ))}
         </div>
 
-        {/* Demo credentials quick-access */}
-        <div className="p-6 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/50">
-          <h2 className="font-bold text-slate-900 dark:text-white text-sm mb-3 flex items-center gap-2">
+        {/* Enterprise Support & Security Commitment */}
+        <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+          <h2 className="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
-            Quick Access — FinNova Demo Credentials
+            Enterprise Support &amp; Response Times
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            {[
-              { role: 'Admin', email: 'admin@finnova.com', password: 'Admin@123' },
-              { role: 'Manager', email: 'manager@finnova.com', password: 'Manager@123' },
-              { role: 'Reviewer', email: 'reviewer@finnova.com', password: 'Reviewer@123' },
-              { role: 'Creator', email: 'creator@finnova.com', password: 'Creator@123' },
-            ].map(({ role, email, password }) => (
-              <div key={role} className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <p className="font-semibold text-indigo-600 dark:text-indigo-400 mb-1">{role}</p>
-                <p className="font-mono text-slate-700 dark:text-slate-300 text-[11px] break-all">{email}</p>
-                <p className="font-mono text-slate-500 dark:text-slate-500 text-[11px]">{password}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-500 mt-3">
-            These credentials are for demonstration purposes only.{' '}
-            <Link href="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline">Sign in →</Link>
+          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+            BrandGuard AI is committed to high-availability compliance operations. Critical platform alerts and urgent security disclosures receive priority triage within 2 hours. General enterprise onboarding and operational support inquiries are responded to within one business day.
           </p>
+          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500">
+            <span>Operating Hours: 24/7 Monitoring</span>
+            <span>·</span>
+            <span>Security SLA: Priority Critical Triage</span>
+          </div>
         </div>
       </main>
 

@@ -57,12 +57,14 @@ export default function Navbar() {
               </div>
             </Link>
 
-            {/* FinNova Pill */}
-            <div className="hidden md:flex items-center space-x-1.5 ml-4 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] text-slate-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Workspace:</span>
-              <span className="font-semibold text-slate-100">FinNova Technologies</span>
-            </div>
+            {/* Workspace pill when user is authenticated */}
+            {mounted && user?.organization && (
+              <div className="hidden md:flex items-center space-x-1.5 ml-4 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] text-slate-300">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Workspace:</span>
+                <span className="font-semibold text-slate-100">{user.organization}</span>
+              </div>
+            )}
           </div>
 
           {/* Navigation Links */}

@@ -111,66 +111,60 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Enterprise Demonstration Presets */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-              <Building className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span>FinNova Demonstration Profiles</span>
-            </span>
-            <span className="text-[10px] text-slate-400 font-mono">1-Click Sign In</span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <button
-              type="button"
-              onClick={() => handleRolePreset('CREATOR')}
-              disabled={loading}
-              className="p-2.5 rounded-xl text-left bg-slate-50 hover:bg-indigo-50/60 dark:bg-slate-950 dark:hover:bg-indigo-950/40 border border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-800 transition group"
-            >
-              <span className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 block">
-                Creator
+        {/* Developer Seed Shortcuts (Development Environment Only) */}
+        {process.env.NODE_ENV === 'development' && (
+          <details className="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-xs group">
+            <summary className="cursor-pointer font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 select-none flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <Building className="w-3.5 h-3.5 text-indigo-500" />
+                <span>Developer Seed Credentials</span>
               </span>
-              <span className="text-[10px] text-slate-500 block truncate">Drafts &amp; Revisions</span>
-            </button>
+              <span className="text-[10px] text-slate-400 font-mono">Dev Only</span>
+            </summary>
 
-            <button
-              type="button"
-              onClick={() => handleRolePreset('REVIEWER')}
-              disabled={loading}
-              className="p-2.5 rounded-xl text-left bg-slate-50 hover:bg-blue-50/60 dark:bg-slate-950 dark:hover:bg-blue-950/40 border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-800 transition group"
-            >
-              <span className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 block">
-                Reviewer
-              </span>
-              <span className="text-[10px] text-slate-500 block truncate">Audits &amp; Citations</span>
-            </button>
+            <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs">
+              <button
+                type="button"
+                onClick={() => handleRolePreset('CREATOR')}
+                disabled={loading}
+                className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 transition"
+              >
+                <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Creator</span>
+                <span className="text-[10px] text-slate-400 font-mono block">creator@finnova.com</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={() => handleRolePreset('MANAGER')}
-              disabled={loading}
-              className="p-2.5 rounded-xl text-left bg-slate-50 hover:bg-purple-50/60 dark:bg-slate-950 dark:hover:bg-purple-950/40 border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-800 transition group"
-            >
-              <span className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 block">
-                Manager
-              </span>
-              <span className="text-[10px] text-slate-500 block truncate">Executive Sign-Off</span>
-            </button>
+              <button
+                type="button"
+                onClick={() => handleRolePreset('REVIEWER')}
+                disabled={loading}
+                className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-400 transition"
+              >
+                <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Reviewer</span>
+                <span className="text-[10px] text-slate-400 font-mono block">reviewer@finnova.com</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={() => handleRolePreset('ADMIN')}
-              disabled={loading}
-              className="p-2.5 rounded-xl text-left bg-slate-50 hover:bg-emerald-50/60 dark:bg-slate-950 dark:hover:bg-emerald-950/40 border border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-800 transition group"
-            >
-              <span className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 block">
-                Admin
-              </span>
-              <span className="text-[10px] text-slate-500 block truncate">Policies &amp; Users</span>
-            </button>
-          </div>
-        </div>
+              <button
+                type="button"
+                onClick={() => handleRolePreset('MANAGER')}
+                disabled={loading}
+                className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-400 transition"
+              >
+                <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Manager</span>
+                <span className="text-[10px] text-slate-400 font-mono block">manager@finnova.com</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRolePreset('ADMIN')}
+                disabled={loading}
+                className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-emerald-400 transition"
+              >
+                <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Admin</span>
+                <span className="text-[10px] text-slate-400 font-mono block">admin@finnova.com</span>
+              </button>
+            </div>
+          </details>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card space-y-4">
