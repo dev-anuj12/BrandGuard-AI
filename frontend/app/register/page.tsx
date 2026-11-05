@@ -71,6 +71,7 @@ export default function RegisterPage() {
           onClick={toggleTheme}
           className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 transition"
           title="Toggle theme"
+          aria-label="Toggle theme"
           type="button"
         >
           {resolvedTheme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
@@ -96,12 +97,13 @@ export default function RegisterPage() {
           )}
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label htmlFor="reg-fullname" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
               Full Name
             </label>
             <div className="relative">
               <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
+                id="reg-fullname"
                 type="text"
                 required
                 value={fullName}
@@ -113,12 +115,13 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label htmlFor="reg-email" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
               Work Email
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
+                id="reg-email"
                 type="email"
                 required
                 value={email}
@@ -130,12 +133,13 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label htmlFor="reg-password" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
               Password
             </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
+                id="reg-password"
                 type="password"
                 required
                 value={password}
@@ -147,10 +151,11 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label htmlFor="reg-role" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
               Assigned Governance Role
             </label>
             <select
+              id="reg-role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
               className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"

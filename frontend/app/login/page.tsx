@@ -93,6 +93,7 @@ export default function LoginPage() {
           onClick={toggleTheme}
           className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 transition"
           title="Toggle theme"
+          aria-label="Toggle theme"
           type="button"
         >
           {resolvedTheme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
@@ -181,12 +182,13 @@ export default function LoginPage() {
           )}
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label htmlFor="work-email" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
               Work Email
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
+                id="work-email"
                 type="email"
                 required
                 value={email}
@@ -199,13 +201,14 @@ export default function LoginPage() {
 
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+              <label htmlFor="user-password" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                 Password
               </label>
             </div>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
+                id="user-password"
                 type="password"
                 required
                 value={password}

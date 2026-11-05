@@ -535,6 +535,7 @@ export default function DomainProtectionPage() {
               onClick={loadData}
               className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 transition-colors"
               title="Refresh History"
+              aria-label="Refresh domain inspection history"
             >
               <RefreshCw className="w-4 h-4" />
             </button>

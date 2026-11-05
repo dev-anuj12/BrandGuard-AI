@@ -163,12 +163,14 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
               onClick={() => setCollapsed(!collapsed)}
               className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              aria-label={collapsed ? 'Expand sidebar navigation' : 'Collapse sidebar navigation'}
             >
               {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
             </button>
             <button
               onClick={() => setMobileOpen(false)}
               className="md:hidden p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              aria-label="Close mobile navigation"
             >
               <X className="w-5 h-5" />
             </button>
@@ -228,6 +230,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
               collapsed ? 'justify-center px-2' : ''
             }`}
             title={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Dark'} Mode`}
+            aria-label={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
             {resolvedTheme === 'dark' ? (
               <Sun className="w-4 h-4 text-amber-400 shrink-0" />
@@ -261,6 +264,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
                 onClick={handleLogout}
                 className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition"
                 title="Sign out"
+                aria-label="Sign out of account"
               >
                 <LogOut className="w-3.5 h-3.5" />
               </button>
@@ -336,6 +340,8 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                aria-label="User profile options"
+                aria-expanded={profileOpen}
               >
                 <div className="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">
                   {user.full_name?.charAt(0) || 'U'}
@@ -376,7 +382,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
         </header>
 
         {/* Content Body */}
-        <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+        <main id="main-content" className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
           {children}
         </main>
       </div>

@@ -38,6 +38,7 @@ export default function LandingPage() {
               onClick={toggleTheme}
               className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               title="Toggle theme"
+              aria-label="Toggle between dark and light theme"
             >
               {resolvedTheme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
             </button>
@@ -70,6 +71,28 @@ export default function LandingPage() {
         </div>
       </header>
 
+      {/* JSON-LD Structured Data for Search Engines */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "BrandGuard AI",
+            "operatingSystem": "All",
+            "applicationCategory": "BusinessApplication",
+            "url": "https://brandguard-ai-eight.vercel.app",
+            "description": "Enterprise AI-Powered Brand Governance & Digital Brand Protection Platform",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          })
+        }}
+      />
+
+      <main id="main-content">
       {/* 2. Hero Section */}
       <section className="relative overflow-hidden pt-16 pb-20 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/60 text-xs font-semibold text-indigo-700 dark:text-indigo-300 mb-6">
@@ -414,6 +437,7 @@ export default function LandingPage() {
           </Link>
         </div>
       </section>
+      </main>
 
       {/* 11. Professional Footer */}
       <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#070A10] py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">

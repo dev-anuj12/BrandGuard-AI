@@ -5,9 +5,11 @@ function getApiBase(): string {
   }
   // Strip trailing slashes
   base = base.replace(/\/+$/, '');
-  // Strip redundant /api/v1 suffix if user included it in their environment variable
+  // Strip redundant /api/v1 or /api suffix if user included it in their environment variable
   if (base.endsWith('/api/v1')) {
     base = base.slice(0, -'/api/v1'.length);
+  } else if (base.endsWith('/api')) {
+    base = base.slice(0, -'/api'.length);
   }
   return base;
 }

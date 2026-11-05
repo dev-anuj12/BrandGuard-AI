@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
+from starlette.responses import Response
 from app.core.config import settings
 from app.database.init_db import init_db
 from app.api.v1 import auth, users, guidelines, content, review, approvals, analytics, threats, protection_domains, protection_social, protection_products
@@ -11,6 +14,18 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc"
 )
+
+# Security Headers Middleware
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response: Response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        return response
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 # CORS Configuration: allow all cross-origin requests from Vercel, localhost, and external domains
 app.add_middleware(
@@ -49,19 +64,27 @@ def root():
         "health": "/health"
     }
 
-# Register API Routers under /api/v1
-app.include_router(auth.router, prefix=settings.API_V1_STR)
-app.include_router(users.router, prefix=settings.API_V1_STR)
-app.include_router(guidelines.router, prefix=settings.API_V1_STR)
-app.include_router(content.router, prefix=settings.API_V1_STR)
-app.include_router(review.router, prefix=settings.API_V1_STR)
-app.include_router(approvals.router, prefix=settings.API_V1_STR)
-app.include_router(analytics.router, prefix=settings.API_V1_STR)
-app.include_router(threats.router, prefix=settings.API_V1_STR)
-app.include_router(protection_domains.router, prefix=settings.API_V1_STR)
-app.include_router(protection_social.router, prefix=settings.API_V1_STR)
-app.include_router(protection_products.router, prefix=settings.API_V1_STR)
+# Register API Routers with primary prefix /api/v1, direct alias, and double-prefix resilience
+api_routers = [
+    auth.router,
+    users.router,
+    guidelines.router,
+    content.router,
+    review.router,
+    approvals.router,
+    analytics.router,
+    threats.router,
+    protection_domains.router,
+    protection_social.router,
+    protection_products.router,
+]
 
-# Register direct fallback alias for /auth (handles clients that omit /api/v1 prefix)
-app.include_router(auth.router)
+for router in api_routers:
+    # Standard prefix: /api/v1/...
+    app.include_router(router, prefix=settings.API_V1_STR)
+    # Direct fallback alias: /... (e.g. /auth/login)
+    app.include_router(router)
+    # Resilient double-prefix alias: /api/v1/api/v1/... (handles clients with duplicated prefix in env var)
+    app.include_router(router, prefix="/api/v1/api/v1")
+
 

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { LucideIcon } from 'lucide-react';
 import { Button } from './Button';
 
@@ -36,9 +37,11 @@ export function EmptyState({
       {actionLabel && (
         <div>
           {actionHref ? (
-            <Button size="sm" onClick={() => (window.location.href = actionHref)}>
-              {actionLabel}
-            </Button>
+            <Link href={actionHref}>
+              <Button size="sm">
+                {actionLabel}
+              </Button>
+            </Link>
           ) : (
             <Button size="sm" onClick={onAction}>
               {actionLabel}

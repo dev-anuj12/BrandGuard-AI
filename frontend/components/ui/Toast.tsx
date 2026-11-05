@@ -57,7 +57,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={{ toast, addToast: toast, showToast, success, error, warning, info }}>
       {children}
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+      <div
+        className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         {toasts.map((t) => {
           let Icon = Info;
           let borderClass = 'border-slate-200 dark:border-slate-800';

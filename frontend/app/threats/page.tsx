@@ -208,6 +208,7 @@ On behalf of FinNova Financial Technologies`;
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
+                aria-label="Search threat code, domain, handle, or title"
                 placeholder="Search threat code, domain, handle, or title..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -224,6 +225,7 @@ On behalf of FinNova Financial Technologies`;
             <div className="flex items-center gap-1.5">
               <span className="text-slate-500 font-medium text-[11px]">Category:</span>
               <select
+                aria-label="Filter threats by category"
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
                 className="px-2 py-1 text-xs rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
@@ -240,6 +242,7 @@ On behalf of FinNova Financial Technologies`;
             <div className="flex items-center gap-1.5">
               <span className="text-slate-500 font-medium text-[11px]">Risk:</span>
               <select
+                aria-label="Filter threats by risk level"
                 value={riskFilter}
                 onChange={(e) => setRiskFilter(e.target.value)}
                 className="px-2 py-1 text-xs rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
@@ -255,6 +258,7 @@ On behalf of FinNova Financial Technologies`;
             <div className="flex items-center gap-1.5">
               <span className="text-slate-500 font-medium text-[11px]">Status:</span>
               <select
+                aria-label="Filter threats by status"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
                 className="px-2 py-1 text-xs rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
