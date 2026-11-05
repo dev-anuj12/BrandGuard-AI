@@ -12,13 +12,14 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-# CORS Configuration
+# CORS Configuration: allow all cross-origin requests from Vercel, localhost, and external domains
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Startup event: Initialize database and seed demo data
@@ -60,4 +61,7 @@ app.include_router(threats.router, prefix=settings.API_V1_STR)
 app.include_router(protection_domains.router, prefix=settings.API_V1_STR)
 app.include_router(protection_social.router, prefix=settings.API_V1_STR)
 app.include_router(protection_products.router, prefix=settings.API_V1_STR)
+
+# Register direct fallback alias for /auth (handles clients that omit /api/v1 prefix)
+app.include_router(auth.router)
 

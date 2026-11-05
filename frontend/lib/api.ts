@@ -1,4 +1,16 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+function getApiBase(): string {
+  let base = process.env.NEXT_PUBLIC_API_URL;
+  if (!base) {
+    return 'http://localhost:8000';
+  }
+  // Strip trailing slashes
+  base = base.replace(/\/+$/, '');
+  // Strip redundant /api/v1 suffix if user included it in their environment variable
+  if (base.endsWith('/api/v1')) {
+    base = base.slice(0, -'/api/v1'.length);
+  }
+  return base;
+}
 
 export function getAuthToken(): string | null {
   if (typeof window === 'undefined') return null;
@@ -34,11 +46,19 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const url = `${API_BASE}${endpoint}`;
-  const response = await fetch(url, { ...options, headers });
+  const base = getApiBase();
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const url = `${base}${cleanEndpoint}`;
+
+  let response: Response;
+  try {
+    response = await fetch(url, { ...options, headers });
+  } catch (err: any) {
+    throw new Error(`Unable to reach backend API at ${base}. Please ensure backend is running and NEXT_PUBLIC_API_URL is configured.`);
+  }
 
   if (!response.ok) {
-    let errorDetail = 'API request failed';
+    let errorDetail = `API request failed (${response.status})`;
     try {
       const errJson = await response.json();
       errorDetail = errJson.detail || errJson.message || errorDetail;
