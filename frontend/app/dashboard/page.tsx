@@ -8,10 +8,7 @@ import {
   ArrowRight, RefreshCw, BarChart3, Globe, Users, ExternalLink, 
   Search, Sliders, Activity, Sparkles, Plus, Eye, CheckSquare, FileText
 } from 'lucide-react';
-import { 
-  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, 
-  PieChart, Pie, Cell, LineChart, Line, CartesianGrid 
-} from 'recharts';
+import dynamic from 'next/dynamic';
 
 import AppLayout from '../../components/AppLayout';
 import { Button } from '../../components/ui/Button';
@@ -19,6 +16,16 @@ import { CardSkeleton, TableSkeleton } from '../../components/ui/Skeleton';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ThreatRiskBadge, ThreatStatusBadge } from '../../components/Badges';
 import { api, getCurrentUser } from '../../lib/api';
+
+const DynamicComplianceTrendChart = dynamic(
+  () => import('../../components/charts/ComplianceTrendChart'),
+  { ssr: false, loading: () => <div className="h-[180px] flex items-center justify-center text-xs text-slate-400">Loading trend...</div> }
+);
+
+const DynamicThreatCategoryPieChart = dynamic(
+  () => import('../../components/charts/ThreatCategoryPieChart'),
+  { ssr: false, loading: () => <div className="h-[176px] flex items-center justify-center text-xs text-slate-400">Loading breakdown...</div> }
+);
 
 const PIE_COLORS = ['#EF4444', '#F59E0B', '#6366F1', '#8B5CF6', '#10B981'];
 
@@ -190,24 +197,7 @@ export default function UnifiedDashboardPage() {
 
             {/* Governance Velocity Chart */}
             <div className="h-44">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={trendData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
-                  <XAxis dataKey="timestamp" tick={{ fontSize: 10, fill: '#888888' }} />
-                  <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: '#888888' }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '11px', color: '#fff' }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="score" 
-                    name="Compliance Score (%)" 
-                    stroke="#6366F1" 
-                    strokeWidth={2.5} 
-                    dot={{ fill: '#6366F1', r: 3.5 }} 
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <DynamicComplianceTrendChart data={trendData.map((d: any) => ({ day: d.timestamp, score: d.score }))} height={176} />
             </div>
 
             {/* Quick Actions & Status Strip */}
@@ -271,27 +261,7 @@ export default function UnifiedDashboardPage() {
             ) : (
               <div className="h-44 flex items-center justify-between">
                 <div className="w-1/2 h-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={threatCategories}
-                        dataKey="value"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={36}
-                        outerRadius={62}
-                        paddingAngle={3}
-                      >
-                        {threatCategories.map((_: any, i: number) => (
-                          <Cell key={`cell-${i}`} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '11px', color: '#fff' }}
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
+                  <DynamicThreatCategoryPieChart data={threatCategories} colors={PIE_COLORS} height={176} />
                 </div>
 
                 <div className="w-1/2 space-y-1.5 pl-2 text-xs">

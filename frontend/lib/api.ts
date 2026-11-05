@@ -26,6 +26,9 @@ export function setAuthSession(token: string, user: any) {
   if (typeof window === 'undefined') return;
   localStorage.setItem('brandguard_token', token);
   localStorage.setItem('brandguard_user', JSON.stringify(user));
+  // Sync secure session cookie for Next.js Edge Middleware route guard
+  const isSecure = window.location.protocol === 'https:' ? '; secure' : '';
+  document.cookie = `brandguard_token=${token}; path=/; max-age=86400; SameSite=Lax${isSecure}`;
 }
 
 export function getCurrentUser(): any | null {
@@ -38,6 +41,7 @@ export function clearAuthSession() {
   if (typeof window === 'undefined') return;
   localStorage.removeItem('brandguard_token');
   localStorage.removeItem('brandguard_user');
+  document.cookie = 'brandguard_token=; path=/; max-age=0; SameSite=Lax';
 }
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {

@@ -2,20 +2,31 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { 
   BarChart3, TrendingUp, CheckCircle2, AlertTriangle, ShieldCheck, 
   Clock, RefreshCw, Sparkles, PieChart as PieIcon, Activity,
   AlertOctagon, CheckSquare, Layers, Award
 } from 'lucide-react';
-import { 
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, 
-  PieChart, Pie, Cell, LineChart, Line, CartesianGrid, Legend 
-} from 'recharts';
 import AppLayout from '../../components/AppLayout';
 import { Button } from '../../components/ui/Button';
 import { CardSkeleton } from '../../components/ui/Skeleton';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { api, getCurrentUser } from '../../lib/api';
+
+// Lazy-load all recharts components to prevent SSR issues and reduce initial bundle
+const DynamicBarChart = dynamic(() => import('../../components/charts/AnalyticsBarChart'), {
+  ssr: false,
+  loading: () => <div className="h-[220px] flex items-center justify-center text-xs text-slate-400">Loading chart...</div>
+});
+const DynamicPieChart = dynamic(() => import('../../components/charts/AnalyticsPieChart'), {
+  ssr: false,
+  loading: () => <div className="h-[220px] flex items-center justify-center text-xs text-slate-400">Loading chart...</div>
+});
+const DynamicLineChart = dynamic(() => import('../../components/charts/AnalyticsLineChart'), {
+  ssr: false,
+  loading: () => <div className="h-[220px] flex items-center justify-center text-xs text-slate-400">Loading chart...</div>
+});
 
 const COLORS = ['#6366F1', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#3B82F6', '#EC4899'];
 
@@ -238,23 +249,7 @@ export default function AnalyticsDashboardPage() {
               </div>
             ) : (
               <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={violationsData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
-                    <XAxis 
-                      dataKey="category" 
-                      tick={{ fontSize: 10, fill: '#888888' }} 
-                      interval={0}
-                      angle={-20}
-                      textAnchor="end"
-                    />
-                    <YAxis tick={{ fontSize: 10, fill: '#888888' }} allowDecimals={false} />
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '11px', color: '#fff' }}
-                    />
-                    <Bar dataKey="count" fill="#6366F1" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
+                <DynamicBarChart data={violationsData.map((d: any) => ({ name: d.category, count: d.count }))} dataKey="count" color="#6366F1" height={256} />
               </div>
             )}
           </div>
@@ -279,28 +274,7 @@ export default function AnalyticsDashboardPage() {
               </div>
             ) : (
               <div className="h-64 flex items-center">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={statusData}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      innerRadius={45}
-                      paddingAngle={3}
-                      label={({ name, percent }: { name: string; percent: number }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                    >
-                      {statusData.map((_: any, index: number) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '11px', color: '#fff' }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+                <DynamicPieChart data={statusData} colors={COLORS} height={256} />
               </div>
             )}
           </div>
@@ -325,17 +299,7 @@ export default function AnalyticsDashboardPage() {
               </div>
             ) : (
               <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={severityData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
-                    <XAxis dataKey="severity" tick={{ fontSize: 11, fill: '#888888' }} />
-                    <YAxis tick={{ fontSize: 11, fill: '#888888' }} allowDecimals={false} />
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '11px', color: '#fff' }}
-                    />
-                    <Bar dataKey="count" fill="#F59E0B" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
+                <DynamicBarChart data={severityData.map((d: any) => ({ name: d.severity, count: d.count }))} dataKey="count" color="#F59E0B" height={256} />
               </div>
             )}
           </div>
@@ -351,24 +315,13 @@ export default function AnalyticsDashboardPage() {
             </div>
 
             <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={timelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
-                  <XAxis dataKey="timestamp" tick={{ fontSize: 11, fill: '#888888' }} />
-                  <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: '#888888' }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '11px', color: '#fff' }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="score" 
-                    name="Compliance Score (%)" 
-                    stroke="#6366F1" 
-                    strokeWidth={2.5} 
-                    dot={{ fill: '#6366F1', r: 4 }} 
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <DynamicLineChart
+                data={timelineData.map((d: any) => ({ name: d.timestamp, score: d.score }))}
+                lines={[{ dataKey: 'score', color: '#6366F1', name: 'Compliance Score (%)' }]}
+                height={256}
+                domain={[0, 100]}
+                showLegend={false}
+              />
             </div>
           </div>
         </div>

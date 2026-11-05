@@ -84,7 +84,7 @@ export default function RegisterPage() {
             Create an Enterprise Account
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Join the FinNova compliance and content governance network
+            Access your organization's compliance and brand governance workspace
           </p>
         </div>
 
@@ -126,7 +126,7 @@ export default function RegisterPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="sarah@finnova.com"
+                placeholder="sarah@company.com"
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
               />
             </div>
@@ -151,9 +151,12 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="reg-role" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-              Assigned Governance Role
-            </label>
+            <div className="flex items-center justify-between">
+              <label htmlFor="reg-role" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                Governance Role
+              </label>
+              <span className="text-[11px] text-slate-400">Self-Registration</span>
+            </div>
             <select
               id="reg-role"
               value={role}
@@ -162,9 +165,10 @@ export default function RegisterPage() {
             >
               <option value="CREATOR">Creator — Content Drafting &amp; Campaign Production</option>
               <option value="REVIEWER">Reviewer — Compliance Verification &amp; Evidence Audit</option>
-              <option value="MANAGER">Manager — Executive Approval &amp; Release Authority</option>
-              <option value="ADMIN">Admin — Brand Guidelines &amp; User Governance</option>
             </select>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+              Note: Manager and Administrator roles must be provisioned by an existing organization administrator.
+            </p>
           </div>
 
           <Button
