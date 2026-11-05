@@ -115,3 +115,4 @@ The platform is pre-seeded with 4 role-based accounts:
 | **Compliance Manager** | `manager@finnova.com` | `manager123` | Final sign-off, campaign approvals, audit trails |
 | **Brand Reviewer** | `reviewer@finnova.com` | `reviewer123` | AI finding verification, citation audits, review comments |
 | **Content Creator** | `creator@finnova.com` | `creator123` | Draft submissions, AI violation remediation, revisions |
+

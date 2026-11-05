@@ -113,3 +113,4 @@ Configured at `frontend/public/manifest.json`:
 - `display`: `standalone`
 - `theme_color`: `#4f46e5`
 - `background_color`: `#0f172a`
+

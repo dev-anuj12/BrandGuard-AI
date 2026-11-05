@@ -104,3 +104,4 @@ BrandGuard AI operates on a **Dual-Pillar Enterprise Architecture**:
 5. **Production Deployment Configurations:**
    - Created root `Dockerfile` and `render.yaml` blueprint with health check endpoint.
    - Configured security headers in `next.config.js` and FastAPI middleware.
+

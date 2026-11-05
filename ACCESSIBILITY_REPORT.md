@@ -72,3 +72,4 @@
 | Dark Theme Body Text | `#0F172A` (Slate-900) | `#F8FAFC` (Slate-50) | **16.8:1** | 4.5:1 | **PASS** |
 | Dark Theme Muted Text | `#0F172A` (Slate-900) | `#94A3B8` (Slate-400) | **5.4:1** | 4.5:1 | **PASS** |
 | Dark Theme High Risk Card | `#450A0A` (Red-950) | `#F87171` (Red-400) | **5.2:1** | 4.5:1 | **PASS** |
+

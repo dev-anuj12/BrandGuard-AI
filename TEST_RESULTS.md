@@ -144,3 +144,4 @@ backend/tests/test_threats.py::test_update_threat_status PASSED                 
 > tsc --project frontend/tsconfig.json --noEmit
 Exit Code: 0 (Zero type errors)
 ```
+

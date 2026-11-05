@@ -15,6 +15,7 @@ class Content(Base):
     target_audience = Column(String(100), default="Retail Investors")
     status = Column(SQLEnum(ContentStatus), default=ContentStatus.DRAFT, nullable=False, index=True)
     creator_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    organization = Column(String(100), default="FinNova Financial Technologies", nullable=False, index=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 

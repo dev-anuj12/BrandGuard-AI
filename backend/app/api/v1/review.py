@@ -5,9 +5,9 @@ from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.models.content import Content, ContentRevision
 from app.models.review import AIReview, Finding, Suggestion
-from app.models.enums import SuggestionStatus, ContentStatus
-from app.schemas.review import AIReviewOut, FindingOut, SuggestionAction, SuggestionOut
-from app.api.deps import get_current_user
+from app.models.enums import SuggestionStatus, ContentStatus, UserRole
+from app.schemas.review import AIReviewOut, FindingOut, SuggestionAction, SuggestionOut, FindingOverrideRequest
+from app.api.deps import get_current_user, require_roles
 from app.models.user import User
 from app.models.audit import AuditLog
 from app.ai_engine.review_pipeline import AIReviewPipeline
@@ -155,4 +155,38 @@ def handle_suggestion_action(
     db.commit()
     db.refresh(sugg)
     return sugg
+
+
+@router.post("/findings/{finding_id}/override", response_model=FindingOut)
+def human_override_finding(
+    finding_id: int,
+    override: FindingOverrideRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_roles([UserRole.REVIEWER, UserRole.MANAGER, UserRole.ADMIN]))
+):
+    """Allow authorized reviewers and managers to override an AI finding with a documented human reason."""
+    finding = db.query(Finding).filter(Finding.id == finding_id).first()
+    if not finding:
+        raise HTTPException(status_code=404, detail="Finding not found")
+
+    if not override.reason or len(override.reason.strip()) < 10:
+        raise HTTPException(
+            status_code=400,
+            detail="A meaningful override reason (minimum 10 characters) is required for audit compliance."
+        )
+
+    finding.status = "Human Override"
+    db.commit()
+
+    audit = AuditLog(
+        user_id=current_user.id,
+        action="FINDING_HUMAN_OVERRIDE",
+        entity_type="Finding",
+        entity_id=finding.id,
+        details=f"Human override by {current_user.full_name} ({current_user.role.value}). Reason: {override.reason.strip()}"
+    )
+    db.add(audit)
+    db.commit()
+    db.refresh(finding)
+    return finding
 

@@ -19,6 +19,7 @@ class ContentBase(BaseModel):
     original_body: str
     channel: str = "Website/Blog"
     target_audience: str = "Retail Investors"
+    organization: Optional[str] = None
 
 class ContentCreate(ContentBase):
     pass
@@ -39,6 +40,7 @@ class ContentOut(BaseModel):
     target_audience: str
     status: ContentStatus
     creator_id: int
+    organization: str = "FinNova Financial Technologies"
     creator_name: Optional[str] = None
     created_at: datetime
     updated_at: datetime

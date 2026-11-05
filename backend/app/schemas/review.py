@@ -7,6 +7,9 @@ class SuggestionAction(BaseModel):
     action: str  # 'accept', 'reject', 'manual'
     custom_text: Optional[str] = None
 
+class FindingOverrideRequest(BaseModel):
+    reason: str
+
 class SuggestionOut(BaseModel):
     id: int
     finding_id: int

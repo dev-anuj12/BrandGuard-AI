@@ -82,3 +82,4 @@ First Load JS shared by all routes: 87.5 kB
 3. **Asset Delivery:**
    - SVGs used for brand logos and threat icons instead of uncompressed raster PNGs.
    - PWA web manifest pre-caches essential UI icons.
+

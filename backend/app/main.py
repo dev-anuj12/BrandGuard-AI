@@ -27,10 +27,12 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
 app.add_middleware(SecurityHeadersMiddleware)
 
-# CORS Configuration: allow all cross-origin requests from Vercel, localhost, and external domains
+# CORS Configuration: environment-aware origin restriction
+_allow_all_cors = settings.ENVIRONMENT.lower() in ("development", "dev", "test")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"] if _allow_all_cors else settings.effective_cors_origins,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],

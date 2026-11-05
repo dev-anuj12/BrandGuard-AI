@@ -13,6 +13,7 @@ class BrandGuideline(Base):
     description = Column(Text, nullable=False)
     rule_type = Column(String(50), default="General") # Deterministic, AI_Analyzed, Fact_Checked
     severity = Column(SQLEnum(SeverityLevel), default=SeverityLevel.MEDIUM)
+    organization = Column(String(100), default="FinNova Financial Technologies", nullable=False, index=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))

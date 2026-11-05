@@ -1,5 +1,8 @@
+import io
+import csv
+from datetime import datetime, timezone
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import APIRouter, Depends, HTTPException, status, Query, Response
 from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.models.content import Content, ContentRevision
@@ -20,7 +23,8 @@ async def submit_content(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    # Create content record
+    # Create content record with organization isolation
+    user_org = getattr(current_user, "organization", None) or "FinNova Financial Technologies"
     initial_status = ContentStatus.SUBMITTED if auto_review else ContentStatus.DRAFT
     content = Content(
         title=content_in.title,
@@ -29,7 +33,8 @@ async def submit_content(
         channel=content_in.channel,
         target_audience=content_in.target_audience,
         status=initial_status,
-        creator_id=current_user.id
+        creator_id=current_user.id,
+        organization=user_org
     )
     db.add(content)
     db.commit()
@@ -125,6 +130,11 @@ def list_content(
 ):
     query = db.query(Content)
 
+    # Multi-tenant isolation: enforce organization boundary
+    user_org = getattr(current_user, "organization", None)
+    if user_org:
+        query = query.filter(Content.organization == user_org)
+
     # Creators only see their own content by default, unless Admin/Manager/Reviewer
     if current_user.role == UserRole.CREATOR:
         query = query.filter(Content.creator_id == current_user.id)
@@ -158,6 +168,11 @@ def get_content_by_id(
     if not c:
         raise HTTPException(status_code=404, detail="Content not found")
     
+    # Multi-tenant organization check
+    user_org = getattr(current_user, "organization", None)
+    if user_org and getattr(c, "organization", None) and c.organization != user_org:
+        raise HTTPException(status_code=403, detail="Cross-organization data access prohibited")
+
     # Creator permission check
     if current_user.role == UserRole.CREATOR and c.creator_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized to view this submission")
@@ -181,6 +196,9 @@ def get_content_revisions(
     c = db.query(Content).filter(Content.id == content_id).first()
     if not c:
         raise HTTPException(status_code=404, detail="Content not found")
+    user_org = getattr(current_user, "organization", None)
+    if user_org and getattr(c, "organization", None) and c.organization != user_org:
+        raise HTTPException(status_code=403, detail="Cross-organization data access prohibited")
     return db.query(ContentRevision).filter(ContentRevision.content_id == content_id).order_by(ContentRevision.version.desc()).all()
 
 @router.put("/{content_id}", response_model=ContentOut)
@@ -194,6 +212,10 @@ async def revise_content(
     if not c:
         raise HTTPException(status_code=404, detail="Content not found")
     
+    user_org = getattr(current_user, "organization", None)
+    if user_org and getattr(c, "organization", None) and c.organization != user_org:
+        raise HTTPException(status_code=403, detail="Cross-organization content modification prohibited")
+
     if current_user.role == UserRole.CREATOR and c.creator_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized to edit this content")
 
@@ -294,4 +316,76 @@ async def revise_content(
     c_out.latest_score = review.overall_score
     c_out.latest_review_id = review.id
     return c_out
+
+@router.get("/{content_id}/export")
+def export_content_audit_csv(
+    content_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    c = db.query(Content).filter(Content.id == content_id).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    user_org = getattr(current_user, "organization", None)
+    if user_org and getattr(c, "organization", None) and c.organization != user_org:
+        raise HTTPException(status_code=403, detail="Cross-organization data access prohibited")
+
+    if current_user.role == UserRole.CREATOR and c.creator_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to export this content")
+
+    latest_review = db.query(AIReview).filter(AIReview.content_id == c.id).order_by(AIReview.id.desc()).first()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow(["BRANDGUARD AI — ENTERPRISE CONTENT AUDIT REPORT"])
+    writer.writerow(["Generated At (UTC)", datetime.now(timezone.utc).isoformat()])
+    writer.writerow(["Exported By", f"{current_user.full_name} ({current_user.role.value})"])
+    writer.writerow(["Organization", getattr(c, "organization", "FinNova Financial Technologies")])
+    writer.writerow([])
+
+    writer.writerow(["CONTENT METADATA"])
+    writer.writerow(["Content ID", c.id])
+    writer.writerow(["Title", c.title])
+    writer.writerow(["Channel", c.channel])
+    writer.writerow(["Target Audience", c.target_audience])
+    writer.writerow(["Workflow Status", c.status.value])
+    writer.writerow(["Creator ID", c.creator_id])
+    writer.writerow(["Created At", c.created_at.isoformat() if c.created_at else ""])
+    writer.writerow(["Last Updated", c.updated_at.isoformat() if c.updated_at else ""])
+    writer.writerow(["Compliance Score", f"{latest_review.overall_score}%" if latest_review else "N/A"])
+    writer.writerow([])
+
+    writer.writerow(["AI REVIEW FINDINGS & EVIDENCE"])
+    writer.writerow(["Finding ID", "Category", "Severity", "Confidence", "Status", "Flagged Text", "Explanation", "Suggested Correction"])
+    if latest_review and latest_review.findings:
+        for f in latest_review.findings:
+            writer.writerow([
+                f.id,
+                f.category.value if hasattr(f.category, "value") else str(f.category),
+                f.severity.value if hasattr(f.severity, "value") else str(f.severity),
+                f"{round((f.confidence or 0.9) * 100)}%",
+                f.status or "Pending",
+                f.matched_text,
+                f.explanation,
+                f.suggested_correction or "None"
+            ])
+    else:
+        writer.writerow(["No findings or violations detected."])
+    writer.writerow([])
+
+    writer.writerow(["CURRENT APPROVED / REVIEWED TEXT"])
+    writer.writerow([c.current_body])
+
+    csv_data = output.getvalue()
+    filename = f"brandguard_audit_{c.id}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.csv"
+
+    return Response(
+        content=csv_data,
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"'
+        }
+    )
 

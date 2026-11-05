@@ -12,12 +12,25 @@ from app.models.guideline import (
 from app.models.content import Content, ContentRevision
 from app.models.review import AIReview, Finding, Suggestion
 from app.models.audit import AuditLog
+from sqlalchemy import text
 from app.models.threat import ThreatItem, ThreatEvidence, DomainScan, BrandAsset, BrandProduct
 from app.core.security import get_password_hash
+
+def ensure_organization_columns() -> None:
+    """Idempotently ensure organization column exists in tables for multi-tenant isolation."""
+    with engine.connect() as conn:
+        for table in ["users", "contents", "brand_guidelines", "threat_items"]:
+            try:
+                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN organization VARCHAR(100) DEFAULT 'FinNova Financial Technologies'"))
+                conn.commit()
+            except Exception:
+                # Column already present or table not yet created
+                pass
 
 def init_db(db: Session = None) -> None:
     # Create all tables
     Base.metadata.create_all(bind=engine)
+    ensure_organization_columns()
 
     close_db_at_end = False
     if db is None:

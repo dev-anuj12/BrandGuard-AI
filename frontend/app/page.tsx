@@ -447,11 +447,13 @@ export default function LandingPage() {
             <span className="text-slate-400">&copy; {new Date().getFullYear()} All rights reserved.</span>
           </div>
 
-          <div className="flex items-center space-x-6 text-slate-600 dark:text-slate-400">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-slate-600 dark:text-slate-400">
             <Link href="/login" className="hover:text-indigo-600 dark:hover:text-white transition">Sign In</Link>
             <Link href="/register" className="hover:text-indigo-600 dark:hover:text-white transition">Register</Link>
+            <Link href="/contact" className="hover:text-indigo-600 dark:hover:text-white transition">Contact</Link>
+            <Link href="/privacy" className="hover:text-indigo-600 dark:hover:text-white transition">Privacy</Link>
+            <Link href="/terms" className="hover:text-indigo-600 dark:hover:text-white transition">Terms</Link>
             <a href="#features" className="hover:text-indigo-600 dark:hover:text-white transition">Capabilities</a>
-            <a href="#workflow" className="hover:text-indigo-600 dark:hover:text-white transition">Governance</a>
           </div>
         </div>
       </footer>

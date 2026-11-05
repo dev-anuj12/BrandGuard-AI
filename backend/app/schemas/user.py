@@ -7,9 +7,11 @@ class UserBase(BaseModel):
     email: EmailStr
     full_name: str
     role: UserRole = UserRole.CREATOR
+    organization: str = "FinNova Financial Technologies"
 
 class UserCreate(UserBase):
     password: str
+    organization: Optional[str] = "FinNova Financial Technologies"
 
 class UserLogin(BaseModel):
     email: EmailStr

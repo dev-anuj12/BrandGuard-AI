@@ -20,13 +20,16 @@ class Settings(BaseSettings):
         validation_alias="DATABASE_URL"
     )
     
-    # CORS
+    # CORS — restrict to approved deployment domains; expand via ALLOWED_ORIGINS env var
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:8000",
-        "https://brandguard.vercel.app"
+        "https://brandguard-ai-eight.vercel.app",
+        "https://brandguard.vercel.app",
     ]
+    # Accept comma-separated extra origins from environment (e.g. custom Vercel previews)
+    ALLOWED_ORIGINS_EXTRA: Optional[str] = Field(default=None, validation_alias="ALLOWED_ORIGINS")
     
     # AI / LLM Configuration
     OPENAI_API_KEY: Optional[str] = Field(default=None, validation_alias="OPENAI_API_KEY")
@@ -35,6 +38,14 @@ class Settings(BaseSettings):
     
     # Demonstration Scenario Company Info
     DEMO_COMPANY_NAME: str = "FinNova Financial Technologies"
+    
+    @property
+    def effective_cors_origins(self) -> List[str]:
+        origins = list(self.BACKEND_CORS_ORIGINS)
+        if self.ALLOWED_ORIGINS_EXTRA:
+            extras = [o.strip() for o in self.ALLOWED_ORIGINS_EXTRA.split(",") if o.strip()]
+            origins.extend(extras)
+        return origins
     
     class Config:
         case_sensitive = True

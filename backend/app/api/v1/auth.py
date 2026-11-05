@@ -6,6 +6,7 @@ from app.database.session import get_db
 from app.core.security import verify_password, get_password_hash, create_access_token
 from app.core.config import settings
 from app.models.user import User
+from app.models.enums import UserRole
 from app.models.audit import AuditLog
 from app.schemas.user import UserCreate, UserLogin, UserOut, Token
 from app.api.deps import get_current_user
@@ -22,11 +23,22 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
             detail="A user with this email address already exists."
         )
 
+    # SEC-01: Prevent unauthorized privilege escalation during public registration
+    if user_in.role in [UserRole.ADMIN, UserRole.MANAGER]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Self-assignment of administrative roles (Admin, Manager) is prohibited. An existing administrator must provision privileged roles."
+        )
+
+    assigned_role = user_in.role or UserRole.CREATOR
+    org_name = user_in.organization.strip() if user_in.organization and user_in.organization.strip() else "FinNova Financial Technologies"
+
     user = User(
         email=user_in.email,
         full_name=user_in.full_name,
         hashed_password=get_password_hash(user_in.password),
-        role=user_in.role,
+        role=assigned_role,
+        organization=org_name,
         is_active=True
     )
     db.add(user)

@@ -76,3 +76,4 @@ Enforced at the backend API layer in `backend/app/api/deps.py`:
 +------------------+-----------------------------------------------------------+
 ```
 Attempts by lower-privilege roles to invoke admin endpoints (e.g. `/api/v1/guidelines/rules` updates) return HTTP 403 Forbidden.
+

@@ -143,3 +143,4 @@ Default Next.js and FastAPI configurations do not apply security headers unless 
 
 ### Verification Proof
 Inspected response headers in live verification script: security headers present on 100% of endpoints.
+

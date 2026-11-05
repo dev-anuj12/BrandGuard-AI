@@ -13,6 +13,7 @@ class ThreatItem(Base):
     title = Column(String(255), nullable=False)
     source_url = Column(Text, nullable=False)
     target_brand = Column(String(100), default="FinNova Financial Technologies")
+    organization = Column(String(100), default="FinNova Financial Technologies", nullable=False, index=True)
     risk_level = Column(SQLEnum(ThreatRiskLevel), nullable=False, index=True)
     confidence_score = Column(Float, default=85.0)
     status = Column(SQLEnum(ThreatStatus), default=ThreatStatus.NEW, nullable=False, index=True)

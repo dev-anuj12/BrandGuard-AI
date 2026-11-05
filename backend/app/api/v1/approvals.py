@@ -29,6 +29,10 @@ def verify_content(
     if not content:
         raise HTTPException(status_code=404, detail="Content not found")
 
+    user_org = getattr(current_user, "organization", None)
+    if user_org and getattr(content, "organization", None) and content.organization != user_org:
+        raise HTTPException(status_code=403, detail="Cross-organization verification access prohibited")
+
     prev_status = content.status.value
 
     if decision.action == "verify":
@@ -94,6 +98,10 @@ def manager_decision(
     content = db.query(Content).filter(Content.id == content_id).first()
     if not content:
         raise HTTPException(status_code=404, detail="Content not found")
+
+    user_org = getattr(current_user, "organization", None)
+    if user_org and getattr(content, "organization", None) and content.organization != user_org:
+        raise HTTPException(status_code=403, detail="Cross-organization verification access prohibited")
 
     prev_status = content.status.value
 
