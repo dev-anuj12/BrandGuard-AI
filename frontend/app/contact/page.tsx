@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ShieldCheck, ArrowLeft, Mail, MessageSquare, Building2, ExternalLink } from 'lucide-react';
 import type { Metadata } from 'next';
+import ContactForm from '../../components/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Contact | BrandGuard AI',
@@ -88,6 +89,11 @@ export default function ContactPage() {
               </a>
             </div>
           ))}
+        </div>
+
+        {/* Direct Inquiries Form */}
+        <div className="mb-12">
+          <ContactForm />
         </div>
 
         {/* Enterprise Support & Security Commitment */}
