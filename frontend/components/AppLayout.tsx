@@ -32,13 +32,16 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
 
   useEffect(() => {
     setMounted(true);
+    if (pageTitle && typeof document !== 'undefined') {
+      document.title = `${pageTitle} | BrandGuard AI`;
+    }
     const cur = getCurrentUser();
     if (!cur) {
       router.push('/login');
       return;
     }
     setUser(cur);
-  }, [router]);
+  }, [router, pageTitle]);
 
   const handleLogout = () => {
     clearAuthSession();

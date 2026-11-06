@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ShieldCheck, ArrowRight, Lock, Mail, AlertCircle, Sun, Moon, Building } from 'lucide-react';
@@ -19,6 +19,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.title = 'Sign In | BrandGuard AI';
+    }
+  }, []);
 
   const performLogin = async (loginEmail: string, loginPass: string) => {
     setError(null);
