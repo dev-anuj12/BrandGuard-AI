@@ -186,7 +186,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               </div>
               <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-0.5 truncate">
-                FinNova Technologies
+                {user?.organization || 'Enterprise Workspace'}
               </p>
               <div className="flex items-center gap-1.5 mt-1">
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60">

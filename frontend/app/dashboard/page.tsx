@@ -78,9 +78,9 @@ export default function UnifiedDashboardPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/70 border border-indigo-200 dark:border-indigo-800 text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 mb-1.5">
               <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-              <span>FinNova Financial Technologies</span>
+              <span>{user?.organization || 'Enterprise Brand'}</span>
               <span>•</span>
-              <span className="text-slate-500 dark:text-slate-400">Enterprise Brand Perimeter</span>
+              <span className="text-slate-500 dark:text-slate-400">Governance Perimeter</span>
             </div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Brand Governance &amp; Threat Intelligence Command Center
@@ -319,7 +319,7 @@ export default function UnifiedDashboardPage() {
                   <ShieldAlert className="w-4 h-4 text-rose-500" />
                   Active Threat Intelligence Incidents
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Live external threats targeting FinNova assets</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Live external threats targeting enterprise assets</p>
               </div>
 
               <Link href="/threats">

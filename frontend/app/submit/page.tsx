@@ -67,27 +67,27 @@ const DEMO_SAMPLE = {
   title: 'Q4 Investment Campaign - Digital Newsletter',
   channel: 'Email Marketing',
   target_audience: 'Retail Investors',
-  original_body: `Introducing FinNova's Revolutionary Investment Platform — Guaranteed Wealth Ahead!
+  original_body: `Introducing our Revolutionary Investment Platform — Guaranteed Wealth Ahead!
 
 Dear Valued Client,
 
-Are you tired of mediocre returns? FinNova's AI-powered portfolio management system guarantees 40% annual returns with zero risk. Our revolutionary technology has never failed a single client!
+Are you tired of mediocre returns? Our AI-powered portfolio management system guarantees 40% annual returns with zero risk. Our revolutionary technology has never failed a single client!
 
-Special Limited Offer: Invest ₹1 lakh today and earn ₹2 lakh within 6 months — a 100% return! This offer is only for the first 500 premium members.
+Special Limited Offer: Invest $10,000 today and earn $20,000 within 6 months — a 100% return! This offer is only for the first 500 premium members.
 
-Our exclusive SmartGrowth Fund has outperformed every competitor in the market for 15 consecutive years. No other fintech in India can match our track record.
+Our exclusive SmartGrowth Fund has outperformed every competitor in the market for 15 consecutive years. No other provider can match our track record.
 
 Act now! This guaranteed opportunity closes at midnight. Miss it and lose forever!
 
-Sign up at finnova.com/invest. No terms, no conditions, just pure profit!
+Sign up at example-invest.com/invest. No terms, no conditions, just pure profit!
 
-FinNova Financial Technologies — Where Every Rupee Grows!`,
+BrandGuard Enterprise Solutions — Where Capital Grows!`,
 };
 
 const GUIDELINES = [
   {
     icon: <Info className="h-4 w-4 text-indigo-500 flex-shrink-0 mt-0.5" />,
-    text: 'Use only approved FinNova brand terminology and registered product names.',
+    text: 'Use only approved enterprise brand terminology and registered product names.',
   },
   {
     icon: <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />,

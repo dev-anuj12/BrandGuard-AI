@@ -54,46 +54,46 @@ interface LogoScanReport {
 
 const PRODUCT_PRESETS = [
   {
-    name: 'Counterfeit Bond on AliExpress (88% Cut)',
+    name: 'Counterfeit Bond on Marketplace (88% Cut)',
     marketplace: 'AliExpress',
-    listing_title: 'FinNova SmartGrowth Managed Portfolio 1:1 replica bond certificate',
+    listing_title: 'SmartGrowth Managed Portfolio 1:1 replica certificate',
     listing_url: 'https://aliexpress.com/item/10042',
     seller_name: 'Shenzhen Liquidity Direct',
     listed_price: 1200.0,
-    sku: 'FNV-SGP-01',
+    sku: 'BGD-SGP-01',
     description: '100% replica bond certificate OEM surplus unverified copy.',
     tag: 'Critical / Counterfeit',
   },
   {
-    name: 'Unauthorized Reseller on eBay',
+    name: 'Unauthorized Reseller on Auction Site',
     marketplace: 'eBay',
-    listing_title: 'FinNova Prime Yield Flexible Deposit Certificate - Pre-owned',
+    listing_title: 'Prime Yield Flexible Deposit Certificate - Pre-owned',
     listing_url: 'https://ebay.com/itm/3928172',
     seller_name: 'DiscountVouchersUSA',
     listed_price: 16500.0,
-    sku: 'FNV-PYD-02',
+    sku: 'BGD-PYD-02',
     description: 'Surplus wealth voucher sold without original guarantee box.',
     tag: 'High / Unauthorized Reseller',
   },
   {
     name: 'Official Authorized Platform Listing',
-    marketplace: 'FinNova Portal',
-    listing_title: 'FinNova SmartGrowth Managed Portfolio - Direct Investment',
-    listing_url: 'https://finnova.com/invest/smartgrowth',
-    seller_name: 'FinNova Web Platform',
+    marketplace: 'Official Brand Portal',
+    listing_title: 'SmartGrowth Managed Portfolio - Direct Subscription',
+    listing_url: 'https://brandguard.io/invest/smartgrowth',
+    seller_name: 'Official Brand Web Platform',
     listed_price: 10000.0,
-    sku: 'FNV-SGP-01',
-    description: 'Official direct subscription to FinNova SmartGrowth Portfolio.',
+    sku: 'BGD-SGP-01',
+    description: 'Official direct subscription to SmartGrowth Portfolio.',
     tag: 'Safe / Authorized Channel',
   },
 ];
 
 const LOGO_PRESETS = [
   {
-    name: 'Unlicensed Crypto Yield Site',
+    name: 'Unlicensed Third-Party Yield Site',
     partner_name: 'Apex Crypto Yield Portal',
     host_url: 'https://apexyields.cc/partners',
-    asset_name: 'FinNova Primary Corporate Emblem',
+    asset_name: 'Brand Primary Corporate Emblem',
     has_auth: false,
     color_mod: true,
     aspect_mod: true,
@@ -105,7 +105,7 @@ const LOGO_PRESETS = [
     name: 'Partner with Distorted Mark & Colors',
     partner_name: 'Global FinTech Aggregate Inc',
     host_url: 'https://fintech-aggregator.com',
-    asset_name: 'FinNova Shield Icon Mark',
+    asset_name: 'Brand Shield Icon Mark',
     has_auth: true,
     color_mod: true,
     aspect_mod: true,
@@ -115,9 +115,9 @@ const LOGO_PRESETS = [
   },
   {
     name: 'Compliant Licensed Distribution Partner',
-    partner_name: 'HDFC Partner Branch Network',
-    host_url: 'https://hdfcbank.com/partners/finnova',
-    asset_name: 'FinNova Verified Trust Badge',
+    partner_name: 'Authorized Partner Branch Network',
+    host_url: 'https://partner-portal.example.com/brand',
+    asset_name: 'Brand Verified Trust Badge',
     has_auth: true,
     color_mod: false,
     aspect_mod: false,
@@ -143,7 +143,7 @@ export default function CounterfeitProtectionPage() {
   // Logo Scanner State
   const [partnerName, setPartnerName] = useState('');
   const [hostUrl, setHostUrl] = useState('');
-  const [assetName, setAssetName] = useState('FinNova Primary Corporate Emblem');
+  const [assetName, setAssetName] = useState('Brand Primary Corporate Emblem');
   const [hasWrittenAuth, setHasWrittenAuth] = useState(false);
   const [isColorMod, setIsColorMod] = useState(false);
   const [isAspectMod, setIsAspectMod] = useState(false);
@@ -455,7 +455,7 @@ export default function CounterfeitProtectionPage() {
                   <option value="Flipkart">Flipkart</option>
                   <option value="Shopee">Shopee</option>
                   <option value="Telegram Shop">Telegram Channel Shop</option>
-                  <option value="FinNova Portal">Official FinNova Portal</option>
+                  <option value="Official Brand Portal">Official Brand Portal</option>
                 </select>
               </div>
 
@@ -499,7 +499,7 @@ export default function CounterfeitProtectionPage() {
                   type="text"
                   value={listingTitle}
                   onChange={(e) => setListingTitle(e.target.value)}
-                  placeholder="e.g. FinNova SmartGrowth Portfolio bond certificate 1:1 replica"
+                  placeholder="e.g. SmartGrowth Portfolio certificate 1:1 replica"
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
@@ -636,7 +636,7 @@ export default function CounterfeitProtectionPage() {
                       {a.asset_name} ({a.asset_type})
                     </option>
                   ))}
-                  <option value="FinNova Primary Corporate Emblem">FinNova Primary Corporate Emblem</option>
+                  <option value="Brand Primary Corporate Emblem">Brand Primary Corporate Emblem</option>
                 </select>
               </div>
             </div>

@@ -28,6 +28,7 @@ interface CurrentUser {
   name?: string;
   email?: string;
   role?: string;
+  organization?: string;
 }
 
 export default function SettingsPage() {
@@ -131,7 +132,7 @@ export default function SettingsPage() {
                   Enterprise Brand Context
                 </p>
                 <p className="text-lg font-bold text-slate-900 dark:text-slate-50">
-                  FinNova Financial Technologies
+                  {currentUser?.organization || 'Enterprise Brand'}
                 </p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                   All brand compliance checks are evaluated against this organization's brand guidelines.

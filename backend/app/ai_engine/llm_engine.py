@@ -31,12 +31,12 @@ class LLMEngine:
             except Exception as e:
                 print(f"[LLM Engine] Gemini call failed: {e}. Falling back to rule-based fallback.")
 
-        # Robust Fallback Engine (Semantic & Heuristic pattern matching against FinNova Brand Guidelines)
+        # Robust Fallback Engine (Semantic & Heuristic pattern matching against Brand Guidelines)
         return self._semantic_fallback_analysis(text, guidelines)
 
     async def _call_openai(self, text: str, guidelines: str, facts: str) -> List[Dict[str, Any]]:
-        system_prompt = f"""You are BrandGuard AI, an expert brand compliance auditor for FinNova Financial Technologies.
-FinNova Brand Guidelines:
+        system_prompt = f"""You are BrandGuard AI, an expert brand compliance auditor.
+Brand Guidelines:
 {guidelines}
 
 Approved Facts:
@@ -93,7 +93,7 @@ If there are no violations, return empty array []."""
 
     async def _call_gemini(self, text: str, guidelines: str, facts: str) -> List[Dict[str, Any]]:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={settings.GEMINI_API_KEY}"
-        system_instruction = f"""You are BrandGuard AI, brand compliance auditor for FinNova Financial Technologies.
+        system_instruction = f"""You are BrandGuard AI, an expert brand compliance auditor.
 Brand Guidelines:
 {guidelines}
 Approved Facts:
@@ -120,7 +120,7 @@ Return a strict JSON array of brand compliance findings for the user content."""
             if "```json" in raw_text:
                 raw_text = raw_text.split("```json")[1].split("```")[0].strip()
             elif "```" in raw_text:
-                raw_text = raw_text.split("```")[1].split("```")[0].strip()
+                raw_text = raw_text.split("```\n")[1].split("```")[0].strip()
             return json.loads(raw_text)
 
     def _semantic_fallback_analysis(self, text: str, guidelines: List[BrandGuideline]) -> List[Dict[str, Any]]:
@@ -130,9 +130,9 @@ Return a strict JSON array of brand compliance findings for the user content."""
 
         # 1. Hype & Sensationalist Tone Checks
         hype_patterns = [
-            (r'\b(unbelievable|crazy returns|insane growth|skyrocket|blow your mind|secret trick)\b', 
+            (r'\b(unbelievable|crazy returns|insane growth|skyrocket|blow your mind|secret trick)\b',
              "Sensationalized Hype",
-             "Tone is sensationalized and inconsistent with FinNova's professional, trustworthy, and responsible identity.",
+             "Tone is sensationalized and inconsistent with a professional, trustworthy, and responsible brand identity.",
              "Brand Tone & Communication Consistency",
              "disciplined, long-term financial growth",
              SeverityLevel.HIGH,
@@ -146,14 +146,14 @@ Return a strict JSON array of brand compliance findings for the user content."""
              FindingCategory.MISLEADING_STATEMENT),
             (r'\b(wealth wizardry|crypto moon|money hack)\b',
              "Unprofessional Slang",
-             "Colloquial terminology undermines FinNova's institutional reputation as a licensed financial entity.",
+             "Colloquial terminology undermines institutional brand reputation and professional credibility.",
              "Official Terminology Standard",
              "modern digital wealth management solutions",
              SeverityLevel.MEDIUM,
              FindingCategory.TONE_INCONSISTENCY),
             (r'\b(act now or regret forever|limited time rush|don\'t miss out)\b',
              "High-Pressure Urgency",
-             "Urgency tactics contradict FinNova's principle of patient, customer-centric advisory.",
+             "Urgency tactics contradict the brand principle of patient, customer-centric advisory.",
              "Brand Tone & Communication Consistency",
              "explore our options at your own pace",
              SeverityLevel.MEDIUM,
@@ -172,7 +172,7 @@ Return a strict JSON array of brand compliance findings for the user content."""
                     "explanation": explanation,
                     "guideline_reference": guideline_ref,
                     "evidence": [{
-                        "source": "FinNova Brand Tone Manual",
+                        "source": "Brand Tone & Compliance Manual",
                         "rule": "Avoid aggressive marketing hype and misleading claims."
                     }],
                     "confidence": 0.91,
@@ -182,4 +182,3 @@ Return a strict JSON array of brand compliance findings for the user content."""
                 })
 
         return findings
-

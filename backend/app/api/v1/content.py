@@ -12,6 +12,7 @@ from app.models.review import AIReview
 from app.schemas.content import ContentCreate, ContentUpdate, ContentOut, ContentRevisionOut
 from app.api.deps import get_current_user
 from app.models.audit import AuditLog
+from app.core.config import settings
 from app.ai_engine.review_pipeline import AIReviewPipeline
 
 router = APIRouter(prefix="/content", tags=["Content"])
@@ -24,7 +25,7 @@ async def submit_content(
     current_user: User = Depends(get_current_user)
 ):
     # Create content record with organization isolation
-    user_org = getattr(current_user, "organization", None) or "FinNova Financial Technologies"
+    user_org = getattr(current_user, "organization", None) or settings.DEMO_COMPANY_NAME
     initial_status = ContentStatus.SUBMITTED if auto_review else ContentStatus.DRAFT
     content = Content(
         title=content_in.title,
@@ -342,7 +343,7 @@ def export_content_audit_csv(
     writer.writerow(["BRANDGUARD AI — ENTERPRISE CONTENT AUDIT REPORT"])
     writer.writerow(["Generated At (UTC)", datetime.now(timezone.utc).isoformat()])
     writer.writerow(["Exported By", f"{current_user.full_name} ({current_user.role.value})"])
-    writer.writerow(["Organization", getattr(c, "organization", "FinNova Financial Technologies")])
+    writer.writerow(["Organization", getattr(c, "organization", settings.DEMO_COMPANY_NAME)])
     writer.writerow([])
 
     writer.writerow(["CONTENT METADATA"])

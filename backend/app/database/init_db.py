@@ -21,7 +21,7 @@ def ensure_organization_columns() -> None:
     with engine.connect() as conn:
         for table in ["users", "contents", "brand_guidelines", "threat_items"]:
             try:
-                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN organization VARCHAR(100) DEFAULT 'FinNova Financial Technologies'"))
+                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN organization VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"))
                 conn.commit()
             except Exception:
                 # Column already present or table not yet created
@@ -43,7 +43,7 @@ def init_db(db: Session = None) -> None:
             seed_threat_data(db)
             return
 
-        print("--- Seeding Database with FinNova Demo Data ---")
+        print("--- Seeding Database with BrandGuard Demo Data ---")
 
         # 1. Seed Users (Admin, Creator, Reviewer, Manager)
         users = [
@@ -91,14 +91,14 @@ def init_db(db: Session = None) -> None:
             BrandGuideline(
                 title="Brand Tone & Communication Consistency",
                 category="Tone",
-                description="FinNova's communication tone must be Professional, Trustworthy, Clear, Customer-friendly, and Responsible. Avoid hype, sensationalism, and aggressive promises.",
+                description="Brand communication must be Professional, Trustworthy, Clear, Customer-focused, and Responsible. Avoid hype, sensationalism, and aggressive or misleading promises.",
                 rule_type="AI_Analyzed",
                 severity=SeverityLevel.HIGH
             ),
             BrandGuideline(
                 title="Official Terminology Standard",
                 category="Terminology",
-                description="Use approved fintech terminology. Refer to FinNova offerings as 'digital financial services' and 'customer-focused solutions'. Avoid ambiguous or non-standard jargon.",
+                description="Use approved brand terminology consistently across all channels. Avoid ambiguous, non-standard, or legally sensitive jargon in customer-facing content.",
                 rule_type="Deterministic",
                 severity=SeverityLevel.MEDIUM
             ),
@@ -116,24 +116,24 @@ def init_db(db: Session = None) -> None:
         # 3. Seed Approved Sources
         sources = [
             ApprovedSource(
-                name="FinNova Official Product Factsheet 2026",
-                url="https://finnova-demo.com/docs/factsheet-2026.pdf",
+                name="Brand Compliance Reference Guide 2026",
+                url="https://docs.example-brandguard.com/compliance/guide-2026.pdf",
                 source_type="Product Documentation",
-                description="Official product specifications, transaction security architecture, and regulatory certifications.",
+                description="Official product specifications, compliance architecture, and certification standards.",
                 is_verified=True
             ),
             ApprovedSource(
-                name="FinNova Annual Financial & Compliance Report 2025",
-                url="https://finnova-demo.com/investor-relations/annual-report-2025",
+                name="Annual Brand Governance & Compliance Report 2025",
+                url="https://docs.example-brandguard.com/governance/annual-report-2025",
                 source_type="Regulatory Filing",
-                description="Audited metrics on digital financial transaction volume, client satisfaction index, and security accreditations.",
+                description="Audited metrics on brand compliance performance, customer trust index, and security accreditations.",
                 is_verified=True
             ),
             ApprovedSource(
-                name="Reserve Bank / FinTech Regulatory Sandbox Verification",
-                url="https://finnova-demo.com/compliance/regulatory-status",
+                name="Regulatory Sandbox Verification Certificate",
+                url="https://docs.example-brandguard.com/compliance/regulatory-status",
                 source_type="Regulatory Sandbox",
-                description="Official framework validation for digital financial solutions.",
+                description="Official framework validation for brand compliance and digital governance solutions.",
                 is_verified=True
             ),
         ]
@@ -143,7 +143,7 @@ def init_db(db: Session = None) -> None:
         # 4. Seed Approved Facts
         facts = [
             ApprovedFact(
-                statement="FinNova provides digital financial services and wealth planning tools.",
+                statement="BrandGuard Demo Enterprise provides brand compliance and content governance services.",
                 category="Company Overview",
                 source_id=sources[0].id,
                 guideline_id=guidelines[2].id
@@ -161,7 +161,7 @@ def init_db(db: Session = None) -> None:
                 guideline_id=guidelines[0].id
             ),
             ApprovedFact(
-                statement="FinNova uses 256-bit encryption for all customer transactions.",
+                statement="All customer data is protected using 256-bit encryption and enterprise-grade security standards.",
                 category="Security",
                 source_id=sources[0].id,
                 guideline_id=guidelines[2].id
@@ -190,7 +190,7 @@ def init_db(db: Session = None) -> None:
                 word_or_phrase="instant wealth",
                 category="Tone & Marketing",
                 severity=SeverityLevel.HIGH,
-                explanation="FinNova strictly avoids hyperbole, get-rich-quick tropes, and predatory marketing phrases.",
+                explanation="Brand guidelines strictly avoid hyperbole, get-rich-quick tropes, and predatory marketing phrases.",
                 suggested_replacement="disciplined long-term wealth planning"
             ),
             BannedWord(
@@ -204,7 +204,7 @@ def init_db(db: Session = None) -> None:
                 word_or_phrase="crypto moon",
                 category="Tone & Brand Identity",
                 severity=SeverityLevel.HIGH,
-                explanation="Slang and meme terminology degrade institutional trust in FinNova's brand.",
+                explanation="Slang and meme terminology degrade institutional trust in brand credibility and professionalism.",
                 suggested_replacement="diversified digital asset allocation"
             ),
         ]
@@ -216,7 +216,7 @@ def init_db(db: Session = None) -> None:
             ApprovedTerminology(
                 approved_term="digital financial services",
                 incorrect_term="money app",
-                context="Official descriptor of FinNova's technological ecosystem.",
+                context="Official descriptor of the organization's technological ecosystem.",
                 guideline_id=guidelines[2].id
             ),
             ApprovedTerminology(
@@ -243,12 +243,12 @@ def init_db(db: Session = None) -> None:
 
         # 7. Seed Initial Sample Demonstration Content
         sample_body = (
-            "FinNova is an ultra-fast money app that promises guaranteed returns for every customer! "
+            "BrandGuard Demo Enterprise is an ultra-fast money app that promises guaranteed returns for every customer! "
             "Our new wealth wizardry platform provides a risk-free investment opportunity with 100% profit guaranteed. "
             "Experience unhackable transfers and instant wealth today."
         )
         sample_content = Content(
-            title="FinNova Wealth Launch Campaign [Sample Draft]",
+            title="Brand Compliance Review Sample [Demo Draft]",
             original_body=sample_body,
             current_body=sample_body,
             channel="Social Media Campaign",
@@ -288,7 +288,7 @@ def init_db(db: Session = None) -> None:
                 category=FindingCategory.BANNED_EXPRESSION,
                 severity=SeverityLevel.CRITICAL,
                 matched_text="guaranteed returns",
-                explanation="This statement makes a financial guarantee that violates FinNova Financial Claims Policy.",
+                explanation="This statement makes a financial guarantee that violates the Financial Claims & Guarantees Policy.",
                 guideline_id=guidelines[0].id,
                 guideline_reference="Financial Claims & Guarantees Policy",
                 evidence=[{"source": "Regulatory Compliance Standard", "text": "Prohibits unconditional guarantee of investment yield"}],
@@ -305,7 +305,7 @@ def init_db(db: Session = None) -> None:
                 explanation="Financial regulations strictly prohibit describing investment portfolios as risk-free.",
                 guideline_id=guidelines[0].id,
                 guideline_reference="Financial Claims & Guarantees Policy",
-                evidence=[{"source": "FinNova Compliance Manual", "text": "All investment literature must carry standard risk disclosure"}],
+                evidence=[{"source": "Brand Compliance Manual", "text": "All investment literature must carry standard risk disclosure"}],
                 confidence=0.97,
                 suggested_correction="structured risk-managed investment options",
                 status="Pending",
@@ -316,7 +316,7 @@ def init_db(db: Session = None) -> None:
                 category=FindingCategory.INCORRECT_TERMINOLOGY,
                 severity=SeverityLevel.MEDIUM,
                 matched_text="money app",
-                explanation="'money app' violates FinNova Official Terminology Standard. Use 'digital financial services'.",
+                explanation="'money app' violates the Official Terminology Standard. Use 'digital financial services'.",
                 guideline_id=guidelines[2].id,
                 guideline_reference="Official Terminology Standard",
                 evidence=[{"source": "Brand Style Guide v2.4", "text": "Preserve institutional prestige and professional standing"}],
@@ -330,7 +330,7 @@ def init_db(db: Session = None) -> None:
                 category=FindingCategory.TONE_INCONSISTENCY,
                 severity=SeverityLevel.HIGH,
                 matched_text="instant wealth",
-                explanation="Tone is sensationalized and predatory. FinNova promotes disciplined, responsible financial planning.",
+                explanation="Tone is sensationalized and predatory. Brand guidelines promote disciplined, responsible financial planning.",
                 guideline_id=guidelines[1].id,
                 guideline_reference="Brand Tone & Communication Consistency",
                 evidence=[{"source": "Brand Tone Guidelines", "text": "Professional, Trustworthy, Clear, Customer-friendly, Responsible"}],
@@ -361,7 +361,7 @@ def init_db(db: Session = None) -> None:
             action="SYSTEM_INIT",
             entity_type="Database",
             entity_id=1,
-            details="Database schema initialized and FinNova demonstration sample data seeded successfully."
+            details="Database schema initialized and BrandGuard demonstration sample data seeded successfully."
         )
         db.add(audit)
         db.commit()
@@ -382,23 +382,23 @@ def seed_threat_data(db: Session) -> None:
     # 1. Official Brand Assets
     assets = [
         BrandAsset(
-            asset_name="FinNova Corporate Primary Logo",
+            asset_name="BrandGuard Corporate Primary Logo",
             asset_type="Primary Logo",
-            image_path="/assets/brand/finnova-logo-primary.svg",
+            image_path="/assets/brand/brandguard-logo-primary.svg",
             perceptual_hash="d41d8cd98f00b204e9800998ecf8427e",
             is_active=True
         ),
         BrandAsset(
-            asset_name="FinNova App Icon & Shield Mark",
+            asset_name="BrandGuard App Icon & Shield Mark",
             asset_type="Icon Mark",
-            image_path="/assets/brand/finnova-shield-mark.svg",
+            image_path="/assets/brand/brandguard-shield-mark.svg",
             perceptual_hash="9e107d9d372bb6826bd81d3542a419d6",
             is_active=True
         ),
         BrandAsset(
-            asset_name="FinNova Verified Trust Badge",
+            asset_name="BrandGuard Verified Trust Badge",
             asset_type="Watermark",
-            image_path="/assets/brand/finnova-trust-badge.png",
+            image_path="/assets/brand/brandguard-trust-badge.png",
             perceptual_hash="c4ca4238a0b923820dcc509a6f75849b",
             is_active=True
         )
@@ -409,17 +409,17 @@ def seed_threat_data(db: Session) -> None:
     # 2. Official Brand Products
     products = [
         BrandProduct(
-            product_name="FinNova SmartGrowth Managed Portfolio",
-            sku="FNV-SGP-01",
+            product_name="BrandGuard SmartGrowth Managed Portfolio",
+            sku="BGD-SGP-01",
             official_msrp=10000.0,
-            authorized_distributors='["FinNova Web Platform", "FinNova Mobile App", "SEBI Registered Advisors"]',
+            authorized_distributors='["BrandGuard Web Platform", "BrandGuard Mobile App", "Authorized Partners"]',
             reference_image_path="/assets/products/smartgrowth.png"
         ),
         BrandProduct(
-            product_name="FinNova Prime Yield Flexible Deposit",
-            sku="FNV-PYD-02",
+            product_name="BrandGuard Prime Yield Flexible Deposit",
+            sku="BGD-PYD-02",
             official_msrp=25000.0,
-            authorized_distributors='["FinNova Wealth Portal", "HDFC Partner Branch Network"]',
+            authorized_distributors='["BrandGuard Wealth Portal", "Authorized Partner Network"]',
             reference_image_path="/assets/products/prime-yield.png"
         )
     ]
@@ -431,49 +431,49 @@ def seed_threat_data(db: Session) -> None:
         ThreatItem(
             threat_code="THR-2026-001",
             category=ThreatCategory.PHISHING_DOMAIN,
-            title="Credential Harvesting Portal — finnova-secure-login.cc",
-            source_url="https://finnova-secure-login.cc/auth/login",
-            target_brand="FinNova Financial Technologies",
+            title="Credential Harvesting Portal — yourbrand-secure-login.cc",
+            source_url="https://yourbrand-secure-login.cc/auth/login",
+            target_brand="BrandGuard Demo Enterprise",
             risk_level=ThreatRiskLevel.CRITICAL,
             confidence_score=95.0,
             status=ThreatStatus.UNDER_INVESTIGATION,
-            explanation="Lookalike domain mimicking FinNova client portal styling with unauthorized credential capture scripts.",
+            explanation="Lookalike domain mimicking brand client portal styling with unauthorized credential capture scripts.",
             recommended_action="Submit urgent registrar domain suspension notice to Cloudflare & Namecheap abuse desks."
         ),
         ThreatItem(
             threat_code="THR-2026-002",
             category=ThreatCategory.SOCIAL_IMPERSONATION,
-            title="Impersonation Support Account — @finnova_refund_help",
-            source_url="https://telegram.org/finnova_refund_help",
-            target_brand="FinNova Financial Technologies",
+            title="Impersonation Support Account — @yourbrand_refund_help",
+            source_url="https://telegram.org/yourbrand_refund_help",
+            target_brand="BrandGuard Demo Enterprise",
             risk_level=ThreatRiskLevel.HIGH,
             confidence_score=89.0,
             status=ThreatStatus.NEW,
-            explanation="Telegram handle claiming to be 'FinNova Instant Refund Desk', actively soliciting customer OTPs and PAN details.",
+            explanation="Telegram handle claiming to be official brand support, actively soliciting customer OTPs and personal details.",
             recommended_action="File brand impersonation report with Telegram platform security team."
         ),
         ThreatItem(
             threat_code="THR-2026-003",
             category=ThreatCategory.COUNTERFEIT_PRODUCT,
             title="Unauthorized Investment Note — 40% Guaranteed SmartGrowth Bond",
-            source_url="https://unregulated-p2p-market.in/listings/finnova-bonds-9842",
-            target_brand="FinNova Financial Technologies",
+            source_url="https://unregulated-p2p-market.in/listings/smartgrowth-bonds-9842",
+            target_brand="BrandGuard Demo Enterprise",
             risk_level=ThreatRiskLevel.HIGH,
             confidence_score=92.0,
             status=ThreatStatus.VERIFIED_THREAT,
-            explanation="Unregistered third-party entity offering bogus fixed-return promissory notes using FinNova SmartGrowth trademark.",
-            recommended_action="Issue formal Cease & Desist letter and notify SEBI Market Intermediaries Regulation Department."
+            explanation="Unregistered third-party entity offering bogus fixed-return promissory notes using brand SmartGrowth trademark.",
+            recommended_action="Issue formal Cease & Desist letter and notify relevant regulatory authority."
         ),
         ThreatItem(
             threat_code="THR-2026-004",
             category=ThreatCategory.UNAUTHORIZED_LOGO,
             title="Fraudulent Partner Endorsement — crypto-wealth-advisor.biz",
             source_url="https://crypto-wealth-advisor.biz/partners.html",
-            target_brand="FinNova Financial Technologies",
+            target_brand="BrandGuard Demo Enterprise",
             risk_level=ThreatRiskLevel.MEDIUM,
             confidence_score=84.0,
             status=ThreatStatus.RESOLVED,
-            explanation="Cryptocurrency advisory site displaying FinNova primary logo in 'Institutional Partners' banner without agreement.",
+            explanation="Cryptocurrency advisory site displaying brand primary logo in 'Institutional Partners' banner without agreement.",
             recommended_action="Takedown notice served; offending webmaster removed logo asset. Verified resolved."
         )
     ]
@@ -489,25 +489,25 @@ def seed_threat_data(db: Session) -> None:
     ev2 = ThreatEvidence(
         threat_id=threats[0].id,
         evidence_type="DOM_SNAPSHOT",
-        data_payload='{"forms_detected": 1, "action": "/harvest.php", "title": "FinNova Client Portal - Sign In", "finnova_keywords_count": 8}'
+        data_payload='{"forms_detected": 1, "action": "/harvest.php", "title": "Brand Client Portal - Sign In", "brand_keywords_count": 8}'
     )
     ev3 = ThreatEvidence(
         threat_id=threats[1].id,
         evidence_type="PROFILE_METADATA",
-        data_payload='{"handle": "@finnova_refund_help", "bio": "Official 24/7 FinNova Grievance Desk. DM with registered phone number.", "verified": false}'
+        data_payload='{"handle": "@yourbrand_refund_help", "bio": "Official 24/7 Brand Grievance Desk. DM with registered phone number.", "verified": false}'
     )
     ev4 = ThreatEvidence(
         threat_id=threats[2].id,
         evidence_type="LISTING_DETAILS",
-        data_payload='{"listing_title": "FinNova SmartGrowth Bond Series IV", "promised_yield": "40% annual", "official_msrp_delta": "+300%", "seller": "Global Apex Capital"}'
+        data_payload='{"listing_title": "SmartGrowth Bond Series IV", "promised_yield": "40% annual", "official_msrp_delta": "+300%", "seller": "Global Apex Capital"}'
     )
     db.add_all([ev1, ev2, ev3, ev4])
     db.commit()
 
     # 5. Initial Domain Scan
     scan1 = DomainScan(
-        scanned_url="https://finnova-secure-login.cc/auth/login",
-        domain_name="finnova-secure-login.cc",
+        scanned_url="https://yourbrand-secure-login.cc/auth/login",
+        domain_name="yourbrand-secure-login.cc",
         ip_address="198.51.100.42",
         is_https=True,
         ssl_valid=False,

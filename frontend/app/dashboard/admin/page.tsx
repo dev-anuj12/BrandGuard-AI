@@ -569,7 +569,7 @@ export default function AdminDashboard() {
                     <label className="text-xs font-medium text-slate-700 dark:text-slate-300">URL / Document Reference</label>
                     <input
                       type="text"
-                      placeholder="https://finnova.com/disclosures/..."
+                      placeholder="https://company.com/disclosures/..."
                       value={newSource.url}
                       onChange={(e) => setNewSource({ ...newSource, url: e.target.value })}
                       required

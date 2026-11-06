@@ -149,7 +149,7 @@ export default function LandingPage() {
             </div>
 
             <div className="p-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm leading-relaxed font-mono text-slate-800 dark:text-slate-200 shadow-inner">
-              FinNova is an ultra-fast{' '}
+              Our brand platform is an ultra-fast{' '}
               <span className="bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 px-1.5 py-0.5 rounded border border-amber-300 dark:border-amber-800 font-bold">
                 money app [Incorrect Terminology]
               </span>{' '}
@@ -171,7 +171,7 @@ export default function LandingPage() {
                   <span>Regulatory Violation</span>
                 </div>
                 <p className="text-slate-600 dark:text-slate-400 text-[11px]">
-                  Unconditional yield promise violates FinNova Financial Claims Policy.
+                  Unconditional yield promise violates Financial Claims &amp; Guarantees Policy.
                 </p>
               </div>
 

@@ -37,15 +37,15 @@ class CitationValidator:
                     "category": FindingCategory.UNVERIFIED_SOURCE,
                     "severity": SeverityLevel.HIGH,
                     "matched_text": url,
-                    "explanation": f"The cited source '{url}' is not in FinNova's pre-approved regulatory source registry.",
+                    "explanation": f"The cited source '{url}' is not in the pre-approved regulatory source registry.",
                     "guideline_reference": "Evidence & Citation Validation Requirement",
                     "evidence": [{
-                        "source": "FinNova Approved Source Registry",
+                        "source": "Approved Source Registry",
                         "status": "Unverified External Source",
                         "detected_url": url
                     }],
                     "confidence": 0.95,
-                    "suggested_correction": "Replace with official citations from FinNova's Product Factsheet or Investor Relations portal.",
+                    "suggested_correction": "Replace with official citations from the approved documentation or regulatory portal.",
                     "status": "Pending",
                     "engine_source": "Citation Validator"
                 })
@@ -74,7 +74,7 @@ class CitationValidator:
                         "guideline_reference": "Evidence & Citation Validation Requirement",
                         "evidence": [{
                             "status": "Missing Supporting Evidence",
-                            "note": "Not found in FinNova Approved Facts or Annual Reports"
+                            "note": "Not found in Approved Facts or Annual Reports"
                         }],
                         "confidence": 0.88,
                         "suggested_correction": "Support this claim with approved facts or rephrase with substantiated qualitative language.",

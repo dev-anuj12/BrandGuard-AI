@@ -59,7 +59,7 @@ class AIReviewPipeline:
         total_violations = len(merged_findings)
 
         if total_violations == 0:
-            summary = "Brand compliance review passed with 100% adherence to FinNova Brand Guidelines."
+            summary = "Brand compliance review passed with 100% adherence to Brand Guidelines."
         else:
             summary = (
                 f"Review identified {total_violations} issue(s) ({critical_count} critical, {high_count} high severity). "

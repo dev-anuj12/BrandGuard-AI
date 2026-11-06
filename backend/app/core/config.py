@@ -36,8 +36,8 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: Optional[str] = Field(default=None, validation_alias="GEMINI_API_KEY")
     AI_PROVIDER: str = Field(default="rule_fallback", validation_alias="AI_PROVIDER")  # 'openai', 'gemini', 'rule_fallback'
     
-    # Demonstration Scenario Company Info
-    DEMO_COMPANY_NAME: str = "FinNova Financial Technologies"
+    # Demonstration Scenario Company Info (used in seed data and AI engine prompts)
+    DEMO_COMPANY_NAME: str = "BrandGuard Demo Enterprise"
     
     @property
     def effective_cors_origins(self) -> List[str]:

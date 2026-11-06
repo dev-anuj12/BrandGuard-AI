@@ -28,7 +28,7 @@ class RuleEngine:
                     "explanation": bw.explanation,
                     "guideline_reference": f"Banned Expression: {bw.word_or_phrase}",
                     "evidence": [{
-                        "source": "FinNova Brand Compliance Database",
+                        "source": "Brand Compliance Database",
                         "rule": "Banned Expression Registry",
                         "term": bw.word_or_phrase
                     }],
@@ -50,7 +50,7 @@ class RuleEngine:
                     "category": FindingCategory.INCORRECT_TERMINOLOGY,
                     "severity": SeverityLevel.MEDIUM,
                     "matched_text": matched_snippet,
-                    "explanation": f"'{matched_snippet}' violates FinNova terminology guidelines. Official approved term is '{term.approved_term}'.",
+                    "explanation": f"'{matched_snippet}' violates brand terminology guidelines. Official approved term is '{term.approved_term}'.",
                     "guideline_reference": "Official Terminology Standard",
                     "evidence": [{
                         "source": "Brand Style & Terminology Glossary",

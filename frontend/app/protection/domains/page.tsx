@@ -48,26 +48,26 @@ interface DomainScanReport {
 
 const PRESET_TARGETS = [
   {
-    name: 'FinNova Official Domain',
-    url: 'https://finnova.com',
+    name: 'Corporate Primary Domain',
+    url: 'https://brandguard.io',
     type: 'Safe / Canonical',
     color: 'emerald',
   },
   {
     name: 'Phishing Portal Lookalike',
-    url: 'https://finnova-secure-login.cc',
+    url: 'https://brandguard-secure-login.cc',
     type: 'Critical / Phishing',
     color: 'rose',
   },
   {
     name: 'Typo-Squatting Clone',
-    url: 'https://finova-secure-account.xyz',
+    url: 'https://brandguad-secure-account.xyz',
     type: 'High / Lookalike',
     color: 'amber',
   },
   {
     name: 'Cyrillic Homoglyph Mimic',
-    url: 'https://finn\u043ev\u0430-banking.top',
+    url: 'https://br\u0430ndguard-portal.top',
     type: 'Critical / Homoglyph',
     color: 'purple',
   },
@@ -173,7 +173,7 @@ export default function DomainProtectionPage() {
 
           <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-200/80 dark:border-slate-700">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Monitored Brand: <strong className="text-slate-900 dark:text-white font-semibold">finnova.com</strong></span>
+            <span>Monitored Brand: <strong className="text-slate-900 dark:text-white font-semibold">brandguard.io</strong></span>
           </div>
         </div>
 
@@ -256,7 +256,7 @@ export default function DomainProtectionPage() {
                     type="text"
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
-                    placeholder="e.g. finnova-secure-login.cc, finova-banking.xyz, or full https:// URL"
+                    placeholder="e.g. brand-secure-login.cc, lookalike-domain.xyz, or full https:// URL"
                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-mono"
                   />
                 </div>

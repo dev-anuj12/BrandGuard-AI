@@ -41,8 +41,8 @@ const PRESET_PROFILES = [
   {
     name: 'Fake Telegram Support Desk',
     platform: 'telegram',
-    handle: 'finnova_support_desk',
-    display_name: 'FinNova Official Support Desk',
+    handle: 'brand_support_desk',
+    display_name: 'Brand Official Support Desk',
     bio: 'Official 24/7 Support Desk. DM for wallet recovery, transaction reversal, and KYC validation.',
     followers: 24,
     following: 380,
@@ -53,9 +53,9 @@ const PRESET_PROFILES = [
   {
     name: 'Crypto Airdrop Twitter Bot',
     platform: 'twitter',
-    handle: 'finnova_airdrop_bot',
-    display_name: 'FinNova Airdrop Rewards',
-    bio: 'Official celebratory FinNova airdrop! Connect your wallet and send 0.1 ETH to verify account for 5,000 FNV bonus.',
+    handle: 'brand_airdrop_bot',
+    display_name: 'Brand Airdrop Rewards',
+    bio: 'Official celebratory brand airdrop! Connect your wallet and send 0.1 ETH to verify account for 5,000 token bonus.',
     followers: 12,
     following: 890,
     is_verified: false,
@@ -65,9 +65,9 @@ const PRESET_PROFILES = [
   {
     name: 'Cyrillic Homoglyph Mimic',
     platform: 'twitter',
-    handle: 'finn\u0430va_care',
-    display_name: 'FinNova Customer Care',
-    bio: 'FinNova Technologies assistance representative. Direct message us your account issues.',
+    handle: 'br\u0430nd_care',
+    display_name: 'Brand Customer Care',
+    bio: 'Enterprise brand assistance representative. Direct message us your account issues.',
     followers: 5,
     following: 120,
     is_verified: false,
@@ -77,9 +77,9 @@ const PRESET_PROFILES = [
   {
     name: 'Official Verified Brand Profile',
     platform: 'twitter',
-    handle: 'finnovahq',
-    display_name: 'FinNova Financial Technologies',
-    bio: 'Official corporate account of FinNova Financial Technologies. Powering next-gen financial intelligence.',
+    handle: 'brandguardhq',
+    display_name: 'BrandGuard Enterprise',
+    bio: 'Official corporate account of BrandGuard Enterprise. Powering next-gen brand intelligence.',
     followers: 48200,
     following: 142,
     is_verified: true,
@@ -206,7 +206,7 @@ export default function SocialProtectionPage() {
 
           <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-200/80 dark:border-slate-700">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Canonical Brand Handle: <strong className="text-slate-900 dark:text-white font-semibold">@finnovahq</strong></span>
+            <span>Canonical Brand Handle: <strong className="text-slate-900 dark:text-white font-semibold">@brandguardhq</strong></span>
           </div>
         </div>
 
@@ -309,7 +309,7 @@ export default function SocialProtectionPage() {
                   type="text"
                   value={handle}
                   onChange={(e) => setHandle(e.target.value)}
-                  placeholder="e.g. finnova_support_desk"
+                  placeholder="e.g. brand_support_desk"
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
                 />
               </div>
@@ -322,7 +322,7 @@ export default function SocialProtectionPage() {
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  placeholder="e.g. FinNova Official Support"
+                  placeholder="e.g. Brand Official Support"
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>

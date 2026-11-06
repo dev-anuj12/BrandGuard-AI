@@ -44,17 +44,18 @@ export default function ThreatIntelligencePage() {
   const generateNoticeText = (threat: any) => {
     if (!threat) return '';
     const dateStr = new Date(threat.detected_at).toUTCString();
+    const brandName = threat.target_brand || 'Protected Enterprise Brand';
     return `FORMAL NOTICE OF TRADEMARK INFRINGEMENT & DEMAND FOR IMMEDIATE TAKEDOWN
 Date: ${new Date().toUTCString()}
 Reference Code: ${threat.threat_code}
 
 TO: Designated Legal & Abuse Desk
-RE: Unauthorized Infringement of "FinNova" Trademarks & Brand Assets
+RE: Unauthorized Infringement of "${brandName}" Trademarks & Brand Assets
 
 Complainant Information:
-Brand Owner: FinNova Financial Technologies
+Brand Owner: ${brandName}
 Authorized Contact: Legal Operations / Brand Protection Team
-Email: legal-abuse@finnova.com
+Email: legal-abuse@brandguard.internal
 
 Infringing Location / Endpoint:
 Target URL / Identifier: ${threat.source_url}
@@ -73,13 +74,13 @@ ${threat.evidence_items?.map((ev: any) => `- [${ev.evidence_type}]: ${ev.data_pa
 
 Statement of Good Faith:
 We confirm under penalty of perjury that:
-1. FinNova Financial Technologies is the sole proprietor of the "FinNova" trademarks, brand marks, and associated intellectual property.
+1. ${brandName} is the proprietor of the registered trademarks, brand marks, and associated intellectual property.
 2. The use of the aforementioned trademarks and trade dress at ${threat.source_url} is not authorized by the trademark owner, its agents, or the law.
 3. This notice is issued in good faith with the expectation of immediate remedial suspension within twenty-four (24) hours of receipt.
 
 Signed,
 BrandGuard AI Autonomous Brand Protection & Legal Governance Operations
-On behalf of FinNova Financial Technologies`;
+On behalf of ${brandName}`;
   };
 
   const handleCopyNotice = (text: string) => {

@@ -31,7 +31,7 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
         )
 
     assigned_role = user_in.role or UserRole.CREATOR
-    org_name = user_in.organization.strip() if user_in.organization and user_in.organization.strip() else "FinNova Financial Technologies"
+    org_name = user_in.organization.strip() if user_in.organization and user_in.organization.strip() else settings.DEMO_COMPANY_NAME
 
     user = User(
         email=user_in.email,
