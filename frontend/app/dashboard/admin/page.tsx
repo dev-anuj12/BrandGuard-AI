@@ -446,7 +446,7 @@ export default function AdminDashboard() {
                     <label className="text-xs font-medium text-slate-700 dark:text-slate-300">Explanation for Violation</label>
                     <input
                       type="text"
-                      placeholder="e.g. SEBI regulations prohibit promising guaranteed investment outcomes."
+                      placeholder="e.g. Regulatory compliance guidelines prohibit promising guaranteed investment outcomes."
                       value={newBanned.explanation}
                       onChange={(e) => setNewBanned({ ...newBanned, explanation: e.target.value })}
                       required
@@ -544,7 +544,7 @@ export default function AdminDashboard() {
                     <label className="text-xs font-medium text-slate-700 dark:text-slate-300">Source Name</label>
                     <input
                       type="text"
-                      placeholder="e.g. SEBI Master Circular 2024"
+                      placeholder="e.g. Regulatory Compliance Circular 2026"
                       value={newSource.name}
                       onChange={(e) => setNewSource({ ...newSource, name: e.target.value })}
                       required
@@ -582,7 +582,7 @@ export default function AdminDashboard() {
                   <label className="text-xs font-medium text-slate-700 dark:text-slate-300">Description</label>
                   <input
                     type="text"
-                    placeholder="e.g. Official SEBI statutory circular outlining compliance standards for retail advertising."
+                    placeholder="e.g. Official statutory circular outlining compliance standards for retail advertising."
                     value={newSource.description}
                     onChange={(e) => setNewSource({ ...newSource, description: e.target.value })}
                     className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"

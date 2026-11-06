@@ -95,10 +95,10 @@ function scoreColor(score?: number | null): string {
 
 function matchesFilter(item: ContentItem, tab: FilterTab): boolean {
   const s = item.status?.toLowerCase() ?? '';
-  if (tab === 'pending') return s.includes('pending') && s.includes('manager');
-  if (tab === 'verified') return s === 'verified';
+  if (tab === 'pending') return s.includes('pending') || s.includes('submitted');
+  if (tab === 'verified') return s.includes('verified') || (s.includes('pending') && s.includes('manager'));
   if (tab === 'decided')
-    return s === 'approved' || s === 'rejected' || s.includes('changes requested');
+    return s === 'approved' || s === 'rejected' || s.includes('changes');
   return true;
 }
 
