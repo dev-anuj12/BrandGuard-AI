@@ -311,5 +311,13 @@ export const api = {
 
   getCounterfeitStats: () =>
     request<any>('/api/v1/protection/products/stats'),
+
+  exportUserData: () =>
+    request<any>('/api/v1/users/me/export'),
+
+  requestAccountDeletion: () =>
+    request<any>('/api/v1/users/me/delete-request', {
+      method: 'POST',
+    }),
 };
 

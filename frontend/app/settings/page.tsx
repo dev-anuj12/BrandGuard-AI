@@ -245,6 +245,50 @@ export default function SettingsPage() {
           </div>
         </section>
 
+        {/* ── Privacy & Data Governance (DPDP / GDPR) ──────────────────── */}
+        <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+            <Shield className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+            <h2 className="text-base font-semibold text-slate-800 dark:text-slate-100">
+              Privacy, Billing &amp; Data Governance
+            </h2>
+          </div>
+          <div className="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            <button
+              type="button"
+              onClick={() => router.push('/settings/security')}
+              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-left transition space-y-1"
+            >
+              <span className="font-bold text-slate-900 dark:text-white block">Security &amp; 2FA</span>
+              <span className="text-[11px] text-slate-400 block">Manage password and access</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => router.push('/settings/billing')}
+              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-left transition space-y-1"
+            >
+              <span className="font-bold text-slate-900 dark:text-white block">Billing &amp; Plan</span>
+              <span className="text-[11px] text-slate-400 block">Subscription &amp; quotas</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => router.push('/settings/data-export')}
+              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-left transition space-y-1"
+            >
+              <span className="font-bold text-indigo-600 dark:text-indigo-400 block">Export My Data</span>
+              <span className="text-[11px] text-slate-400 block">Download audit archive (JSON)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => router.push('/settings/delete-account')}
+              className="p-3.5 rounded-xl border border-rose-200 dark:border-rose-900/40 hover:border-rose-500 text-left transition space-y-1"
+            >
+              <span className="font-bold text-rose-600 dark:text-rose-400 block">Delete Account</span>
+              <span className="text-[11px] text-slate-400 block">Data erasure &amp; deactivation</span>
+            </button>
+          </div>
+        </section>
+
         {/* ── Account Actions ───────────────────────────────────────────── */}
         <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
           <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">

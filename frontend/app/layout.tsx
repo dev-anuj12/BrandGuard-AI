@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '../components/ThemeProvider';
 import { ToastProvider } from '../components/ui/Toast';
+import CookieConsent from '../components/CookieConsent';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://brandguard-ai-eight.vercel.app'),
@@ -70,6 +71,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ToastProvider>
             {children}
+            <CookieConsent />
           </ToastProvider>
         </ThemeProvider>
       </body>

@@ -1,98 +1,52 @@
 import Link from 'next/link';
-import { ShieldCheck, ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
+import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | BrandGuard AI',
-  description: 'BrandGuard AI Terms of Service — the terms governing your use of the platform.',
+  title: 'Terms of Service',
+  description: 'BrandGuard AI Terms of Service — service level agreements, acceptable usage, AI advisory disclaimers, and subscription terms.',
 };
 
 export default function TermsOfServicePage() {
-  const updated = 'November 5, 2026';
+  const lastUpdated = 'November 7, 2026';
+
+  const sections = [
+    { title: '1. Agreement to Terms', text: 'By registering for an account, accessing the BrandGuard AI web portal, or integrating our APIs, you enter into a binding contractual agreement with BrandGuard AI. If acting on behalf of an enterprise or corporate entity, you represent and warrant that you possess requisite corporate authorization to bind the organization.' },
+    { title: '2. Provision of Platform Services', text: 'BrandGuard AI grants authorized users a non-exclusive, non-transferable, revocable subscription license to use our brand governance engine, automated rule analysis, citation validation, and external digital threat scanners in accordance with chosen subscription tiers.' },
+    { title: '3. Multi-Tenant Account Responsibilities', text: 'Organizations are responsible for designating administrators, configuring role-segregated governance workflows (Creator, Reviewer, Manager, Admin), maintaining credential secrecy, and revoking credentials for departed personnel.' },
+    { title: '4. AI Analysis Disclaimer & Professional Judgment', text: 'BrandGuard AI compliance scores, rule findings, and remediation suggestions are operational advisory aids powered by automated heuristic algorithms and large language models. They DO NOT constitute formal legal advice, statutory regulatory certification, or guarantees against third-party regulatory enforcement. Organizations retain exclusive responsibility for approving and publishing content.' },
+    { title: '5. Intellectual Property Rights', text: 'Customers retain all right, title, and interest in and to their proprietary logos, trademarks, content submissions, and brand documentation. BrandGuard AI retains all rights, title, and intellectual property in the platform software, algorithms, UI designs, and documentation.' },
+    { title: '6. Acceptable Use Standards', text: 'Users shall not reverse engineer, decompile, or tamper with security controls; submit malicious code, defamatory material, or unlawful content; or bypass tenant data isolation. Violations result in immediate account suspension.' },
+    { title: '7. Service Levels & Maintenance Windows', text: 'We target 99.9% platform availability for enterprise tiers, excluding scheduled maintenance windows announced at least 48 hours in advance via our System Status portal.' },
+    { title: '8. Term, Renewals & Cancellation', text: 'Subscriptions renew automatically for successive monthly or annual terms unless cancelled prior to the renewal date. Enterprise contract terms are governed by specific Master Services Agreements (MSAs).' },
+    { title: '9. Limitation of Liability', text: 'To the maximum extent permitted by applicable law, neither party shall be liable for indirect, incidental, punitive, or consequential damages. Total cumulative liability under any claim shall not exceed total fees paid during the preceding twelve (12) month period.' },
+    { title: '10. Dispute Resolution & Governing Law', text: 'These terms are governed by the laws of India and applicable regional commercial statutes. Any dispute arising out of or in connection with this agreement shall be submitted to binding arbitration.' },
+  ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#070A10]">
-      <header className="border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between max-w-5xl mx-auto">
-        <Link href="/" className="flex items-center gap-2">
-          <ShieldCheck className="w-6 h-6 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
-          <span className="font-bold text-slate-900 dark:text-white text-sm">BrandGuard AI</span>
-        </Link>
-        <Link
-          href="/"
-          className="flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
-        >
-          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-          Back
-        </Link>
-      </header>
+    <PublicLayout
+      breadcrumbs={[{ label: 'Legal' }, { label: 'Terms of Service' }]}
+      badge="Legal &amp; Contracts"
+      title="Terms of Service"
+      subtitle="The contractual framework governing access, licensing, and usage of the BrandGuard AI platform."
+      lastUpdated={lastUpdated}
+      legalNotice={true}
+    >
+      <div className="space-y-8 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        {sections.map(({ title, text }) => (
+          <section key={title} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">{title}</h2>
+            <p className="leading-relaxed">{text}</p>
+          </section>
+        ))}
 
-      <main id="main-content" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="mb-10">
-          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 mb-3">Legal</span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
-            Terms of Service
-          </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Last updated: {updated}</p>
-          <div className="mt-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 text-xs text-amber-800 dark:text-amber-300">
-            <strong>Legal Review Notice:</strong> This document describes the governing terms for BrandGuard AI use. It should be reviewed and approved by a qualified legal professional before formal publication.
-          </div>
+        <div className="pt-4 flex items-center justify-between text-xs text-slate-500">
+          <span>Need a customized Master Services Agreement?</span>
+          <Link href="/contact" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+            Contact Enterprise Legal Team &rarr;
+          </Link>
         </div>
-
-        <div className="space-y-8">
-          {[
-            {
-              title: '1. Acceptance of Terms',
-              body: 'By accessing or using BrandGuard AI, you agree to be bound by these Terms of Service. If you are using BrandGuard AI on behalf of an organization, you represent that you have the authority to bind that organization to these terms.',
-            },
-            {
-              title: '2. Platform Use',
-              body: 'BrandGuard AI is an enterprise platform for brand governance, content compliance review, and digital brand protection. You may use BrandGuard AI only for lawful purposes and in accordance with these terms. You may not use the platform to process content that violates any applicable law or regulation.',
-            },
-            {
-              title: '3. Account Responsibility',
-              body: 'You are responsible for maintaining the security of your account credentials. Administrators are responsible for managing user access within their organization. You must notify your administrator immediately of any unauthorized account access.',
-            },
-            {
-              title: '4. Content Ownership',
-              body: 'You retain ownership of all content you submit to BrandGuard AI for compliance review. By submitting content, you grant BrandGuard AI a limited, non-exclusive license to process that content for the purpose of providing the AI analysis service.',
-            },
-            {
-              title: '5. AI Analysis Disclaimer',
-              body: 'AI-generated compliance analysis results are provided as an operational aid and do not constitute legal advice. Human reviewers and managers must exercise independent professional judgment when making final approval or rejection decisions.',
-            },
-            {
-              title: '6. Service Availability',
-              body: 'We strive to maintain reliable service availability. However, we do not guarantee uninterrupted access. The platform may be periodically unavailable for scheduled maintenance or infrastructure updates.',
-            },
-            {
-              title: '7. Limitation of Liability',
-              body: 'To the maximum extent permitted by applicable law, BrandGuard AI shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the platform.',
-            },
-            {
-              title: '8. Changes to Terms',
-              body: 'We reserve the right to modify these terms at any time. We will notify users of material changes via platform notifications. Continued use of the platform after such notification constitutes acceptance of the updated terms.',
-            },
-            {
-              title: '9. Governing Law',
-              body: 'These terms are governed by and construed in accordance with applicable law. Any disputes shall be subject to the exclusive jurisdiction of the competent courts.',
-            },
-          ].map(({ title, body }) => (
-            <section key={title}>
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{title}</h2>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base">{body}</p>
-            </section>
-          ))}
-        </div>
-      </main>
-
-      <footer className="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-400">
-        &copy; {new Date().getFullYear()} BrandGuard AI — All rights reserved.
-        <span className="mx-2">·</span>
-        <Link href="/privacy" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Privacy</Link>
-        <span className="mx-2">·</span>
-        <Link href="/contact" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Contact</Link>
-      </footer>
-    </div>
+      </div>
+    </PublicLayout>
   );
 }
-

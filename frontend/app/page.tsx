@@ -11,6 +11,7 @@ import {
 import { useTheme } from '../components/ThemeProvider';
 import { getCurrentUser } from '../lib/api';
 import BrandLogo from '../components/BrandLogo';
+import PublicFooter from '../components/PublicFooter';
 
 export default function LandingPage() {
   const { resolvedTheme, toggleTheme } = useTheme();
@@ -545,24 +546,8 @@ export default function LandingPage() {
       </section>
       </main>
 
-      {/* 11. Professional Footer */}
-      <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#070A10] py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <BrandLogo size="sm" showSubtitle={false} href="/" />
-            <span className="text-slate-400">&copy; {new Date().getFullYear()} All rights reserved.</span>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-slate-600 dark:text-slate-400">
-            <Link href="/login" className="hover:text-indigo-600 dark:hover:text-white transition">Sign In</Link>
-            <Link href="/register" className="hover:text-indigo-600 dark:hover:text-white transition">Register</Link>
-            <Link href="/contact" className="hover:text-indigo-600 dark:hover:text-white transition">Contact</Link>
-            <Link href="/privacy" className="hover:text-indigo-600 dark:hover:text-white transition">Privacy</Link>
-            <Link href="/terms" className="hover:text-indigo-600 dark:hover:text-white transition">Terms</Link>
-            <a href="#features" className="hover:text-indigo-600 dark:hover:text-white transition">Capabilities</a>
-          </div>
-        </div>
-      </footer>
+      {/* 11. 5-Column Enterprise Footer */}
+      <PublicFooter />
     </div>
   );
 }
