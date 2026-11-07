@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { 
   BarChart3, TrendingUp, CheckCircle2, AlertTriangle, ShieldCheck, 
   Clock, RefreshCw, Sparkles, PieChart as PieIcon, Activity,
-  AlertOctagon, CheckSquare, Layers, Award
+  AlertOctagon, CheckSquare, Layers, Award, Download
 } from 'lucide-react';
 import AppLayout from '../../components/AppLayout';
 import { Button } from '../../components/ui/Button';
@@ -106,6 +106,39 @@ export default function AnalyticsDashboardPage() {
   const pendingCount = data?.pending_approvals ?? data?.pending_review_submissions ?? 0;
   const rejectedCount = data?.rejected_content ?? data?.rejected_submissions ?? 0;
 
+  const handleExportAnalyticsCSV = () => {
+    const rows = [
+      ['BRANDGUARD AI — GOVERNANCE ANALYTICS REPORT'],
+      ['Generated At (UTC)', new Date().toISOString()],
+      ['Organization', user?.organization || 'Enterprise'],
+      [],
+      ['Metric', 'Value'],
+      ['Total Submissions', totalReviewed],
+      ['Approved Assets', approvedCount],
+      ['Pending Review', pendingCount],
+      ['Rejected / Returned', rejectedCount],
+      ['Average Compliance Score', `${avgScore}%`],
+      ['Total Violations Detected', totalViolations],
+      ['Critical Severity Violations', criticalViolations],
+      ['AI Remediations Offered', suggestionsGenerated],
+      ['Remediation Adoption Rate', `${acceptanceRate}%`],
+      [],
+      ['Compliance Category', 'Violation Count'],
+      ...violationsData.map((v: any) => [v.category, v.count]),
+      [],
+      ['Severity Level', 'Count'],
+      ...severityData.map((s: any) => [s.severity, s.count]),
+    ];
+    const csvContent = 'data:text/csv;charset=utf-8,' + rows.map((e) => e.map((cell: any) => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `brandguard_analytics_summary_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <AppLayout pageTitle="Analytics & Governance" breadcrumbs={[{ label: 'Analytics & Governance' }]}>
       <div className="space-y-6">
@@ -120,14 +153,24 @@ export default function AnalyticsDashboardPage() {
             </p>
           </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={loadAnalytics}
-            leftIcon={<RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />}
-          >
-            Refresh Data
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportAnalyticsCSV}
+              leftIcon={<Download className="w-3.5 h-3.5" />}
+            >
+              Export CSV
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={loadAnalytics}
+              leftIcon={<RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />}
+            >
+              Refresh Data
+            </Button>
+          </div>
         </div>
 
         {/* 10 KPI Cards in 2 Rows */}
@@ -219,7 +262,7 @@ export default function AnalyticsDashboardPage() {
               <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Active Rules</span>
                 <div className="text-xl font-bold text-blue-600 dark:text-blue-400 mt-1">
-                  12
+                  {data?.active_guidelines_count ?? data?.total_guidelines ?? '—'}
                 </div>
                 <span className="text-[10px] text-blue-500/80 mt-0.5 block">Enforced brand guidelines</span>
               </div>
@@ -314,15 +357,25 @@ export default function AnalyticsDashboardPage() {
               <TrendingUp className="w-4 h-4 text-purple-500" />
             </div>
 
-            <div className="h-64">
-              <DynamicLineChart
-                data={timelineData.map((d: any) => ({ name: d.timestamp, score: d.score }))}
-                lines={[{ dataKey: 'score', color: '#6366F1', name: 'Compliance Score (%)' }]}
-                height={256}
-                domain={[0, 100]}
-                showLegend={false}
-              />
-            </div>
+            {timelineData.length === 0 ? (
+              <div className="h-64 flex items-center justify-center">
+                <EmptyState
+                  icon={TrendingUp}
+                  title="No trend timeline"
+                  description="Score progression will appear after multiple submission cycles."
+                />
+              </div>
+            ) : (
+              <div className="h-64">
+                <DynamicLineChart
+                  data={timelineData.map((d: any) => ({ name: d.timestamp, score: d.score }))}
+                  lines={[{ dataKey: 'score', color: '#6366F1', name: 'Compliance Score (%)' }]}
+                  height={256}
+                  domain={[0, 100]}
+                  showLegend={false}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

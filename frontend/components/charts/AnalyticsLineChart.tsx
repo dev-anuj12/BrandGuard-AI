@@ -26,6 +26,14 @@ export default function AnalyticsLineChart({
   domain,
   showLegend = true,
 }: AnalyticsLineChartProps) {
+  if (!data || data.length === 0) {
+    return (
+      <div style={{ width: '100%', height }} className="flex items-center justify-center text-xs text-slate-400">
+        No timeline telemetry recorded
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: '100%', height }}>
       <ResponsiveContainer width="100%" height="100%">

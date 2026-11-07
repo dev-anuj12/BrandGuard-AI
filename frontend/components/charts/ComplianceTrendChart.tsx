@@ -9,6 +9,14 @@ export interface ComplianceTrendChartProps {
 }
 
 export default function ComplianceTrendChart({ data, height = 180 }: ComplianceTrendChartProps) {
+  if (!data || data.length === 0) {
+    return (
+      <div style={{ width: '100%', height }} className="flex items-center justify-center text-xs text-slate-400">
+        No trend telemetry available
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: '100%', height }}>
       <ResponsiveContainer width="100%" height="100%">

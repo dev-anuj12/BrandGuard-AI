@@ -16,6 +16,14 @@ export default function ThreatCategoryPieChart({
   colors = DEFAULT_COLORS,
   height = 176,
 }: ThreatCategoryPieChartProps) {
+  if (!data || data.length === 0 || data.every((d) => d.value === 0)) {
+    return (
+      <div style={{ width: '100%', height }} className="flex items-center justify-center text-xs text-slate-400">
+        No active threat telemetry recorded
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: '100%', height }}>
       <ResponsiveContainer width="100%" height="100%">

@@ -22,6 +22,14 @@ export default function AnalyticsBarChart({
   height = 220,
   layout = 'horizontal',
 }: AnalyticsBarChartProps) {
+  if (!data || data.length === 0) {
+    return (
+      <div style={{ width: '100%', height }} className="flex items-center justify-center text-xs text-slate-400">
+        No bar chart telemetry available
+      </div>
+    );
+  }
+
   if (layout === 'vertical') {
     return (
       <div style={{ width: '100%', height }}>
