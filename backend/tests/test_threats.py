@@ -5,7 +5,7 @@ from app.main import app
 client = TestClient(app)
 
 def get_admin_token():
-    res = client.post("/api/v1/auth/login", json={"email": "admin@finnova.com", "password": "Admin@123"})
+    res = client.post("/api/v1/auth/login", json={"email": "admin@brandguard.io", "password": "Admin@123"})
     assert res.status_code == 200
     return res.json()["access_token"]
 

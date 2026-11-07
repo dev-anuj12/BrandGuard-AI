@@ -38,9 +38,9 @@ def test_levenshtein_distance():
 
 
 def test_official_brand_domain_evaluation():
-    """Verify the official FinNova canonical domain evaluates as safe with 0 risk."""
+    """Verify the official canonical domain evaluates as safe with 0 risk."""
     analyzer = DomainAnalyzer()
-    res = analyzer.analyze_domain("https://finnova.com")
+    res = analyzer.analyze_domain("https://brandguard.io")
     assert res["risk_level"] == ThreatRiskLevel.INFO
     assert res["risk_score"] == 0.0
     assert res["similarity_score"] == 100.0
@@ -49,7 +49,7 @@ def test_official_brand_domain_evaluation():
 def test_phishing_lookalike_domain_evaluation():
     """Verify high-risk phishing and lookalike domain detection."""
     analyzer = DomainAnalyzer()
-    res = analyzer.analyze_domain("https://finnova-secure-login.cc")
+    res = analyzer.analyze_domain("https://brandguard-secure-login.cc")
     assert res["risk_score"] >= 60.0
     assert res["risk_level"] in (ThreatRiskLevel.HIGH, ThreatRiskLevel.CRITICAL)
     assert res["credential_harvesting_detected"] is True

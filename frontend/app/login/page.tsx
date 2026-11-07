@@ -67,24 +67,24 @@ export default function LoginPage() {
   const handleRolePreset = (role: 'CREATOR' | 'REVIEWER' | 'MANAGER' | 'ADMIN') => {
     switch (role) {
       case 'CREATOR':
-        setEmail('creator@finnova.com');
+        setEmail('creator@brandguard.io');
         setPassword('Creator@123');
-        performLogin('creator@finnova.com', 'Creator@123');
+        performLogin('creator@brandguard.io', 'Creator@123');
         break;
       case 'REVIEWER':
-        setEmail('reviewer@finnova.com');
+        setEmail('reviewer@brandguard.io');
         setPassword('Reviewer@123');
-        performLogin('reviewer@finnova.com', 'Reviewer@123');
+        performLogin('reviewer@brandguard.io', 'Reviewer@123');
         break;
       case 'MANAGER':
-        setEmail('manager@finnova.com');
+        setEmail('manager@brandguard.io');
         setPassword('Manager@123');
-        performLogin('manager@finnova.com', 'Manager@123');
+        performLogin('manager@brandguard.io', 'Manager@123');
         break;
       case 'ADMIN':
-        setEmail('admin@finnova.com');
+        setEmail('admin@brandguard.io');
         setPassword('Admin@123');
-        performLogin('admin@finnova.com', 'Admin@123');
+        performLogin('admin@brandguard.io', 'Admin@123');
         break;
     }
   };
@@ -136,7 +136,7 @@ export default function LoginPage() {
                 className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 transition"
               >
                 <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Creator</span>
-                <span className="text-[10px] text-slate-400 font-mono block">creator@finnova.com</span>
+                <span className="text-[10px] text-slate-400 font-mono block">creator@brandguard.io</span>
               </button>
 
               <button
@@ -146,7 +146,7 @@ export default function LoginPage() {
                 className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-400 transition"
               >
                 <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Reviewer</span>
-                <span className="text-[10px] text-slate-400 font-mono block">reviewer@finnova.com</span>
+                <span className="text-[10px] text-slate-400 font-mono block">reviewer@brandguard.io</span>
               </button>
 
               <button
@@ -156,7 +156,7 @@ export default function LoginPage() {
                 className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-400 transition"
               >
                 <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Manager</span>
-                <span className="text-[10px] text-slate-400 font-mono block">manager@finnova.com</span>
+                <span className="text-[10px] text-slate-400 font-mono block">manager@brandguard.io</span>
               </button>
 
               <button
@@ -166,7 +166,7 @@ export default function LoginPage() {
                 className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-emerald-400 transition"
               >
                 <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Admin</span>
-                <span className="text-[10px] text-slate-400 font-mono block">admin@finnova.com</span>
+                <span className="text-[10px] text-slate-400 font-mono block">admin@brandguard.io</span>
               </button>
             </div>
           </details>

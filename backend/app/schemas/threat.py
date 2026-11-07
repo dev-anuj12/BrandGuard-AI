@@ -17,7 +17,7 @@ class ThreatItemBase(BaseModel):
     category: ThreatCategory
     title: str
     source_url: str
-    target_brand: str = "FinNova Financial Technologies"
+    target_brand: str = "BrandGuard Demo Enterprise"
     risk_level: ThreatRiskLevel
     confidence_score: float = 85.0
     explanation: str

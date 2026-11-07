@@ -12,15 +12,16 @@ from app.models.threat import ThreatItem, ThreatEvidence, DomainScan
 from app.models.enums import ThreatCategory, ThreatRiskLevel, ThreatStatus
 from app.schemas.threat import DomainFinding, DomainScanReport
 from app.protection.ssrf_guard import validate_and_resolve_url, SSRFSecurityError
+from app.core.config import settings
 
-# Canonical FinNova brand parameters
-BRAND_NAME = "FinNova Financial Technologies"
-BRAND_CANONICAL_DOMAIN = "finnova.com"
-BRAND_STEM = "finnova"
+# Brand parameters — driven by settings; demo values used as fallback
+BRAND_NAME = settings.DEMO_COMPANY_NAME
+BRAND_CANONICAL_DOMAIN = "brandguard.io"
+BRAND_STEM = "brandguard"
 
 BRAND_KEYWORDS = [
-    "finnova", "fin-nova", "finnovapay", "finnovatech",
-    "finnovawallet", "finnovasecure", "finnovabank"
+    "brandguard", "brand-guard", "brandguardpay", "brandguardtech",
+    "brandguardwallet", "brandguardsecure", "brandguardapp"
 ]
 
 HIGH_RISK_TLDS = {
@@ -300,7 +301,7 @@ class DomainAnalyzer:
                     category="Phishing Threat",
                     severity="CRITICAL",
                     title="Interactive Login / Password Extraction Portal",
-                    description="Endpoint renders unauthorized FinNova-branded authentication form capturing user credentials and session tokens.",
+                    description="Endpoint renders unauthorized branded authentication form capturing user credentials and session tokens.",
                     evidence=f"Target URL path triggers credential harvesting heuristics at {lower_host}",
                     recommendation="Dispatch urgent takedown notice to hosting ISP and block traffic at corporate boundary."
                 )

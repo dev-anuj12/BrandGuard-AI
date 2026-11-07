@@ -168,7 +168,7 @@ def get_domain_scan_detail(scan_id: int, db: Session = Depends(get_db)):
         homoglyphs_detected=[],
         typosquatting_detected=scan.similarity_score > 70.0 and scan.similarity_score < 100.0,
         credential_harvesting_detected=scan.risk_score >= 70.0,
-        brand_keywords_found=[kw for kw in ["brandguard", "brand", "finnova", "secure", "login"] if kw in scan.domain_name.lower()],
+        brand_keywords_found=[kw for kw in ["brandguard", "brand", "secure", "login"] if kw in scan.domain_name.lower()],
         findings=findings_list,
         recommended_action=(
             "Initiate immediate registrar takedown and UDRP arbitration."
