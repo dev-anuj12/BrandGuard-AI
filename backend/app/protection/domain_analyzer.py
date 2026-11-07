@@ -3,6 +3,7 @@ import socket
 import ssl
 import json
 import datetime
+from datetime import timezone
 import urllib.parse
 from typing import Dict, List, Tuple, Optional, Any
 from sqlalchemy.orm import Session
@@ -368,7 +369,7 @@ class DomainAnalyzer:
                 threat_code = existing_threat.threat_code
             else:
                 # Generate unique threat code
-                year = datetime.datetime.utcnow().year
+                year = datetime.datetime.now(timezone.utc).year
                 count = db.query(ThreatItem).count() + 1
                 threat_code = f"THR-{year}-{count:03d}"
 
@@ -393,7 +394,7 @@ class DomainAnalyzer:
                         f"Primary flags: {', '.join([f.title for f in analysis['findings'][:2]])}."
                     ),
                     recommended_action=analysis["recommended_action"],
-                    detected_at=datetime.datetime.utcnow()
+                    detected_at=datetime.datetime.now(timezone.utc)
                 )
                 db.add(new_threat)
                 db.flush()  # populate new_threat.id
@@ -412,7 +413,7 @@ class DomainAnalyzer:
                     threat_id=new_threat.id,
                     evidence_type="DOMAIN_DIAGNOSTICS",
                     data_payload=json.dumps(evidence_payload),
-                    created_at=datetime.datetime.utcnow()
+                    created_at=datetime.datetime.now(timezone.utc)
                 )
                 db.add(evidence)
 
@@ -432,7 +433,7 @@ class DomainAnalyzer:
             risk_score=analysis["risk_score"],
             findings_json=findings_serialized,
             threat_id=threat_id,
-            created_at=datetime.datetime.utcnow()
+            created_at=datetime.datetime.now(timezone.utc)
         )
         db.add(scan_record)
         db.commit()

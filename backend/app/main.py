@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -7,12 +8,20 @@ from app.core.config import settings
 from app.database.init_db import init_db
 from app.api.v1 import auth, users, guidelines, content, review, approvals, analytics, threats, protection_domains, protection_social, protection_products
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Initialize database and seed demo data
+    init_db()
+    yield
+    # Shutdown: nothing to clean up currently
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
     description="An intelligent brand compliance and content governance platform that helps organizations review, validate, manage and approve brand-related content using AI-assisted analysis and human oversight.",
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
+    lifespan=lifespan,
 )
 
 # Security Headers Middleware
@@ -38,11 +47,6 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["*"],
 )
-
-# Startup event: Initialize database and seed demo data
-@app.on_event("startup")
-def on_startup():
-    init_db()
 
 # Health Check APIs
 @app.get("/health", tags=["System"])

@@ -1,17 +1,17 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from app.models.enums import UserRole
 
 class UserBase(BaseModel):
     email: EmailStr
     full_name: str
     role: UserRole = UserRole.CREATOR
-    organization: str = "FinNova Financial Technologies"
+    organization: str = "BrandGuard Demo Enterprise"
 
 class UserCreate(UserBase):
     password: str
-    organization: Optional[str] = "FinNova Financial Technologies"
+    organization: Optional[str] = "BrandGuard Demo Enterprise"
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -23,12 +23,11 @@ class UserUpdate(BaseModel):
     is_active: Optional[bool] = None
 
 class UserOut(UserBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     is_active: bool
     created_at: datetime
-
-    class Config:
-        from_attributes = True
 
 class Token(BaseModel):
     access_token: str
@@ -38,4 +37,3 @@ class Token(BaseModel):
 class TokenPayload(BaseModel):
     sub: Optional[str] = None
     role: Optional[str] = None
-

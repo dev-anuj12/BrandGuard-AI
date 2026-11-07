@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional, List, Any
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from app.models.enums import FindingCategory, SeverityLevel, SuggestionStatus
 
 class SuggestionAction(BaseModel):
@@ -11,6 +11,8 @@ class FindingOverrideRequest(BaseModel):
     reason: str
 
 class SuggestionOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     finding_id: int
     original_text: str
@@ -19,10 +21,9 @@ class SuggestionOut(BaseModel):
     status: SuggestionStatus
     applied_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
-
 class FindingOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     review_id: int
     category: FindingCategory
@@ -38,10 +39,9 @@ class FindingOut(BaseModel):
     engine_source: str
     suggestions: List[SuggestionOut] = []
 
-    class Config:
-        from_attributes = True
-
 class AIReviewOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     content_id: int
     revision_id: Optional[int] = None
@@ -51,7 +51,3 @@ class AIReviewOut(BaseModel):
     provider: str
     created_at: datetime
     findings: List[FindingOut] = []
-
-    class Config:
-        from_attributes = True
-

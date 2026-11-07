@@ -1,12 +1,14 @@
 from datetime import datetime
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from app.models.enums import ApprovalAction
 
 class CommentCreate(BaseModel):
     comment_text: str
 
 class CommentOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     content_id: int
     user_id: int
@@ -15,14 +17,13 @@ class CommentOut(BaseModel):
     comment_text: str
     created_at: datetime
 
-    class Config:
-        from_attributes = True
-
 class ApprovalDecision(BaseModel):
     action: ApprovalAction
     comments: Optional[str] = None
 
 class ApprovalOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     content_id: int
     manager_id: int
@@ -31,14 +32,13 @@ class ApprovalOut(BaseModel):
     comments: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
-
 class ReviewerVerificationDecision(BaseModel):
     action: str  # 'verify', 'request_changes'
     comments: Optional[str] = None
 
 class ReviewerAssignmentOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     content_id: int
     reviewer_id: int
@@ -47,10 +47,9 @@ class ReviewerAssignmentOut(BaseModel):
     created_at: datetime
     completed_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
-
 class AuditLogOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     user_id: Optional[int] = None
     user_email: Optional[str] = None
@@ -59,7 +58,3 @@ class AuditLogOut(BaseModel):
     entity_id: Optional[int] = None
     details: Optional[str] = None
     created_at: datetime
-
-    class Config:
-        from_attributes = True
-

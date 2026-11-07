@@ -1,6 +1,7 @@
 import re
 import json
 import datetime
+from datetime import timezone
 from typing import Dict, List, Optional, Any
 from sqlalchemy.orm import Session
 
@@ -267,7 +268,7 @@ class SocialMediaScanner:
                 threat_id = existing.id
                 threat_code = existing.threat_code
             else:
-                year = datetime.datetime.utcnow().year
+                year = datetime.datetime.now(timezone.utc).year
                 count = db.query(ThreatItem).count() + 1
                 threat_code = f"THR-{year}-{count:03d}"
 
@@ -286,7 +287,7 @@ class SocialMediaScanner:
                         f"Findings: {', '.join([f['title'] for f in analysis['findings'][:2]])}."
                     ),
                     recommended_action=analysis["recommended_action"],
-                    detected_at=datetime.datetime.utcnow()
+                    detected_at=datetime.datetime.now(timezone.utc)
                 )
                 db.add(new_threat)
                 db.flush()
@@ -305,7 +306,7 @@ class SocialMediaScanner:
                     threat_id=new_threat.id,
                     evidence_type="SOCIAL_PROFILE_METADATA",
                     data_payload=json.dumps(evidence_payload),
-                    created_at=datetime.datetime.utcnow()
+                    created_at=datetime.datetime.now(timezone.utc)
                 )
                 db.add(evidence)
                 db.commit()

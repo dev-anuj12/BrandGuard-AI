@@ -1,18 +1,17 @@
 from datetime import datetime
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from app.models.enums import ContentStatus
 
 class ContentRevisionOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     version: int
     body: str
     revised_by_id: int
     change_summary: Optional[str] = None
     created_at: datetime
-
-    class Config:
-        from_attributes = True
 
 class ContentBase(BaseModel):
     title: str
@@ -32,6 +31,8 @@ class ContentUpdate(BaseModel):
     change_summary: Optional[str] = None
 
 class ContentOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     title: str
     original_body: str
@@ -40,14 +41,10 @@ class ContentOut(BaseModel):
     target_audience: str
     status: ContentStatus
     creator_id: int
-    organization: str = "FinNova Financial Technologies"
+    organization: str = "BrandGuard Demo Enterprise"
     creator_name: Optional[str] = None
     created_at: datetime
     updated_at: datetime
     revisions_count: int = 0
     latest_score: Optional[float] = None
     latest_review_id: Optional[int] = None
-
-    class Config:
-        from_attributes = True
-

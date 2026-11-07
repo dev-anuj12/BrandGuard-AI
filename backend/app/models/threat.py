@@ -1,4 +1,5 @@
 import datetime
+from datetime import timezone
 from sqlalchemy import Column, Integer, String, Text, Float, Boolean, DateTime, ForeignKey, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from app.database.session import Base
@@ -21,7 +22,7 @@ class ThreatItem(Base):
     recommended_action = Column(Text, nullable=True)
     
     assigned_to_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    detected_at = Column(DateTime, default=datetime.datetime.utcnow, index=True)
+    detected_at = Column(DateTime, default=lambda: datetime.datetime.now(timezone.utc), index=True)
     resolved_at = Column(DateTime, nullable=True)
     
     # Relationships
@@ -37,7 +38,7 @@ class ThreatEvidence(Base):
     threat_id = Column(Integer, ForeignKey("threat_items.id"), nullable=False, index=True)
     evidence_type = Column(String(50), nullable=False)  # WHOIS, SSL_CERT, DOM_SNAPSHOT, IMAGE_HASH, SCREENSHOT
     data_payload = Column(Text, nullable=False)  # JSON or structured evidence string
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.datetime.now(timezone.utc))
 
     threat = relationship("ThreatItem", back_populates="evidence_items")
 
@@ -58,7 +59,7 @@ class DomainScan(Base):
     findings_json = Column(Text, nullable=True)
     
     threat_id = Column(Integer, ForeignKey("threat_items.id"), nullable=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow, index=True)
+    created_at = Column(DateTime, default=lambda: datetime.datetime.now(timezone.utc), index=True)
 
     threat = relationship("ThreatItem", back_populates="domain_scans")
 
@@ -72,7 +73,7 @@ class BrandAsset(Base):
     image_path = Column(String(255), nullable=True)
     perceptual_hash = Column(String(64), nullable=True)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.datetime.now(timezone.utc))
 
 
 class BrandProduct(Base):
@@ -84,5 +85,5 @@ class BrandProduct(Base):
     official_msrp = Column(Float, nullable=False)
     authorized_distributors = Column(Text, nullable=True)  # JSON array string
     reference_image_path = Column(String(255), nullable=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.datetime.now(timezone.utc))
 

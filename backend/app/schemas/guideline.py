@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from app.models.enums import SeverityLevel
 
 # Guidelines
@@ -24,12 +24,11 @@ class BrandGuidelineUpdate(BaseModel):
     is_active: Optional[bool] = None
 
 class BrandGuidelineOut(BrandGuidelineBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True
 
 # Approved Sources
 class ApprovedSourceBase(BaseModel):
@@ -43,11 +42,10 @@ class ApprovedSourceCreate(ApprovedSourceBase):
     pass
 
 class ApprovedSourceOut(ApprovedSourceBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     created_at: datetime
-
-    class Config:
-        from_attributes = True
 
 # Approved Facts
 class ApprovedFactBase(BaseModel):
@@ -61,12 +59,11 @@ class ApprovedFactCreate(ApprovedFactBase):
     pass
 
 class ApprovedFactOut(ApprovedFactBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     created_at: datetime
     source_name: Optional[str] = None
-
-    class Config:
-        from_attributes = True
 
 # Banned Words
 class BannedWordBase(BaseModel):
@@ -89,11 +86,10 @@ class BannedWordUpdate(BaseModel):
     is_active: Optional[bool] = None
 
 class BannedWordOut(BannedWordBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     created_at: datetime
-
-    class Config:
-        from_attributes = True
 
 # Terminology
 class ApprovedTerminologyBase(BaseModel):
@@ -106,9 +102,7 @@ class ApprovedTerminologyCreate(ApprovedTerminologyBase):
     pass
 
 class ApprovedTerminologyOut(ApprovedTerminologyBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     created_at: datetime
-
-    class Config:
-        from_attributes = True
-

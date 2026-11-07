@@ -1,4 +1,5 @@
 import datetime
+from datetime import timezone
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
@@ -78,7 +79,7 @@ def update_threat_status(
     if payload.status:
         threat.status = payload.status
         if payload.status == ThreatStatus.RESOLVED:
-            threat.resolved_at = datetime.datetime.utcnow()
+            threat.resolved_at = datetime.datetime.now(timezone.utc)
 
     if payload.risk_level:
         threat.risk_level = payload.risk_level
@@ -110,7 +111,7 @@ def create_threat_incident(
 ):
     # Generate unique threat code
     count = db.query(ThreatItem).count() + 1
-    year = datetime.datetime.utcnow().year
+    year = datetime.datetime.now(timezone.utc).year
     code = f"THR-{year}-{count:03d}"
 
     threat = ThreatItem(
