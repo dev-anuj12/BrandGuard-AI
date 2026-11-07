@@ -2,7 +2,7 @@ function getApiBase(): string {
   let base = process.env.NEXT_PUBLIC_API_URL;
   if (!base) {
     if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      return 'https://brandguard-backend.onrender.com';
+      return 'https://brandguard-backend-k3ri.onrender.com';
     }
     return 'http://localhost:8000';
   }
