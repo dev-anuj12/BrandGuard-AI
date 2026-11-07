@@ -21,12 +21,12 @@ SUPPORTED_PLATFORMS = {
 }
 
 OFFICIAL_VERIFIED_HANDLES = {
-    "twitter": ["finnovahq", "finnovatech", "finnovaofficial"],
-    "x": ["finnovahq", "finnovatech", "finnovaofficial"],
-    "instagram": ["finnova.official", "finnova_hq"],
-    "linkedin": ["finnova-financial-technologies", "finnova"],
-    "telegram": ["finnova_announcements"],
-    "youtube": ["finnovatech"]
+    "twitter": ["brandguardhq", "brandguardtech", "brandguardofficial"],
+    "x": ["brandguardhq", "brandguardtech", "brandguardofficial"],
+    "instagram": ["brandguard.official", "brandguard_hq"],
+    "linkedin": ["brandguard-ai", "brandguard"],
+    "telegram": ["brandguard_announcements"],
+    "youtube": ["brandguardtech"]
 }
 
 SCAM_INTENT_PATTERNS = [
@@ -52,7 +52,7 @@ class SocialMediaScanner:
     unverified lookalike handles, and financial scam bio language.
     """
 
-    def __init__(self, brand_name: str = "FinNova", official_canonical: str = "finnovahq"):
+    def __init__(self, brand_name: str = "BrandGuard", official_canonical: str = "brandguardhq"):
         self.brand_name = brand_name.lower()
         self.official_canonical = official_canonical.lower()
 
@@ -277,7 +277,7 @@ class SocialMediaScanner:
                     category=ThreatCategory.SOCIAL_IMPERSONATION,
                     title=f"Social Impersonation: {analysis['platform']} {analysis['handle']}",
                     source_url=analysis["profile_url"],
-                    target_brand="FinNova Financial Technologies",
+                    target_brand="BrandGuard Demo Enterprise",
                     risk_level=analysis["risk_level"],
                     confidence_score=analysis["risk_score"],
                     status=ThreatStatus.UNDER_INVESTIGATION,

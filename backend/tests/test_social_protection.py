@@ -8,8 +8,8 @@ def test_official_social_profile_evaluation():
     scanner = SocialMediaScanner()
     res = scanner.analyze_profile(
         platform="twitter",
-        handle="finnovahq",
-        display_name="FinNova Financial Technologies",
+        handle="brandguardhq",
+        display_name="BrandGuard AI Enterprise",
         is_verified=True
     )
     assert res["risk_level"] == ThreatRiskLevel.INFO
@@ -22,8 +22,8 @@ def test_impersonation_fake_support_bot():
     scanner = SocialMediaScanner()
     res = scanner.analyze_profile(
         platform="telegram",
-        handle="finnova_support_desk",
-        display_name="FinNova Official Support Desk",
+        handle="brandguard_support_desk",
+        display_name="BrandGuard Official Support Desk",
         bio_text="Official 24/7 Support Desk. DM for wallet recovery and KYC validation. Send deposit to verify.",
         is_verified=False
     )
@@ -39,10 +39,9 @@ def test_homoglyph_in_social_handle():
     # Using Cyrillic 'а' (\u0430)
     res = scanner.analyze_profile(
         platform="twitter",
-        handle="finn\u0430va_care",
-        display_name="FinNova Care",
+        handle="br\u0430ndguard_care",
+        display_name="BrandGuard Care",
         is_verified=False
     )
     assert res["risk_score"] >= 60.0
     assert any(f["rule_id"] == "SOC-HOMOGLYPH-002" for f in res["findings"])
-

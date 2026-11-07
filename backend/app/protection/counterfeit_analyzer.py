@@ -58,8 +58,8 @@ class CounterfeitAnalyzer:
 
         # Fallback reference price if unknown product
         official_msrp = product.official_msrp if product else 199.99
-        matched_product_name = product.product_name if product else "FinNova SecureKey Token (Inferred)"
-        matched_sku = product.sku if product else "FN-SEC-01"
+        matched_product_name = product.product_name if product else "BrandGuard SecureKey Token (Inferred)"
+        matched_sku = product.sku if product else "BG-SEC-01"
 
         authorized_distributors = []
         if product and product.authorized_distributors:
@@ -100,7 +100,7 @@ class CounterfeitAnalyzer:
         # Step 2: Seller Authorization Check
         is_official_brand = any(
             token in seller_name.lower() 
-            for token in ["finnova official", "official finnova", "finnova web", "finnova technologies", "finnova mobile"]
+            for token in ["brandguard official", "official brandguard", "brandguard web", "brandguard technologies", "brandguard mobile"]
         )
         is_authorized_seller = is_official_brand or any(
             seller_name.lower() == auth.lower() or auth.lower() in seller_name.lower() 
@@ -227,7 +227,7 @@ class CounterfeitAnalyzer:
                     category=ThreatCategory.COUNTERFEIT_PRODUCT,
                     title=f"Counterfeit Listing: {marketplace} - {listing_title[:60]}",
                     source_url=listing_url,
-                    target_brand="FinNova Financial Technologies",
+                    target_brand="BrandGuard Demo Enterprise",
                     risk_level=analysis["risk_level"],
                     confidence_score=analysis["risk_score"],
                     status=ThreatStatus.UNDER_INVESTIGATION,
@@ -315,7 +315,7 @@ class LogoMisuseAnalyzer:
                 "rule_id": "LOGO-COLOR-ALTERATION-003",
                 "severity": "HIGH",
                 "title": "Brand Guidelines Color Palette Violation",
-                "description": "Logo colors deviate from FinNova corporate brand standards (Mandatory: FinNova Blue #0052FF, Slate #0B0F19).",
+                "description": "Logo colors deviate from corporate brand standards (Mandatory: Brand Blue #0052FF, Slate #0B0F19).",
                 "evidence": "Modified fill/stroke colors detected on asset",
                 "recommendation": "Provide official SVG brand asset kit and require asset replacement."
             })
@@ -432,7 +432,7 @@ class LogoMisuseAnalyzer:
                     category=ThreatCategory.UNAUTHORIZED_LOGO,
                     title=f"Unauthorized Logo Misuse: {partner_name}",
                     source_url=host_url,
-                    target_brand="FinNova Financial Technologies",
+                    target_brand="BrandGuard Demo Enterprise",
                     risk_level=analysis["risk_level"],
                     confidence_score=analysis["risk_score"],
                     status=ThreatStatus.UNDER_INVESTIGATION,

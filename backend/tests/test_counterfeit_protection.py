@@ -12,12 +12,12 @@ def test_counterfeit_severe_discount():
         res = analyzer.analyze_listing(
             db=db,
             marketplace="AliExpress",
-            listing_title="FinNova SecureKey Token 1:1 replica clone hardware wallet",
+            listing_title="BrandGuard SecureKey Token 1:1 replica clone hardware wallet",
             listing_url="https://aliexpress.com/item/100500912",
             seller_name="Shenzhen Discount Tech Ltd",
             listed_price=24.99,
-            sku_or_product_id="FN-SEC-01",
-            description="OEM factory surplus 1:1 copy of FinNova hardware token."
+            sku_or_product_id="BG-SEC-01",
+            description="OEM factory surplus 1:1 copy of BrandGuard hardware token."
         )
         assert res["risk_score"] >= 80.0
         assert res["risk_level"] == ThreatRiskLevel.CRITICAL
@@ -36,12 +36,12 @@ def test_authorized_distributor_listing():
         res = analyzer.analyze_listing(
             db=db,
             marketplace="Amazon",
-            listing_title="FinNova SecureKey Hardware Token - Official Edition",
+            listing_title="BrandGuard SecureKey Hardware Token - Official Edition",
             listing_url="https://amazon.com/dp/B09XYZ",
-            seller_name="FinNova Official Store",
+            seller_name="BrandGuard Official Store",
             listed_price=199.99,
-            sku_or_product_id="FN-SEC-01",
-            description="Official authenticated hardware token directly from FinNova."
+            sku_or_product_id="BG-SEC-01",
+            description="Official authenticated hardware token directly from BrandGuard."
         )
         assert res["risk_score"] == 0.0
         assert res["risk_level"] == ThreatRiskLevel.INFO
@@ -59,7 +59,7 @@ def test_logo_misuse_unauthorized_partner():
             db=db,
             partner_name="Apex High-Yield Lending Portal",
             host_url="https://apexyields.cc",
-            asset_name="FinNova Primary Emblem",
+            asset_name="BrandGuard Primary Emblem",
             has_written_authorization=False,
             is_color_palette_modified=True,
             placed_on_unauthorized_collateral=True
@@ -69,4 +69,3 @@ def test_logo_misuse_unauthorized_partner():
         assert res["has_written_authorization"] is False
     finally:
         db.close()
-
