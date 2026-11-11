@@ -59,5 +59,6 @@ class AIReviewOut(BaseModel):
     overall_status: str
     summary: Optional[str] = None
     provider: str
+    analysis_mode: str = "rules"
     created_at: datetime
     findings: List[FindingOut] = []

@@ -227,6 +227,16 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
               <span>Violations Detected: <strong className="text-slate-700 dark:text-white">{review.findings?.length || 0}</strong></span>
               <span>•</span>
               <span>Auditor Engine: <strong className="text-slate-700 dark:text-slate-200">{review.provider}</strong></span>
+              <span>•</span>
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${
+                review.analysis_mode === 'ai'
+                  ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+                  : review.analysis_mode === 'combined'
+                  ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700'
+              }`}>
+                {review.analysis_mode === 'ai' ? '🤖 AI Mode' : review.analysis_mode === 'combined' ? '⚡ Combined' : '📋 Rules Mode'}
+              </span>
             </div>
           </div>
         </div>

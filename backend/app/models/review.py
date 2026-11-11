@@ -14,6 +14,7 @@ class AIReview(Base):
     overall_status = Column(String(50), default="Completed") # Completed, Partial, Fallback
     summary = Column(Text, nullable=True)
     provider = Column(String(50), default="Rule + AI Engine")
+    analysis_mode = Column(String(20), default="rules")  # 'rules', 'ai', 'combined'
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     # Relationships

@@ -320,3 +320,22 @@ def get_unified_analytics(
         recent_activities=recent_activities,
         recent_threats=recent_threats
     )
+
+
+@router.get("/benchmark")
+def get_benchmark_results(
+    current_user: User = Depends(get_current_user)
+):
+    """Return saved benchmark results from benchmark/results/final_test.json (read-only, no rerun)."""
+    import json
+    import os
+    results_path = os.path.join(
+        os.path.dirname(__file__),
+        "..", "..", "..", "..", "benchmark", "results", "final_test.json"
+    )
+    results_path = os.path.normpath(results_path)
+    if not os.path.exists(results_path):
+        return {"error": "Benchmark results not yet generated. Run benchmark/run.py first.", "modes": {}}
+    with open(results_path, "r") as f:
+        data = json.load(f)
+    return data

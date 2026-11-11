@@ -48,7 +48,8 @@ async def trigger_ai_review(
         overall_score=review_result["overall_score"],
         overall_status=review_result["overall_status"],
         summary=review_result["summary"],
-        provider=review_result["provider"]
+        provider=review_result["provider"],
+        analysis_mode=review_result.get("analysis_mode", "rules")
     )
     db.add(review)
     db.commit()

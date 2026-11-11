@@ -45,6 +45,13 @@ def ensure_finding_grounding_columns() -> None:
             except Exception:
                 pass
 
+        # Add analysis_mode to ai_reviews
+        try:
+            conn.execute(text("ALTER TABLE ai_reviews ADD COLUMN analysis_mode VARCHAR(20) DEFAULT 'rules'"))
+            conn.commit()
+        except Exception:
+            pass
+
 def ensure_workflow_columns() -> None:
     """Idempotently ensure workflow verification, approval, version and audit columns exist."""
     with engine.connect() as conn:

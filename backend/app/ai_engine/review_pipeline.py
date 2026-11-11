@@ -36,6 +36,15 @@ class AIReviewPipeline:
 
         # 3. Run LLM Engine (or its fallback)
         llm_findings = await self.llm_engine.analyze(text)
+        llm_mode = getattr(self.llm_engine, "_last_mode", "rules")
+
+        # Determine analysis_mode: if rule_findings + llm_findings and llm used AI -> combined, else rules
+        if llm_mode == "ai" and rule_findings:
+            analysis_mode = "combined"
+        elif llm_mode == "ai":
+            analysis_mode = "ai"
+        else:
+            analysis_mode = "rules"
 
         # 4. Merge and deduplicate findings (prefer rule engine for identical matched text)
         merged_findings = []
@@ -97,6 +106,7 @@ class AIReviewPipeline:
             "overall_status": "Completed" if score >= 80 else "Changes Required",
             "summary": summary,
             "provider": "Rule Engine + LLM Engine + Citation Validator",
+            "analysis_mode": analysis_mode,
             "findings": merged_findings,
             "grounded_findings": grounded_findings,
             "needs_human_review_findings": needs_review_findings,

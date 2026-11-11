@@ -15,6 +15,7 @@ from app.ai_engine.normalizer import (
 class LLMEngine:
     def __init__(self, db: Session):
         self.db = db
+        self._last_mode = "rules"  # 'rules', 'ai'
 
     async def analyze(self, text: str) -> List[Dict[str, Any]]:
         # Retrieve Brand Guidelines and Approved Facts from DB for grounding
@@ -24,19 +25,24 @@ class LLMEngine:
         guidelines_summary = "\n".join([f"- [{g.category}] {g.title}: {g.description}" for g in guidelines])
         facts_summary = "\n".join([f"- [{f.category}] {f.statement}" for f in facts])
 
-        # Attempt external LLM if key is present
-        if settings.OPENAI_API_KEY and settings.AI_PROVIDER == "openai":
+        # Auto-detect available LLM key regardless of AI_PROVIDER setting
+        if settings.OPENAI_API_KEY:
             try:
-                return await self._call_openai(text, guidelines_summary, facts_summary)
+                findings = await self._call_openai(text, guidelines_summary, facts_summary)
+                self._last_mode = "ai"
+                return findings
             except Exception as e:
                 print(f"[LLM Engine] OpenAI call failed: {e}. Falling back to rule-based fallback.")
-        elif settings.GEMINI_API_KEY and settings.AI_PROVIDER == "gemini":
+        elif settings.GEMINI_API_KEY:
             try:
-                return await self._call_gemini(text, guidelines_summary, facts_summary)
+                findings = await self._call_gemini(text, guidelines_summary, facts_summary)
+                self._last_mode = "ai"
+                return findings
             except Exception as e:
                 print(f"[LLM Engine] Gemini call failed: {e}. Falling back to rule-based fallback.")
 
         # Robust Fallback Engine (Semantic & Heuristic pattern matching against Brand Guidelines)
+        self._last_mode = "rules"
         return self._semantic_fallback_analysis(text, guidelines)
 
     async def _call_openai(self, text: str, guidelines: str, facts: str) -> List[Dict[str, Any]]:
