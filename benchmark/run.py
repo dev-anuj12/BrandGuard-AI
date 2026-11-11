@@ -332,6 +332,11 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
         with open(tuned_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
         print(f"Tuned dev results saved to: {tuned_path}")
+    elif split == "test":
+        final_test_path = results_dir / "final_test.json"
+        with open(final_test_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+        print(f"Final test results saved to: {final_test_path}")
     else:
         # Default dev run saves to after_grounding_v2_dev.json without overwriting baseline, tuned, or v1
         grounding_path = results_dir / "after_grounding_v2_dev.json"
