@@ -22,3 +22,10 @@ The `test` split **must not** be used for model tuning, threshold selection, or 
 
 ## Provenance
 Items were drafted with AI assistance and then reviewed by the team. Unicode lookalike characters in hard positives are intentional and machine-detectable.
+
+## How to Run
+```bash
+python -m benchmark.run --split dev
+python -m benchmark.run --split test --confirm-final  # frozen final evaluation only
+```
+
