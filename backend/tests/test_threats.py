@@ -52,3 +52,29 @@ def test_update_threat_status():
     updated = patch_res.json()
     assert updated["status"] == "Under Investigation"
 
+
+def test_analytics_overview():
+    token = get_admin_token()
+    headers = {"Authorization": f"Bearer {token}"}
+    res = client.get("/api/v1/analytics/overview", headers=headers)
+    assert res.status_code == 200
+    data = res.json()
+    assert "total_content_reviewed" in data
+    assert "total_violations_detected" in data
+    assert "average_review_score" in data
+    assert "status_breakdown" in data
+    assert "severity_breakdown" in data
+    assert "common_violations" in data
+
+
+def test_analytics_benchmark():
+    token = get_admin_token()
+    headers = {"Authorization": f"Bearer {token}"}
+    res = client.get("/api/v1/analytics/benchmark", headers=headers)
+    assert res.status_code == 200
+    data = res.json()
+    assert "modes" in data
+    assert "rules_only" in data["modes"]
+    assert "combined" in data["modes"]
+
+
