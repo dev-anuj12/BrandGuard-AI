@@ -64,31 +64,6 @@ export default function LoginPage() {
     performLogin(email, password);
   };
 
-  const handleRolePreset = (role: 'CREATOR' | 'REVIEWER' | 'MANAGER' | 'ADMIN') => {
-    switch (role) {
-      case 'CREATOR':
-        setEmail('creator@brandguard.io');
-        setPassword('Creator@123');
-        performLogin('creator@brandguard.io', 'Creator@123');
-        break;
-      case 'REVIEWER':
-        setEmail('reviewer@brandguard.io');
-        setPassword('Reviewer@123');
-        performLogin('reviewer@brandguard.io', 'Reviewer@123');
-        break;
-      case 'MANAGER':
-        setEmail('manager@brandguard.io');
-        setPassword('Manager@123');
-        performLogin('manager@brandguard.io', 'Manager@123');
-        break;
-      case 'ADMIN':
-        setEmail('admin@brandguard.io');
-        setPassword('Admin@123');
-        performLogin('admin@brandguard.io', 'Admin@123');
-        break;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
       {/* Top Header */}
@@ -116,61 +91,6 @@ export default function LoginPage() {
             Access your enterprise compliance workspace
           </p>
         </div>
-
-        {/* Developer Seed Shortcuts (Development Environment Only) */}
-        {process.env.NODE_ENV === 'development' && (
-          <details className="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-xs group">
-            <summary className="cursor-pointer font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 select-none flex items-center justify-between">
-              <span className="flex items-center gap-1.5">
-                <Building className="w-3.5 h-3.5 text-indigo-500" />
-                <span>Developer Seed Credentials</span>
-              </span>
-              <span className="text-[10px] text-slate-400 font-mono">Dev Only</span>
-            </summary>
-
-            <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs">
-              <button
-                type="button"
-                onClick={() => handleRolePreset('CREATOR')}
-                disabled={loading}
-                className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 transition"
-              >
-                <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Creator</span>
-                <span className="text-[10px] text-slate-400 font-mono block">creator@brandguard.io</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleRolePreset('REVIEWER')}
-                disabled={loading}
-                className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-400 transition"
-              >
-                <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Reviewer</span>
-                <span className="text-[10px] text-slate-400 font-mono block">reviewer@brandguard.io</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleRolePreset('MANAGER')}
-                disabled={loading}
-                className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-400 transition"
-              >
-                <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Manager</span>
-                <span className="text-[10px] text-slate-400 font-mono block">manager@brandguard.io</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleRolePreset('ADMIN')}
-                disabled={loading}
-                className="p-2 rounded-lg text-left bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-emerald-400 transition"
-              >
-                <span className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px]">Admin</span>
-                <span className="text-[10px] text-slate-400 font-mono block">admin@brandguard.io</span>
-              </button>
-            </div>
-          </details>
-        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card space-y-4">

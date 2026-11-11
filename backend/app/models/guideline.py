@@ -31,6 +31,7 @@ class ApprovedSource(Base):
     url = Column(String(1024), nullable=False)
     source_type = Column(String(50), default="Official Site") # Annual Report, Regulatory Filing, Product Doc
     description = Column(Text, nullable=True)
+    organization = Column(String(100), default="BrandGuard Demo Enterprise", nullable=False, index=True)
     is_verified = Column(Boolean, default=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
@@ -43,6 +44,7 @@ class ApprovedFact(Base):
     id = Column(Integer, primary_key=True, index=True)
     statement = Column(Text, nullable=False)
     category = Column(String(100), nullable=False)
+    organization = Column(String(100), default="BrandGuard Demo Enterprise", nullable=False, index=True)
     source_id = Column(Integer, ForeignKey("approved_sources.id"), nullable=True)
     guideline_id = Column(Integer, ForeignKey("brand_guidelines.id"), nullable=True)
     is_active = Column(Boolean, default=True)
@@ -61,6 +63,7 @@ class BannedWord(Base):
     severity = Column(SQLEnum(SeverityLevel), default=SeverityLevel.HIGH)
     explanation = Column(Text, nullable=False)
     suggested_replacement = Column(String(255), nullable=True)
+    organization = Column(String(100), default="BrandGuard Demo Enterprise", nullable=False, index=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
@@ -71,6 +74,7 @@ class ApprovedTerminology(Base):
     approved_term = Column(String(255), nullable=False)
     incorrect_term = Column(String(255), nullable=False, index=True)
     context = Column(Text, nullable=True)
+    organization = Column(String(100), default="BrandGuard Demo Enterprise", nullable=False, index=True)
     guideline_id = Column(Integer, ForeignKey("brand_guidelines.id"), nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 

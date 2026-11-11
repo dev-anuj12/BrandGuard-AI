@@ -1,7 +1,7 @@
 import os
 from typing import List, Optional
 from pydantic_settings import BaseSettings
-from pydantic import Field, ConfigDict
+from pydantic import Field, ConfigDict, model_validator
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "BrandGuard AI"
@@ -13,6 +13,21 @@ class Settings(BaseSettings):
     SECRET_KEY: str = Field(default="brandguard-enterprise-jwt-signing-key-2026-production", validation_alias="SECRET_KEY")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
+
+    @model_validator(mode="after")
+    def validate_production_secret_key(self) -> "Settings":
+        if self.ENVIRONMENT.lower() == "production":
+            known_defaults = {
+                "brandguard-enterprise-jwt-signing-key-2026-production",
+                "default_insecure_secret_key_change_in_production",
+                "secret",
+                "changeme",
+            }
+            if self.SECRET_KEY in known_defaults or "default" in self.SECRET_KEY.lower() or len(self.SECRET_KEY) < 32:
+                raise ValueError(
+                    "In production, SECRET_KEY must not be the default value and must be at least 32 characters long."
+                )
+        return self
     
     # Database: Supports PostgreSQL, falls back to SQLite for local ease if not set
     DATABASE_URL: str = Field(

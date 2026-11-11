@@ -7,7 +7,7 @@ from app.models.content import Content, ContentRevision
 from app.models.review import AIReview, Finding, Suggestion
 from app.models.enums import SuggestionStatus, ContentStatus, UserRole
 from app.schemas.review import AIReviewOut, FindingOut, SuggestionAction, SuggestionOut, FindingOverrideRequest
-from app.api.deps import get_current_user, require_roles
+from app.api.deps import get_current_user, require_roles, get_current_org
 from app.models.user import User
 from app.models.audit import AuditLog
 from app.ai_engine.review_pipeline import AIReviewPipeline
@@ -18,8 +18,12 @@ router = APIRouter(prefix="/review", tags=["AI Review & Suggestions"])
 def get_latest_review(
     content_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org)
 ):
+    c = db.query(Content).filter(Content.id == content_id, Content.organization == org).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Content not found")
     review = db.query(AIReview).filter(AIReview.content_id == content_id).order_by(AIReview.id.desc()).first()
     if not review:
         raise HTTPException(status_code=404, detail="No AI review found for this content")
@@ -29,9 +33,10 @@ def get_latest_review(
 async def trigger_ai_review(
     content_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org)
 ):
-    c = db.query(Content).filter(Content.id == content_id).first()
+    c = db.query(Content).filter(Content.id == content_id, Content.organization == org).first()
     if not c:
         raise HTTPException(status_code=404, detail="Content not found")
 
@@ -104,15 +109,22 @@ def handle_suggestion_action(
     suggestion_id: int,
     action_in: SuggestionAction,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org)
 ):
     sugg = db.query(Suggestion).filter(Suggestion.id == suggestion_id).first()
     if not sugg:
         raise HTTPException(status_code=404, detail="Suggestion not found")
 
     finding = db.query(Finding).filter(Finding.id == sugg.finding_id).first()
+    if not finding:
+        raise HTTPException(status_code=404, detail="Finding not found")
     review = db.query(AIReview).filter(AIReview.id == finding.review_id).first()
+    if not review:
+        raise HTTPException(status_code=404, detail="Review not found")
     content = db.query(Content).filter(Content.id == review.content_id).first()
+    if not content or content.organization != org:
+        raise HTTPException(status_code=404, detail="Suggestion not found")
 
     action_type = action_in.action.lower()
 
@@ -165,11 +177,19 @@ def human_override_finding(
     finding_id: int,
     override: FindingOverrideRequest,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_roles([UserRole.REVIEWER, UserRole.MANAGER, UserRole.ADMIN]))
+    current_user: User = Depends(require_roles([UserRole.REVIEWER, UserRole.MANAGER, UserRole.ADMIN])),
+    org: str = Depends(get_current_org)
 ):
     """Allow authorized reviewers and managers to override an AI finding with a documented human reason."""
     finding = db.query(Finding).filter(Finding.id == finding_id).first()
     if not finding:
+        raise HTTPException(status_code=404, detail="Finding not found")
+
+    review = db.query(AIReview).filter(AIReview.id == finding.review_id).first()
+    if not review:
+        raise HTTPException(status_code=404, detail="Review not found")
+    content = db.query(Content).filter(Content.id == review.content_id).first()
+    if not content or content.organization != org:
         raise HTTPException(status_code=404, detail="Finding not found")
 
     if not override.reason or len(override.reason.strip()) < 10:

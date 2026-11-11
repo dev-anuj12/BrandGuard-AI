@@ -8,16 +8,17 @@ from app.models.enums import UserRole
 from app.models.content import Content
 from app.models.audit import AuditLog
 from app.schemas.user import UserOut, UserUpdate
-from app.api.deps import get_current_user, require_roles
+from app.api.deps import get_current_user, require_roles, get_current_org
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.get("/", response_model=List[UserOut])
 def get_all_users(
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_roles([UserRole.ADMIN, UserRole.MANAGER]))
+    current_user: User = Depends(require_roles([UserRole.ADMIN, UserRole.MANAGER])),
+    org: str = Depends(get_current_org)
 ):
-    return db.query(User).order_by(User.id.asc()).all()
+    return db.query(User).filter(User.organization == org).order_by(User.id.asc()).all()
 
 @router.get("/me/export")
 def export_user_data(
@@ -102,9 +103,10 @@ def update_user(
     user_id: int,
     user_in: UserUpdate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_roles([UserRole.ADMIN]))
+    current_user: User = Depends(require_roles([UserRole.ADMIN])),
+    org: str = Depends(get_current_org)
 ):
-    user = db.query(User).filter(User.id == user_id).first()
+    user = db.query(User).filter(User.id == user_id, User.organization == org).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     

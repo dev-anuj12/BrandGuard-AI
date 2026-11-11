@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
 from app.database.session import get_db
-from app.api.deps import get_current_user
+from app.api.deps import get_current_user, get_current_org
 from app.models.user import User
 from app.models.threat import ThreatItem, ThreatEvidence
 from app.models.audit import AuditLog
@@ -31,8 +31,9 @@ def list_threats(
     limit: int = 50,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org),
 ):
-    query = db.query(ThreatItem)
+    query = db.query(ThreatItem).filter(ThreatItem.organization == org)
 
     if category and category != "ALL":
         query = query.filter(ThreatItem.category == category)
@@ -57,8 +58,9 @@ def get_threat_detail(
     threat_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org),
 ):
-    threat = db.query(ThreatItem).filter(ThreatItem.id == threat_id).first()
+    threat = db.query(ThreatItem).filter(ThreatItem.id == threat_id, ThreatItem.organization == org).first()
     if not threat:
         raise HTTPException(status_code=404, detail="Threat incident not found")
     return threat
@@ -70,8 +72,9 @@ def update_threat_status(
     payload: ThreatItemUpdate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org),
 ):
-    threat = db.query(ThreatItem).filter(ThreatItem.id == threat_id).first()
+    threat = db.query(ThreatItem).filter(ThreatItem.id == threat_id, ThreatItem.organization == org).first()
     if not threat:
         raise HTTPException(status_code=404, detail="Threat incident not found")
 
@@ -108,6 +111,7 @@ def create_threat_incident(
     payload: ThreatItemCreate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org),
 ):
     # Generate unique threat code
     count = db.query(ThreatItem).count() + 1
@@ -125,6 +129,7 @@ def create_threat_incident(
         status=ThreatStatus.NEW,
         explanation=payload.explanation,
         recommended_action=payload.recommended_action,
+        organization=org,
         assigned_to_id=current_user.id
     )
     db.add(threat)

@@ -129,7 +129,14 @@ export default function AnalyticsDashboardPage() {
       ['Severity Level', 'Count'],
       ...severityData.map((s: any) => [s.severity, s.count]),
     ];
-    const csvContent = 'data:text/csv;charset=utf-8,' + rows.map((e) => e.map((cell: any) => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const sanitizeCell = (cell: any) => {
+      const s = String(cell ?? '');
+      if (s.length > 0 && ['=', '+', '-', '@'].includes(s[0])) {
+        return `'${s}`;
+      }
+      return s;
+    };
+    const csvContent = 'data:text/csv;charset=utf-8,' + rows.map((e) => e.map((cell: any) => `"${sanitizeCell(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);

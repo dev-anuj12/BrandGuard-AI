@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
 from app.database.session import get_db
+from app.api.deps import get_current_user
 from app.models.threat import DomainScan, ThreatItem
 from app.models.enums import ThreatRiskLevel
 from app.schemas.threat import (
@@ -13,7 +14,7 @@ from app.schemas.threat import (
 from app.protection.domain_analyzer import DomainAnalyzer
 from app.protection.ssrf_guard import SSRFSecurityError
 
-router = APIRouter(prefix="/protection/domains", tags=["Digital Protection - Domains"])
+router = APIRouter(prefix="/protection/domains", tags=["Digital Protection - Domains"], dependencies=[Depends(get_current_user)])
 
 
 @router.post("/scan", response_model=DomainScanReport, status_code=status.HTTP_201_CREATED)

@@ -20,7 +20,10 @@ from app.core.config import settings
 def ensure_organization_columns() -> None:
     """Idempotently ensure organization column exists in tables for multi-tenant isolation."""
     with engine.connect() as conn:
-        for table in ["users", "contents", "brand_guidelines", "threat_items"]:
+        for table in [
+            "users", "contents", "brand_guidelines", "threat_items",
+            "approved_sources", "approved_facts", "banned_words", "approved_terminology"
+        ]:
             try:
                 conn.execute(text(f"ALTER TABLE {table} ADD COLUMN organization VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"))
                 conn.commit()

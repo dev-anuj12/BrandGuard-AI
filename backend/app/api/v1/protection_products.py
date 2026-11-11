@@ -5,12 +5,13 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
 from app.database.session import get_db
+from app.api.deps import get_current_user
 from app.models.threat import ThreatItem, BrandProduct, BrandAsset
 from app.models.enums import ThreatCategory, ThreatRiskLevel, ThreatStatus
 from app.schemas.threat import BrandProductOut, BrandAssetOut, ThreatItemOut
 from app.protection.counterfeit_analyzer import CounterfeitAnalyzer, LogoMisuseAnalyzer
 
-router = APIRouter(prefix="/protection/products", tags=["Digital Protection - Counterfeit & Brand Assets"])
+router = APIRouter(prefix="/protection/products", tags=["Digital Protection - Counterfeit & Brand Assets"], dependencies=[Depends(get_current_user)])
 
 
 class ProductListingScanRequest(BaseModel):

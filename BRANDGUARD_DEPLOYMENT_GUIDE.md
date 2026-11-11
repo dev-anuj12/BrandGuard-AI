@@ -120,8 +120,8 @@ For executive reviews and QA audits:
 
 | Role | Email | Password | Primary Workflow |
 |---|---|---|---|
-| **Admin** | `admin@finnova.com` | `Admin@123` | Brand rules, users, full governance |
-| **Manager** | `manager@finnova.com` | `Manager@123` | Executive sign-off, approvals, audit logs |
-| **Reviewer** | `reviewer@finnova.com` | `Reviewer@123` | AI finding verification, human overrides |
-| **Creator** | `creator@finnova.com` | `Creator@123` | Draft submissions, AI review, revisions |
+| **Admin** | `admin@finnova.com` | `[Configured at deployment]` | Brand rules, users, full governance |
+| **Manager** | `manager@finnova.com` | `[Configured at deployment]` | Executive sign-off, approvals, audit logs |
+| **Reviewer** | `reviewer@finnova.com` | `[Configured at deployment]` | AI finding verification, human overrides |
+| **Creator** | `creator@finnova.com` | `[Configured at deployment]` | Draft submissions, AI review, revisions |
 

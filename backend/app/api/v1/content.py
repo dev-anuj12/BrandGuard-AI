@@ -1,7 +1,7 @@
 import io
 import csv
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import Any, List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Query, Response
 from sqlalchemy.orm import Session
 from app.database.session import get_db
@@ -345,7 +345,18 @@ def export_content_audit_csv(
     latest_review = db.query(AIReview).filter(AIReview.content_id == c.id).order_by(AIReview.id.desc()).first()
 
     output = io.StringIO()
-    writer = csv.writer(output)
+    base_writer = csv.writer(output)
+
+    def sanitize_csv_cell(val: Any) -> Any:
+        if isinstance(val, str) and len(val) > 0 and val[0] in ("=", "+", "-", "@"):
+            return f"'{val}"
+        return val
+
+    class SafeWriter:
+        def writerow(self, row):
+            base_writer.writerow([sanitize_csv_cell(cell) for cell in row])
+
+    writer = SafeWriter()
 
     writer.writerow(["BRANDGUARD AI — ENTERPRISE CONTENT AUDIT REPORT"])
     writer.writerow(["Generated At (UTC)", datetime.now(timezone.utc).isoformat()])

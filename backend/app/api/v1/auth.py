@@ -9,11 +9,11 @@ from app.models.user import User
 from app.models.enums import UserRole
 from app.models.audit import AuditLog
 from app.schemas.user import UserCreate, UserLogin, UserOut, Token
-from app.api.deps import get_current_user
+from app.api.deps import get_current_user, rate_limit_auth
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-@router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
+@router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED, dependencies=[Depends(rate_limit_auth)])
 def register(user_in: UserCreate, db: Session = Depends(get_db)):
     # Check if user already exists
     existing = db.query(User).filter(User.email == user_in.email).first()
@@ -63,7 +63,7 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
         "user": user
     }
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=Token, dependencies=[Depends(rate_limit_auth)])
 def login_json(credentials: UserLogin, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == credentials.email).first()
     
@@ -99,7 +99,7 @@ def login_json(credentials: UserLogin, db: Session = Depends(get_db)):
         "user": user
     }
 
-@router.post("/token", response_model=Token)
+@router.post("/token", response_model=Token, dependencies=[Depends(rate_limit_auth)])
 def login_form(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == form_data.username).first()
     if not user or not verify_password(form_data.password, user.hashed_password):

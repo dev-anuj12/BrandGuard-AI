@@ -15,19 +15,17 @@ The application is running locally with seeded demonstration data for **FinNova 
 
 | Role | Email Address | Password | Primary Responsibilities & Access |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `admin@finnova.com` | `Admin@123` | Brand Knowledge Base, Rule Configuration, Global Settings, Threat Intel |
-| **Manager** | `manager@finnova.com` | `Manager@123` | Final Executive Approval, Risk Sign-Off, Rejection Handling, Analytics |
-| **Reviewer** | `reviewer@finnova.com` | `Reviewer@123` | Citation Verification, AI Recommendations Audit, Issue Triage |
-| **Creator** | `creator@finnova.com` | `Creator@123` | Multi-channel Content Drafting, AI Review Triggering, Revisions |
-
-> **Tip:** You can quickly switch between roles using the 1-click demonstration buttons on the [`/login`](http://localhost:3000/login) page.
+| **Admin** | `admin@finnova.com` | `[Configured at deployment]` | Brand Knowledge Base, Rule Configuration, Global Settings, Threat Intel |
+| **Manager** | `manager@finnova.com` | `[Configured at deployment]` | Final Executive Approval, Risk Sign-Off, Rejection Handling, Analytics |
+| **Reviewer** | `reviewer@finnova.com` | `[Configured at deployment]` | Citation Verification, AI Recommendations Audit, Issue Triage |
+| **Creator** | `creator@finnova.com` | `[Configured at deployment]` | Multi-channel Content Drafting, AI Review Triggering, Revisions |
 
 ---
 
 ## 2. Walkthrough Part 1: Internal Content Governance Workflow
 
 ### Step 1: Submit Non-Compliant Marketing Copy (Creator)
-1. Log in as **Creator** (`creator@finnova.com` / `Creator@123`) or click **Creator** on the login screen.
+1. Log in as **Creator** (`creator@finnova.com`).
 2. Navigate to **Create Submission** ([`/submit`](http://localhost:3000/submit)).
 3. Select **Social Media Campaign** as the channel.
 4. Input title: `"FinNova SmartGrowth Q4 Promotional Push"`.
