@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
   ShieldCheck, AlertTriangle, CheckCircle2, ArrowLeft, Sparkles, 
-  RefreshCw, Check, X, Edit3, History, BookOpen, Search, Send
+  RefreshCw, Check, X, Edit3, History, BookOpen, Search, Send, FileCheck
 } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout';
 import { Button } from '../../../components/ui/Button';
@@ -24,6 +24,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
   const [content, setContent] = useState<any>(null);
   const [review, setReview] = useState<any>(null);
   const [revisions, setRevisions] = useState<any[]>([]);
+  const [decisions, setDecisions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<number | null>(null);
   const [manualText, setManualText] = useState<Record<number, string>>({});
@@ -33,14 +34,16 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
   const loadAll = async () => {
     setLoading(true);
     try {
-      const [cData, rData, revsData] = await Promise.all([
+      const [cData, rData, revsData, decsData] = await Promise.all([
         api.getContentById(contentId),
-        api.getLatestReview(contentId),
-        api.getContentRevisions(contentId)
+        api.getLatestReview(contentId).catch(() => null),
+        api.getContentRevisions(contentId).catch(() => []),
+        api.getContentDecisions(contentId).catch(() => []),
       ]);
       setContent(cData);
       setReview(rData);
       setRevisions(revsData);
+      setDecisions(decsData || []);
     } catch (err: any) {
       showToast(err.message || 'Failed to load review data', 'error');
     } finally {
@@ -269,6 +272,45 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                     </span>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Decision History */}
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3 shadow-sm">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
+                <FileCheck className="w-4 h-4 text-emerald-500" />
+                <span>Decision History ({decisions.length} events)</span>
+              </div>
+              <div className="space-y-2 text-xs">
+                {decisions.length === 0 ? (
+                  <p className="text-slate-400 text-xs italic">No workflow decision records yet.</p>
+                ) : (
+                  decisions.map((dec) => (
+                    <div
+                      key={dec.id}
+                      className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-slate-800 dark:text-slate-200">
+                          {dec.action}
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-mono">
+                          {new Date(dec.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' })}{' '}
+                          {new Date(dec.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 flex items-center justify-between">
+                        <span>{dec.actor_name} {dec.role ? `(${dec.role})` : ''}</span>
+                        {dec.revision_id && <span className="font-mono text-[10px]">rev #{dec.revision_id}</span>}
+                      </div>
+                      {dec.reason && (
+                        <p className="text-[11px] text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-950 p-1.5 rounded border border-slate-100 dark:border-slate-800">
+                          {dec.reason}
+                        </p>
+                      )}
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>

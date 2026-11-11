@@ -6,7 +6,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from app.core.config import settings
 from app.database.init_db import init_db
-from app.api.v1 import auth, users, guidelines, content, review, approvals, analytics, threats, protection_domains, protection_social, protection_products
+from app.api.v1 import auth, users, guidelines, content, review, approvals, analytics, threats, protection_domains, protection_social, protection_products, audit
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -91,6 +91,7 @@ api_routers = [
     protection_domains.router,
     protection_social.router,
     protection_products.router,
+    audit.router,
 ]
 
 for router in api_routers:

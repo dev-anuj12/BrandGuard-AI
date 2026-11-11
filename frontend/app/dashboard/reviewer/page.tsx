@@ -136,12 +136,12 @@ function ActionPanel({ item, onActionComplete }: ActionPanelProps) {
   return (
     <div className="border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 px-5 py-4 space-y-3">
       <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wide">
-        Reviewer Comments
+        Reviewer Comments {comments.trim().length < 10 && <span className="text-amber-500 font-normal lowercase">(min 10 chars required to request changes)</span>}
       </label>
       <textarea
         className="w-full rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
         rows={3}
-        placeholder="Add comments or feedback for the content creator…"
+        placeholder="Add comments or feedback for the content creator (min 10 chars required for change requests)…"
         value={comments}
         onChange={(e) => setComments(e.target.value)}
         disabled={loading !== null}
@@ -161,7 +161,7 @@ function ActionPanel({ item, onActionComplete }: ActionPanelProps) {
           size="sm"
           variant="outline"
           onClick={() => handleAction('request_changes')}
-          disabled={loading !== null}
+          disabled={loading !== null || comments.trim().length < 10}
           loading={loading === 'request_changes'}
           leftIcon={<XCircle className="w-4 h-4" />}
           className="text-amber-600 border-amber-400 hover:bg-amber-50 dark:text-amber-400 dark:border-amber-500 dark:hover:bg-amber-900/20"

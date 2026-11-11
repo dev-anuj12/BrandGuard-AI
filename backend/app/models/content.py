@@ -16,12 +16,17 @@ class Content(Base):
     status = Column(SQLEnum(ContentStatus), default=ContentStatus.DRAFT, nullable=False, index=True)
     creator_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     organization = Column(String(100), default="BrandGuard Demo Enterprise", nullable=False, index=True)
+    verified_by_id = Column(Integer, nullable=True)
+    verified_revision_id = Column(Integer, nullable=True)
+    approved_by_id = Column(Integer, nullable=True)
+    approved_revision_id = Column(Integer, nullable=True)
+    version = Column(Integer, default=1, nullable=False)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     # Relationships
     creator = relationship("User", back_populates="created_content", foreign_keys=[creator_id])
-    revisions = relationship("ContentRevision", back_populates="content", cascade="all, delete-orphan", order_by="ContentRevision.version.desc()")
+    revisions = relationship("ContentRevision", back_populates="content", cascade="all, delete-orphan", foreign_keys="[ContentRevision.content_id]", order_by="ContentRevision.version.desc()")
     reviews = relationship("AIReview", back_populates="content", cascade="all, delete-orphan")
     assignments = relationship("ReviewerAssignment", back_populates="content", cascade="all, delete-orphan")
     approvals = relationship("Approval", back_populates="content", cascade="all, delete-orphan")

@@ -129,6 +129,8 @@ export const api = {
 
   getContentRevisions: (id: number | string) => request<any[]>(`/api/v1/content/${id}/revisions`),
 
+  getContentDecisions: (id: number | string) => request<any[]>(`/api/v1/content/${id}/decisions`),
+
   reviseContent: (id: number | string, data: { current_body: string; change_summary?: string }) =>
     request<any>(`/api/v1/content/${id}`, {
       method: 'PUT',

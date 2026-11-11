@@ -57,4 +57,21 @@ class AuditLogOut(BaseModel):
     entity_type: Optional[str] = None
     entity_id: Optional[int] = None
     details: Optional[str] = None
+    organization: Optional[str] = None
+    reason: Optional[str] = None
+    revision_id: Optional[int] = None
     created_at: datetime
+
+class DecisionHistoryItem(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    actor_id: Optional[int] = None
+    actor_name: Optional[str] = None
+    role: Optional[str] = None
+    action: str
+    previous_status: Optional[str] = None
+    new_status: Optional[str] = None
+    reason: Optional[str] = None
+    timestamp: datetime
+    revision_id: Optional[int] = None

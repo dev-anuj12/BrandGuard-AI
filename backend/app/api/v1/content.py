@@ -14,6 +14,8 @@ from app.api.deps import get_current_user
 from app.models.audit import AuditLog
 from app.core.config import settings
 from app.ai_engine.review_pipeline import AIReviewPipeline
+from app.schemas.workflow import DecisionHistoryItem
+from app.services import workflow
 
 router = APIRouter(prefix="/content", tags=["Content"])
 
@@ -237,9 +239,6 @@ async def revise_content(
     if update_in.target_audience:
         c.target_audience = update_in.target_audience
 
-    c.status = ContentStatus.RESUBMITTED
-    db.commit()
-
     # Save new revision
     new_rev = ContentRevision(
         content_id=c.id,
@@ -251,6 +250,9 @@ async def revise_content(
     db.add(new_rev)
     db.commit()
     db.refresh(new_rev)
+
+    # Invalidate earlier reviewer verification, reset status to Resubmitted, log audit
+    workflow.mark_verification_stale_on_revision(db, c, current_user, new_rev.id)
 
     # Re-run AI Review Pipeline automatically for the revision
     pipeline = AIReviewPipeline(db)
@@ -301,9 +303,8 @@ async def revise_content(
             db.add(sugg)
     db.commit()
 
-    c.status = ContentStatus.AI_REVIEW_COMPLETED if review_result["overall_score"] < 90 else ContentStatus.PENDING_REVIEWER_VERIFICATION
-    db.commit()
-    db.refresh(c)
+    # Mark earlier reviewer verification stale, reset status to Resubmitted, and log audit
+    workflow.mark_verification_stale_on_revision(db, c, current_user, new_rev.id)
 
     # Record Audit Log
     audit = AuditLog(
@@ -395,4 +396,57 @@ def export_content_audit_csv(
             "Content-Disposition": f'attachment; filename="{filename}"'
         }
     )
+
+
+@router.get("/{content_id}/decisions", response_model=List[DecisionHistoryItem])
+def get_content_decision_history(
+    content_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Retrieve full audit decision history for a content item."""
+    c = db.query(Content).filter(Content.id == content_id).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    user_org = getattr(current_user, "organization", None)
+    if user_org and getattr(c, "organization", None) and c.organization != user_org:
+        raise HTTPException(status_code=403, detail="Cross-organization data access prohibited")
+
+    # Fetch audit logs pertaining to this content item
+    logs = (
+        db.query(AuditLog)
+        .filter(AuditLog.entity_type == "Content", AuditLog.entity_id == content_id)
+        .order_by(AuditLog.id.asc())
+        .all()
+    )
+
+    history: List[DecisionHistoryItem] = []
+    for log in logs:
+        prev_st = None
+        new_st = None
+        if isinstance(log.previous_state, dict):
+            prev_st = log.previous_state.get("status")
+        if isinstance(log.new_state, dict):
+            new_st = log.new_state.get("status")
+
+        reason_text = log.reason or log.details
+        actor_name = log.user.full_name if log.user else "System"
+        role_name = log.user.role.value if (log.user and hasattr(log.user.role, "value")) else None
+
+        history.append(
+            DecisionHistoryItem(
+                id=log.id,
+                actor_id=log.user_id,
+                actor_name=actor_name,
+                role=role_name,
+                action=log.action,
+                previous_status=prev_st,
+                new_status=new_st,
+                reason=reason_text,
+                timestamp=log.created_at,
+                revision_id=log.revision_id,
+            )
+        )
+    return history
 

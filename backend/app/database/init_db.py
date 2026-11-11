@@ -42,6 +42,35 @@ def ensure_finding_grounding_columns() -> None:
             except Exception:
                 pass
 
+def ensure_workflow_columns() -> None:
+    """Idempotently ensure workflow verification, approval, version and audit columns exist."""
+    with engine.connect() as conn:
+        content_cols = [
+            ("verified_by_id", "INTEGER"),
+            ("verified_revision_id", "INTEGER"),
+            ("approved_by_id", "INTEGER"),
+            ("approved_revision_id", "INTEGER"),
+            ("version", "INTEGER DEFAULT 1")
+        ]
+        for col_name, col_type in content_cols:
+            try:
+                conn.execute(text(f"ALTER TABLE contents ADD COLUMN {col_name} {col_type}"))
+                conn.commit()
+            except Exception:
+                pass
+
+        audit_cols = [
+            ("organization", "VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"),
+            ("reason", "TEXT"),
+            ("revision_id", "INTEGER")
+        ]
+        for col_name, col_type in audit_cols:
+            try:
+                conn.execute(text(f"ALTER TABLE audit_logs ADD COLUMN {col_name} {col_type}"))
+                conn.commit()
+            except Exception:
+                pass
+
 def ensure_guidelines(db: Session) -> None:
     """Idempotently ensures core and generic brand guidelines exist in the database."""
     standard_guidelines = [
@@ -107,6 +136,7 @@ def init_db(db: Session = None) -> None:
     Base.metadata.create_all(bind=engine)
     ensure_organization_columns()
     ensure_finding_grounding_columns()
+    ensure_workflow_columns()
 
     close_db_at_end = False
     if db is None:

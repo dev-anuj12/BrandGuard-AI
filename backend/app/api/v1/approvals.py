@@ -14,6 +14,7 @@ from app.schemas.workflow import (
 from app.models.user import User
 from app.models.audit import AuditLog
 from app.api.deps import get_current_user, require_roles
+from app.services import workflow
 
 router = APIRouter(prefix="/approvals", tags=["Human Approval Workflow"])
 
@@ -29,22 +30,14 @@ def verify_content(
     if not content:
         raise HTTPException(status_code=404, detail="Content not found")
 
-    user_org = getattr(current_user, "organization", None)
-    if user_org and getattr(content, "organization", None) and content.organization != user_org:
-        raise HTTPException(status_code=403, detail="Cross-organization verification access prohibited")
-
-    prev_status = content.status.value
-
-    if decision.action == "verify":
-        content.status = ContentStatus.PENDING_MANAGER_APPROVAL
-        audit_action = "REVIEWER_VERIFIED"
-        details = f"Reviewer {current_user.full_name} verified content. Ready for manager sign-off. Notes: {decision.comments or 'None'}"
-    elif decision.action == "request_changes":
-        content.status = ContentStatus.CHANGES_REQUIRED
-        audit_action = "REVIEWER_CHANGES_REQUESTED"
-        details = f"Reviewer {current_user.full_name} requested corrections. Notes: {decision.comments or 'None'}"
-    else:
-        raise HTTPException(status_code=400, detail="Invalid action. Use 'verify' or 'request_changes'.")
+    # Delegate validation, transitions, reason requirements and audit logging to workflow engine
+    workflow.execute_transition(
+        db=db,
+        content=content,
+        user=current_user,
+        action=decision.action,
+        reason=decision.comments
+    )
 
     # Record assignment completion
     assignment = db.query(ReviewerAssignment).filter(
@@ -71,18 +64,6 @@ def verify_content(
             comment_text=f"[Verification Note] {decision.comments}"
         )
         db.add(c_obj)
-
-    # Record Audit
-    audit = AuditLog(
-        user_id=current_user.id,
-        action=audit_action,
-        entity_type="Content",
-        entity_id=content.id,
-        previous_state={"status": prev_status},
-        new_state={"status": content.status.value},
-        details=details
-    )
-    db.add(audit)
     db.commit()
 
     return content.status
@@ -99,21 +80,21 @@ def manager_decision(
     if not content:
         raise HTTPException(status_code=404, detail="Content not found")
 
-    user_org = getattr(current_user, "organization", None)
-    if user_org and getattr(content, "organization", None) and content.organization != user_org:
-        raise HTTPException(status_code=403, detail="Cross-organization verification access prohibited")
+    action_map = {
+        ApprovalAction.APPROVED: "approve",
+        ApprovalAction.REJECTED: "reject",
+        ApprovalAction.CHANGES_REQUESTED: "request_changes",
+    }
+    action_str = action_map.get(decision.action, str(decision.action.value))
 
-    prev_status = content.status.value
-
-    if decision.action == ApprovalAction.APPROVED:
-        content.status = ContentStatus.APPROVED
-        audit_action = "MANAGER_APPROVED"
-    elif decision.action == ApprovalAction.REJECTED:
-        content.status = ContentStatus.REJECTED
-        audit_action = "MANAGER_REJECTED"
-    else:
-        content.status = ContentStatus.CHANGES_REQUIRED
-        audit_action = "MANAGER_REQUESTED_CHANGES"
+    # Delegate state transition, reason check, optimistic locking, and audit log to workflow engine
+    workflow.execute_transition(
+        db=db,
+        content=content,
+        user=current_user,
+        action=action_str,
+        reason=decision.comments
+    )
 
     approval = Approval(
         content_id=content_id,
@@ -131,16 +112,6 @@ def manager_decision(
         )
         db.add(c_obj)
 
-    audit = AuditLog(
-        user_id=current_user.id,
-        action=audit_action,
-        entity_type="Content",
-        entity_id=content.id,
-        previous_state={"status": prev_status},
-        new_state={"status": content.status.value},
-        details=f"Manager {current_user.full_name} set status to {decision.action.value}. Note: {decision.comments or 'None'}"
-    )
-    db.add(audit)
     db.commit()
     db.refresh(approval)
 
