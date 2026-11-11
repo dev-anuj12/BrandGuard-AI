@@ -93,11 +93,13 @@ def validate_finding(
         if is_url_only or evidence_state == "unverified_source":
             evidence_state = "unverified_source"
             reasons.append("Citations containing only a URL without an approved institutional authority cannot be verified.")
-        elif finding.get("category") == "Unsupported Claim":
+        elif finding.get("category") == "Unsupported Claim" and not has_explicit_id:
             evidence_state = "unsupported_claim"
         elif not evidence and not has_explicit_id and not finding.get("guideline_reference"):
             evidence_state = "missing_citation"
             reasons.append("No supporting guideline reference or verified evidence provided.")
+        elif not has_explicit_id:
+            reasons.append("Finding does not reference a valid retrieved guideline or knowledge ID.")
 
     if evidence_state not in VALID_EVIDENCE_STATES:
         evidence_state = "source_unavailable"
@@ -119,3 +121,4 @@ def validate_finding(
     finding["grounding_reasons"] = "; ".join(reasons)
 
     return status, reasons
+

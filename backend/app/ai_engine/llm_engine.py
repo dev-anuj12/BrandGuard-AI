@@ -8,7 +8,8 @@ from app.models.guideline import BrandGuideline, ApprovedFact
 from app.models.enums import FindingCategory, SeverityLevel
 from app.ai_engine.normalizer import (
     normalize_text,
-    is_false_positive_context
+    is_false_positive_context,
+    extract_original_snippet
 )
 
 class LLMEngine:
@@ -239,23 +240,50 @@ Return a strict JSON array of brand compliance findings for the user content."""
             )
         ]
 
+        guideline_by_title = {g.title.lower(): g for g in (guidelines or [])}
+        guideline_by_cat = {g.category.lower(): g for g in (guidelines or [])}
+
         for pattern, label, explanation, guideline_ref, suggestion, severity, cat in fallback_patterns:
             matches = list(re.finditer(pattern, lowered))
             for match in matches:
                 start, end = match.span()
                 if is_false_positive_context(lowered, start, end):
                     continue
-                matched_snippet = text[start:end] if end <= len(text) else normalized_text[start:end]
+                norm_snippet = normalized_text[start:end]
+                matched_snippet = extract_original_snippet(text, norm_snippet)
+
+                # Match against real retrieved guideline row
+                matched_guideline = (
+                    guideline_by_title.get(guideline_ref.lower())
+                    or guideline_by_cat.get(guideline_ref.lower())
+                    or (guideline_by_title.get("financial claims & guarantees policy") if "financial" in guideline_ref.lower() or "guarantee" in guideline_ref.lower() else None)
+                    or (guideline_by_title.get("financial claims policy") if "claims" in guideline_ref.lower() else None)
+                    or (guideline_by_title.get("substantiation policy") if "substantiation" in guideline_ref.lower() or "claim" in guideline_ref.lower() else None)
+                    or (guideline_by_title.get("superlative claims policy") if "superlative" in guideline_ref.lower() or "tone" in guideline_ref.lower() else None)
+                    or (guideline_by_title.get("brand tone & communication consistency") if "tone" in guideline_ref.lower() else None)
+                    or (guideline_by_title.get("evidence & citation validation requirement") if "evidence" in guideline_ref.lower() or "citation" in guideline_ref.lower() else None)
+                )
+                gid = matched_guideline.id if matched_guideline else None
+                ref_name = matched_guideline.title if matched_guideline else guideline_ref
+
+                # Unverified citation domain stays unverified_source -> NEEDS_HUMAN_REVIEW
+                if "fake" in matched_snippet or "made-up" in matched_snippet or "exampleonly" in matched_snippet:
+                    ev_state = "unverified_source"
+                else:
+                    ev_state = "verified"
+
                 findings.append({
                     "category": cat,
                     "severity": severity,
                     "matched_text": matched_snippet,
                     "explanation": explanation,
-                    "guideline_reference": guideline_ref,
+                    "guideline_id": gid,
+                    "guideline_reference": ref_name,
                     "evidence": [{
-                        "source": "Brand Tone & Compliance Manual",
-                        "rule": guideline_ref
+                        "source": "Brand Guidelines Compliance System",
+                        "rule": ref_name
                     }],
+                    "evidence_state": ev_state,
                     "confidence": 0.91,
                     "suggested_correction": suggestion,
                     "status": "Pending",

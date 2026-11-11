@@ -130,3 +130,39 @@ def has_required_disclaimer(normalized_text: str) -> bool:
     """Checks whether the text contains an approved regulatory disclaimer."""
     lowered = normalized_text.lower()
     return any(p in lowered for p in DISCLAIMER_PHRASES)
+
+
+def extract_original_snippet(original_text: str, norm_snippet: str) -> str:
+    """Extracts the exact matching substring from original_text that corresponds
+
+    to norm_snippet, even if letters were obfuscated by hyphens, dots, or spaces.
+    """
+    if not norm_snippet:
+        return ""
+
+    # 1. Exact match in original_text (case-insensitive)
+    idx = original_text.lower().find(norm_snippet.lower())
+    if idx != -1:
+        return original_text[idx:idx + len(norm_snippet)]
+
+    # 2. Allow non-alphanumeric separators between characters
+    words = norm_snippet.split()
+    word_pats = []
+    for w in words:
+        char_pat = r'[\W_]*'.join(re.escape(c) for c in w)
+        word_pats.append(char_pat)
+
+    full_pat = r'\b' + r'[\s\-_.]+?'.join(word_pats) + r'\b'
+    m = re.search(full_pat, original_text, re.IGNORECASE)
+    if m:
+        return m.group(0)
+
+    # 3. Fallback to direct search of words
+    clean_words = [re.escape(w) for w in words]
+    if clean_words:
+        m2 = re.search(r'\b' + r'[\s\-_.]+?'.join(clean_words) + r'\b', original_text, re.IGNORECASE)
+        if m2:
+            return m2.group(0)
+
+    return norm_snippet
+

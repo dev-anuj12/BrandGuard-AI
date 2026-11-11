@@ -6,7 +6,8 @@ from app.models.enums import FindingCategory, SeverityLevel
 from app.ai_engine.normalizer import (
     normalize_text,
     is_false_positive_context,
-    has_required_disclaimer
+    has_required_disclaimer,
+    extract_original_snippet
 )
 
 class RuleEngine:
@@ -18,6 +19,10 @@ class RuleEngine:
         normalized_text = normalize_text(text)
         lowered_text = normalized_text.lower()
 
+        # Look up guidelines for grounding references
+        financial_gl = self.db.query(BrandGuideline).filter(BrandGuideline.title.ilike("%financial%")).first()
+        terminology_gl = self.db.query(BrandGuideline).filter(BrandGuideline.title.ilike("%terminology%")).first()
+
         # 1. Detect Banned Words and Phrases
         banned_words = self.db.query(BannedWord).filter(BannedWord.is_active == True).all()
         for bw in banned_words:
@@ -28,18 +33,21 @@ class RuleEngine:
                 start, end = match.span()
                 if is_false_positive_context(lowered_text, start, end):
                     continue
-                matched_snippet = text[start:end] if end <= len(text) else normalized_text[start:end]
+                norm_snippet = normalized_text[start:end]
+                matched_snippet = extract_original_snippet(text, norm_snippet)
                 findings.append({
                     "category": FindingCategory.BANNED_EXPRESSION,
                     "severity": bw.severity,
                     "matched_text": matched_snippet,
                     "explanation": bw.explanation,
-                    "guideline_reference": f"Banned Expression: {bw.word_or_phrase}",
+                    "guideline_id": financial_gl.id if financial_gl else None,
+                    "guideline_reference": financial_gl.title if financial_gl else f"Banned Expression: {bw.word_or_phrase}",
                     "evidence": [{
                         "source": "Brand Compliance Database",
                         "rule": "Banned Expression Registry",
                         "term": bw.word_or_phrase
                     }],
+                    "evidence_state": "verified",
                     "confidence": 0.99,
                     "suggested_correction": bw.suggested_replacement or "appropriate financial phrasing",
                     "status": "Pending",
@@ -56,17 +64,21 @@ class RuleEngine:
                 start, end = match.span()
                 if is_false_positive_context(lowered_text, start, end):
                     continue
-                matched_snippet = text[start:end] if end <= len(text) else normalized_text[start:end]
+                norm_snippet = normalized_text[start:end]
+                matched_snippet = extract_original_snippet(text, norm_snippet)
+                t_gid = term.guideline_id or (terminology_gl.id if terminology_gl else None)
                 findings.append({
                     "category": FindingCategory.INCORRECT_TERMINOLOGY,
                     "severity": SeverityLevel.MEDIUM,
                     "matched_text": matched_snippet,
                     "explanation": f"'{matched_snippet}' violates brand terminology guidelines. Official approved term is '{term.approved_term}'.",
-                    "guideline_reference": "Official Terminology Standard",
+                    "guideline_id": t_gid,
+                    "guideline_reference": terminology_gl.title if terminology_gl else "Official Terminology Standard",
                     "evidence": [{
                         "source": "Brand Style & Terminology Glossary",
                         "context": term.context or "Official terminology requirement"
                     }],
+                    "evidence_state": "verified",
                     "confidence": 0.96,
                     "suggested_correction": term.approved_term,
                     "status": "Pending",
@@ -96,11 +108,13 @@ class RuleEngine:
                 "severity": SeverityLevel.HIGH,
                 "matched_text": "Missing Regulatory Disclosure",
                 "explanation": "Content discusses financial growth or investments but omits mandatory regulatory risk disclaimers.",
-                "guideline_reference": "Financial Claims & Guarantees Policy",
+                "guideline_id": financial_gl.id if financial_gl else None,
+                "guideline_reference": financial_gl.title if financial_gl else "Financial Claims & Guarantees Policy",
                 "evidence": [{
                     "source": "Regulatory Advertising Framework",
                     "requirement": "Financial promotional material must include risk disclosure"
                 }],
+                "evidence_state": "verified",
                 "confidence": 0.94,
                 "suggested_correction": "Investment products are subject to market risks. Please read all scheme-related documents carefully before investing.",
                 "status": "Pending",

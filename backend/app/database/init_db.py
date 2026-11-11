@@ -42,6 +42,66 @@ def ensure_finding_grounding_columns() -> None:
             except Exception:
                 pass
 
+def ensure_guidelines(db: Session) -> None:
+    """Idempotently ensures core and generic brand guidelines exist in the database."""
+    standard_guidelines = [
+        {
+            "title": "Financial Claims & Guarantees Policy",
+            "category": "Financial Claims",
+            "description": "Marketing content must never state or imply guaranteed investment returns or zero-risk financial growth. All performance projections must include standardized regulatory disclosures.",
+            "rule_type": "Deterministic",
+            "severity": SeverityLevel.CRITICAL
+        },
+        {
+            "title": "Financial Claims Policy",
+            "category": "Financial Claims",
+            "description": "All financial performance, return, and capital protection claims must be substantiated and accompanied by required disclaimers.",
+            "rule_type": "Deterministic",
+            "severity": SeverityLevel.CRITICAL
+        },
+        {
+            "title": "Superlative Claims Policy",
+            "category": "Tone",
+            "description": "Unsubstantiated superlatives, peer superiority claims, and sensationalist wealth promises are strictly prohibited.",
+            "rule_type": "Deterministic",
+            "severity": SeverityLevel.HIGH
+        },
+        {
+            "title": "Substantiation Policy",
+            "category": "Evidence",
+            "description": "All quantitative comparisons, accuracy statistics, survey ratios, and client performance metrics must be verifiable and independently cited.",
+            "rule_type": "Fact_Checked",
+            "severity": SeverityLevel.HIGH
+        },
+        {
+            "title": "Brand Tone & Communication Consistency",
+            "category": "Tone",
+            "description": "Brand communication must be Professional, Trustworthy, Clear, Customer-focused, and Responsible. Avoid hype, sensationalism, and aggressive or misleading promises.",
+            "rule_type": "AI_Analyzed",
+            "severity": SeverityLevel.HIGH
+        },
+        {
+            "title": "Official Terminology Standard",
+            "category": "Terminology",
+            "description": "Use approved brand terminology consistently across all channels. Avoid ambiguous, non-standard, or legally sensitive jargon in customer-facing content.",
+            "rule_type": "Deterministic",
+            "severity": SeverityLevel.MEDIUM
+        },
+        {
+            "title": "Evidence & Citation Validation Requirement",
+            "category": "Evidence",
+            "description": "Any quantifiable statistic or market comparison must link directly to an approved official source or audited regulatory filing.",
+            "rule_type": "Fact_Checked",
+            "severity": SeverityLevel.HIGH
+        }
+    ]
+
+    for g_data in standard_guidelines:
+        existing = db.query(BrandGuideline).filter(BrandGuideline.title == g_data["title"]).first()
+        if not existing:
+            db.add(BrandGuideline(**g_data))
+    db.commit()
+
 def init_db(db: Session = None) -> None:
     # Create all tables
     Base.metadata.create_all(bind=engine)
@@ -58,10 +118,12 @@ def init_db(db: Session = None) -> None:
 
         # Check if users already seeded (or guidelines seeded in production)
         if db.query(User).first() or (is_production and db.query(BrandGuideline).first()):
+            ensure_guidelines(db)
             seed_threat_data(db)
             return
 
         print("--- Seeding Database with BrandGuard Guidelines and Data ---")
+        ensure_guidelines(db)
 
         # 1. Seed Users (Admin, Creator, Reviewer, Manager) - skip in production
         users = []
@@ -99,39 +161,9 @@ def init_db(db: Session = None) -> None:
             db.add_all(users)
             db.commit()
 
-        # 2. Seed Brand Guidelines
-        guidelines = [
-            BrandGuideline(
-                title="Financial Claims & Guarantees Policy",
-                category="Financial Claims",
-                description="Marketing content must never state or imply guaranteed investment returns or zero-risk financial growth. All performance projections must include standardized regulatory disclosures.",
-                rule_type="Deterministic",
-                severity=SeverityLevel.CRITICAL
-            ),
-            BrandGuideline(
-                title="Brand Tone & Communication Consistency",
-                category="Tone",
-                description="Brand communication must be Professional, Trustworthy, Clear, Customer-focused, and Responsible. Avoid hype, sensationalism, and aggressive or misleading promises.",
-                rule_type="AI_Analyzed",
-                severity=SeverityLevel.HIGH
-            ),
-            BrandGuideline(
-                title="Official Terminology Standard",
-                category="Terminology",
-                description="Use approved brand terminology consistently across all channels. Avoid ambiguous, non-standard, or legally sensitive jargon in customer-facing content.",
-                rule_type="Deterministic",
-                severity=SeverityLevel.MEDIUM
-            ),
-            BrandGuideline(
-                title="Evidence & Citation Validation Requirement",
-                category="Evidence",
-                description="Any quantifiable statistic or market comparison must link directly to an approved official source or audited regulatory filing.",
-                rule_type="Fact_Checked",
-                severity=SeverityLevel.HIGH
-            ),
-        ]
-        db.add_all(guidelines)
-        db.commit()
+        # 2. Seed Brand Guidelines (idempotent)
+        ensure_guidelines(db)
+        guidelines = db.query(BrandGuideline).all()
 
         # 3. Seed Approved Sources
         sources = [

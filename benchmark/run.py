@@ -165,7 +165,8 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
     results_by_mode = {}
 
     for mode in modes:
-        preds = []
+        preds_confirmed = []
+        preds_surfaced = []
         total_needs_review = 0
         for item in items:
             text = item["text"]
@@ -187,38 +188,87 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
             else:
                 findings = []
 
-            # Document-level prediction uses GROUNDED findings only
             grounded_findings = [f for f in findings if f.get("grounding_status") == "GROUNDED"]
             needs_review_count = sum(1 for f in findings if f.get("grounding_status") == "NEEDS_HUMAN_REVIEW")
             total_needs_review += needs_review_count
 
-            pred = "violation" if len(grounded_findings) > 0 else "compliant"
-            preds.append(pred)
+            # Confirmed: GROUNDED findings only
+            pred_conf = "violation" if len(grounded_findings) > 0 else "compliant"
+            preds_confirmed.append(pred_conf)
 
-        # Metrics on all split items
-        all_metrics = compute_metrics(items, preds)
+            # Surfaced: GROUNDED or NEEDS_HUMAN_REVIEW
+            pred_surf = "violation" if len(findings) > 0 else "compliant"
+            preds_surfaced.append(pred_surf)
 
-        # Metrics on hard cases only
+        # Metrics: Confirmed view
+        conf_all = compute_metrics(items, preds_confirmed)
         hard_items = [it for it in items if it.get("hard_case", False)]
-        hard_preds = [p for it, p in zip(items, preds) if it.get("hard_case", False)]
-        hard_metrics = compute_metrics(hard_items, hard_preds) if hard_items else {}
+        hard_preds_conf = [p for it, p in zip(items, preds_confirmed) if it.get("hard_case", False)]
+        conf_hard = compute_metrics(hard_items, hard_preds_conf) if hard_items else {}
+
+        # Metrics: Surfaced view
+        surf_all = compute_metrics(items, preds_surfaced)
+        hard_preds_surf = [p for it, p in zip(items, preds_surfaced) if it.get("hard_case", False)]
+        surf_hard = compute_metrics(hard_items, hard_preds_surf) if hard_items else {}
 
         results_by_mode[mode] = {
-            "all": all_metrics,
-            "hard_cases": hard_metrics,
-            "misclassified_ids": all_metrics["misclassified_ids"],
+            "confirmed": {
+                "all": conf_all,
+                "hard_cases": conf_hard,
+                "misclassified_ids": conf_all["misclassified_ids"],
+            },
+            "surfaced": {
+                "all": surf_all,
+                "hard_cases": surf_hard,
+                "misclassified_ids": surf_all["misclassified_ids"],
+            },
+            "all": conf_all,
+            "hard_cases": conf_hard,
+            "misclassified_ids": conf_all["misclassified_ids"],
             "needs_human_review_count": total_needs_review
         }
 
-    # Format Markdown Table
-    print("\n### Benchmark Results Summary (" + split.upper() + " split, N=" + str(len(items)) + ")")
+    # Format Markdown Table: Confirmed View
+    print("\n### Benchmark Results: CONFIRMED View (GROUNDED findings only, N=" + str(len(items)) + ")")
     headers = ["Mode", "Subset", "N", "TP", "FP", "TN", "FN", "Prec", "Rec", "F1", "FPR", "FNR", "Prec 95% CI", "Rec 95% CI"]
     print("| " + " | ".join(headers) + " |")
     print("|" + "|".join(["---"] * len(headers)) + "|")
 
     for mode in modes:
-        m_all = results_by_mode[mode]["all"]
-        m_hard = results_by_mode[mode]["hard_cases"]
+        m_all = results_by_mode[mode]["confirmed"]["all"]
+        m_hard = results_by_mode[mode]["confirmed"]["hard_cases"]
+        n_all = len(items)
+        n_hard = sum(1 for it in items if it.get("hard_case", False))
+
+        row_all = [
+            mode, "All", str(n_all),
+            str(m_all["tp"]), str(m_all["fp"]), str(m_all["tn"]), str(m_all["fn"]),
+            f"{m_all['precision']:.3f}", f"{m_all['recall']:.3f}", f"{m_all['f1']:.3f}",
+            f"{m_all['fpr']:.3f}", f"{m_all['fnr']:.3f}",
+            f"[{m_all['precision_wilson_95'][0]:.2f}, {m_all['precision_wilson_95'][1]:.2f}]",
+            f"[{m_all['recall_wilson_95'][0]:.2f}, {m_all['recall_wilson_95'][1]:.2f}]"
+        ]
+        print("| " + " | ".join(row_all) + " |")
+
+        if m_hard:
+            row_hard = [
+                mode, "Hard Cases", str(n_hard),
+                str(m_hard["tp"]), str(m_hard["fp"]), str(m_hard["tn"]), str(m_hard["fn"]),
+                f"{m_hard['precision']:.3f}", f"{m_hard['recall']:.3f}", f"{m_hard['f1']:.3f}",
+                f"{m_hard['fpr']:.3f}", f"{m_hard['fnr']:.3f}",
+                f"[{m_hard['precision_wilson_95'][0]:.2f}, {m_hard['precision_wilson_95'][1]:.2f}]",
+                f"[{m_hard['recall_wilson_95'][0]:.2f}, {m_hard['recall_wilson_95'][1]:.2f}]"
+            ]
+            print("| " + " | ".join(row_hard) + " |")
+
+    # Format Markdown Table: Surfaced View
+    print("\n### Benchmark Results: SURFACED View (GROUNDED or NEEDS_HUMAN_REVIEW, N=" + str(len(items)) + ")")
+    print("| " + " | ".join(headers) + " |")
+    print("|" + "|".join(["---"] * len(headers)) + "|")
+
+    for mode in modes:
+        m_all = results_by_mode[mode]["surfaced"]["all"]
+        m_hard = results_by_mode[mode]["surfaced"]["hard_cases"]
         n_all = len(items)
         n_hard = sum(1 for it in items if it.get("hard_case", False))
 
@@ -283,11 +333,11 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
             json.dump(payload, f, indent=2)
         print(f"Tuned dev results saved to: {tuned_path}")
     else:
-        # Default dev run saves to after_grounding_dev.json without overwriting baseline or tuned
-        grounding_path = results_dir / "after_grounding_dev.json"
+        # Default dev run saves to after_grounding_v2_dev.json without overwriting baseline, tuned, or v1
+        grounding_path = results_dir / "after_grounding_v2_dev.json"
         with open(grounding_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
-        print(f"After-grounding dev results saved to: {grounding_path}")
+        print(f"After-grounding v2 dev results saved to: {grounding_path}")
 
     db.close()
 

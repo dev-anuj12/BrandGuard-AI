@@ -131,3 +131,71 @@ def test_grounding_guideline_in_db_but_not_retrieved(grounding_db):
     status, reasons = validate_finding(finding, content, retrieved_knowledge)
     assert status == "NEEDS_HUMAN_REVIEW"
     assert any("not in the retrieved knowledge set" in r for r in reasons)
+
+def test_paraphrase_finding_referencing_seeded_guideline_is_grounded(grounding_db):
+    """Test: A paraphrase finding referencing a seeded guideline is GROUNDED"""
+    guideline = grounding_db.query(BrandGuideline).filter(
+        BrandGuideline.title.ilike("%financial%")
+    ).first()
+    assert guideline is not None
+
+    content = "You simply cannot lose money with this principal-protected solution."
+    retrieved_knowledge = {
+        "guideline_ids": {guideline.id},
+        "fact_ids": set(),
+        "source_ids": set()
+    }
+    finding = {
+        "engine_source": "AI Engine (Fallback)",
+        "category": "Misleading Statement",
+        "matched_text": "cannot lose money",
+        "guideline_id": guideline.id,
+        "guideline_reference": guideline.title,
+        "explanation": "Financial guarantee paraphrase detected",
+        "evidence": [{"source": "Brand Guidelines Compliance System", "rule": guideline.title}],
+        "evidence_state": "verified"
+    }
+
+    status, reasons = validate_finding(finding, content, retrieved_knowledge)
+    assert status == "GROUNDED"
+    assert len(reasons) == 0
+    assert finding["grounding_status"] == "GROUNDED"
+
+def test_paraphrase_finding_referencing_non_retrieved_guideline_is_needs_human_review(grounding_db):
+    """Test: A paraphrase finding referencing a non-retrieved guideline is NEEDS_HUMAN_REVIEW"""
+    guideline = grounding_db.query(BrandGuideline).filter(
+        BrandGuideline.title.ilike("%substantiation%")
+    ).first()
+    assert guideline is not None
+
+    content = "Nine out of ten customers outperform traditional banks."
+    retrieved_knowledge = {
+        "guideline_ids": {99999},  # non-matching set
+        "fact_ids": set(),
+        "source_ids": set()
+    }
+    finding = {
+        "engine_source": "AI Engine (Fallback)",
+        "category": "Unsupported Claim",
+        "matched_text": "Nine out of ten",
+        "guideline_id": guideline.id,
+        "guideline_reference": guideline.title,
+        "explanation": "Unsubstantiated ratio claim",
+        "evidence": [{"source": "Brand Guidelines Compliance System", "rule": guideline.title}],
+        "evidence_state": "verified"
+    }
+
+    status, reasons = validate_finding(finding, content, retrieved_knowledge)
+    assert status == "NEEDS_HUMAN_REVIEW"
+    assert any("not in the retrieved knowledge set" in r for r in reasons)
+
+def test_guideline_seeding_is_idempotent(grounding_db):
+    """Test: Seeding is idempotent and does not create duplicate guidelines"""
+    initial_count = grounding_db.query(BrandGuideline).count()
+    assert initial_count > 0
+
+    init_db(grounding_db)
+    init_db(grounding_db)
+
+    final_count = grounding_db.query(BrandGuideline).count()
+    assert final_count == initial_count
