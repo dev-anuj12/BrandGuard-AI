@@ -48,7 +48,7 @@ export default function DeleteAccountPage() {
             <span>Delete Account &amp; Request Data Erasure</span>
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Initiate self-service account deactivation and data erasure under DPDP Act and GDPR Article 17.
+            Initiate self-service account deactivation and data erasure upon request.
           </p>
         </div>
 

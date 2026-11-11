@@ -182,7 +182,7 @@ export default function CookieConsent() {
             </div>
 
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Customize which categories of storage and analytics you authorize while using the BrandGuard AI platform. In compliance with DPDP Act, GDPR, and regional privacy regulations, optional categories remain disabled until you actively consent.
+              Customize which categories of storage and analytics you authorize while using the BrandGuard AI platform. Optional categories remain disabled until you actively consent.
             </p>
 
             <div className="space-y-3.5">

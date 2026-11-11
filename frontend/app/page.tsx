@@ -353,7 +353,7 @@ export default function LandingPage() {
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Multi-Tenant Isolation</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Tenant-isolated workspace context enforced at the database and API level, preventing cross-organization leakage with immutable audit logging.
+              Tenant-isolated workspace context enforced at the database and API level, preventing cross-organization leakage with append-only audit logging.
             </p>
           </div>
         </div>
@@ -436,7 +436,7 @@ export default function LandingPage() {
               </li>
               <li className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Immutable version history preserved across all content revisions</span>
+                <span>Version history preserved across all content revisions</span>
               </li>
             </ul>
           </div>
@@ -502,7 +502,7 @@ export default function LandingPage() {
 
             <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
               <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Immutable Audit Trail</h4>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Append-Only Audit Trail</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Timestamped snapshots recording user ID, action, prior state, and resulting state.
               </p>

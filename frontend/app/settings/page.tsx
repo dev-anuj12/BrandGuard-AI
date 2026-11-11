@@ -245,7 +245,7 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        {/* ── Privacy & Data Governance (DPDP / GDPR) ──────────────────── */}
+        {/* ── Privacy & Data Governance ──────────────────── */}
         <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
           <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">
             <Shield className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />

@@ -1,26 +1,26 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { Headphones, Clock, Mail, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Mail, HelpCircle, ShieldAlert, ArrowRight } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
   title: 'Customer Support Services',
-  description: 'BrandGuard AI Enterprise Support — technical assistance, incident response SLAs, and dedicated account engineering.',
+  description: 'BrandGuard AI Support — technical assistance, incident reporting, and platform guidance.',
 };
 
 export default function SupportPage() {
   const tiers = [
-    { title: 'Standard Support', desc: 'Included with Starter and Professional tiers. Business hours response within 4 hours.', icon: Mail },
-    { title: 'Priority Enterprise Support', desc: '24/7/365 mission-critical support with 30-minute critical incident SLAs and dedicated Slack/Teams bridge.', icon: Clock },
-    { title: 'Security Incident Escalation', desc: 'Direct emergency channel for confirmed brand phishing campaigns or perimeter threat events.', icon: ShieldAlert },
+    { title: 'Technical Support', desc: 'Assistance with workflow configuration, rule setup, and platform troubleshooting.', icon: Mail },
+    { title: 'Documentation & FAQ', desc: 'Self-service guides covering API integration, role permissions, and compliance engines.', icon: HelpCircle },
+    { title: 'Security Incident Reporting', desc: 'Direct reporting channel for perimeter anomalies or suspected brand impersonations.', icon: ShieldAlert },
   ];
 
   return (
     <PublicLayout
       breadcrumbs={[{ label: 'Support' }, { label: 'Support Services' }]}
       badge="Operations"
-      title="Enterprise Technical Support"
-      subtitle="Dedicated technical account managers, SLA-backed response times, and 24/7 incident coordination."
+      title="BrandGuard AI Technical Support"
+      subtitle="Assistance, troubleshooting, and incident reporting for your workspace."
     >
       <div className="space-y-8 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -41,7 +41,7 @@ export default function SupportPage() {
         <div className="p-6 rounded-2xl bg-indigo-600 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-indigo-600/10">
           <div className="space-y-1">
             <h4 className="font-bold text-base">Experiencing a technical issue or anomaly?</h4>
-            <p className="text-xs text-indigo-100">Submit a tracked ticket to our engineering support team.</p>
+            <p className="text-xs text-indigo-100">Submit a tracked ticket to our support team.</p>
           </div>
           <Link
             href="/tickets"
@@ -55,4 +55,3 @@ export default function SupportPage() {
     </PublicLayout>
   );
 }
-

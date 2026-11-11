@@ -141,6 +141,10 @@ export default function DemoPage() {
               />
             </div>
 
+            <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
+              Note: This is an interactive demo interface; form submissions are processed locally in your browser and not transmitted to a backend server.
+            </div>
+
             <button
               type="submit"
               className="w-full py-2.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition"

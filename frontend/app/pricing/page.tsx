@@ -32,7 +32,7 @@ export default function PricingPage() {
         'Semantic AI Compliance (OpenAI & Gemini integration)',
         'Homoglyph Domain Scanner',
         'Social Media Impersonation Monitoring',
-        'Immutable Audit Logging & CSV Telemetry',
+        'Append-Only Audit Logging & CSV Telemetry',
         'Priority Support',
       ],
       highlighted: true,

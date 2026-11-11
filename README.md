@@ -1,5 +1,7 @@
 # BrandGuard AI — Enterprise Brand Governance & Digital Brand Protection Platform
 
+Hackathon project; not affiliated with any commercial product of the same name.
+
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2+-000000.svg?logo=next.js&logoColor=white)](https://nextjs.org)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org)
@@ -156,6 +158,7 @@ python scripts/verify_e2e_platform.py
 ## 8. Known Limitations
 
 - **Deterministic Fallback Engine:** Semantic tone analysis operates via local deterministic rule-based evaluation unless an external LLM API key (`OPENAI_API_KEY` or `GEMINI_API_KEY`) is configured.
-- **Input-Based Scanners:** Perimeter protection scanners analyze user-supplied domain names, social handles, and marketplace URLs on demand; they do not perform persistent autonomous web-wide crawling.
+- **Input-Based Scanners:** Perimeter protection scanners analyze user-supplied input (domain names, social handles, and marketplace URLs) on demand and do not monitor platforms autonomously.
 - **Render Free-Tier Cold Starts:** When hosted on free-tier infrastructure, backend services spin down after inactivity and may take 30–50 seconds to respond on initial wake-up.
+- **Audit Log Append-Only:** The audit log is append-only at the API level, not tamper-proof.
 - **Simulated External Metadata:** WHOIS and external registrar threat evaluations use heuristic similarity scoring algorithms when live external registrar API credentials are not provided.

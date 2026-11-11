@@ -47,7 +47,7 @@ export default function CookiePreferencesPage() {
       breadcrumbs={[{ label: 'Legal' }, { label: 'Cookie Preferences' }]}
       badge="Privacy Controls"
       title="Cookie Preferences Manager"
-      subtitle="Manage your consent for local storage and telemetry tracking categories in compliance with DPDP Act, GDPR, and regional privacy regulations."
+      subtitle="Manage your consent for local storage and telemetry tracking categories and privacy preferences."
       lastUpdated="November 7, 2026"
     >
       <div className="max-w-2xl space-y-6">

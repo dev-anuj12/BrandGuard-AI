@@ -44,7 +44,7 @@ export default function CookiePolicyPage() {
                   <td className="p-2.5 font-mono">access_token</td>
                   <td className="p-2.5 font-semibold text-emerald-600 dark:text-emerald-400">Strictly Necessary</td>
                   <td className="p-2.5">24 Hours / Session</td>
-                  <td className="p-2.5">Stores the cryptographically signed JWT used to authorize API calls to protected endpoints.</td>
+                  <td className="p-2.5">Stores the signed JWT used to authorize API calls to protected endpoints.</td>
                 </tr>
                 <tr>
                   <td className="p-2.5 font-mono">user</td>
@@ -62,7 +62,7 @@ export default function CookiePolicyPage() {
                   <td className="p-2.5 font-mono">brandguard_cookie_consent_v1</td>
                   <td className="p-2.5 font-semibold text-emerald-600 dark:text-emerald-400">Strictly Necessary</td>
                   <td className="p-2.5">Persistent (1 Year)</td>
-                  <td className="p-2.5">Records your verified consent choices and timestamp to satisfy DPDP/GDPR accountability.</td>
+                  <td className="p-2.5">Records your verified consent choices and timestamp.</td>
                 </tr>
               </tbody>
             </table>

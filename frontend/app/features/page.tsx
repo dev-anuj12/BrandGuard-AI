@@ -35,7 +35,7 @@ export default function FeaturesPage() {
       title: 'Four-Role Segregated RBAC',
       category: 'Workflow & Auditing',
       icon: Lock,
-      description: 'Role-based authorization enforces sequential progression: Creator draft &rarr; Reviewer verification &rarr; Manager approval &rarr; Admin oversight with immutable audit logs.',
+      description: 'Role-based authorization enforces sequential progression: Creator draft &rarr; Reviewer verification &rarr; Manager approval &rarr; Admin oversight with append-only audit logs.',
     },
     {
       title: 'Homoglyph & Phishing Domain Scanner',

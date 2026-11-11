@@ -1,42 +1,42 @@
 import type { Metadata } from 'next';
-import { Compass, Clock, CheckCircle2 } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
   title: 'Product Roadmap',
-  description: 'BrandGuard AI Product Roadmap — upcoming features, planned integrations, and engine milestones.',
+  description: 'BrandGuard AI Product Roadmap — planned architectural milestones and future enhancements.',
 };
 
 export default function RoadmapPage() {
-  const roadmapStages = [
+  const items = [
     {
-      quarter: 'Q1 2027 — In Development',
-      badge: 'In Progress',
-      color: 'bg-indigo-500',
-      features: [
-        'Multi-Modal Image Compliance: Automated logo clear-space & color palette verification via computer vision.',
-        'Automated Registrar Takedown Dispatch: One-click UDRP evidence compilation and hosting abuse dispatch.',
-        'Slack & Microsoft Teams Notifications: Interactive approval buttons within enterprise chat clients.',
-      ],
+      title: 'Real-LLM Benchmark with a Larger Labelled Set',
+      desc: 'Expanding evaluation coverage beyond the current dataset with a broader labelled corpus and live LLM provider comparisons.',
+      status: 'Planned',
     },
     {
-      quarter: 'Q2 2027 — Planned',
-      badge: 'Upcoming',
-      color: 'bg-purple-500',
-      features: [
-        'Browser Extension for Real-Time Content Verification across Google Docs, Figma, and Notion.',
-        'Automated Regulatory Rule Ingestion: Parsing SEBI, SEC, and FTC circulars directly into rule trees.',
-        'Granular Tenant IP Whitelisting: Restricting admin portal access to corporate VPN IP blocks.',
-      ],
+      title: 'Vector Retrieval for Large Guideline Sets',
+      desc: 'Dense semantic indexing and embedding retrieval for enterprises maintaining hundreds of regulatory rules.',
+      status: 'Planned',
     },
     {
-      quarter: 'Q3 2027 — Future Horizon',
-      badge: 'Under Research',
-      color: 'bg-slate-400',
-      features: [
-        'Air-Gapped On-Premise LLM Appliance for banking and national defense environments.',
-        'Cross-Platform Counterfeit Image Hash Correlation across global marketplace clusters.',
-      ],
+      title: 'In-App Notifications',
+      desc: 'Real-time notification tray for assigned review tasks, manager approvals, and threat detections.',
+      status: 'Planned',
+    },
+    {
+      title: 'Password Reset and Email Verification',
+      desc: 'Self-service password recovery workflows and transactional email verification for user accounts.',
+      status: 'Planned',
+    },
+    {
+      title: 'Authorised Platform APIs for Social Monitoring',
+      desc: 'Direct integration with authorized social platform APIs for automated perimeter monitoring of brand impersonations.',
+      status: 'Planned',
+    },
+    {
+      title: 'Single Sign-On (SSO)',
+      desc: 'SAML 2.0 and OIDC enterprise identity provider integrations for centralized corporate authentication.',
+      status: 'Planned',
     },
   ];
 
@@ -45,29 +45,23 @@ export default function RoadmapPage() {
       breadcrumbs={[{ label: 'Company' }, { label: 'Roadmap' }]}
       badge="Future Vision"
       title="BrandGuard AI Product Roadmap"
-      subtitle="A transparent look at upcoming capabilities and technical milestones planned for the BrandGuard AI platform."
+      subtitle="A transparent overview of planned capabilities and engineering milestones."
     >
-      <div className="space-y-8 max-w-3xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
-        {roadmapStages.map((stage) => (
-          <div key={stage.quarter} className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-sm text-slate-900 dark:text-white">{stage.quarter}</span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-                {stage.badge}
-              </span>
+      <div className="space-y-6 max-w-3xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <div className="space-y-4">
+          {items.map((item) => (
+            <div key={item.title} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white">{item.title}</h3>
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">
+                  {item.status}
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{item.desc}</p>
             </div>
-            <ul className="space-y-2 pt-1">
-              {stage.features.map((feat, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300">
-                  <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${stage.color}`} />
-                  <span>{feat}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </PublicLayout>
   );
 }
-

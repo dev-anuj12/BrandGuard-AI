@@ -50,7 +50,7 @@ export default function DataExportPage() {
             Export My Data
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Download a portable, machine-readable JSON copy of your personal data, content submissions, and audit trail in compliance with DPDP Act &amp; GDPR.
+            Download a portable, machine-readable JSON copy of your personal data, content submissions, and audit trail for your records.
           </p>
         </div>
 
