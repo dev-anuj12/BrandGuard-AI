@@ -1,7 +1,7 @@
 {
   "split": "dev",
-  "timestamp": "2026-11-11T06:39:42.463893+00:00",
-  "git_commit": "6c4234af605fc751257e23b307a6e959c4d62bb5",
+  "timestamp": "2026-11-11T06:48:25.832005+00:00",
+  "git_commit": "7715b1ee83987172f7cdbfc634da1a3dd4533bd3",
   "dataset_sha256": "60185dfcaaf8d08f989c8063e9675e3a0d3ebb41ef4802d217b7faad8d3c6942",
   "total_items": 63,
   "modes": {
@@ -120,10 +120,10 @@
         "per_category_recall": {
           "bad_citation": 1.0,
           "banned_phrase": 0.6364,
-          "missing_disclaimer": 0.1429,
+          "missing_disclaimer": 0.2857,
           "terminology": 0.0,
-          "tone": 1.0,
-          "unsupported_claim": 0.5714
+          "tone": 0.8,
+          "unsupported_claim": 0.7143
         },
         "misclassified_ids": [
           "d002",
@@ -136,9 +136,9 @@
           "d014",
           "d015",
           "d016",
-          "d017",
           "d018",
           "d019",
+          "d028",
           "d032",
           "d054"
         ]
@@ -186,9 +186,9 @@
         "d014",
         "d015",
         "d016",
-        "d017",
         "d018",
         "d019",
+        "d028",
         "d032",
         "d054"
       ]
@@ -215,14 +215,14 @@
         "per_category_recall": {
           "bad_citation": 1.0,
           "banned_phrase": 0.9091,
-          "missing_disclaimer": 0.8571,
+          "missing_disclaimer": 1.0,
           "terminology": 1.0,
-          "tone": 1.0,
-          "unsupported_claim": 0.8571
+          "tone": 0.8,
+          "unsupported_claim": 1.0
         },
         "misclassified_ids": [
           "d009",
-          "d017",
+          "d028",
           "d054"
         ]
       },
@@ -257,7 +257,7 @@
       },
       "misclassified_ids": [
         "d009",
-        "d017",
+        "d028",
         "d054"
       ]
     }

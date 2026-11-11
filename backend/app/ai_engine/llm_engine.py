@@ -154,7 +154,7 @@ Return a strict JSON array of brand compliance findings for the user content."""
                 FindingCategory.TONE_INCONSISTENCY
             ),
             (
-                r'\b(act now or regret forever|limited time rush|don\'t miss out|once-in-a-lifetime opportunity|limited spots remain|act now|become wealthy now)\b',
+                r'\b(act now or regret forever|limited time rush|don\'t miss out|once[\s\-]in[\s\-]a[\s\-]lifetime|limited\s+(?:spots?|seats?|availability)|closing\s+soon|act\s+(?:now|fast)|become wealthy now)\b',
                 "High-Pressure Urgency",
                 "Urgency tactics contradict the brand principle of patient, customer-centric advisory.",
                 "Brand Tone & Communication Consistency",
@@ -163,7 +163,7 @@ Return a strict JSON array of brand compliance findings for the user content."""
                 FindingCategory.TONE_INCONSISTENCY
             ),
             (
-                r'\b(multiply\s+your\s+wealth\s+fast|make\s+(?:ordinary\s+)?investors\s+extraordinarily\s+wealthy|life-changing\s+returns?|compounding\s+model\s+is\s+in\s+a\s+class\s+of\s+its\s+own)\b',
+                r'\b(multiply\s+your\s+wealth\s+fast|make\s+\w+\s+(?:extraordinarily|insanely|ultra)\s+wealthy|life-changing\s+returns?|in\s+a\s+class\s+of\s+its\s+own|unmatched\s+in\s+the\s+industry)\b',
                 "Sensationalized Wealth Promise",
                 "Sensationalized promises of outsized or rapid wealth accumulation contradict brand tone standards.",
                 "Brand Tone & Communication Consistency",
@@ -219,7 +219,7 @@ Return a strict JSON array of brand compliance findings for the user content."""
             ),
             # 3. Unsupported Superiority & Quantitative Claims
             (
-                r'\b(nine\s+out\s+of\s+ten|\d+%\s+accuracy\s+rate|saved\s+its\s+clients\s+over|outperform(?:ed|s)?\s+\d+%|beats?\s+inflation\s+consistently|zero\s+reported\s+losses)\b',
+                r'\b((?:\d+|nine|eight|seven)\s+out\s+of\s+(?:ten|10)|\d+%\s+accuracy\s+rate|(?:saved|earned|generated)\s+(?:its\s+)?(?:clients|users)\s+over|outperform(?:ed|s)?\s+(?:\d+%|the\s+market)|(?:always|consistently)\s+(?:beats?|outperforms?)\s+(?:inflation|the\s+market|peers)|zero\s+reported\s+losses)\b',
                 "Unsupported Quantitative Claim",
                 "Specific statistical or competitive superiority claims must be backed by verifiable citations.",
                 "Claims Substantiation Standard",
