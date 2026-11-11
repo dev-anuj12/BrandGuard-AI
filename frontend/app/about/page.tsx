@@ -70,7 +70,7 @@ export default function AboutPage() {
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Enterprise Multi-Tenant Security</h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              Strict database isolation guarantees no tenant content touches another organization&apos;s workspace. Full audit trails ensure complete regulatory compliance.
+              Strict database isolation guarantees no tenant content touches another organization&apos;s workspace. Full audit trails record content lifecycle actions.
             </p>
           </div>
         </div>

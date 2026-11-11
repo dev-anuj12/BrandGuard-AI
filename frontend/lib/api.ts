@@ -319,5 +319,8 @@ export const api = {
     request<any>('/api/v1/users/me/delete-request', {
       method: 'POST',
     }),
+
+  checkHealth: () =>
+    request<any>('/health'),
 };
 

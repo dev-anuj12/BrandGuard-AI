@@ -5,14 +5,14 @@ import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
   title: 'Security & Compliance Standards',
-  description: 'BrandGuard AI Security & Compliance — multi-tenant isolation, cryptographic safeguards, and regulatory framework alignment.',
+  description: 'BrandGuard AI Security & Compliance — multi-tenant isolation, data safeguards, and audit trails.',
 };
 
 export default function SecurityAndCompliancePage() {
   const controls = [
     { title: 'Zero Cross-Tenant Data Access', desc: 'All database queries enforce organization tenancy parameters preventing inadvertent cross-tenant visibility.' },
-    { title: 'Cryptographic Standards', desc: 'Enforced TLS 1.3 across all public endpoints and AES-256 for persistent database storage volumes.' },
-    { title: 'Audit Trail Immutability', desc: 'Every content edit, score change, and managerial sign-off writes a permanent, tamper-resistant audit entry.' },
+    { title: 'Data Encryption', desc: 'Encrypted in transit over HTTPS and encrypted at rest [[TO BE COMPLETED]].' },
+    { title: 'Audit Trail Records', desc: 'Every content edit, score change, and managerial sign-off writes an audit entry.' },
     { title: 'SSRF Perimeter Protection', desc: 'Domain and threat scanners validate IP ranges to eliminate internal network probing risks.' },
   ];
 
@@ -20,8 +20,8 @@ export default function SecurityAndCompliancePage() {
     <PublicLayout
       breadcrumbs={[{ label: 'Product' }, { label: 'Security & Compliance' }]}
       badge="Enterprise Trust"
-      title="Security &amp; Regulatory Compliance"
-      subtitle="Architected from day one to exceed the security, auditability, and data isolation demands of regulated enterprise institutions."
+      title="Security &amp; Compliance"
+      subtitle="Architected to provide auditability and logical data isolation for enterprise teams."
     >
       <div className="space-y-10 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -36,18 +36,17 @@ export default function SecurityAndCompliancePage() {
 
         <div className="p-6 rounded-2xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-slate-900 dark:text-white">Require Security Questionnaires or CAIQ documentation?</h4>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Our security compliance team typically turns around vendor assessments in 2 business days.</p>
+            <h4 className="font-bold text-sm text-slate-900 dark:text-white">Require Security Questionnaires or documentation?</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Our security team can assist with vendor assessments and documentation [[TO BE COMPLETED]].</p>
           </div>
           <Link
             href="/contact"
             className="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition shrink-0"
           >
-            Request Security Packet &rarr;
+            Contact Security Team &rarr;
           </Link>
         </div>
       </div>
     </PublicLayout>
   );
 }
-

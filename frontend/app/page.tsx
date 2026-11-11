@@ -303,7 +303,7 @@ export default function LandingPage() {
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Deterministic Rule Engine</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Instant regex-level detection of prohibited expressions, non-compliant naming, and omitted legal disclosures with zero false-negative tolerance.
+              Instant regex-level detection of prohibited expressions, non-compliant naming, and omitted legal disclosures.
             </p>
           </div>
 
@@ -445,26 +445,25 @@ export default function LandingPage() {
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
                 <BarChart3 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                <span>Compliance KPI Overview</span>
+                <span>Governance Roles</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-mono">Live PostgreSQL Engine</span>
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-500 block">Passing Benchmark</span>
-                <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">80.0%</span>
+                <span className="text-[10px] text-slate-500 block">Creator</span>
+                <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Content Submissions</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-500 block">Turnaround Time</span>
-                <span className="text-xl font-black text-slate-900 dark:text-white">~3.2s</span>
+                <span className="text-[10px] text-slate-500 block">Reviewer</span>
+                <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Guideline Verification</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-500 block">Strict Banned Rules</span>
-                <span className="text-xl font-black text-rose-600 dark:text-rose-400">5 Active</span>
+                <span className="text-[10px] text-slate-500 block">Manager</span>
+                <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Approval &amp; Sign-off</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-500 block">Governance Roles</span>
-                <span className="text-xl font-black text-indigo-600 dark:text-indigo-400">4 Stakeholders</span>
+                <span className="text-[10px] text-slate-500 block">Admin</span>
+                <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">System &amp; Policies</span>
               </div>
             </div>
           </div>
@@ -480,7 +479,7 @@ export default function LandingPage() {
               Complete Auditability &amp; Role-Based Access Control
             </h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm">
-              Every status transition, content modification, and managerial sign-off is cryptographically tracked in an immutable audit ledger.
+              Every status transition, content modification, and managerial sign-off is logged in an audit ledger.
             </p>
           </div>
 
@@ -513,7 +512,7 @@ export default function LandingPage() {
               <Globe className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               <h4 className="font-bold text-sm text-slate-900 dark:text-white">Privacy First</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Zero client credential leakage and deterministic fallback capability for sensitive air-gapped environments.
+                Zero client credential leakage and deterministic fallback capability when external AI services are unconfigured.
               </p>
             </div>
           </div>

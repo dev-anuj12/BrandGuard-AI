@@ -5,7 +5,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6+-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-38B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
-[![Tests](https://img.shields.io/badge/Pytest-23%2F23%20Passing-success.svg?logo=pytest&logoColor=white)](backend/tests/)
+[![Tests](https://img.shields.io/badge/Pytest-25%2F25%20Passing-success.svg?logo=pytest&logoColor=white)](backend/tests/)
 
 > **BrandGuard AI** is an intelligent brand compliance and content governance platform that helps organizations review, validate, manage, and approve brand-related content using AI-assisted analysis and human oversight, while proactively defending against external digital brand threats.
 
@@ -23,9 +23,9 @@ BrandGuard AI connects two vital capabilities into a single operational interfac
 
 ### Pillar 2: Digital Brand Protection (External Threat Surface Monitoring)
 * **Website & Lookalike Domain Protection:** SSRF-hardened inspection engine analyzing normalized Levenshtein similarity, Cyrillic homoglyph attacks, high-risk TLD abuse, and credential harvesting forms.
-* **Social Media Impersonation Protection:** Heuristic detection of unauthorized brand handles, fake customer support pretenders, and crypto/financial scam bio lures across Twitter/X, Telegram, Instagram, LinkedIn, and YouTube.
-* **Counterfeit Products & Trademark Misuse:** MSRP price disparity analysis against official catalogs and visual brand asset compliance (color alterations, aspect ratio stretching, missing ®/™ notices).
-* **Centralized Threat Intelligence & Incident Response:** Triage workflows and **One-Click Legal Takedown Notice Generator** (DMCA / Cease & Desist / UDRP).
+* **Social Media Impersonation Protection:** Heuristic detection of unauthorized brand handles, fake customer support pretenders, and crypto/financial scam bio lures across social platforms.
+* **Counterfeit Products & Trademark Misuse:** MSRP price disparity analysis against official catalogs and visual brand asset compliance.
+* **Centralized Threat Intelligence & Incident Response:** Triage workflows and **Legal Takedown Notice Generator** (DMCA / Cease & Desist / UDRP).
 
 ---
 
@@ -79,18 +79,13 @@ BrandGuard AI connects two vital capabilities into a single operational interfac
 
 ---
 
-## 4. Demonstration Organization: FinNova Financial Technologies
+## 4. Demonstration Scenario
 
-To demonstrate realistic financial compliance and digital brand protection, the platform includes sample demonstration data for:
+The platform includes baseline demonstration data for testing compliance policies:
 
-* **Company:** *FinNova Financial Technologies*
-* **Official Primary Domain:** `finnova.com`
-* **Canonical Social Handle:** `@finnovahq`
-* **Official Product Catalog:** FinNova SmartGrowth Portfolio (`FNV-SGP-01`, MSRP $10,000.00), FinNova Prime Yield (`FNV-PYD-02`, MSRP $25,000.00).
+* **Organization:** *BrandGuard Demo Enterprise*
 * **Banned Expressions:** `guaranteed returns`, `risk-free investment`, `instant wealth`, `100% profit`, `crypto moon`.
 * **Approved Terminology:** `digital financial services` (instead of *money app*), `secure transactions` (instead of *unhackable transfers*).
-
-*(All demonstration entities are explicitly identified as fictional sample data).*
 
 ---
 
@@ -123,37 +118,44 @@ npm run dev
 
 ---
 
-## 6. Access Credentials
+## 6. Environment Variables
 
-Pre-seeded demonstration accounts with role-based permissions:
+The application is configured using environment variables based on `.env.example`:
 
-| Role | Email Address | Password | Access Scope |
-| :--- | :--- | :--- | :--- |
-| **Admin** | `admin@finnova.com` | `Admin@123` | Global Settings, Brand Knowledge Base, Full Threat Intel |
-| **Manager** | `manager@finnova.com` | `Manager@123` | Final Executive Approval, Risk Sign-Off, Takedowns |
-| **Reviewer** | `reviewer@finnova.com` | `Reviewer@123` | Citation Verification, AI Recommendations Audit |
-| **Creator** | `creator@finnova.com` | `Creator@123` | Multi-channel Content Drafting, Revisions Queue |
+### Backend
+- `SECRET_KEY`
+- `ENVIRONMENT`
+- `DATABASE_URL`
+- `AI_PROVIDER`
+- `OPENAI_API_KEY`
+- `GEMINI_API_KEY`
+- `ALLOWED_ORIGINS`
 
-*(The login page at `/login` also provides convenient 1-click demonstration profile buttons for instant evaluation).*
+### Frontend
+- `NEXT_PUBLIC_API_URL`
 
 ---
 
 ## 7. Automated Test Suite & Platform Verification
 
-### A. Pytest Test Suite
-To run all 23 automated regression unit and integration tests:
+### Pytest Test Suite
+To run all 25 automated regression unit and integration tests:
 
 ```powershell
-& "backend\venv\Scripts\python.exe" -m pytest backend/tests/ -v
+& "backend\venv\Scripts\python.exe" -m pytest backend/tests -v
 ```
-**Results:** `23 passed in 4.39s` (100% pass rate).
+**Results:** `25 passed in ~5s` (100% pass rate).
 
-### B. Comprehensive End-to-End Platform Verification Script
-To run the full end-to-end integration verification exercising both internal governance and digital protection pillars:
-
+### Comprehensive End-to-End Platform Verification Script
 ```powershell
 python scripts/verify_e2e_platform.py
 ```
-**Results:** `100% SUCCESS` across all 9 workflow checkpoints.
 
-See [`DEMO_GUIDE.md`](DEMO_GUIDE.md) for a complete step-by-step feature walkthrough.
+---
+
+## 8. Known Limitations
+
+- **Deterministic Fallback Engine:** Semantic tone analysis operates via local deterministic rule-based evaluation unless an external LLM API key (`OPENAI_API_KEY` or `GEMINI_API_KEY`) is configured.
+- **Input-Based Scanners:** Perimeter protection scanners analyze user-supplied domain names, social handles, and marketplace URLs on demand; they do not perform persistent autonomous web-wide crawling.
+- **Render Free-Tier Cold Starts:** When hosted on free-tier infrastructure, backend services spin down after inactivity and may take 30–50 seconds to respond on initial wake-up.
+- **Simulated External Metadata:** WHOIS and external registrar threat evaluations use heuristic similarity scoring algorithms when live external registrar API credentials are not provided.

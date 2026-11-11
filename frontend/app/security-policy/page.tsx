@@ -13,38 +13,38 @@ export default function SecurityPolicyPage() {
       breadcrumbs={[{ label: 'Legal' }, { label: 'Security Policy' }]}
       badge="Security Architecture"
       title="Security &amp; Data Safeguards Policy"
-      subtitle="Comprehensive technical safeguards, multi-tenant isolation, cryptographic standards, and vulnerability reporting procedures."
+      subtitle="Technical safeguards, multi-tenant logical isolation, data protection measures, and vulnerability reporting procedures."
       lastUpdated="November 7, 2026"
     >
       <div className="space-y-8 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <section className="space-y-3">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">1. Multi-Tenant Cryptographic &amp; Logical Isolation</h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">1. Multi-Tenant Logical Isolation</h2>
           <p>
-            BrandGuard AI employs a defense-in-depth security model to ensure enterprise content and telemetry remain strictly confidential:
+            BrandGuard AI employs security practices to protect enterprise content and telemetry:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             <div className="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
               <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Tenant Partitioning</span>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Mandatory organization-level filters applied at the database querying layer in FastAPI prevent cross-tenant record leakage.
+                Organization-level filters applied at the database querying layer in FastAPI prevent cross-tenant record leakage.
               </p>
             </div>
             <div className="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
               <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Encryption at Rest &amp; Transit</span>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                All client interactions mandate TLS 1.3 encryption in transit. Relational database storage is encrypted at rest using AES-256.
+                Client interactions use HTTPS in transit. Relational database storage is encrypted at rest [[TO BE COMPLETED]].
               </p>
             </div>
             <div className="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
               <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Server-Side Request Forgery Defense</span>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Perimeter domain scanners incorporate strict IP validation preventing internal network probing (RFC 1918 / Loopback address blocking).
+                Perimeter domain scanners incorporate IP validation preventing internal network probing (RFC 1918 / Loopback address blocking).
               </p>
             </div>
             <div className="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
-              <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Immutable Audit Trail</span>
+              <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Audit Trail Logging</span>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Every content creation, review, and approval action writes a permanent record with actor ID, timestamp, and modification payload.
+                Content creation, review, and approval actions write an audit record with actor ID, timestamp, and modification payload.
               </p>
             </div>
           </div>
@@ -65,4 +65,3 @@ export default function SecurityPolicyPage() {
     </PublicLayout>
   );
 }
-
