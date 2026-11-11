@@ -6,6 +6,10 @@ from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.models.guideline import BrandGuideline, ApprovedFact
 from app.models.enums import FindingCategory, SeverityLevel
+from app.ai_engine.normalizer import (
+    normalize_text,
+    is_false_positive_context
+)
 
 class LLMEngine:
     def __init__(self, db: Session):
@@ -126,45 +130,122 @@ Return a strict JSON array of brand compliance findings for the user content."""
     def _semantic_fallback_analysis(self, text: str, guidelines: List[BrandGuideline]) -> List[Dict[str, Any]]:
         """Reliable deterministic fallback analyzer simulating AI tone & contextual consistency checks."""
         findings = []
-        lowered = text.lower()
+        normalized_text = normalize_text(text)
+        lowered = normalized_text.lower()
 
-        # 1. Hype & Sensationalist Tone Checks
-        hype_patterns = [
-            (r'\b(unbelievable|crazy returns|insane growth|skyrocket|blow your mind|secret trick)\b',
-             "Sensationalized Hype",
-             "Tone is sensationalized and inconsistent with a professional, trustworthy, and responsible brand identity.",
-             "Brand Tone & Communication Consistency",
-             "disciplined, long-term financial growth",
-             SeverityLevel.HIGH,
-             FindingCategory.TONE_INCONSISTENCY),
-            (r'\b(never lose money|zero downside|foolproof)\b',
-             "Misleading Guarantee",
-             "Statement implies investment immunity from market forces, violating financial compliance standards.",
-             "Financial Claims & Guarantees Policy",
-             "risk-managed strategies aligned with your portfolio objectives",
-             SeverityLevel.CRITICAL,
-             FindingCategory.MISLEADING_STATEMENT),
-            (r'\b(wealth wizardry|crypto moon|money hack)\b',
-             "Unprofessional Slang",
-             "Colloquial terminology undermines institutional brand reputation and professional credibility.",
-             "Official Terminology Standard",
-             "modern digital wealth management solutions",
-             SeverityLevel.MEDIUM,
-             FindingCategory.TONE_INCONSISTENCY),
-            (r'\b(act now or regret forever|limited time rush|don\'t miss out)\b',
-             "High-Pressure Urgency",
-             "Urgency tactics contradict the brand principle of patient, customer-centric advisory.",
-             "Brand Tone & Communication Consistency",
-             "explore our options at your own pace",
-             SeverityLevel.MEDIUM,
-             FindingCategory.TONE_INCONSISTENCY)
+        fallback_patterns = [
+            # 1. Hype & Sensationalist Tone Checks
+            (
+                r'\b(unbelievable|crazy returns|insane growth|skyrocket|blow your mind|secret trick)\b',
+                "Sensationalized Hype",
+                "Tone is sensationalized and inconsistent with a professional, trustworthy, and responsible brand identity.",
+                "Brand Tone & Communication Consistency",
+                "disciplined, long-term financial growth",
+                SeverityLevel.HIGH,
+                FindingCategory.TONE_INCONSISTENCY
+            ),
+            (
+                r'\b(wealth wizardry|crypto moon|money hack)\b',
+                "Unprofessional Slang",
+                "Colloquial terminology undermines institutional brand reputation and professional credibility.",
+                "Official Terminology Standard",
+                "modern digital wealth management solutions",
+                SeverityLevel.MEDIUM,
+                FindingCategory.TONE_INCONSISTENCY
+            ),
+            (
+                r'\b(act now or regret forever|limited time rush|don\'t miss out|once-in-a-lifetime opportunity|limited spots remain|act now|become wealthy now)\b',
+                "High-Pressure Urgency",
+                "Urgency tactics contradict the brand principle of patient, customer-centric advisory.",
+                "Brand Tone & Communication Consistency",
+                "explore our options at your own pace",
+                SeverityLevel.MEDIUM,
+                FindingCategory.TONE_INCONSISTENCY
+            ),
+            (
+                r'\b(multiply\s+your\s+wealth\s+fast|make\s+(?:ordinary\s+)?investors\s+extraordinarily\s+wealthy|life-changing\s+returns?|compounding\s+model\s+is\s+in\s+a\s+class\s+of\s+its\s+own)\b',
+                "Sensationalized Wealth Promise",
+                "Sensationalized promises of outsized or rapid wealth accumulation contradict brand tone standards.",
+                "Brand Tone & Communication Consistency",
+                "long-term, disciplined portfolio growth",
+                SeverityLevel.HIGH,
+                FindingCategory.TONE_INCONSISTENCY
+            ),
+            # 2. Financial Guarantee Paraphrases (cannot lose, no risk, sure profit)
+            (
+                r'\b(cannot|can\'t|cant|won\'t|wont|will not|never)\s+(?:simply\s+)?(lose|drop|diminish)\s+(?:money|capital|funds|core investment|deposit)\b',
+                "Paraphrased Capital Guarantee",
+                "Implying that an investor cannot lose money represents an unsubstantiated financial guarantee.",
+                "Financial Claims & Guarantees Policy",
+                "capital preservation strategies subject to market conditions",
+                SeverityLevel.CRITICAL,
+                FindingCategory.MISLEADING_STATEMENT
+            ),
+            (
+                r'\b(never\s+seen\s+a\s+negative\s+outcome|zero[\s\-]+downside|foolproof|no\s+risk\s+at\s+all|zero\s+risk)\b',
+                "Misleading Zero-Downside Claim",
+                "Statement implies total immunity from market risk, violating financial advertising standards.",
+                "Financial Claims & Guarantees Policy",
+                "risk-managed strategies aligned with your objectives",
+                SeverityLevel.CRITICAL,
+                FindingCategory.MISLEADING_STATEMENT
+            ),
+            (
+                r'\b(in\s+practice,?\s+risk[\s\-_]*free|effectively\s+risk[\s\-_]*free|practically\s+risk[\s\-_]*free)\b',
+                "Obfuscated Risk-Free Guarantee",
+                "Describing investment opportunities as practically or effectively risk-free is prohibited.",
+                "Financial Claims & Guarantees Policy",
+                "low-volatility portfolio structure",
+                SeverityLevel.CRITICAL,
+                FindingCategory.BANNED_EXPRESSION
+            ),
+            (
+                r'\b(sure|certain|guaranteed|inevitable)\s+(?:profit|profits|gains?|returns?)\b',
+                "Guaranteed Profit Claim",
+                "Promising certain or guaranteed profits on market-linked instruments is prohibited.",
+                "Financial Claims & Guarantees Policy",
+                "projections based on historical models",
+                SeverityLevel.CRITICAL,
+                FindingCategory.UNSUPPORTED_CLAIM
+            ),
+            (
+                r'\b(100%\s+profit|guarantees?\s+100%\s+profit)\b',
+                "Absolute Profit Promise",
+                "Absolute profit promises contradict financial compliance standards.",
+                "Financial Claims & Guarantees Policy",
+                "competitive return targets",
+                SeverityLevel.CRITICAL,
+                FindingCategory.UNSUPPORTED_CLAIM
+            ),
+            # 3. Unsupported Superiority & Quantitative Claims
+            (
+                r'\b(nine\s+out\s+of\s+ten|\d+%\s+accuracy\s+rate|saved\s+its\s+clients\s+over|outperform(?:ed|s)?\s+\d+%|beats?\s+inflation\s+consistently|zero\s+reported\s+losses)\b',
+                "Unsupported Quantitative Claim",
+                "Specific statistical or competitive superiority claims must be backed by verifiable citations.",
+                "Claims Substantiation Standard",
+                "substantiated benchmark comparisons",
+                SeverityLevel.HIGH,
+                FindingCategory.UNSUPPORTED_CLAIM
+            ),
+            # 4. Bad / Suspicious Citation Domains
+            (
+                r'\b[a-zA-Z0-9_\.-]*\.(?:fake[a-zA-Z0-9_\.-]*|made-up[a-zA-Z0-9_\.-]*|exampleonly[a-zA-Z0-9_\.-]*)\b',
+                "Unverified Source Citation",
+                "Citations must reference reputable, authoritative, and independently verifiable sources.",
+                "Citation & Evidence Policy",
+                "approved industry benchmarks or official filings",
+                SeverityLevel.HIGH,
+                FindingCategory.UNSUPPORTED_CLAIM
+            )
         ]
 
-        for pattern, label, explanation, guideline_ref, suggestion, severity, cat in hype_patterns:
+        for pattern, label, explanation, guideline_ref, suggestion, severity, cat in fallback_patterns:
             matches = list(re.finditer(pattern, lowered))
             for match in matches:
                 start, end = match.span()
-                matched_snippet = text[start:end]
+                if is_false_positive_context(lowered, start, end):
+                    continue
+                matched_snippet = text[start:end] if end <= len(text) else normalized_text[start:end]
                 findings.append({
                     "category": cat,
                     "severity": severity,
@@ -173,7 +254,7 @@ Return a strict JSON array of brand compliance findings for the user content."""
                     "guideline_reference": guideline_ref,
                     "evidence": [{
                         "source": "Brand Tone & Compliance Manual",
-                        "rule": "Avoid aggressive marketing hype and misleading claims."
+                        "rule": guideline_ref
                     }],
                     "confidence": 0.91,
                     "suggested_correction": suggestion,

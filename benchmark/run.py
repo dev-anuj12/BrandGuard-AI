@@ -251,11 +251,16 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
         json.dump(payload, f, indent=2)
     print(f"\nResults saved to: {output_path}")
 
-    if save_baseline or split == "dev":
+    if save_baseline:
         baseline_path = results_dir / "baseline_dev.json"
         with open(baseline_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
         print(f"Dev baseline saved to: {baseline_path}")
+
+    tuned_path = results_dir / "tuned_dev.json"
+    with open(tuned_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+    print(f"Tuned dev results saved to: {tuned_path}")
 
     db.close()
 
@@ -265,6 +270,7 @@ def main():
     parser.add_argument("--split", choices=["dev", "test"], required=True, help="Dataset split to evaluate")
     parser.add_argument("--confirm-final", action="store_true", help="Confirmation required to evaluate frozen test split")
     parser.add_argument("--save-baseline", action="store_true", help="Explicitly save output as baseline_dev.json")
+    parser.add_argument("--save-tuned", action="store_true", help="Save output as tuned_dev.json")
     args = parser.parse_args()
 
     asyncio.run(run_evaluation(args.split, args.confirm_final, args.save_baseline))
@@ -272,3 +278,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

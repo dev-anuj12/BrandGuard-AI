@@ -3,6 +3,11 @@ from typing import List, Dict, Any
 from sqlalchemy.orm import Session
 from app.models.guideline import BannedWord, ApprovedTerminology, BrandGuideline
 from app.models.enums import FindingCategory, SeverityLevel
+from app.ai_engine.normalizer import (
+    normalize_text,
+    is_false_positive_context,
+    has_required_disclaimer
+)
 
 class RuleEngine:
     def __init__(self, db: Session):
@@ -10,17 +15,20 @@ class RuleEngine:
 
     def analyze(self, text: str) -> List[Dict[str, Any]]:
         findings = []
-        lowered_text = text.lower()
+        normalized_text = normalize_text(text)
+        lowered_text = normalized_text.lower()
 
         # 1. Detect Banned Words and Phrases
         banned_words = self.db.query(BannedWord).filter(BannedWord.is_active == True).all()
         for bw in banned_words:
-            pattern = r'\b' + re.escape(bw.word_or_phrase.lower()) + r'\b'
+            words = re.split(r'[\s\-]+', bw.word_or_phrase.lower().strip())
+            pattern = r'\b' + r'[\s\-]+'.join(re.escape(w) for w in words) + r'\b'
             matches = list(re.finditer(pattern, lowered_text))
             for match in matches:
-                # Capture exact original casing from input
                 start, end = match.span()
-                matched_snippet = text[start:end]
+                if is_false_positive_context(lowered_text, start, end):
+                    continue
+                matched_snippet = text[start:end] if end <= len(text) else normalized_text[start:end]
                 findings.append({
                     "category": FindingCategory.BANNED_EXPRESSION,
                     "severity": bw.severity,
@@ -41,11 +49,14 @@ class RuleEngine:
         # 2. Detect Incorrect Terminology
         terminologies = self.db.query(ApprovedTerminology).all()
         for term in terminologies:
-            pattern = r'\b' + re.escape(term.incorrect_term.lower()) + r'\b'
+            words = re.split(r'[\s\-]+', term.incorrect_term.lower().strip())
+            pattern = r'\b' + r'[\s\-]+'.join(re.escape(w) for w in words) + r'\b'
             matches = list(re.finditer(pattern, lowered_text))
             for match in matches:
                 start, end = match.span()
-                matched_snippet = text[start:end]
+                if is_false_positive_context(lowered_text, start, end):
+                    continue
+                matched_snippet = text[start:end] if end <= len(text) else normalized_text[start:end]
                 findings.append({
                     "category": FindingCategory.INCORRECT_TERMINOLOGY,
                     "severity": SeverityLevel.MEDIUM,
@@ -62,11 +73,22 @@ class RuleEngine:
                     "engine_source": "Rule Engine"
                 })
 
-        # 3. Detect Missing Mandatory Disclaimers for Financial Projections
-        financial_indicators = ["return", "returns", "profit", "growth", "invest", "wealth", "yield", "portfolio"]
-        has_financial_mention = any(re.search(r'\b' + word + r'\b', lowered_text) for word in financial_indicators)
-        disclaimer_phrases = ["subject to market risks", "terms and conditions apply", "past performance is no guarantee", "risk disclosure"]
-        has_disclaimer = any(phrase in lowered_text for phrase in disclaimer_phrases)
+        # 3. Detect Missing Mandatory Disclaimers for Financial Projections & Investment Products
+        financial_indicators = [
+            r'\breturn[s]?\b',
+            r'\bprofit[s]?\b',
+            r'\byield[s]?\b',
+            r'\bwealth\s+accumulation\b',
+            r'\bcapital\s+accumulation\b',
+            r'\binvest\s+in\b',
+            r'\binvesting\b',
+            r'\binvestment\s+(opportunity|product|vehicle|scheme|fund|plan)\b',
+            r'\b(growth|equity|bond|mutual)\s+fund\b',
+            r'\bmodel\s+portfolio\b',
+            r'\bportfolio\s+growth\b'
+        ]
+        has_financial_mention = any(re.search(pat, lowered_text) for pat in financial_indicators)
+        has_disclaimer = has_required_disclaimer(lowered_text)
 
         if has_financial_mention and not has_disclaimer:
             findings.append({
