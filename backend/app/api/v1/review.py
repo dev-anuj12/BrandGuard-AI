@@ -61,7 +61,10 @@ async def trigger_ai_review(
             confidence=f.get("confidence", 0.90),
             suggested_correction=f.get("suggested_correction"),
             status=f.get("status", "Pending"),
-            engine_source=f.get("engine_source", "Rule Engine")
+            engine_source=f.get("engine_source", "Rule Engine"),
+            grounding_status=f.get("grounding_status", "GROUNDED"),
+            grounding_reasons=f.get("grounding_reasons", ""),
+            evidence_state=f.get("evidence_state", "verified")
         )
         db.add(finding_record)
         db.commit()

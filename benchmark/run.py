@@ -20,7 +20,8 @@ from app.database.init_db import init_db
 from app.ai_engine.rule_engine import RuleEngine
 from app.ai_engine.llm_engine import LLMEngine
 from app.ai_engine.review_pipeline import AIReviewPipeline
-from app.models.guideline import BrandGuideline
+from app.ai_engine.grounding import validate_finding
+from app.models.guideline import BrandGuideline, ApprovedFact, ApprovedSource
 from app.core.config import settings
 
 
@@ -108,7 +109,7 @@ def get_file_sha256(filepath: Path) -> str:
     return h.hexdigest()
 
 
-async def run_evaluation(split: str, confirm_final: bool = False, save_baseline: bool = False):
+async def run_evaluation(split: str, confirm_final: bool = False, save_baseline: bool = False, save_tuned: bool = False):
     if split == "test" and not confirm_final:
         print("ERROR: Refusing to evaluate test split without --confirm-final. The test split is frozen.", file=sys.stderr)
         sys.exit(1)
@@ -139,6 +140,16 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
     llm_engine = LLMEngine(db)
     pipeline = AIReviewPipeline(db)
     guidelines = db.query(BrandGuideline).filter(BrandGuideline.is_active == True).all()
+    facts = db.query(ApprovedFact).filter(ApprovedFact.is_active == True).all()
+    sources = db.query(ApprovedSource).all()
+    retrieved_knowledge = {
+        "guideline_ids": {g.id for g in guidelines},
+        "fact_ids": {f.id for f in facts},
+        "source_ids": {s.id for s in sources},
+        "guidelines": guidelines,
+        "facts": facts,
+        "sources": sources
+    }
 
     # Determine modes
     modes = ["rules_only", "semantic_fallback", "combined"]
@@ -155,21 +166,33 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
 
     for mode in modes:
         preds = []
+        total_needs_review = 0
         for item in items:
             text = item["text"]
             if mode == "rules_only":
                 findings = rule_engine.analyze(text)
+                for f in findings:
+                    validate_finding(f, text, retrieved_knowledge)
             elif mode == "semantic_fallback":
                 findings = llm_engine._semantic_fallback_analysis(text, guidelines)
+                for f in findings:
+                    validate_finding(f, text, retrieved_knowledge)
             elif mode == "combined":
                 res = await pipeline.execute_review(text)
                 findings = res.get("findings", [])
             elif mode == "llm":
                 findings = await llm_engine.analyze(text)
+                for f in findings:
+                    validate_finding(f, text, retrieved_knowledge)
             else:
                 findings = []
 
-            pred = "violation" if len(findings) > 0 else "compliant"
+            # Document-level prediction uses GROUNDED findings only
+            grounded_findings = [f for f in findings if f.get("grounding_status") == "GROUNDED"]
+            needs_review_count = sum(1 for f in findings if f.get("grounding_status") == "NEEDS_HUMAN_REVIEW")
+            total_needs_review += needs_review_count
+
+            pred = "violation" if len(grounded_findings) > 0 else "compliant"
             preds.append(pred)
 
         # Metrics on all split items
@@ -184,6 +207,7 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
             "all": all_metrics,
             "hard_cases": hard_metrics,
             "misclassified_ids": all_metrics["misclassified_ids"],
+            "needs_human_review_count": total_needs_review
         }
 
     # Format Markdown Table
@@ -231,12 +255,13 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
             row.append(f"{val:.3f}")
         print("| " + " | ".join(row) + " |")
 
+    print("\n### Needs Human Review Counts")
+    for mode in modes:
+        print(f"- {mode}: {results_by_mode[mode]['needs_human_review_count']} item(s)")
+
     # Save Results
     results_dir = REPO_ROOT / "benchmark" / "results"
     results_dir.mkdir(parents=True, exist_ok=True)
-    timestamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d_%H%M%S")
-    output_filename = f"{split}_{timestamp}.json"
-    output_path = results_dir / output_filename
 
     payload = {
         "split": split,
@@ -247,20 +272,22 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
         "modes": results_by_mode,
     }
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
-    print(f"\nResults saved to: {output_path}")
-
     if save_baseline:
         baseline_path = results_dir / "baseline_dev.json"
         with open(baseline_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
         print(f"Dev baseline saved to: {baseline_path}")
-
-    tuned_path = results_dir / "tuned_dev.json"
-    with open(tuned_path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
-    print(f"Tuned dev results saved to: {tuned_path}")
+    elif save_tuned:
+        tuned_path = results_dir / "tuned_dev.json"
+        with open(tuned_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+        print(f"Tuned dev results saved to: {tuned_path}")
+    else:
+        # Default dev run saves to after_grounding_dev.json without overwriting baseline or tuned
+        grounding_path = results_dir / "after_grounding_dev.json"
+        with open(grounding_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+        print(f"After-grounding dev results saved to: {grounding_path}")
 
     db.close()
 
@@ -273,7 +300,7 @@ def main():
     parser.add_argument("--save-tuned", action="store_true", help="Save output as tuned_dev.json")
     args = parser.parse_args()
 
-    asyncio.run(run_evaluation(args.split, args.confirm_final, args.save_baseline))
+    asyncio.run(run_evaluation(args.split, args.confirm_final, args.save_baseline, args.save_tuned))
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ import AppLayout from '../../../components/AppLayout';
 import { Button } from '../../../components/ui/Button';
 import { useToast } from '../../../components/ui/Toast';
 import { StatusBadge, SeverityBadge, ConfidenceBadge } from '../../../components/Badges';
+import { Badge } from '../../../components/ui/Badge';
 import { CardSkeleton } from '../../../components/ui/Skeleton';
 import { api, getCurrentUser } from '../../../lib/api';
 
@@ -273,194 +274,247 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
           </div>
 
           {/* Right Column: Findings & Remediations */}
-          <div className="lg:col-span-7 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-500" />
-                <span>Explainable AI Findings &amp; Grounding Evidence</span>
-              </h2>
-              <span className="text-xs text-slate-400">
-                {review.findings?.length || 0} Issue(s)
-              </span>
-            </div>
+          <div className="lg:col-span-7 space-y-6">
+            {(() => {
+              const groundedFindings = (review.findings || []).filter((f: any) => f.grounding_status !== 'NEEDS_HUMAN_REVIEW');
+              const needsReviewFindings = (review.findings || []).filter((f: any) => f.grounding_status === 'NEEDS_HUMAN_REVIEW');
 
-            {review.findings?.length === 0 ? (
-              <div className="p-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 text-center space-y-2">
-                <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto" />
-                <h3 className="font-bold text-emerald-800 dark:text-emerald-300 text-sm">Perfect Compliance</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">No violations detected against brand guidelines.</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {review.findings.map((f: any, idx: number) => {
-                  const suggestion = f.suggestions?.[0];
-                  const isResolved = f.status === 'Resolved' || suggestion?.status === 'Accepted';
-                  const isOverridden = f.status === 'Overridden' || suggestion?.status === 'Rejected';
+              return (
+                <>
+                  {/* Confirmed Grounded Findings */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 text-emerald-500" />
+                        <span>Confirmed Grounded Findings ({groundedFindings.length})</span>
+                      </h2>
+                      <span className="text-xs text-slate-400">
+                        {groundedFindings.length} Verified Issue(s)
+                      </span>
+                    </div>
 
-                  return (
-                    <div
-                      key={f.id || idx}
-                      className={`p-4 rounded-xl border transition-all space-y-3 ${
-                        isResolved
-                          ? 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60'
-                          : isOverridden
-                          ? 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800'
-                          : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm'
-                      }`}
-                    >
-                      {/* Finding Header */}
-                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-700/60 pb-2.5">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-bold text-slate-900 dark:text-white">{f.category}</span>
-                          <SeverityBadge severity={f.severity} />
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <ConfidenceBadge confidence={f.confidence} />
-                          <span className="text-[10px] text-slate-500 font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900">
-                            {f.engine_source}
-                          </span>
-                        </div>
+                    {groundedFindings.length === 0 ? (
+                      <div className="p-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 text-center space-y-2">
+                        <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto" />
+                        <h3 className="font-bold text-emerald-800 dark:text-emerald-300 text-sm">No Confirmed Violations</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">All content statements adhere to grounded brand rules.</p>
                       </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {groundedFindings.map((f: any, idx: number) => {
+                          const suggestion = f.suggestions?.[0];
+                          const isResolved = f.status === 'Resolved' || suggestion?.status === 'Accepted';
+                          const isOverridden = f.status === 'Overridden' || suggestion?.status === 'Rejected';
 
-                      {/* Matched Snippet */}
-                      <div className="p-2.5 rounded-lg bg-rose-50/50 dark:bg-slate-900 border border-rose-200 dark:border-rose-950/60 text-xs">
-                        <span className="text-rose-600 dark:text-rose-400 block mb-0.5 font-semibold uppercase text-[10px]">
-                          Problematic Text Detected:
-                        </span>
-                        <span className="font-mono font-bold text-rose-700 dark:text-rose-300 text-sm">
-                          &quot;{f.matched_text}&quot;
-                        </span>
-                      </div>
-
-                      {/* Explanation & Guideline Reference */}
-                      <div className="space-y-1.5 text-xs">
-                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{f.explanation}</p>
-                        {f.guideline_reference && (
-                          <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium text-[11px]">
-                            <BookOpen className="w-3.5 h-3.5 shrink-0" />
-                            <span>Policy Reference: {f.guideline_reference}</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Source Evidence */}
-                      {f.evidence && f.evidence.length > 0 && (
-                        <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-[11px] space-y-1">
-                          <span className="font-semibold text-slate-600 dark:text-slate-400 flex items-center gap-1">
-                            <Search className="w-3 h-3 text-blue-500" />
-                            <span>Supporting Evidence:</span>
-                          </span>
-                          {f.evidence.map((ev: any, evIdx: number) => (
-                            <div key={evIdx} className="text-slate-500 dark:text-slate-400 font-mono text-[10px]">
-                              • {typeof ev === 'string' ? ev : `${ev.source || ev.rule || 'Evidence'}: ${ev.text || ev.note || ev.requirement || ''}`}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Suggested Correction */}
-                      {suggestion && (
-                        <div className="pt-2 border-t border-slate-100 dark:border-slate-700/60 space-y-2.5">
-                          <div className="p-3 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 text-xs space-y-1">
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
-                              AI Suggested Correction:
-                            </span>
-                            <span className="font-mono text-emerald-700 dark:text-emerald-300 font-bold block text-sm">
-                              &quot;{suggestion.suggested_text}&quot;
-                            </span>
-                          </div>
-
-                          {/* Status tag if handled */}
-                          {isResolved && (
-                            <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                              <CheckCircle2 className="w-3.5 h-3.5" />
-                              <span>Accepted and applied to current copy</span>
-                            </div>
-                          )}
-
-                          {isOverridden && (
-                            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                              <X className="w-3.5 h-3.5" />
-                              <span>Suggestion rejected (manual override)</span>
-                            </div>
-                          )}
-
-                          {/* Action controls */}
-                          {!isResolved && !isOverridden && (
-                            <div className="space-y-2">
-                              {editingId === suggestion.id ? (
-                                <div className="space-y-2">
-                                  <input
-                                    type="text"
-                                    value={manualText[suggestion.id] ?? suggestion.suggested_text}
-                                    onChange={(e) =>
-                                      setManualText({ ...manualText, [suggestion.id]: e.target.value })
-                                    }
-                                    className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-slate-200 font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    placeholder="Type custom text..."
-                                  />
-                                  <div className="flex items-center gap-2">
-                                    <Button
-                                      size="sm"
-                                      onClick={() =>
-                                        handleSuggestion(
-                                          suggestion.id,
-                                          'manual',
-                                          manualText[suggestion.id] ?? suggestion.suggested_text
-                                        )
-                                      }
-                                    >
-                                      Apply Custom Text
-                                    </Button>
-                                    <Button
-                                      size="sm"
-                                      variant="ghost"
-                                      onClick={() => setEditingId(null)}
-                                    >
-                                      Cancel
-                                    </Button>
-                                  </div>
+                          return (
+                            <div
+                              key={f.id || idx}
+                              className={`p-4 rounded-xl border transition-all space-y-3 ${
+                                isResolved
+                                  ? 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60'
+                                  : isOverridden
+                                  ? 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800'
+                                  : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm'
+                              }`}
+                            >
+                              {/* Finding Header */}
+                              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-700/60 pb-2.5">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-xs font-bold text-slate-900 dark:text-white">{f.category}</span>
+                                  <SeverityBadge severity={f.severity} />
+                                  <Badge variant="success" size="sm">Grounded</Badge>
                                 </div>
-                              ) : (
-                                <div className="flex flex-wrap items-center gap-2">
-                                  <Button
-                                    size="sm"
-                                    onClick={() => handleSuggestion(suggestion.id, 'accept')}
-                                    isLoading={actionLoading === suggestion.id}
-                                    leftIcon={<Check className="w-3.5 h-3.5" />}
-                                  >
-                                    Accept Suggestion
-                                  </Button>
+                                <div className="flex items-center gap-2">
+                                  <ConfidenceBadge confidence={f.confidence} />
+                                  <span className="text-[10px] text-slate-500 font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900">
+                                    {f.engine_source}
+                                  </span>
+                                </div>
+                              </div>
 
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={() => handleSuggestion(suggestion.id, 'reject')}
-                                    isLoading={actionLoading === suggestion.id}
-                                    leftIcon={<X className="w-3.5 h-3.5" />}
-                                  >
-                                    Reject
-                                  </Button>
+                              {/* Matched Snippet */}
+                              <div className="p-2.5 rounded-lg bg-rose-50/50 dark:bg-slate-900 border border-rose-200 dark:border-rose-950/60 text-xs">
+                                <span className="text-rose-600 dark:text-rose-400 block mb-0.5 font-semibold uppercase text-[10px]">
+                                  Problematic Text Detected:
+                                </span>
+                                <span className="font-mono font-bold text-rose-700 dark:text-rose-300 text-sm">
+                                  &quot;{f.matched_text}&quot;
+                                </span>
+                              </div>
 
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => setEditingId(suggestion.id)}
-                                    leftIcon={<Edit3 className="w-3.5 h-3.5" />}
-                                  >
-                                    Edit Manually
-                                  </Button>
+                              {/* Explanation & Guideline Reference */}
+                              <div className="space-y-1.5 text-xs">
+                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{f.explanation}</p>
+                                {f.guideline_reference && (
+                                  <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium text-[11px]">
+                                    <BookOpen className="w-3.5 h-3.5 shrink-0" />
+                                    <span>Policy Reference: {f.guideline_reference}</span>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Source Evidence */}
+                              {f.evidence && f.evidence.length > 0 && (
+                                <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-[11px] space-y-1">
+                                  <span className="font-semibold text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                                    <Search className="w-3 h-3 text-blue-500" />
+                                    <span>Supporting Evidence:</span>
+                                  </span>
+                                  {f.evidence.map((ev: any, evIdx: number) => (
+                                    <div key={evIdx} className="text-slate-500 dark:text-slate-400 font-mono text-[10px]">
+                                      • {typeof ev === 'string' ? ev : `${ev.source || ev.rule || 'Evidence'}: ${ev.text || ev.note || ev.requirement || ''}`}
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              {/* Suggested Correction */}
+                              {suggestion && (
+                                <div className="pt-2 border-t border-slate-100 dark:border-slate-700/60 space-y-2.5">
+                                  <div className="p-3 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 text-xs space-y-1">
+                                    <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
+                                      AI Suggested Correction:
+                                    </span>
+                                    <span className="font-mono text-emerald-700 dark:text-emerald-300 font-bold block text-sm">
+                                      &quot;{suggestion.suggested_text}&quot;
+                                    </span>
+                                  </div>
+
+                                  {isResolved && (
+                                    <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                                      <CheckCircle2 className="w-3.5 h-3.5" />
+                                      <span>Accepted and applied to current copy</span>
+                                    </div>
+                                  )}
+                                  {isOverridden && (
+                                    <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                      <X className="w-3.5 h-3.5" />
+                                      <span>Rejected/Overridden</span>
+                                    </div>
+                                  )}
+
+                                  {!isResolved && !isOverridden && (
+                                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                                      <Button
+                                        size="sm"
+                                        variant="primary"
+                                        onClick={() => handleSuggestion(suggestion.id, 'accept')}
+                                        loading={actionLoading === suggestion.id}
+                                      >
+                                        <Check className="w-3.5 h-3.5 mr-1" />
+                                        Accept Suggestion
+                                      </Button>
+                                      <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => handleSuggestion(suggestion.id, 'reject')}
+                                        loading={actionLoading === suggestion.id}
+                                      >
+                                        <X className="w-3.5 h-3.5 mr-1" />
+                                        Reject
+                                      </Button>
+                                      <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() => setEditingId(editingId === suggestion.id ? null : suggestion.id)}
+                                      >
+                                        <Edit3 className="w-3.5 h-3.5 mr-1" />
+                                        Custom Edit
+                                      </Button>
+                                    </div>
+                                  )}
+
+                                  {editingId === suggestion.id && (
+                                    <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+                                      <textarea
+                                        className="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                                        rows={2}
+                                        value={manualText[suggestion.id] ?? suggestion.suggested_text}
+                                        onChange={(e) => setManualText({ ...manualText, [suggestion.id]: e.target.value })}
+                                      />
+                                      <Button
+                                        size="sm"
+                                        variant="primary"
+                                        onClick={() => handleSuggestion(suggestion.id, 'manual', manualText[suggestion.id] ?? suggestion.suggested_text)}
+                                        loading={actionLoading === suggestion.id}
+                                      >
+                                        Apply Custom Fix
+                                      </Button>
+                                    </div>
+                                  )}
                                 </div>
                               )}
                             </div>
-                          )}
-                        </div>
-                      )}
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Separate Section: Needs Human Review */}
+                  {needsReviewFindings.length > 0 && (
+                    <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                          <AlertTriangle className="w-4 h-4 text-amber-500" />
+                          <span>Needs Human Review ({needsReviewFindings.length})</span>
+                        </h2>
+                        <span className="text-xs text-amber-500 font-medium">Ungrounded / Unverified Evidence</span>
+                      </div>
+
+                      <div className="space-y-4">
+                        {needsReviewFindings.map((f: any, idx: number) => {
+                          const evidenceState = f.evidence_state || 'unverified_source';
+                          const badgeVariant =
+                            evidenceState === 'verified'
+                              ? 'success'
+                              : evidenceState === 'missing_citation' || evidenceState === 'unsupported_claim'
+                              ? 'danger'
+                              : 'warning';
+
+                          return (
+                            <div
+                              key={`needs-review-${f.id || idx}`}
+                              className="p-4 rounded-xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/30 dark:bg-amber-950/10 space-y-3 shadow-sm"
+                            >
+                              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-amber-100 dark:border-amber-900/40 pb-2.5">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-xs font-bold text-slate-900 dark:text-white">{f.category}</span>
+                                  <SeverityBadge severity={f.severity} />
+                                  <Badge variant={badgeVariant} size="sm">
+                                    Evidence: {evidenceState}
+                                  </Badge>
+                                </div>
+                                <span className="text-[10px] text-slate-500 font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900">
+                                  {f.engine_source}
+                                </span>
+                              </div>
+
+                              <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
+                                <span className="text-slate-500 block mb-0.5 font-semibold uppercase text-[10px]">
+                                  Candidate Text:
+                                </span>
+                                <span className="font-mono text-slate-700 dark:text-slate-300 text-sm">
+                                  &quot;{f.matched_text}&quot;
+                                </span>
+                              </div>
+
+                              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{f.explanation}</p>
+
+                              {f.grounding_reasons && (
+                                <div className="p-2 rounded-lg bg-amber-100/60 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 text-xs font-medium">
+                                  <strong>Grounding Status:</strong> {f.grounding_reasons}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                  )}
+                </>
+              );
+            })()}
           </div>
         </div>
       </div>

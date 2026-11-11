@@ -37,6 +37,9 @@ class Finding(Base):
     suggested_correction = Column(Text, nullable=True)
     status = Column(String(50), default="Pending") # Pending, Accepted, Rejected, Resolved
     engine_source = Column(String(50), default="Rule Engine") # Rule Engine, LLM Engine, Citation Validator
+    grounding_status = Column(String(50), default="GROUNDED") # GROUNDED, NEEDS_HUMAN_REVIEW
+    grounding_reasons = Column(Text, default="")
+    evidence_state = Column(String(50), default="verified") # verified, unverified_source, source_unavailable, unsupported_claim, missing_citation
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     # Relationships

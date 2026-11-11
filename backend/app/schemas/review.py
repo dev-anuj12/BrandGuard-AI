@@ -21,6 +21,12 @@ class SuggestionOut(BaseModel):
     status: SuggestionStatus
     applied_at: Optional[datetime] = None
 
+class ConfidenceComponentsOut(BaseModel):
+    rule_match: float = 0.0
+    evidence: float = 0.0
+    source_approved: float = 0.0
+    ai_confidence: float = 0.0
+
 class FindingOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -34,6 +40,10 @@ class FindingOut(BaseModel):
     guideline_reference: Optional[str] = None
     evidence: List[Any] = []
     confidence: float
+    confidence_components: Optional[ConfidenceComponentsOut] = None
+    grounding_status: str = "GROUNDED"
+    grounding_reasons: Optional[str] = ""
+    evidence_state: str = "verified"
     suggested_correction: Optional[str] = None
     status: str
     engine_source: str

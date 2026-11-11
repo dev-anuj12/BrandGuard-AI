@@ -28,10 +28,25 @@ def ensure_organization_columns() -> None:
                 # Column already present or table not yet created
                 pass
 
+def ensure_finding_grounding_columns() -> None:
+    """Idempotently ensure grounding_status, grounding_reasons, and evidence_state exist on findings."""
+    with engine.connect() as conn:
+        for col_def in [
+            ("grounding_status", "VARCHAR(50) DEFAULT 'GROUNDED'"),
+            ("grounding_reasons", "TEXT DEFAULT ''"),
+            ("evidence_state", "VARCHAR(50) DEFAULT 'verified'")
+        ]:
+            try:
+                conn.execute(text(f"ALTER TABLE findings ADD COLUMN {col_def[0]} {col_def[1]}"))
+                conn.commit()
+            except Exception:
+                pass
+
 def init_db(db: Session = None) -> None:
     # Create all tables
     Base.metadata.create_all(bind=engine)
     ensure_organization_columns()
+    ensure_finding_grounding_columns()
 
     close_db_at_end = False
     if db is None:
