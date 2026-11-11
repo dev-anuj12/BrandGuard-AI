@@ -103,3 +103,4 @@ def test_audit_tamper_detection(client, db):
         headers={"Authorization": f"Bearer {create_access_token('2', UserRole.CREATOR.value)}"}
     )
     assert res_creator.status_code == 403
+

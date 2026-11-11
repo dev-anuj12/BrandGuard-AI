@@ -24,9 +24,10 @@ def verify_content(
     content_id: int,
     decision: ReviewerVerificationDecision,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_roles([UserRole.REVIEWER, UserRole.ADMIN]))
+    current_user: User = Depends(require_roles([UserRole.REVIEWER, UserRole.ADMIN])),
+    org: str = Depends(get_current_org)
 ):
-    content = db.query(Content).filter(Content.id == content_id).first()
+    content = db.query(Content).filter(Content.id == content_id, Content.organization == org).first()
     if not content:
         raise HTTPException(status_code=404, detail="Content not found")
 
@@ -74,9 +75,10 @@ def manager_decision(
     content_id: int,
     decision: ApprovalDecision,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN]))
+    current_user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN])),
+    org: str = Depends(get_current_org)
 ):
-    content = db.query(Content).filter(Content.id == content_id).first()
+    content = db.query(Content).filter(Content.id == content_id, Content.organization == org).first()
     if not content:
         raise HTTPException(status_code=404, detail="Content not found")
 
@@ -124,8 +126,12 @@ def manager_decision(
 def get_content_comments(
     content_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org)
 ):
+    content = db.query(Content).filter(Content.id == content_id, Content.organization == org).first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
     comments = db.query(Comment).filter(Comment.content_id == content_id).order_by(Comment.created_at.asc()).all()
     out = []
     for c in comments:
@@ -141,8 +147,12 @@ def add_comment(
     content_id: int,
     comment_in: CommentCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org)
 ):
+    content = db.query(Content).filter(Content.id == content_id, Content.organization == org).first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
     comment = Comment(
         content_id=content_id,
         user_id=current_user.id,
@@ -162,9 +172,16 @@ def add_comment(
 def get_audit_logs(
     limit: int = 50,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_roles([UserRole.ADMIN, UserRole.MANAGER]))
+    current_user: User = Depends(require_roles([UserRole.ADMIN, UserRole.MANAGER])),
+    org: str = Depends(get_current_org)
 ):
-    logs = db.query(AuditLog).order_by(AuditLog.created_at.desc()).limit(limit).all()
+    logs = (
+        db.query(AuditLog)
+        .filter((AuditLog.organization == org) | (AuditLog.organization == None))
+        .order_by(AuditLog.created_at.desc())
+        .limit(limit)
+        .all()
+    )
     results = []
     for l in logs:
         l_out = AuditLogOut.model_validate(l)

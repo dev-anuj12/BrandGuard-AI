@@ -349,4 +349,90 @@ def test_production_secret_key_validation():
         )
 
 
+def test_content_submission_validation(client, db):
+    from app.models.enums import UserRole
+    user, headers = _make_user(db, "content_val@example.com", UserRole.CREATOR, "ValOrg")
+
+    # Empty title rejected
+    res_empty_title = client.post(
+        "/api/v1/content/",
+        headers=headers,
+        json={"title": "   ", "original_body": "Valid body content"}
+    )
+    assert res_empty_title.status_code == 422
+
+    # Title too short (<3 chars) rejected
+    res_short_title = client.post(
+        "/api/v1/content/",
+        headers=headers,
+        json={"title": "ab", "original_body": "Valid body content"}
+    )
+    assert res_short_title.status_code == 422
+
+    # Empty body rejected
+    res_empty_body = client.post(
+        "/api/v1/content/",
+        headers=headers,
+        json={"title": "Valid Title", "original_body": "   "}
+    )
+    assert res_empty_body.status_code == 422
+
+
+def test_cross_organization_workflow_isolation(client, db):
+    from app.models.content import Content
+    from app.models.enums import ContentStatus, UserRole
+
+    # User in Org Alpha
+    user_alpha, _ = _make_user(db, "alpha_creator_wf@alphacorp.com", UserRole.CREATOR, "AlphaCorp")
+    content_alpha = Content(
+        title="Alpha Workflow Content",
+        original_body="Alpha body copy needing verification",
+        current_body="Alpha body copy needing verification",
+        status=ContentStatus.PENDING_REVIEWER_VERIFICATION,
+        channel="Blog",
+        organization="AlphaCorp",
+        creator_id=user_alpha.id
+    )
+    db.add(content_alpha)
+    db.commit()
+    db.refresh(content_alpha)
+
+    # Reviewer in Org Beta
+    _, headers_beta_rev = _make_user(db, "beta_rev_wf@betacorp.com", UserRole.REVIEWER, "BetaCorp")
+    # Manager in Org Beta
+    _, headers_beta_mgr = _make_user(db, "beta_mgr_wf@betacorp.com", UserRole.MANAGER, "BetaCorp")
+
+    # Reviewer Beta attempts to verify Alpha content -> 404
+    res_verify = client.post(
+        f"/api/v1/approvals/verify/{content_alpha.id}",
+        headers=headers_beta_rev,
+        json={"action": "Verified", "comments": "Unauthorized verification"}
+    )
+    assert res_verify.status_code == 404
+
+    # Manager Beta attempts to approve Alpha content -> 404
+    res_decision = client.post(
+        f"/api/v1/approvals/decision/{content_alpha.id}",
+        headers=headers_beta_mgr,
+        json={"action": "Approved", "comments": "Unauthorized approval"}
+    )
+    assert res_decision.status_code == 404
+
+    # User Beta attempts to read or add comments to Alpha content -> 404
+    res_get_comments = client.get(
+        f"/api/v1/approvals/{content_alpha.id}/comments",
+        headers=headers_beta_rev
+    )
+    assert res_get_comments.status_code == 404
+
+    res_add_comment = client.post(
+        f"/api/v1/approvals/{content_alpha.id}/comments",
+        headers=headers_beta_rev,
+        json={"comment_text": "Unauthorized comment"}
+    )
+    assert res_add_comment.status_code == 404
+
+
+
+
 
