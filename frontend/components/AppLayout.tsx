@@ -9,7 +9,7 @@ import {
   Sun, Moon, Bell, Search, User, Menu, X, HelpCircle, 
   BookOpen, Sliders, Layers, ChevronDown, ShieldAlert, Globe, Activity, Share2, ShoppingBag
 } from 'lucide-react';
-import { getCurrentUser, clearAuthSession } from '../lib/api';
+import { getCurrentUser, clearAuthSession, api } from '../lib/api';
 import { useTheme } from './ThemeProvider';
 import BrandLogo, { BrandLogoIcon } from './BrandLogo';
 
@@ -28,7 +28,45 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [readIds, setReadIds] = useState<Set<number>>(new Set());
   const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('brandguard_read_notifications');
+      if (stored) {
+        setReadIds(new Set(JSON.parse(stored)));
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    api.getNotifications()
+      .then((data) => setNotifications(data || []))
+      .catch(() => {});
+  }, [user]);
+
+  const markAllAsRead = () => {
+    const allIds = new Set(notifications.map((n) => n.id));
+    setReadIds(allIds);
+    try {
+      localStorage.setItem('brandguard_read_notifications', JSON.stringify(Array.from(allIds)));
+    } catch {}
+  };
+
+  const markAsRead = (id: number) => {
+    const updated = new Set(readIds);
+    updated.add(id);
+    setReadIds(updated);
+    try {
+      localStorage.setItem('brandguard_read_notifications', JSON.stringify(Array.from(updated)));
+    } catch {}
+  };
+
+  const unreadCount = notifications.filter((n) => !readIds.has(n.id)).length;
 
   useEffect(() => {
     setMounted(true);
@@ -317,6 +355,79 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
 
           {/* Right Header Utilities */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Notification Bell */}
+            <div className="relative">
+              <button
+                onClick={() => setNotificationsOpen(!notificationsOpen)}
+                className="relative p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                aria-label="Notifications"
+                title="Notifications"
+              >
+                <Bell className="w-4 h-4" />
+                {unreadCount > 0 && (
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                )}
+              </button>
+
+              {notificationsOpen && (
+                <>
+                  <div className="fixed inset-0 z-30" onClick={() => setNotificationsOpen(false)} />
+                  <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-dropdown p-3 z-40 text-xs">
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800">
+                      <span className="font-bold text-slate-900 dark:text-slate-100">Workflow Notifications</span>
+                      {unreadCount > 0 && (
+                        <button
+                          onClick={markAllAsRead}
+                          className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
+                        >
+                          Mark all read
+                        </button>
+                      )}
+                    </div>
+                    {notifications.length === 0 ? (
+                      <p className="text-center py-4 text-slate-400">No recent notifications</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {notifications.map((n) => {
+                          const isUnread = !readIds.has(n.id);
+                          return (
+                            <div
+                              key={n.id}
+                              onClick={() => markAsRead(n.id)}
+                              className={`p-2 rounded-xl transition cursor-pointer ${
+                                isUnread
+                                  ? 'bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/50 dark:border-indigo-800/50'
+                                  : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                              }`}
+                            >
+                              <div className="flex items-center gap-1.5 mb-0.5">
+                                <span className={`w-1.5 h-1.5 rounded-full ${
+                                  n.type === 'approved' ? 'bg-emerald-500' :
+                                  n.type === 'rejected' ? 'bg-rose-500' :
+                                  n.type === 'change_requested' ? 'bg-amber-500' : 'bg-indigo-500'
+                                }`} />
+                                <span className="font-bold uppercase tracking-wider text-[10px] text-slate-600 dark:text-slate-300">
+                                  {n.type.replace('_', ' ')}
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-slate-700 dark:text-slate-300 line-clamp-2">
+                                {n.details}
+                              </p>
+                              {n.created_at && (
+                                <span className="text-[10px] text-slate-400 mt-1 block">
+                                  {new Date(n.created_at).toLocaleString()}
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+
             {/* Theme Toggle Button in Header */}
             <button
               onClick={toggleTheme}

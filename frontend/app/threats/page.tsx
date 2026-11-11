@@ -40,6 +40,7 @@ export default function ThreatIntelligencePage() {
   // Legal Notice Generator Modal
   const [noticeModalThreat, setNoticeModalThreat] = useState<any | null>(null);
   const [copiedNotice, setCopiedNotice] = useState(false);
+  const [dispatchingNotice, setDispatchingNotice] = useState(false);
 
   const generateNoticeText = (threat: any) => {
     if (!threat) return '';
@@ -495,8 +496,31 @@ On behalf of ${brandName}`;
                     </>
                   )}
                 </Button>
-                <Button onClick={() => setNoticeModalThreat(null)}>
-                  Done
+                <Button
+                  disabled={dispatchingNotice}
+                  onClick={async () => {
+                    if (!noticeModalThreat) return;
+                    setDispatchingNotice(true);
+                    try {
+                      await api.updateThreatStatus(noticeModalThreat.id, {
+                        status: 'Under Investigation',
+                        notes: 'Formal takedown notice dispatched to registrar/host abuse desk.'
+                      });
+                      showToast('Takedown notice dispatched and status recorded.', 'success');
+                      setNoticeModalThreat(null);
+                      await loadThreats();
+                    } catch (e: any) {
+                      showToast(e.message || 'Failed to dispatch notice', 'error');
+                    } finally {
+                      setDispatchingNotice(false);
+                    }
+                  }}
+                >
+                  <Send className="w-4 h-4 mr-1.5" />
+                  Dispatch Notice
+                </Button>
+                <Button variant="ghost" onClick={() => setNoticeModalThreat(null)}>
+                  Close
                 </Button>
               </div>
             </div>

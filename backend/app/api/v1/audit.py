@@ -10,6 +10,28 @@ from app.api.deps import require_roles
 
 router = APIRouter(prefix="/audit", tags=["Audit"])
 
+@router.get("/verify")
+def verify_audit_trail(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_roles([UserRole.ADMIN]))
+):
+    """
+    Verifies cryptographic hash chain of the audit trail.
+    Returns {"status": "ok"} if all hashes and prev_hashes are valid,
+    or {"status": "tampered", "broken_row_id": <int>} on the first broken row.
+    """
+    from app.models.audit import compute_audit_hash
+    logs = db.query(AuditLog).order_by(AuditLog.id.asc()).all()
+    prev = "GENESIS"
+    for log in logs:
+        if log.prev_hash != prev:
+            return {"status": "tampered", "broken_row_id": log.id, "reason": "prev_hash_mismatch"}
+        computed = compute_audit_hash(log.prev_hash, log)
+        if log.hash != computed:
+            return {"status": "tampered", "broken_row_id": log.id, "reason": "hash_mismatch"}
+        prev = log.hash
+    return {"status": "ok"}
+
 @router.get("", response_model=List[AuditLogOut], status_code=status.HTTP_200_OK)
 @router.get("/", response_model=List[AuditLogOut], status_code=status.HTTP_200_OK)
 def get_audit_trail(

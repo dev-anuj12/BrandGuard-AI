@@ -172,6 +172,7 @@ export const api = {
     }),
 
   getAuditLogs: (limit = 50) => request<any[]>(`/api/v1/approvals/audit-logs?limit=${limit}`),
+  getNotifications: () => request<any[]>('/api/v1/approvals/notifications'),
 
   // Knowledge Base
   getGuidelines: () => request<any[]>('/api/v1/guidelines/rules'),
@@ -205,6 +206,7 @@ export const api = {
   // Analytics
   getAnalytics: () => request<any>('/api/v1/analytics/overview'),
   getUnifiedAnalytics: () => request<any>('/api/v1/analytics/unified'),
+  getBenchmark: () => request<any>('/api/v1/analytics/benchmark'),
 
   // Threat Intelligence & Digital Protection
   getThreats: (filters?: { category?: string; risk_level?: string; status_filter?: string; search?: string }) => {

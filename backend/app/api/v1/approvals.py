@@ -13,7 +13,7 @@ from app.schemas.workflow import (
 )
 from app.models.user import User
 from app.models.audit import AuditLog
-from app.api.deps import get_current_user, require_roles
+from app.api.deps import get_current_user, require_roles, get_current_org
 from app.services import workflow
 
 router = APIRouter(prefix="/approvals", tags=["Human Approval Workflow"])
@@ -172,4 +172,55 @@ def get_audit_logs(
             l_out.user_email = l.user.email
         results.append(l_out)
     return results
+
+@router.get("/notifications")
+def get_user_notifications(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+    org: str = Depends(get_current_org)
+):
+    """
+    Returns recent workflow/audit events (flagged, approved, rejected, change requested)
+    for the current user's organization.
+    """
+    target_actions = [
+        "WORKFLOW_APPROVE",
+        "WORKFLOW_REJECT",
+        "WORKFLOW_REQUEST_CHANGES",
+        "AI_REVIEW_TRIGGERED",
+        "CONTENT_SUBMITTED"
+    ]
+    logs = (
+        db.query(AuditLog)
+        .filter(
+            AuditLog.organization == org,
+            AuditLog.action.in_(target_actions)
+        )
+        .order_by(AuditLog.id.desc())
+        .limit(20)
+        .all()
+    )
+    notifications = []
+    for log in logs:
+        action_type = "flagged"
+        if "APPROVE" in log.action:
+            action_type = "approved"
+        elif "REJECT" in log.action:
+            action_type = "rejected"
+        elif "CHANGES" in log.action:
+            action_type = "change_requested"
+        elif "REVIEW" in log.action or "SUBMIT" in log.action:
+            action_type = "flagged"
+
+        notifications.append({
+            "id": log.id,
+            "type": action_type,
+            "action": log.action,
+            "details": log.details or f"Action {log.action} on Content #{log.entity_id}",
+            "entity_id": log.entity_id,
+            "entity_type": log.entity_type,
+            "created_at": log.created_at.isoformat() if log.created_at else None
+        })
+    return notifications
+
 

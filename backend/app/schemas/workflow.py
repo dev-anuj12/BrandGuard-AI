@@ -60,6 +60,8 @@ class AuditLogOut(BaseModel):
     organization: Optional[str] = None
     reason: Optional[str] = None
     revision_id: Optional[int] = None
+    prev_hash: Optional[str] = None
+    hash: Optional[str] = None
     created_at: datetime
 
 class DecisionHistoryItem(BaseModel):

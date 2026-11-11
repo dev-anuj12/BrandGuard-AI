@@ -72,7 +72,9 @@ def ensure_workflow_columns() -> None:
         audit_cols = [
             ("organization", "VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"),
             ("reason", "TEXT"),
-            ("revision_id", "INTEGER")
+            ("revision_id", "INTEGER"),
+            ("prev_hash", "VARCHAR(64)"),
+            ("hash", "VARCHAR(64)")
         ]
         for col_name, col_type in audit_cols:
             try:
@@ -80,6 +82,21 @@ def ensure_workflow_columns() -> None:
                 conn.commit()
             except Exception:
                 pass
+
+def backfill_audit_hashes(db: Session) -> None:
+    """Backfill prev_hash and hash on existing audit log rows in chronological order."""
+    from app.models.audit import compute_audit_hash
+    logs = db.query(AuditLog).order_by(AuditLog.id.asc()).all()
+    prev = "GENESIS"
+    modified = False
+    for log in logs:
+        if not log.prev_hash or not log.hash:
+            log.prev_hash = prev
+            log.hash = compute_audit_hash(prev, log)
+            modified = True
+        prev = log.hash
+    if modified:
+        db.commit()
 
 def ensure_guidelines(db: Session) -> None:
     """Idempotently ensures core and generic brand guidelines exist in the database."""
@@ -154,6 +171,7 @@ def init_db(db: Session = None) -> None:
         close_db_at_end = True
 
     try:
+        backfill_audit_hashes(db)
         is_production = settings.ENVIRONMENT.lower() == "production"
 
         # Check if users already seeded (or guidelines seeded in production)
@@ -461,6 +479,7 @@ def init_db(db: Session = None) -> None:
 
         print("--- Database seeding complete! ---")
         seed_threat_data(db)
+        backfill_audit_hashes(db)
     finally:
         if close_db_at_end:
             db.close()
