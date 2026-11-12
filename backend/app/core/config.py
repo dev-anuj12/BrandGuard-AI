@@ -54,6 +54,9 @@ class Settings(BaseSettings):
     SMTP_PASSWORD: Optional[str] = Field(default=None, validation_alias="SMTP_PASSWORD")
     SMTP_FROM_EMAIL: str = Field(default="noreply@brandguard.ai", validation_alias="SMTP_FROM_EMAIL")
     SMTP_FROM_NAME: str = Field(default="BrandGuard AI Security", validation_alias="SMTP_FROM_NAME")
+    SMTP_USE_TLS: bool = Field(default=True, validation_alias="SMTP_USE_TLS")
+    SMTP_USE_SSL: bool = Field(default=False, validation_alias="SMTP_USE_SSL")
+    SMTP_TIMEOUT: int = Field(default=15, validation_alias="SMTP_TIMEOUT")
     FRONTEND_URL: str = Field(default="http://localhost:3000", validation_alias="FRONTEND_URL")
 
     # AI / LLM Configuration

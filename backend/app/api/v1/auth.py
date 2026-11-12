@@ -123,8 +123,16 @@ def register(user_in: UserCreate, request: Request, db: Session = Depends(get_db
     db.commit()
 
     # Dispatch email verification OTP if not pre-verified
+    email_delivered = True
     if not is_verified:
-        send_otp_email(user.email, otp, user.full_name)
+        email_delivered, err_msg = send_otp_email(user.email, otp, user.full_name)
+        if not email_delivered and settings.ENVIRONMENT.lower() == "production":
+            db.delete(user)
+            db.commit()
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail=f"Verification email delivery failed: {err_msg}"
+            )
 
     access_jti = secrets.token_hex(16)
     refresh_jti = secrets.token_hex(16)
@@ -147,7 +155,8 @@ def register(user_in: UserCreate, request: Request, db: Session = Depends(get_db
         "access_token": access_token,
         "refresh_token": refresh_tok,
         "token_type": "bearer",
-        "user": user
+        "user": user,
+        "email_sent": email_delivered
     }
 
 @router.post("/verify-otp", response_model=Token, dependencies=[Depends(rate_limit_auth)])
@@ -276,21 +285,32 @@ def resend_otp(data: ResendOTPRequest, request: Request, db: Session = Depends(g
     db.commit()
 
     # Dispatch real email
-    send_otp_email(user.email, otp, user.full_name)
+    email_delivered, err_msg = send_otp_email(user.email, otp, user.full_name)
+    if not email_delivered and settings.ENVIRONMENT.lower() == "production":
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Verification email delivery failed: {err_msg}"
+        )
 
     audit = AuditLog(
         user_id=user.id,
         action="OTP_RESENT",
         entity_type="User",
         entity_id=user.id,
-        details=f"Verification code resent to {user.email}.",
+        details=f"Verification code resent to {user.email}. Delivery status: {email_delivered}",
         ip_address=client_ip,
         organization=user.organization
     )
     db.add(audit)
     db.commit()
 
-    return {"message": "A new verification code has been dispatched to your email."}
+    if not email_delivered:
+        return {
+            "message": f"Verification code generated, but email dispatch failed: {err_msg}",
+            "email_sent": False
+        }
+
+    return {"message": "A new verification code has been dispatched to your email.", "email_sent": True}
 
 # ─── Login & Progressive Cooldown (Phase A & C) ──────────────────────────────
 
@@ -650,7 +670,12 @@ def request_password_recovery(data: PasswordResetRequest, request: Request, db: 
     db.commit()
 
     # Dispatch password recovery email
-    send_password_reset_email(user.email, reset_token, user.full_name)
+    email_delivered, err_msg = send_password_reset_email(user.email, reset_token, user.full_name)
+    if not email_delivered and settings.ENVIRONMENT.lower() == "production":
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Password recovery email delivery failed: {err_msg}"
+        )
 
     audit = AuditLog(
         user_id=user.id,
@@ -862,3 +887,12 @@ def verify_mfa_login(data: MFALoginRequest, request: Request, db: Session = Depe
 @router.get("/me", response_model=UserOut)
 def get_me(current_user: User = Depends(get_current_user)):
     return current_user
+
+@router.get("/smtp-status")
+def get_smtp_status(current_user: User = Depends(get_current_user)):
+    """
+    Check SMTP connectivity and configuration status.
+    Requires authentication. Returns sanitized diagnostics without exposing passwords or keys.
+    """
+    from app.services.email import verify_smtp_connection
+    return verify_smtp_connection()

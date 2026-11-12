@@ -56,7 +56,11 @@ export default function RegisterPage() {
       });
 
       if (!data.user.is_verified) {
-        toastSuccess('Account created! A 6-digit verification code was sent to your email.');
+        if (data.email_sent === false) {
+          toastError('Account created, but verification email could not be delivered. Please check email or click resend.');
+        } else {
+          toastSuccess('Account created! A 6-digit verification code was sent to your email.');
+        }
         router.push(`/verify-otp?email=${encodeURIComponent(email)}`);
       } else {
         setAuthSession(data.access_token, data.user, data.refresh_token);

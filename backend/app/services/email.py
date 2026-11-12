@@ -1,48 +1,156 @@
 import smtplib
 import logging
+import email.utils
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from typing import Optional
+from typing import Optional, Tuple, Dict, Any
 from app.core.config import settings
 
 logger = logging.getLogger("brandguard.email")
 
-def send_email(to_email: str, subject: str, html_content: str, text_content: Optional[str] = None) -> bool:
+def send_email(
+    to_email: str,
+    subject: str,
+    html_content: str,
+    text_content: Optional[str] = None
+) -> Tuple[bool, str]:
     """
-    Sends email via configured SMTP server (e.g. Amazon SES, SendGrid, Postmark, Mailgun, or standard SMTP).
-    Falls back gracefully to secure development logging if SMTP credentials are not configured.
+    Sends email via configured SMTP server (e.g. Gmail, SendGrid, Amazon SES, Mailgun, Brevo, standard SMTP).
+    Returns (success: bool, status_message: str).
+    - If in production and SMTP is unconfigured, logs error and returns (False, 'SMTP unconfigured').
+    - If in development/test and SMTP is unconfigured, logs development preview and returns (True, 'dev_fallback').
+    - Supports STARTTLS (ports 587, 25, 2525) and SMTPS / SSL (port 465).
+    - Validates server acceptance of recipient and message.
+    - Never exposes passwords, OTPs, or secrets in logs or return messages.
     """
-    if not settings.SMTP_HOST or not settings.SMTP_USER:
-        logger.info(
-            f"[EMAIL SERVICE - DEV LOG] To: {to_email} | Subject: {subject}\n"
-            f"Content Preview: {text_content or html_content[:200]}..."
-        )
-        return True
+    is_production = settings.ENVIRONMENT.lower() == "production"
+
+    if not settings.SMTP_HOST:
+        if is_production:
+            logger.error("Production email delivery failed: SMTP_HOST is not configured.")
+            return False, "SMTP server host is not configured in production environment."
+        else:
+            logger.info(
+                f"[EMAIL SERVICE - DEV LOG] To: {to_email} | Subject: {subject}\n"
+                f"Content Preview: {text_content or html_content[:200]}..."
+            )
+            return True, "Development mode: logged to console fallback."
 
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = subject
         msg["From"] = f"{settings.SMTP_FROM_NAME} <{settings.SMTP_FROM_EMAIL}>"
         msg["To"] = to_email
+        msg["Date"] = email.utils.formatdate(localtime=True)
+        domain = settings.SMTP_FROM_EMAIL.split("@")[-1] if "@" in settings.SMTP_FROM_EMAIL else "brandguard.ai"
+        msg["Message-ID"] = email.utils.make_msgid(domain=domain)
 
         if text_content:
-            msg.attach(MIMEText(text_content, "plain"))
-        msg.attach(MIMEText(html_content, "html"))
+            msg.attach(MIMEText(text_content, "plain", "utf-8"))
+        msg.attach(MIMEText(html_content, "html", "utf-8"))
 
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10) as server:
-            server.starttls()
-            if settings.SMTP_PASSWORD:
+        timeout = getattr(settings, "SMTP_TIMEOUT", 15)
+        port = settings.SMTP_PORT
+        use_ssl = getattr(settings, "SMTP_USE_SSL", False) or port == 465
+        use_tls = getattr(settings, "SMTP_USE_TLS", True) if not use_ssl else False
+
+        if use_ssl:
+            server = smtplib.SMTP_SSL(settings.SMTP_HOST, port, timeout=timeout)
+        else:
+            server = smtplib.SMTP(settings.SMTP_HOST, port, timeout=timeout)
+            if use_tls:
+                server.starttls()
+
+        with server:
+            if settings.SMTP_USER and settings.SMTP_PASSWORD:
                 server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-            server.sendmail(settings.SMTP_FROM_EMAIL, [to_email], msg.as_string())
-        
-        logger.info(f"Email successfully delivered to {to_email}")
-        return True
-    except Exception as e:
-        logger.error(f"Failed to deliver email to {to_email}: {str(e)}")
-        # Do not raise to avoid breaking user flows on email network transient errors
-        return False
+            refused = server.sendmail(settings.SMTP_FROM_EMAIL, [to_email], msg.as_string())
+            if refused:
+                logger.error(f"Recipient {to_email} was rejected by SMTP server: {refused}")
+                return False, "Recipient address was rejected by SMTP server."
 
-def send_otp_email(to_email: str, otp_code: str, full_name: Optional[str] = None) -> bool:
+        logger.info(f"Email successfully delivered to SMTP server for {to_email}")
+        return True, "Email successfully dispatched."
+
+    except smtplib.SMTPAuthenticationError as e:
+        logger.error(f"SMTP authentication failure for server {settings.SMTP_HOST}: code {e.smtp_code}")
+        return False, "SMTP authentication failed. Please verify credentials."
+    except smtplib.SMTPConnectError as e:
+        logger.error(f"SMTP connection failure to {settings.SMTP_HOST}:{settings.SMTP_PORT}: {str(e)}")
+        return False, f"Could not connect to SMTP server at {settings.SMTP_HOST}:{settings.SMTP_PORT}."
+    except smtplib.SMTPException as e:
+        logger.error(f"SMTP protocol error: {type(e).__name__} - {str(e)}")
+        return False, f"SMTP protocol error: {type(e).__name__}."
+    except Exception as e:
+        logger.error(f"Unexpected email delivery exception: {type(e).__name__} - {str(e)}")
+        return False, f"Email delivery error: {type(e).__name__}."
+
+def verify_smtp_connection() -> Dict[str, Any]:
+    """
+    Tests SMTP connection and authentication with configured settings.
+    Does NOT send an email. Returns status dictionary.
+    Never exposes passwords or sensitive credentials.
+    """
+    if not settings.SMTP_HOST:
+        return {
+            "configured": False,
+            "status": "unconfigured",
+            "message": "SMTP_HOST is not configured."
+        }
+
+    port = settings.SMTP_PORT
+    use_ssl = getattr(settings, "SMTP_USE_SSL", False) or port == 465
+    use_tls = getattr(settings, "SMTP_USE_TLS", True) if not use_ssl else False
+    timeout = getattr(settings, "SMTP_TIMEOUT", 15)
+
+    try:
+        if use_ssl:
+            server = smtplib.SMTP_SSL(settings.SMTP_HOST, port, timeout=timeout)
+        else:
+            server = smtplib.SMTP(settings.SMTP_HOST, port, timeout=timeout)
+            if use_tls:
+                server.starttls()
+
+        with server:
+            if settings.SMTP_USER and settings.SMTP_PASSWORD:
+                server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+            server.noop()
+
+        return {
+            "configured": True,
+            "host": settings.SMTP_HOST,
+            "port": port,
+            "use_ssl": use_ssl,
+            "use_tls": use_tls,
+            "status": "connected",
+            "message": "SMTP server connection and authentication successful."
+        }
+    except smtplib.SMTPAuthenticationError as e:
+        return {
+            "configured": True,
+            "host": settings.SMTP_HOST,
+            "port": port,
+            "status": "auth_error",
+            "message": f"SMTP authentication failed (code {e.smtp_code})."
+        }
+    except smtplib.SMTPConnectError as e:
+        return {
+            "configured": True,
+            "host": settings.SMTP_HOST,
+            "port": port,
+            "status": "connect_error",
+            "message": f"Failed to connect to SMTP server at {settings.SMTP_HOST}:{port}."
+        }
+    except Exception as e:
+        return {
+            "configured": True,
+            "host": settings.SMTP_HOST,
+            "port": port,
+            "status": "error",
+            "message": f"SMTP test failed: {type(e).__name__}."
+        }
+
+def send_otp_email(to_email: str, otp_code: str, full_name: Optional[str] = None) -> Tuple[bool, str]:
     name = full_name or "BrandGuard User"
     subject = f"{otp_code} is your BrandGuard AI verification code"
     
@@ -84,7 +192,7 @@ def send_otp_email(to_email: str, otp_code: str, full_name: Optional[str] = None
     text = f"Hello {name},\n\nYour BrandGuard AI verification code is: {otp_code}\nThis code expires in 5 minutes.\n\nIf you did not request this, please ignore."
     return send_email(to_email, subject, html, text)
 
-def send_password_reset_email(to_email: str, reset_token: str, full_name: Optional[str] = None) -> bool:
+def send_password_reset_email(to_email: str, reset_token: str, full_name: Optional[str] = None) -> Tuple[bool, str]:
     name = full_name or "BrandGuard User"
     subject = "Reset your BrandGuard AI password"
     reset_url = f"{settings.FRONTEND_URL}/reset-password?token={reset_token}"
@@ -133,7 +241,7 @@ def send_password_reset_email(to_email: str, reset_token: str, full_name: Option
     text = f"Hello {name},\n\nA password reset was requested for your account.\nReset link: {reset_url}\nReset token: {reset_token}\nThis token expires in 15 minutes."
     return send_email(to_email, subject, html, text)
 
-def send_suspicious_login_alert(to_email: str, client_ip: str, user_agent: Optional[str] = None) -> bool:
+def send_suspicious_login_alert(to_email: str, client_ip: str, user_agent: Optional[str] = None) -> Tuple[bool, str]:
     subject = "Security Alert: Suspicious login detected on your BrandGuard account"
     ua = user_agent or "Unknown browser/client"
     

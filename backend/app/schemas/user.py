@@ -58,6 +58,7 @@ class Token(BaseModel):
     user: UserOut
     mfa_required: bool = False
     mfa_token: Optional[str] = None
+    email_sent: Optional[bool] = None
 
 class TokenPayload(BaseModel):
     sub: Optional[str] = None

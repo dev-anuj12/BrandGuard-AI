@@ -123,11 +123,16 @@ function VerifyOtpContent() {
     setResending(true);
     try {
       const data = await api.resendOtp({ email });
-      setSuccess(data.message || 'A new verification code has been dispatched.');
-      toastSuccess('New verification code sent to your email.');
-      setCooldown(60);
-      setOtp(['', '', '', '', '', '']);
-      document.getElementById('otp-input-0')?.focus();
+      if (data.email_sent === false) {
+        setError(data.message || 'Verification email could not be delivered.');
+        toastError(data.message || 'Verification email could not be delivered.');
+      } else {
+        setSuccess(data.message || 'A new verification code has been dispatched.');
+        toastSuccess('New verification code sent to your email.');
+        setCooldown(60);
+        setOtp(['', '', '', '', '', '']);
+        document.getElementById('otp-input-0')?.focus();
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to resend code.');
       toastError(err.message || 'Failed to resend code.');
