@@ -10,7 +10,7 @@ from app.models.enums import (
     ThreatRiskLevel,
     ThreatStatus,
 )
-from app.models.user import User
+from app.models.user import User, UserSession, RevokedToken
 from app.models.guideline import (
     BrandGuideline,
     ApprovedSource,
@@ -36,6 +36,8 @@ __all__ = [
     "ThreatRiskLevel",
     "ThreatStatus",
     "User",
+    "UserSession",
+    "RevokedToken",
     "BrandGuideline",
     "ApprovedSource",
     "ApprovedFact",

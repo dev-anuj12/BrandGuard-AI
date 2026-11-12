@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ShieldCheck, Lock, Mail, User, AlertCircle, Sun, Moon } from 'lucide-react';
+import { ShieldCheck, Lock, Mail, User, AlertCircle, Sun, Moon, Check, X, Building } from 'lucide-react';
 import { api, setAuthSession } from '../../lib/api';
 import { Button } from '../../components/ui/Button';
 import { useTheme } from '../../components/ThemeProvider';
@@ -18,6 +18,7 @@ export default function RegisterPage() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [organization, setOrganization] = useState('');
   const [role, setRole] = useState('CREATOR');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,8 +29,21 @@ export default function RegisterPage() {
     }
   }, []);
 
+  // Password criteria verification
+  const hasMinLength = password.length >= 10;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasDigit = /\d/.test(password);
+  const hasSymbol = /[^A-Za-z0-9]/.test(password);
+  const isPasswordValid = hasMinLength && hasUpper && hasLower && hasDigit && hasSymbol;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isPasswordValid) {
+      setError('Please ensure your password satisfies all security requirements.');
+      return;
+    }
+
     setError(null);
     setLoading(true);
     try {
@@ -38,25 +52,16 @@ export default function RegisterPage() {
         email,
         password,
         role,
+        organization: organization.trim() || undefined,
       });
-      setAuthSession(data.access_token, data.user);
-      toastSuccess(`Account created for ${data.user.full_name}`);
 
-      switch (data.user.role) {
-        case 'CREATOR':
-          router.push('/dashboard/creator');
-          break;
-        case 'REVIEWER':
-          router.push('/dashboard/reviewer');
-          break;
-        case 'MANAGER':
-          router.push('/dashboard/manager');
-          break;
-        case 'ADMIN':
-          router.push('/dashboard/admin');
-          break;
-        default:
-          router.push('/dashboard/creator');
+      if (!data.user.is_verified) {
+        toastSuccess('Account created! A 6-digit verification code was sent to your email.');
+        router.push(`/verify-otp?email=${encodeURIComponent(email)}`);
+      } else {
+        setAuthSession(data.access_token, data.user, data.refresh_token);
+        toastSuccess(`Welcome, ${data.user.full_name}`);
+        router.push('/dashboard/creator');
       }
     } catch (err: any) {
       const msg = err.message || 'Registration failed. Please check your details.';
@@ -103,19 +108,19 @@ export default function RegisterPage() {
           )}
 
           <div className="space-y-1.5">
-            <label htmlFor="reg-fullname" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label htmlFor="reg-name" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
               Full Name
             </label>
             <div className="relative">
               <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
-                id="reg-fullname"
+                id="reg-name"
                 type="text"
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="e.g. Sarah Jenkins"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                placeholder="Jordan Lee"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
           </div>
@@ -132,8 +137,25 @@ export default function RegisterPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="sarah@company.com"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                placeholder="name@company.com"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label htmlFor="reg-org" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+              Organization Name
+            </label>
+            <div className="relative">
+              <Building className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+              <input
+                id="reg-org"
+                type="text"
+                value={organization}
+                onChange={(e) => setOrganization(e.target.value)}
+                placeholder="FinNova Technologies"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
           </div>
@@ -150,46 +172,57 @@ export default function RegisterPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                placeholder="••••••••••••"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <label htmlFor="reg-role" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                Governance Role
-              </label>
-              <span className="text-[11px] text-slate-400">Self-Registration</span>
+          {/* Password Requirements Checklist */}
+          {password.length > 0 && (
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-1 text-[11px]">
+              <span className="font-semibold text-slate-700 dark:text-slate-300 block mb-1">
+                Password Requirements:
+              </span>
+              <div className="grid grid-cols-2 gap-1 text-slate-600 dark:text-slate-400">
+                <div className={`flex items-center gap-1.5 ${hasMinLength ? 'text-emerald-600 dark:text-emerald-400 font-medium' : ''}`}>
+                  {hasMinLength ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5 text-slate-400" />}
+                  <span>10+ chars</span>
+                </div>
+                <div className={`flex items-center gap-1.5 ${hasUpper ? 'text-emerald-600 dark:text-emerald-400 font-medium' : ''}`}>
+                  {hasUpper ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5 text-slate-400" />}
+                  <span>Uppercase</span>
+                </div>
+                <div className={`flex items-center gap-1.5 ${hasLower ? 'text-emerald-600 dark:text-emerald-400 font-medium' : ''}`}>
+                  {hasLower ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5 text-slate-400" />}
+                  <span>Lowercase</span>
+                </div>
+                <div className={`flex items-center gap-1.5 ${hasDigit ? 'text-emerald-600 dark:text-emerald-400 font-medium' : ''}`}>
+                  {hasDigit ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5 text-slate-400" />}
+                  <span>Number</span>
+                </div>
+                <div className={`flex items-center gap-1.5 ${hasSymbol ? 'text-emerald-600 dark:text-emerald-400 font-medium' : ''}`}>
+                  {hasSymbol ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5 text-slate-400" />}
+                  <span>Symbol (!@#$)</span>
+                </div>
+              </div>
             </div>
-            <select
-              id="reg-role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
-            >
-              <option value="CREATOR">Creator — Content Drafting &amp; Campaign Production</option>
-              <option value="REVIEWER">Reviewer — Compliance Verification &amp; Evidence Audit</option>
-            </select>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-              Note: Manager and Administrator roles must be provisioned by an existing organization administrator.
-            </p>
-          </div>
+          )}
 
           <Button
             type="submit"
             isLoading={loading}
+            disabled={!isPasswordValid}
             className="w-full"
             size="md"
           >
-            Complete Registration
+            Create Account &rarr;
           </Button>
 
           <div className="text-center pt-2 text-xs text-slate-500 dark:text-slate-400">
-            Already registered?{' '}
+            Already have an account?{' '}
             <Link href="/login" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
-              Sign in here
+              Sign In
             </Link>
           </div>
         </form>

@@ -22,10 +22,18 @@ export function getAuthToken(): string | null {
   return localStorage.getItem('brandguard_token');
 }
 
-export function setAuthSession(token: string, user: any) {
+export function getRefreshToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('brandguard_refresh_token');
+}
+
+export function setAuthSession(token: string, user: any, refreshToken?: string) {
   if (typeof window === 'undefined') return;
   localStorage.setItem('brandguard_token', token);
   localStorage.setItem('brandguard_user', JSON.stringify(user));
+  if (refreshToken) {
+    localStorage.setItem('brandguard_refresh_token', refreshToken);
+  }
   // Sync secure session cookie for Next.js Edge Middleware route guard
   const isSecure = window.location.protocol === 'https:' ? '; secure' : '';
   document.cookie = `brandguard_token=${token}; path=/; max-age=86400; SameSite=Lax${isSecure}`;
@@ -40,6 +48,7 @@ export function getCurrentUser(): any | null {
 export function clearAuthSession() {
   if (typeof window === 'undefined') return;
   localStorage.removeItem('brandguard_token');
+  localStorage.removeItem('brandguard_refresh_token');
   localStorage.removeItem('brandguard_user');
   document.cookie = 'brandguard_token=; path=/; max-age=0; SameSite=Lax';
 }
@@ -95,8 +104,60 @@ export const api = {
       body: JSON.stringify(credentials),
     }),
 
-  register: (data: { email: string; password: string; full_name: string; role: string }) =>
+  register: (data: { email: string; password: string; full_name: string; role: string; organization?: string }) =>
     request<any>('/api/v1/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  verifyOtp: (data: { email: string; otp: string }) =>
+    request<any>('/api/v1/auth/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  resendOtp: (data: { email: string }) =>
+    request<any>('/api/v1/auth/resend-otp', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  refreshToken: (data: { refresh_token: string }) =>
+    request<any>('/api/v1/auth/refresh', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  logout: () =>
+    request<any>('/api/v1/auth/logout', {
+      method: 'POST',
+    }),
+
+  requestPasswordRecovery: (data: { email: string }) =>
+    request<any>('/api/v1/auth/password-recovery/request', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  confirmPasswordRecovery: (data: { token: string; new_password: string }) =>
+    request<any>('/api/v1/auth/password-recovery/confirm', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  setupMfa: () =>
+    request<any>('/api/v1/auth/mfa/setup', {
+      method: 'POST',
+    }),
+
+  enableMfa: (data: { code: string }) =>
+    request<any>('/api/v1/auth/mfa/enable', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  verifyMfaLogin: (data: { mfa_token: string; code: string }) =>
+    request<any>('/api/v1/auth/mfa/verify-login', {
       method: 'POST',
       body: JSON.stringify(data),
     }),

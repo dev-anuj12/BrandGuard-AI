@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str = Field(default="brandguard-enterprise-jwt-signing-key-2026-production", validation_alias="SECRET_KEY")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
+    MFA_ENFORCE_ADMIN: bool = Field(default=False, validation_alias="MFA_ENFORCE_ADMIN")
 
     @model_validator(mode="after")
     def validate_production_secret_key(self) -> "Settings":
@@ -46,6 +47,15 @@ class Settings(BaseSettings):
     # Accept comma-separated extra origins from environment (e.g. custom Vercel previews)
     ALLOWED_ORIGINS_EXTRA: Optional[str] = Field(default=None, validation_alias="ALLOWED_ORIGINS")
     
+    # SMTP Email Configuration
+    SMTP_HOST: Optional[str] = Field(default=None, validation_alias="SMTP_HOST")
+    SMTP_PORT: int = Field(default=587, validation_alias="SMTP_PORT")
+    SMTP_USER: Optional[str] = Field(default=None, validation_alias="SMTP_USER")
+    SMTP_PASSWORD: Optional[str] = Field(default=None, validation_alias="SMTP_PASSWORD")
+    SMTP_FROM_EMAIL: str = Field(default="noreply@brandguard.ai", validation_alias="SMTP_FROM_EMAIL")
+    SMTP_FROM_NAME: str = Field(default="BrandGuard AI Security", validation_alias="SMTP_FROM_NAME")
+    FRONTEND_URL: str = Field(default="http://localhost:3000", validation_alias="FRONTEND_URL")
+
     # AI / LLM Configuration
     OPENAI_API_KEY: Optional[str] = Field(default=None, validation_alias="OPENAI_API_KEY")
     GEMINI_API_KEY: Optional[str] = Field(default=None, validation_alias="GEMINI_API_KEY")

@@ -17,6 +17,38 @@ from app.models.threat import ThreatItem, ThreatEvidence, DomainScan, BrandAsset
 from app.core.security import get_password_hash
 from app.core.config import settings
 
+def ensure_security_columns() -> None:
+    """Idempotently ensure security, OTP, lockout, session and MFA columns exist."""
+    with engine.connect() as conn:
+        user_cols = [
+            ("is_verified", "BOOLEAN DEFAULT 1"),
+            ("otp_hash", "VARCHAR(255)"),
+            ("otp_expires_at", "DATETIME"),
+            ("otp_attempts", "INTEGER DEFAULT 0"),
+            ("otp_last_sent_at", "DATETIME"),
+            ("failed_login_attempts", "INTEGER DEFAULT 0"),
+            ("locked_until", "DATETIME"),
+            ("password_changed_at", "DATETIME"),
+            ("password_reset_token_hash", "VARCHAR(255)"),
+            ("password_reset_expires_at", "DATETIME"),
+            ("mfa_enabled", "BOOLEAN DEFAULT 0"),
+            ("mfa_secret", "VARCHAR(255)"),
+            ("mfa_backup_codes", "TEXT"),
+        ]
+        for col_name, col_type in user_cols:
+            try:
+                conn.execute(text(f"ALTER TABLE users ADD COLUMN {col_name} {col_type}"))
+                conn.commit()
+            except Exception:
+                pass
+        
+        # Ensure existing seeded users are marked verified
+        try:
+            conn.execute(text("UPDATE users SET is_verified = 1 WHERE is_verified IS NULL OR email LIKE '%@brandguard.io' OR email LIKE '%@finnova.com'"))
+            conn.commit()
+        except Exception:
+            pass
+
 def ensure_organization_columns() -> None:
     """Idempotently ensure organization column exists in tables for multi-tenant isolation."""
     with engine.connect() as conn:
@@ -161,6 +193,7 @@ def ensure_guidelines(db: Session) -> None:
 def init_db(db: Session = None) -> None:
     # Create all tables
     Base.metadata.create_all(bind=engine)
+    ensure_security_columns()
     ensure_organization_columns()
     ensure_finding_grounding_columns()
     ensure_workflow_columns()
@@ -192,28 +225,32 @@ def init_db(db: Session = None) -> None:
                     full_name="Alex Morgan (Admin)",
                     hashed_password=get_password_hash("Admin@123"),
                     role=UserRole.ADMIN,
-                    is_active=True
+                    is_active=True,
+                    is_verified=True
                 ),
                 User(
                     email="creator@brandguard.io",
                     full_name="Jordan Lee (Creator)",
                     hashed_password=get_password_hash("Creator@123"),
                     role=UserRole.CREATOR,
-                    is_active=True
+                    is_active=True,
+                    is_verified=True
                 ),
                 User(
                     email="reviewer@brandguard.io",
                     full_name="Sam Taylor (Reviewer)",
                     hashed_password=get_password_hash("Reviewer@123"),
                     role=UserRole.REVIEWER,
-                    is_active=True
+                    is_active=True,
+                    is_verified=True
                 ),
                 User(
                     email="manager@brandguard.io",
                     full_name="Morgan Vance (Compliance Manager)",
                     hashed_password=get_password_hash("Manager@123"),
                     role=UserRole.MANAGER,
-                    is_active=True
+                    is_active=True,
+                    is_verified=True
                 ),
             ]
             db.add_all(users)
