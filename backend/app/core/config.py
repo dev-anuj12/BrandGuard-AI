@@ -47,7 +47,10 @@ class Settings(BaseSettings):
     # Accept comma-separated extra origins from environment (e.g. custom Vercel previews)
     ALLOWED_ORIGINS_EXTRA: Optional[str] = Field(default=None, validation_alias="ALLOWED_ORIGINS")
     
-    # SMTP Email Configuration
+    # Resend HTTP API (preferred over SMTP on Render — bypasses SMTP port firewall)
+    RESEND_API_KEY: Optional[str] = Field(default=None, validation_alias="RESEND_API_KEY")
+
+    # SMTP Email Configuration (used only when RESEND_API_KEY is not set)
     SMTP_HOST: Optional[str] = Field(default=None, validation_alias="SMTP_HOST")
     SMTP_PORT: int = Field(default=587, validation_alias="SMTP_PORT")
     SMTP_USER: Optional[str] = Field(default=None, validation_alias="SMTP_USER")
