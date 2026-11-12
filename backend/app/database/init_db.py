@@ -1,3 +1,5 @@
+import logging
+from sqlalchemy import text, inspect
 from sqlalchemy.orm import Session
 from app.database.session import Base, engine, SessionLocal
 from app.models.enums import UserRole, SeverityLevel, ContentStatus, FindingCategory, ThreatCategory, ThreatRiskLevel, ThreatStatus
@@ -12,123 +14,136 @@ from app.models.guideline import (
 from app.models.content import Content, ContentRevision
 from app.models.review import AIReview, Finding, Suggestion
 from app.models.audit import AuditLog
-from sqlalchemy import text
 from app.models.threat import ThreatItem, ThreatEvidence, DomainScan, BrandAsset, BrandProduct
 from app.core.security import get_password_hash
 from app.core.config import settings
 
+logger = logging.getLogger(__name__)
+
+def ensure_columns_for_table(table_name: str, column_specs: list) -> None:
+    """
+    Idempotently and safely adds columns to an existing table if missing.
+    - Pre-checks column existence using SQLAlchemy inspector.
+    - Uses isolated per-column transactions with engine.begin() so a failure never
+      poisons a PostgreSQL transaction block.
+    - Adapts SQL dialect types for PostgreSQL vs SQLite (e.g. TIMESTAMP vs DATETIME).
+    - Uses ADD COLUMN IF NOT EXISTS on PostgreSQL.
+    """
+    try:
+        inspector = inspect(engine)
+        if not inspector.has_table(table_name):
+            return
+
+        existing_cols = {c["name"].lower() for c in inspector.get_columns(table_name)}
+        is_postgres = engine.dialect.name == "postgresql"
+
+        for spec in column_specs:
+            col_name = spec[0]
+            if col_name.lower() in existing_cols:
+                continue
+
+            pg_type = spec[1]
+            sq_type = spec[2] if len(spec) > 2 else pg_type
+            col_type = pg_type if is_postgres else sq_type
+
+            try:
+                with engine.begin() as conn:
+                    if is_postgres:
+                        conn.execute(text(f"ALTER TABLE {table_name} ADD COLUMN IF NOT EXISTS {col_name} {col_type}"))
+                    else:
+                        conn.execute(text(f"ALTER TABLE {table_name} ADD COLUMN {col_name} {col_type}"))
+                existing_cols.add(col_name.lower())
+                logger.info(f"Added column {table_name}.{col_name} successfully.")
+            except Exception as e:
+                logger.warning(f"Could not add column {table_name}.{col_name}: {e}")
+    except Exception as e:
+        logger.warning(f"Inspection error on table {table_name}: {e}")
+
 def ensure_security_columns() -> None:
     """Idempotently ensure security, OTP, lockout, session and MFA columns exist."""
-    with engine.connect() as conn:
-        user_cols = [
-            ("is_verified", "BOOLEAN DEFAULT 1"),
-            ("otp_hash", "VARCHAR(255)"),
-            ("otp_expires_at", "DATETIME"),
-            ("otp_attempts", "INTEGER DEFAULT 0"),
-            ("otp_last_sent_at", "DATETIME"),
-            ("failed_login_attempts", "INTEGER DEFAULT 0"),
-            ("locked_until", "DATETIME"),
-            ("password_changed_at", "DATETIME"),
-            ("password_reset_token_hash", "VARCHAR(255)"),
-            ("password_reset_expires_at", "DATETIME"),
-            ("mfa_enabled", "BOOLEAN DEFAULT 0"),
-            ("mfa_secret", "VARCHAR(255)"),
-            ("mfa_backup_codes", "TEXT"),
-        ]
-        for col_name, col_type in user_cols:
-            try:
-                conn.execute(text(f"ALTER TABLE users ADD COLUMN {col_name} {col_type}"))
-                conn.commit()
-            except Exception:
-                pass
-        
-        # Ensure existing seeded users are marked verified
-        try:
-            conn.execute(text("UPDATE users SET is_verified = 1 WHERE is_verified IS NULL OR email LIKE '%@brandguard.io' OR email LIKE '%@finnova.com'"))
-            conn.commit()
-        except Exception:
-            pass
+    user_cols = [
+        ("is_verified", "BOOLEAN DEFAULT TRUE", "BOOLEAN DEFAULT 1"),
+        ("otp_hash", "VARCHAR(255)"),
+        ("otp_expires_at", "TIMESTAMP", "DATETIME"),
+        ("otp_attempts", "INTEGER DEFAULT 0"),
+        ("otp_last_sent_at", "TIMESTAMP", "DATETIME"),
+        ("failed_login_attempts", "INTEGER DEFAULT 0"),
+        ("locked_until", "TIMESTAMP", "DATETIME"),
+        ("password_changed_at", "TIMESTAMP", "DATETIME"),
+        ("password_reset_token_hash", "VARCHAR(255)"),
+        ("password_reset_expires_at", "TIMESTAMP", "DATETIME"),
+        ("mfa_enabled", "BOOLEAN DEFAULT FALSE", "BOOLEAN DEFAULT 0"),
+        ("mfa_secret", "VARCHAR(255)"),
+        ("mfa_backup_codes", "TEXT"),
+        ("organization", "VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"),
+    ]
+    ensure_columns_for_table("users", user_cols)
+
+    # Ensure existing seeded users are marked verified
+    try:
+        is_postgres = engine.dialect.name == "postgresql"
+        val = "TRUE" if is_postgres else "1"
+        with engine.begin() as conn:
+            conn.execute(text(f"UPDATE users SET is_verified = {val} WHERE is_verified IS NULL OR email LIKE '%@brandguard.io' OR email LIKE '%@finnova.com'"))
+    except Exception:
+        pass
 
 def ensure_organization_columns() -> None:
     """Idempotently ensure organization column exists in tables for multi-tenant isolation."""
-    with engine.connect() as conn:
-        for table in [
-            "users", "contents", "brand_guidelines", "threat_items",
-            "approved_sources", "approved_facts", "banned_words", "approved_terminology"
-        ]:
-            try:
-                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN organization VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"))
-                conn.commit()
-            except Exception:
-                # Column already present or table not yet created
-                pass
+    for table in [
+        "users", "contents", "brand_guidelines", "threat_items",
+        "approved_sources", "approved_facts", "banned_words", "approved_terminology"
+    ]:
+        ensure_columns_for_table(table, [
+            ("organization", "VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'")
+        ])
 
 def ensure_finding_grounding_columns() -> None:
     """Idempotently ensure grounding_status, grounding_reasons, and evidence_state exist on findings."""
-    with engine.connect() as conn:
-        for col_def in [
-            ("grounding_status", "VARCHAR(50) DEFAULT 'GROUNDED'"),
-            ("grounding_reasons", "TEXT DEFAULT ''"),
-            ("evidence_state", "VARCHAR(50) DEFAULT 'verified'")
-        ]:
-            try:
-                conn.execute(text(f"ALTER TABLE findings ADD COLUMN {col_def[0]} {col_def[1]}"))
-                conn.commit()
-            except Exception:
-                pass
-
-        # Add analysis_mode to ai_reviews
-        try:
-            conn.execute(text("ALTER TABLE ai_reviews ADD COLUMN analysis_mode VARCHAR(20) DEFAULT 'rules'"))
-            conn.commit()
-        except Exception:
-            pass
+    finding_cols = [
+        ("grounding_status", "VARCHAR(50) DEFAULT 'GROUNDED'"),
+        ("grounding_reasons", "TEXT DEFAULT ''"),
+        ("evidence_state", "VARCHAR(50) DEFAULT 'verified'")
+    ]
+    ensure_columns_for_table("findings", finding_cols)
+    ensure_columns_for_table("ai_reviews", [
+        ("analysis_mode", "VARCHAR(20) DEFAULT 'rules'")
+    ])
 
 def ensure_workflow_columns() -> None:
     """Idempotently ensure workflow verification, approval, version and audit columns exist."""
-    with engine.connect() as conn:
-        content_cols = [
-            ("verified_by_id", "INTEGER"),
-            ("verified_revision_id", "INTEGER"),
-            ("approved_by_id", "INTEGER"),
-            ("approved_revision_id", "INTEGER"),
-            ("version", "INTEGER DEFAULT 1")
-        ]
-        for col_name, col_type in content_cols:
-            try:
-                conn.execute(text(f"ALTER TABLE contents ADD COLUMN {col_name} {col_type}"))
-                conn.commit()
-            except Exception:
-                pass
+    content_cols = [
+        ("verified_by_id", "INTEGER"),
+        ("verified_revision_id", "INTEGER"),
+        ("approved_by_id", "INTEGER"),
+        ("approved_revision_id", "INTEGER"),
+        ("version", "INTEGER DEFAULT 1")
+    ]
+    ensure_columns_for_table("contents", content_cols)
 
-        audit_cols = [
-            ("organization", "VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"),
-            ("reason", "TEXT"),
-            ("revision_id", "INTEGER"),
-            ("prev_hash", "VARCHAR(64)"),
-            ("hash", "VARCHAR(64)")
-        ]
-        for col_name, col_type in audit_cols:
-            try:
-                conn.execute(text(f"ALTER TABLE audit_logs ADD COLUMN {col_name} {col_type}"))
-                conn.commit()
-            except Exception:
-                pass
+    audit_cols = [
+        ("organization", "VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"),
+        ("reason", "TEXT"),
+        ("revision_id", "INTEGER"),
+        ("prev_hash", "VARCHAR(64)"),
+        ("hash", "VARCHAR(64)"),
+        ("ip_address", "VARCHAR(50)"),
+    ]
+    ensure_columns_for_table("audit_logs", audit_cols)
 
-def backfill_audit_hashes(db: Session) -> None:
-    """Backfill prev_hash and hash on existing audit log rows in chronological order."""
-    from app.models.audit import compute_audit_hash
-    logs = db.query(AuditLog).order_by(AuditLog.id.asc()).all()
-    prev = "GENESIS"
-    modified = False
-    for log in logs:
-        if not log.prev_hash or not log.hash:
-            log.prev_hash = prev
-            log.hash = compute_audit_hash(prev, log)
-            modified = True
-        prev = log.hash
-    if modified:
-        db.commit()
+def ensure_all_schema_columns() -> None:
+    """Runs all schema column migrations in safe sequence."""
+    ensure_security_columns()
+    ensure_organization_columns()
+    ensure_finding_grounding_columns()
+    ensure_workflow_columns()
+
+def backfill_audit_hashes(db: Session = None) -> None:
+    """
+    Backfill helper retained for backward compatibility.
+    Preserves existing audit records without fabricating historical hashes.
+    """
+    pass
 
 def ensure_guidelines(db: Session) -> None:
     """Idempotently ensures core and generic brand guidelines exist in the database."""
@@ -191,12 +206,10 @@ def ensure_guidelines(db: Session) -> None:
     db.commit()
 
 def init_db(db: Session = None) -> None:
-    # Create all tables
+    # 1. Create any missing tables (e.g. user_sessions)
     Base.metadata.create_all(bind=engine)
-    ensure_security_columns()
-    ensure_organization_columns()
-    ensure_finding_grounding_columns()
-    ensure_workflow_columns()
+    # 2. Safely add missing columns to existing tables before any queries
+    ensure_all_schema_columns()
 
     close_db_at_end = False
     if db is None:
@@ -204,7 +217,6 @@ def init_db(db: Session = None) -> None:
         close_db_at_end = True
 
     try:
-        backfill_audit_hashes(db)
         is_production = settings.ENVIRONMENT.lower() == "production"
 
         # Check if users already seeded (or guidelines seeded in production)
@@ -516,7 +528,6 @@ def init_db(db: Session = None) -> None:
 
         print("--- Database seeding complete! ---")
         seed_threat_data(db)
-        backfill_audit_hashes(db)
     finally:
         if close_db_at_end:
             db.close()

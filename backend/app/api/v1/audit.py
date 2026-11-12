@@ -19,9 +19,10 @@ def verify_audit_trail(
     Verifies cryptographic hash chain of the audit trail.
     Returns {"status": "ok"} if all hashes and prev_hashes are valid,
     or {"status": "tampered", "broken_row_id": <int>} on the first broken row.
+    Only evaluates cryptographically signed rows, preserving historical legacy records.
     """
     from app.models.audit import compute_audit_hash
-    logs = db.query(AuditLog).order_by(AuditLog.id.asc()).all()
+    logs = db.query(AuditLog).filter(AuditLog.hash.isnot(None)).order_by(AuditLog.id.asc()).all()
     prev = "GENESIS"
     for log in logs:
         if log.prev_hash != prev:

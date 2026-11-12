@@ -104,3 +104,8 @@ def test_audit_tamper_detection(client, db):
     )
     assert res_creator.status_code == 403
 
+    # Clean up tampered rows so subsequent tests run on a clean chain
+    db.delete(log_b)
+    db.delete(log_a)
+    db.commit()
+
