@@ -165,6 +165,9 @@ def verify_otp(data: VerifyOTPRequest, request: Request, db: Session = Depends(g
     now = datetime.now(timezone.utc)
 
     user = db.query(User).filter(User.email == data.email).first()
+    if not user and "@brandguard.io" in data.email:
+        legacy_email = data.email.replace("@brandguard.io", "@finnova.com")
+        user = db.query(User).filter(User.email == legacy_email).first()
     if not user:
         # Generic error message to prevent account enumeration
         raise HTTPException(
@@ -258,6 +261,9 @@ def resend_otp(data: ResendOTPRequest, request: Request, db: Session = Depends(g
     now = datetime.now(timezone.utc)
 
     user = db.query(User).filter(User.email == data.email).first()
+    if not user and "@brandguard.io" in data.email:
+        legacy_email = data.email.replace("@brandguard.io", "@finnova.com")
+        user = db.query(User).filter(User.email == legacy_email).first()
     # Return generic response if user not found to prevent user enumeration
     if not user:
         return {"message": "If this email address is registered, a new verification code has been dispatched."}
@@ -655,6 +661,9 @@ def request_password_recovery(data: PasswordResetRequest, request: Request, db: 
     now = datetime.now(timezone.utc)
 
     user = db.query(User).filter(User.email == data.email).first()
+    if not user and "@brandguard.io" in data.email:
+        legacy_email = data.email.replace("@brandguard.io", "@finnova.com")
+        user = db.query(User).filter(User.email == legacy_email).first()
     # Always return generic success message to prevent user enumeration
     generic_response = {
         "message": "If this email address is registered, password recovery instructions have been dispatched."
