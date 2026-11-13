@@ -166,6 +166,60 @@ export default function BenchmarkPage() {
               {data.git_commit && <span>Commit: <code className="text-indigo-600 dark:text-indigo-400">{data.git_commit.slice(0, 8)}</code></span>}
             </div>
 
+            {/* Verified Rules-Only Scorecard */}
+            <div className="rounded-2xl border border-indigo-200 dark:border-indigo-900/60 bg-gradient-to-br from-indigo-50/70 via-white to-purple-50/40 dark:from-indigo-950/40 dark:via-slate-900 dark:to-purple-950/20 p-6 space-y-4 shadow-card">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 dark:border-indigo-900/60 pb-3">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                    Primary Verified Baseline
+                  </span>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                    Rules-Only Engine (Deterministic Evaluation)
+                  </h3>
+                </div>
+                <Badge variant="purple">Verified Holdout v2</Badge>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">Precision</span>
+                  <span className="text-xl font-black text-indigo-600 dark:text-indigo-400 font-mono">0.909</span>
+                  <span className="text-[10px] text-slate-400 font-mono block">[72.2%, 97.5%]</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">Recall</span>
+                  <span className="text-xl font-black text-purple-600 dark:text-purple-400 font-mono">0.625</span>
+                  <span className="text-[10px] text-slate-400 font-mono block">[45.3%, 77.1%]</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">F1 Score</span>
+                  <span className="text-xl font-black text-emerald-600 dark:text-emerald-400 font-mono">0.741</span>
+                  <span className="text-[10px] text-slate-400 font-mono block">Harmonic Mean</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">FPR</span>
+                  <span className="text-xl font-black text-amber-600 dark:text-amber-400 font-mono">0.250</span>
+                  <span className="text-[10px] text-slate-400 font-mono block">False Positives</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">FNR</span>
+                  <span className="text-xl font-black text-rose-600 dark:text-rose-400 font-mono">0.375</span>
+                  <span className="text-[10px] text-slate-400 font-mono block">False Negatives</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">Samples</span>
+                  <span className="text-xl font-black text-slate-800 dark:text-slate-200 font-mono">N = 40</span>
+                  <span className="text-[10px] text-slate-400 font-mono block">Held-out Split</span>
+                </div>
+              </div>
+
+              <div className="text-xs text-slate-600 dark:text-slate-400 bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/40 rounded-xl p-3">
+                <p>
+                  <strong>Scope Notice:</strong> The figures above are <strong>rules-only results</strong>, not AI-only or combined measurements. Live LLM evaluations require active provider API credentials and are not run without key configuration. Finite sample size (N=40) results in wide Wilson confidence intervals and does not constitute a universal accuracy guarantee.
+                </p>
+              </div>
+            </div>
+
             <div className="space-y-4">
               <ModeCard title="Rules Only" badgeText="Deterministic" data={data.modes?.rules_only} />
               <ModeCard title="Semantic Fallback" badgeText="Heuristic Fallback" data={data.modes?.semantic_fallback} />

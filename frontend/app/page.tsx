@@ -33,6 +33,7 @@ export default function LandingPage() {
             <a href="#features" className="hover:text-indigo-600 dark:hover:text-white transition">Capabilities</a>
             <a href="#workflow" className="hover:text-indigo-600 dark:hover:text-white transition">Workflow Engine</a>
             <a href="#governance" className="hover:text-indigo-600 dark:hover:text-white transition">Governance &amp; RBAC</a>
+            <a href="#benchmark" className="hover:text-indigo-600 dark:hover:text-white transition">Accuracy Benchmark</a>
             <a href="#security" className="hover:text-indigo-600 dark:hover:text-white transition">Security &amp; Audit</a>
           </nav>
 
@@ -107,6 +108,13 @@ export default function LandingPage() {
                 className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               >
                 Governance &amp; RBAC
+              </a>
+              <a
+                href="#benchmark"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                Accuracy Benchmark
               </a>
               <a
                 href="#security"
@@ -399,7 +407,7 @@ export default function LandingPage() {
                 desc: 'Department leadership reviews verified material and grants formal approval or rejects.',
               },
             ].map((st, i) => (
-              <div key={i} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3 shadow-subtle">
+              <div key={i} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3 shadow-subtle transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-indigo-300 dark:hover:border-indigo-700/60">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold text-slate-400 font-mono">{st.step}</span>
                   <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
@@ -449,23 +457,107 @@ export default function LandingPage() {
               </span>
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-700/60">
                 <span className="text-[10px] text-slate-500 block">Creator</span>
                 <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Content Submissions</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-700/60">
                 <span className="text-[10px] text-slate-500 block">Reviewer</span>
                 <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Guideline Verification</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-700/60">
                 <span className="text-[10px] text-slate-500 block">Manager</span>
                 <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Approval &amp; Sign-off</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-700/60">
                 <span className="text-[10px] text-slate-500 block">Admin</span>
                 <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">System &amp; Policies</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8.5. Accuracy Benchmark Section */}
+      <section id="benchmark" className="py-20 border-t border-slate-200 dark:border-slate-800/80 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
+        <div className="text-center space-y-3 max-w-3xl mx-auto">
+          <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 dark:text-indigo-400">
+            Empirical Validation
+          </span>
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Measured Accuracy Benchmark (Rules-Only Baseline)
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Every governance engine claim is backed by empirical testing on held-out compliance test splits. We report honest precision, recall, and error rates without synthetic inflation.
+          </p>
+        </div>
+
+        {/* Primary Benchmark Metrics Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">Precision</span>
+            <div className="text-2xl sm:text-3xl font-black text-indigo-600 dark:text-indigo-400 font-mono">90.9%</div>
+            <span className="text-[10px] text-slate-400 font-mono block">0.909 (95% CI: 72.2–97.5%)</span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">Recall</span>
+            <div className="text-2xl sm:text-3xl font-black text-purple-600 dark:text-purple-400 font-mono">62.5%</div>
+            <span className="text-[10px] text-slate-400 font-mono block">0.625 (95% CI: 45.3–77.1%)</span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">F1 Score</span>
+            <div className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 font-mono">0.741</div>
+            <span className="text-[10px] text-slate-400 font-mono block">Harmonic Mean (74.1%)</span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">False Positive Rate</span>
+            <div className="text-2xl sm:text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">25.0%</div>
+            <span className="text-[10px] text-slate-400 font-mono block">FPR: 0.250</span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">False Negative Rate</span>
+            <div className="text-2xl sm:text-3xl font-black text-rose-600 dark:text-rose-400 font-mono">37.5%</div>
+            <span className="text-[10px] text-slate-400 font-mono block">FNR: 0.375</span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">Evaluation Size</span>
+            <div className="text-2xl sm:text-3xl font-black text-slate-800 dark:text-slate-200 font-mono">N = 40</div>
+            <span className="text-[10px] text-slate-400 font-mono block">Held-Out Test Split</span>
+          </div>
+        </div>
+
+        {/* Verified Disclosures & Honest Boundaries */}
+        <div className="rounded-2xl border border-amber-200 dark:border-amber-900/50 bg-amber-50/40 dark:bg-amber-950/20 p-5 space-y-3">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
+            <div className="space-y-1 text-xs text-slate-700 dark:text-slate-300">
+              <p className="font-bold text-slate-900 dark:text-white text-sm">
+                Important Methodology &amp; Scope Disclosure
+              </p>
+              <p className="leading-relaxed">
+                <strong>These results reflect the deterministic Rules-Only engine</strong> evaluated on <code className="font-mono text-indigo-600 dark:text-indigo-400">holdout_v2</code>. AI-only and combined live-LLM benchmarks require configured external API credentials (<code className="font-mono">OPENAI_API_KEY</code> or <code className="font-mono">GEMINI_API_KEY</code>) and are currently labeled as <em>Offline / Unmeasured</em> to prevent synthetic or fabricated claims.
+              </p>
+              <p className="text-slate-500 dark:text-slate-400 leading-relaxed pt-1">
+                Because N = 40, 95% Wilson confidence intervals are wide. These numbers represent honest empirical point estimates on specific regulatory and marketing test cases, not universal accuracy guarantees across unconstrained copy.
+              </p>
+            </div>
+          </div>
+          <div className="pt-2 border-t border-amber-200/60 dark:border-amber-900/40 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <span className="text-slate-500 dark:text-slate-400 font-mono text-[11px]">
+              Evaluation Commit: <code className="text-indigo-600 dark:text-indigo-400 font-bold">feat/round3-extra</code>
+            </span>
+            <Link
+              href="/benchmark"
+              className="inline-flex items-center gap-1 font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition"
+            >
+              <span>View Full Benchmark Methodology &amp; Split Tables</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </section>
