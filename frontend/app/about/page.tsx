@@ -86,7 +86,7 @@ export default function AboutPage() {
         {/* CTA */}
         <div className="p-8 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-slate-900 border border-indigo-200/80 dark:border-indigo-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
-            <h4 className="font-bold text-base text-slate-900 dark:text-white">Want to see BrandGuard AI in action?</h4>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white">Want to see BrandGuard AI in action?</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400">Schedule a customized walkthrough tailored to your brand guidelines.</p>
           </div>
           <Link

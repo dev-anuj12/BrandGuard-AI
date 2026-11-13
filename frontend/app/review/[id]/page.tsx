@@ -230,9 +230,9 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                   </span>
                 )}
               </div>
-              <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">
                 {content.title}
-              </h1>
+              </h2>
             </div>
           </div>
 
@@ -615,7 +615,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                     </div>
                                   ))
                                 ) : (
-                                  <div className="text-slate-400 dark:text-slate-500 text-[10px] italic">
+                                  <div className="text-slate-500 dark:text-slate-400 text-[10px] italic">
                                     Direct pattern rule match; no external citation database entry required.
                                   </div>
                                 )}

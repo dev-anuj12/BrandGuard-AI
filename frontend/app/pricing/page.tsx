@@ -123,7 +123,7 @@ export default function PricingPage() {
 
         <div className="p-6 rounded-2xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-slate-900 dark:text-white">Have custom requirements or volume inquiries?</h4>
+            <h2 className="font-bold text-sm text-slate-900 dark:text-white">Have custom requirements or volume inquiries?</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">Get in touch with our team for customized deployment options.</p>
           </div>
           <Link

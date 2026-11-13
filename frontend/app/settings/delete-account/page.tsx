@@ -43,10 +43,10 @@ export default function DeleteAccountPage() {
     <AppLayout pageTitle="Delete Account">
       <div className="max-w-2xl mx-auto space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-rose-600 dark:text-rose-400 flex items-center gap-2">
+          <h2 className="text-2xl font-bold tracking-tight text-rose-600 dark:text-rose-400 flex items-center gap-2">
             <Trash2 className="w-6 h-6" />
             <span>Delete Account &amp; Request Data Erasure</span>
-          </h1>
+          </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Initiate self-service account deactivation and data erasure upon request.
           </p>

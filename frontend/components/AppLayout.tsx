@@ -234,7 +234,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
           {!collapsed && (
             <div className="p-3 mx-3 my-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400">
                   Workspace
                 </span>
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -310,7 +310,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
                 <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate">
                   {user.full_name}
                 </p>
-                <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate">{user.email}</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{user.email}</p>
               </div>
             )}
             {!collapsed && (
@@ -343,7 +343,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
             {/* Breadcrumbs & Title */}
             <div>
               {breadcrumbs && breadcrumbs.length > 0 && (
-                <div className="flex items-center gap-1.5 text-[11px] text-slate-400 dark:text-slate-500 font-medium">
+                <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                   {breadcrumbs.map((b, i) => (
                     <React.Fragment key={i}>
                       {b.href ? (

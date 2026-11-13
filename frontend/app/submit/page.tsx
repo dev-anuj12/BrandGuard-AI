@@ -311,9 +311,9 @@ export default function SubmitPage() {
               <FileText className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">
                 Submit Content for Review
-              </h1>
+              </h2>
               <p className="text-sm text-slate-500 dark:text-slate-400">
                 Fill in the details below and run an AI compliance check.
               </p>
@@ -365,9 +365,9 @@ export default function SubmitPage() {
           <div className="lg:col-span-2">
             <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
               <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700">
-                <h2 className="font-semibold text-slate-900 dark:text-white text-base">
+                <h3 className="font-semibold text-slate-900 dark:text-white text-base">
                   Submission Details
-                </h2>
+                </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                   Fields marked <span className="text-red-500">*</span> are required.
                 </p>
@@ -388,7 +388,7 @@ export default function SubmitPage() {
                     value={form.title}
                     onChange={(e) => setField('title', e.target.value)}
                     placeholder="e.g. Q4 Investment Newsletter — October 2024"
-                    className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
+                    className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
                       errors.title
                         ? 'border-red-400 dark:border-red-500'
                         : 'border-slate-200 dark:border-slate-700'
@@ -441,7 +441,7 @@ export default function SubmitPage() {
                       value={form.original_body}
                       onChange={(e) => setField('original_body', e.target.value)}
                       placeholder="Paste or type your content here. The AI compliance engine will analyse it for brand, legal, and regulatory issues…"
-                      className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y transition leading-relaxed ${
+                      className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y transition leading-relaxed ${
                         errors.original_body
                           ? 'border-red-400 dark:border-red-500'
                           : 'border-slate-200 dark:border-slate-700'
@@ -457,7 +457,7 @@ export default function SubmitPage() {
                         </p>
                       )}
                     </div>
-                    <span className="text-xs text-slate-400 dark:text-slate-500 tabular-nums">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 tabular-nums">
                       {wordCount} words / {charCount} characters
                     </span>
                   </div>
@@ -552,7 +552,7 @@ export default function SubmitPage() {
             {/* Channel risk badge */}
             {form.channel && (
               <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm px-5 py-4">
-                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                   Selected Channel
                 </p>
                 <div className="flex items-center gap-2">

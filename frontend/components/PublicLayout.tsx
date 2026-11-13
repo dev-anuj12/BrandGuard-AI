@@ -81,7 +81,7 @@ export default function PublicLayout({
               </p>
             )}
             {lastUpdated && (
-              <p className="text-xs text-slate-400 dark:text-slate-500 mt-3 font-mono">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 font-mono">
                 Last reviewed: {lastUpdated}
               </p>
             )}

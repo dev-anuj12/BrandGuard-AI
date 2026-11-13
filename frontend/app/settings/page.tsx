@@ -318,7 +318,7 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Footer note ───────────────────────────────────────────────── */}
-        <p className="text-center text-xs text-slate-400 dark:text-slate-500 pb-4">
+        <p className="text-center text-xs text-slate-500 dark:text-slate-400 pb-4">
           BrandGuard AI Platform &mdash; Enterprise Brand Compliance Suite
         </p>
 

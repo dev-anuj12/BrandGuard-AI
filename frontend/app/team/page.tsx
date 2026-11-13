@@ -28,7 +28,7 @@ export default function TeamPage() {
       <div className="space-y-10 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <div className="p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-center space-y-3">
           <Users className="w-8 h-8 text-indigo-500 mx-auto opacity-70" />
-          <h3 className="font-bold text-base text-slate-900 dark:text-white">Leadership &amp; Engineering</h3>
+          <h2 className="font-bold text-base text-slate-900 dark:text-white">Leadership &amp; Engineering</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
             Team and leadership profiles: details will be published at launch.
           </p>

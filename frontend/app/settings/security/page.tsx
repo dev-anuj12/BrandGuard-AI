@@ -118,9 +118,9 @@ export default function SecuritySettingsPage() {
     <AppLayout pageTitle="Security Settings">
       <div className="max-w-3xl mx-auto space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             Security &amp; Authentication Settings
-          </h1>
+          </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Manage password credentials, active JWT sessions, and Multi-Factor Authentication (TOTP).
           </p>
@@ -131,7 +131,7 @@ export default function SecuritySettingsPage() {
           <div className="flex items-center gap-2.5">
             <Key className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <div>
-              <h2 className="text-sm font-bold text-slate-900 dark:text-white">Change Master Password</h2>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">Change Master Password</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Requires at least 10 characters with uppercase, lowercase, numbers, and symbols.
               </p>
@@ -188,9 +188,9 @@ export default function SecuritySettingsPage() {
             <div className="flex items-center gap-2.5">
               <Smartphone className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
               <div>
-                <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                   Two-Factor Authentication (TOTP MFA)
-                </h2>
+                </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   Adds an extra layer of security using standard authenticator apps (Google Authenticator, Authy, 1Password).
                 </p>

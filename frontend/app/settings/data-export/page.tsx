@@ -46,9 +46,9 @@ export default function DataExportPage() {
     <AppLayout pageTitle="Export My Data">
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             Export My Data
-          </h1>
+          </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Download a portable, machine-readable JSON copy of your personal data, content submissions, and audit trail for your records.
           </p>
@@ -60,7 +60,7 @@ export default function DataExportPage() {
               <Download className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-900 dark:text-white">Complete Machine-Readable Export</h2>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">Complete Machine-Readable Export</h3>
               <p className="text-xs text-slate-500">Includes user account profile, submitted marketing collateral, review versions, and audit logs.</p>
             </div>
           </div>

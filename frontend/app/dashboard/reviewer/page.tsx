@@ -203,7 +203,7 @@ function ContentRow({ item, onActionComplete }: ContentRowProps) {
                 {item.channel}
               </span>
             )}
-            <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
+            <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
               <Clock className="w-3 h-3" />
               {formatDate(item.submitted_at ?? item.created_at)}
             </span>
@@ -362,9 +362,9 @@ export default function ReviewerDashboardPage() {
         {/* ------------------------------------------------------------------ */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
               Reviewer Workspace
-            </h1>
+            </h2>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Review AI-analyzed content and verify compliance before publication.
             </p>

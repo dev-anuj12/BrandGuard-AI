@@ -156,9 +156,9 @@ On behalf of ${brandName}`;
               <span>•</span>
               <span className="text-slate-500 dark:text-slate-400">Threat Surveillance &amp; Triage</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Centralized Threat Intelligence Center
-            </h1>
+            </h2>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
               Comprehensive registry of active phishing domains, social impersonators, counterfeit products, and unauthorized brand usage.
             </p>
@@ -358,9 +358,9 @@ On behalf of ${brandName}`;
                                 {/* Explanation & Recommended Action */}
                                 <div className="space-y-3">
                                   <div>
-                                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
                                       Detection Explanation &amp; Attack Vectors
-                                    </h4>
+                                    </h3>
                                     <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed p-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
                                       {t.explanation}
                                     </p>
@@ -368,9 +368,9 @@ On behalf of ${brandName}`;
 
                                   {t.recommended_action && (
                                     <div>
-                                      <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1">
+                                      <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1">
                                         Recommended Remediation Action
-                                      </h4>
+                                      </h3>
                                       <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed p-3 rounded-lg bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 font-medium">
                                         {t.recommended_action}
                                       </p>
@@ -380,9 +380,9 @@ On behalf of ${brandName}`;
 
                                 {/* Attached Technical Evidence */}
                                 <div className="space-y-3">
-                                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
                                     Technical Evidence Repository ({t.evidence_items?.length || 0})
-                                  </h4>
+                                  </h3>
 
                                   {(!t.evidence_items || t.evidence_items.length === 0) ? (
                                     <p className="text-xs text-slate-400 italic p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">

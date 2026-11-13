@@ -688,7 +688,7 @@ export default function KnowledgeBasePage() {
 
                   {/* Checklist */}
                   <div className="space-y-2">
-                    <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    <h5 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Compliance Inspection Criteria
                     </h5>
                     {valReport.checks.map((chk: any, idx: number) => (

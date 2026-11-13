@@ -82,9 +82,9 @@ export default function UnifiedDashboardPage() {
               <span>•</span>
               <span className="text-slate-500 dark:text-slate-400">Governance Perimeter</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Brand Governance &amp; Threat Intelligence Command Center
-            </h1>
+            </h2>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
               Unified telemetry connecting internal content compliance with external digital threat detection.
             </p>

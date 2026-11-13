@@ -28,7 +28,7 @@ export default function CareersPage() {
       <div className="space-y-8 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <div className="p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-center space-y-3">
           <Briefcase className="w-8 h-8 text-indigo-500 mx-auto opacity-70" />
-          <h3 className="font-bold text-base text-slate-900 dark:text-white">Open Opportunities</h3>
+          <h2 className="font-bold text-base text-slate-900 dark:text-white">Open Opportunities</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
             There are currently no active job openings. Details will be published at launch.
           </p>

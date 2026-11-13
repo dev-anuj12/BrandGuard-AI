@@ -72,7 +72,7 @@ export default function FeaturesPage() {
                     {c.category}
                   </span>
                 </div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-white">{c.title}</h3>
+                <h2 className="font-bold text-base text-slate-900 dark:text-white">{c.title}</h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{c.description}</p>
               </div>
             );
@@ -81,7 +81,7 @@ export default function FeaturesPage() {
 
         <div className="p-8 rounded-2xl bg-indigo-600 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl shadow-indigo-600/10">
           <div className="space-y-1 text-center sm:text-left">
-            <h4 className="font-bold text-lg">Ready to protect your brand assets?</h4>
+            <h2 className="font-bold text-lg">Ready to protect your brand assets?</h2>
             <p className="text-xs text-indigo-100">Deploy BrandGuard AI across your organization in minutes.</p>
           </div>
           <div className="flex items-center gap-3">

@@ -44,9 +44,9 @@ export default function HelpCenterPage() {
                 <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-105 transition-transform">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
+                <h2 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
                   {c.title}
-                </h3>
+                </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{c.desc}</p>
               </Link>
             );

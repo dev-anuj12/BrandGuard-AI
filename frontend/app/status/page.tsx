@@ -59,7 +59,7 @@ export default function StatusPage() {
                 : 'bg-rose-500'
             }`} />
             <div>
-              <h3 className={`font-bold text-base ${
+              <h2 className={`font-bold text-base ${
                 loading
                   ? 'text-slate-800 dark:text-slate-200'
                   : healthy
@@ -71,7 +71,7 @@ export default function StatusPage() {
                   : healthy
                   ? 'Backend API: Healthy'
                   : 'Backend API: Unreachable'}
-              </h3>
+              </h2>
               {lastCheck && (
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                   Last verified: {lastCheck}

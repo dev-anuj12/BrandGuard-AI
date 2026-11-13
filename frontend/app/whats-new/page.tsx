@@ -31,9 +31,9 @@ export default function WhatsNewPage() {
               Perimeter Defense
             </span>
           </div>
-          <h3 className="font-bold text-lg text-slate-900 dark:text-white">
+          <h2 className="font-bold text-lg text-slate-900 dark:text-white">
             Homoglyph &amp; Lookalike Domain Scanner
-          </h3>
+          </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
             The domain scanner evaluates unicode confusable substitutions and punycode lookalikes, analyzes domain registrar heuristics, and checks suspect web pages for credential-harvesting elements.
           </p>
@@ -51,9 +51,9 @@ export default function WhatsNewPage() {
               Governance &amp; Telemetry
             </span>
           </div>
-          <h3 className="font-bold text-lg text-slate-900 dark:text-white">
+          <h2 className="font-bold text-lg text-slate-900 dark:text-white">
             Segregated Workflow &amp; Telemetry CSV Export
-          </h3>
+          </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
             Four-role segregation of duties with a centralized transition table, append-only audit trail logging, and full CSV export for compliance reporting.
           </p>

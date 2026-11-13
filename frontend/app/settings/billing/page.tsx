@@ -17,9 +17,9 @@ export default function BillingSettingsPage() {
     <AppLayout pageTitle="Billing & Subscription">
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             Billing &amp; Subscription Management
-          </h1>
+          </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Review active tier entitlements, usage limits, and enterprise payment arrangements.
           </p>
@@ -32,7 +32,7 @@ export default function BillingSettingsPage() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-mono">
                 Active Tier
               </span>
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Professional Enterprise Tier</h2>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Professional Enterprise Tier</h3>
               <p className="text-xs text-slate-500">
                 Organization: <strong>{currentUser?.organization || 'Enterprise'}</strong> &bull; Renews on Nov 30, 2026
               </p>

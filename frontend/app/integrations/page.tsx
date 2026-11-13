@@ -56,7 +56,7 @@ export default function IntegrationsPage() {
           {tools.map((t) => (
             <div key={t.name} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-sm text-slate-900 dark:text-white">{t.name}</h3>
+                <h2 className="font-bold text-sm text-slate-900 dark:text-white">{t.name}</h2>
                 <span
                   className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                     t.status === 'Supported'

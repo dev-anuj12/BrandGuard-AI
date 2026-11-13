@@ -202,7 +202,7 @@ export default function AdminDashboard() {
                 <BookOpen className="w-4 h-4 text-indigo-500" />
               </div>
               <div className="text-2xl font-bold text-slate-900 dark:text-white mt-2">{guidelines.length}</div>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 block">Active compliance rules</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Active compliance rules</span>
             </div>
 
             <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
@@ -211,7 +211,7 @@ export default function AdminDashboard() {
                 <AlertOctagon className="w-4 h-4 text-rose-500" />
               </div>
               <div className="text-2xl font-bold text-slate-900 dark:text-white mt-2">{bannedWords.length}</div>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 block">Zero-tolerance vocabulary</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Zero-tolerance vocabulary</span>
             </div>
 
             <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
@@ -220,7 +220,7 @@ export default function AdminDashboard() {
                 <Link2 className="w-4 h-4 text-emerald-500" />
               </div>
               <div className="text-2xl font-bold text-slate-900 dark:text-white mt-2">{sources.length}</div>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 block">Verified evidence repository</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Verified evidence repository</span>
             </div>
 
             <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
@@ -229,7 +229,7 @@ export default function AdminDashboard() {
                 <Users className="w-4 h-4 text-amber-500" />
               </div>
               <div className="text-2xl font-bold text-slate-900 dark:text-white mt-2">{usersList.length}</div>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 block">Configured user accounts</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Configured user accounts</span>
             </div>
           </div>
         )}

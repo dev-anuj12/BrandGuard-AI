@@ -80,7 +80,7 @@ function ModeCard({ title, badgeText, data }: { title: string; badgeText: string
       <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <BarChart2 className="w-4 h-4 text-indigo-500" />
-          <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100">{title}</h2>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">{title}</h3>
         </div>
         <Badge variant="purple">{badgeText}</Badge>
       </div>
@@ -127,7 +127,7 @@ export default function BenchmarkPage() {
     <AppLayout pageTitle="AI Governance Benchmark">
       <div className="space-y-6 max-w-5xl mx-auto">
         <div>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">Benchmark Performance</h1>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">Benchmark Performance</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Empirical evaluation across Precision, Recall, False Positive Rate (FPR), and False Negative Rate (FNR)
             on the frozen test split. Loaded statically from benchmark results without runtime synthetic reruns.

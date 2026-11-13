@@ -106,7 +106,7 @@ export default function ApprovalManagementPage() {
             <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
               <div className="h-full bg-slate-400 dark:bg-slate-500 rounded-full" style={{ width: `${contents.length ? (stage1Count / contents.length) * 100 : 0}%` }} />
             </div>
-            <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-2">Initial submission drafting</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Initial submission drafting</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 relative overflow-hidden shadow-sm">
@@ -120,7 +120,7 @@ export default function ApprovalManagementPage() {
             <div className="h-1.5 w-full bg-indigo-100 dark:bg-indigo-950 rounded-full overflow-hidden">
               <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${contents.length ? (stage2Count / contents.length) * 100 : 0}%` }} />
             </div>
-            <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-2">Deterministic &amp; LLM checks</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Deterministic &amp; LLM checks</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 relative overflow-hidden shadow-sm">
@@ -134,7 +134,7 @@ export default function ApprovalManagementPage() {
             <div className="h-1.5 w-full bg-purple-100 dark:bg-purple-950 rounded-full overflow-hidden">
               <div className="h-full bg-purple-500 rounded-full" style={{ width: `${contents.length ? (stage3Count / contents.length) * 100 : 0}%` }} />
             </div>
-            <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-2">Reviewer &amp; manager verification</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Reviewer &amp; manager verification</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 relative overflow-hidden shadow-sm">
@@ -148,7 +148,7 @@ export default function ApprovalManagementPage() {
             <div className="h-1.5 w-full bg-emerald-100 dark:bg-emerald-950 rounded-full overflow-hidden">
               <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${contents.length ? (stage4Count / contents.length) * 100 : 0}%` }} />
             </div>
-            <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-2">Approved or rejected</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Approved or rejected</p>
           </div>
         </div>
 

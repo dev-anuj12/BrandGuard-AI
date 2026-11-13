@@ -195,9 +195,9 @@ export default function SocialProtectionPage() {
               <div className="w-9 h-9 rounded-lg bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold">
                 <Share2 className="w-5 h-5" />
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Social Media Impersonation Protection
-              </h1>
+              </h2>
             </div>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Heuristic detection of unauthorized brand handles, fake customer support channels, bot swarms, and financial scam bio language.

@@ -409,12 +409,12 @@ export default function LandingPage() {
             ].map((st, i) => (
               <div key={i} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3 shadow-subtle transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-indigo-300 dark:hover:border-indigo-700/60">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-slate-400 font-mono">{st.step}</span>
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 font-mono">{st.step}</span>
                   <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                     {st.role}
                   </span>
                 </div>
-                <h4 className="font-bold text-sm text-slate-900 dark:text-white">{st.title}</h4>
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white">{st.title}</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{st.desc}</p>
               </div>
             ))}
@@ -497,37 +497,37 @@ export default function LandingPage() {
           <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">Precision</span>
             <div className="text-2xl sm:text-3xl font-black text-indigo-600 dark:text-indigo-400 font-mono">90.9%</div>
-            <span className="text-[10px] text-slate-400 font-mono block">0.909 (95% CI: 72.2–97.5%)</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block">0.909 (95% CI: 72.2–97.5%)</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">Recall</span>
             <div className="text-2xl sm:text-3xl font-black text-purple-600 dark:text-purple-400 font-mono">62.5%</div>
-            <span className="text-[10px] text-slate-400 font-mono block">0.625 (95% CI: 45.3–77.1%)</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block">0.625 (95% CI: 45.3–77.1%)</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">F1 Score</span>
             <div className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 font-mono">0.741</div>
-            <span className="text-[10px] text-slate-400 font-mono block">Harmonic Mean (74.1%)</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block">Harmonic Mean (74.1%)</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">False Positive Rate</span>
             <div className="text-2xl sm:text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">25.0%</div>
-            <span className="text-[10px] text-slate-400 font-mono block">FPR: 0.250</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block">FPR: 0.250</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">False Negative Rate</span>
             <div className="text-2xl sm:text-3xl font-black text-rose-600 dark:text-rose-400 font-mono">37.5%</div>
-            <span className="text-[10px] text-slate-400 font-mono block">FNR: 0.375</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block">FNR: 0.375</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">Evaluation Size</span>
             <div className="text-2xl sm:text-3xl font-black text-slate-800 dark:text-slate-200 font-mono">N = 40</div>
-            <span className="text-[10px] text-slate-400 font-mono block">Held-Out Test Split</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block">Held-Out Test Split</span>
           </div>
         </div>
 
@@ -578,7 +578,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
             <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
               <Lock className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-              <h4 className="font-bold text-sm text-slate-900 dark:text-white">JWT Authentication</h4>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">JWT Authentication</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Tokens signed with HS256 and salted bcrypt password hashing across all user sessions.
               </p>
@@ -586,7 +586,7 @@ export default function LandingPage() {
 
             <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
               <Users className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Backend RBAC</h4>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Backend RBAC</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Four distinct permission boundaries strictly validated at the API layer for all operations.
               </p>
@@ -602,7 +602,7 @@ export default function LandingPage() {
 
             <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
               <Globe className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Privacy First</h4>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Privacy First</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Zero client credential leakage and deterministic fallback capability when external AI services are unconfigured.
               </p>

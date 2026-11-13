@@ -109,9 +109,9 @@ function ResetPasswordContent() {
                 <CheckCircle2 className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                <h2 className="text-sm font-bold text-slate-900 dark:text-white">
                   Password Reset Complete
-                </h3>
+                </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   Your master password has been successfully updated. All prior sessions have been invalidated.
                 </p>

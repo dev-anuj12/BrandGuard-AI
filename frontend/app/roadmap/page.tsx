@@ -60,7 +60,7 @@ export default function RoadmapPage() {
           {items.map((item) => (
             <div key={item.title} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-sm text-slate-900 dark:text-white">{item.title}</h3>
+                <h2 className="font-bold text-sm text-slate-900 dark:text-white">{item.title}</h2>
                 <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">
                   {item.status}
                 </span>

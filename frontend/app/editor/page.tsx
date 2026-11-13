@@ -481,7 +481,7 @@ function EditorContent() {
               <Sparkles className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-slate-900 dark:text-white">AI Content Editor</h1>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">AI Content Editor</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Real-time compliance checking as you type
               </p>
@@ -532,7 +532,7 @@ function EditorContent() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Q4 Investment Newsletter — October 2024"
-                  className="w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-slate-200 dark:border-slate-700 transition"
+                  className="w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-slate-200 dark:border-slate-700 transition"
                 />
               </div>
 
@@ -609,7 +609,7 @@ function EditorContent() {
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
                     placeholder="Paste or type your content here. Compliance violations will appear as coloured markers after 2 seconds…"
-                    className="w-full px-4 py-3 text-sm bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none resize-y leading-relaxed font-mono"
+                    className="w-full px-4 py-3 text-sm bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none resize-y leading-relaxed font-mono"
                     spellCheck
                   />
                 </div>
@@ -617,7 +617,7 @@ function EditorContent() {
                 {/* Compare: highlighted preview (right) */}
                 {compareMode && (
                   <div className="relative">
-                    <div className="px-1 py-2 text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider border-b border-slate-100 dark:border-slate-700 text-center">
+                    <div className="px-1 py-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-700 text-center">
                       Highlighted Preview
                     </div>
                     <div
@@ -710,7 +710,7 @@ function EditorContent() {
               </div>
 
               {displayFindings.length === 0 ? (
-                <div className="p-6 text-center text-xs text-slate-400 dark:text-slate-500">
+                <div className="p-6 text-center text-xs text-slate-500 dark:text-slate-400">
                   {body.trim().length < 20
                     ? 'Start typing to see compliance indicators…'
                     : quickChecking
@@ -723,7 +723,7 @@ function EditorContent() {
                     <li key={i} className="px-4 py-3 space-y-1.5">
                       <div className="flex items-center justify-between gap-2 flex-wrap">
                         <SeverityBadge severity={f.severity} />
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 truncate">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 truncate">
                           {f.category.replace(/_/g, ' ')}
                         </span>
                       </div>
@@ -775,7 +775,7 @@ function EditorContent() {
               {historyOpen && (
                 <div className="border-t border-slate-100 dark:border-slate-700">
                   {!contentId ? (
-                    <p className="px-4 py-4 text-xs text-slate-400 dark:text-slate-500">
+                    <p className="px-4 py-4 text-xs text-slate-500 dark:text-slate-400">
                       Save a draft first to enable version history.
                     </p>
                   ) : loadingHistory ? (
@@ -783,7 +783,7 @@ function EditorContent() {
                       <Loader2 className="w-3 h-3 animate-spin" /> Loading…
                     </div>
                   ) : revisions.length === 0 ? (
-                    <p className="px-4 py-4 text-xs text-slate-400 dark:text-slate-500">
+                    <p className="px-4 py-4 text-xs text-slate-500 dark:text-slate-400">
                       No revisions yet.
                     </p>
                   ) : (
@@ -798,7 +798,7 @@ function EditorContent() {
                               <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono">
                                 v{rev.version}
                               </span>
-                              <span className="text-[10px] text-slate-400 dark:text-slate-500 flex items-center gap-1">
+                              <span className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
                                 <Clock className="w-2.5 h-2.5" />
                                 {formatDate(rev.created_at)}
                               </span>
@@ -823,7 +823,7 @@ function EditorContent() {
 
             {/* Legend */}
             <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm px-4 py-3">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                 Severity Legend
               </p>
               <div className="space-y-1.5">

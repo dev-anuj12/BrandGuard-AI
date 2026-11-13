@@ -87,7 +87,7 @@ function formatDate(dateStr?: string): string {
 }
 
 function scoreColor(score?: number | null): string {
-  if (score == null) return 'text-slate-400 dark:text-slate-500';
+  if (score == null) return 'text-slate-500 dark:text-slate-400';
   if (score >= 80) return 'text-emerald-600 dark:text-emerald-400';
   if (score >= 60) return 'text-amber-600 dark:text-amber-400';
   return 'text-red-600 dark:text-red-400';
@@ -133,7 +133,7 @@ function ActionPanel({ item, onDecision, onRejectRequest, loading }: ActionPanel
             onChange={(e) => setComments(e.target.value)}
             disabled={isDecided || loading}
             placeholder={isDecided ? 'Decision already recorded.' : 'Add comments or feedback for this submission (min 10 chars for changes/reject)…'}
-            className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"
+            className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"
           />
         </div>
 
@@ -357,19 +357,19 @@ export default function ManagerDashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           {/* Search */}
           <div className="relative flex-1 max-w-sm">
-            <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
+            <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-slate-400 pointer-events-none" />
             <input
               type="text"
               placeholder="Search by title…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           {/* Filter tabs */}
           <div className="flex items-center gap-1 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-            <Filter className="w-4 h-4 text-slate-400 dark:text-slate-500 ml-1 mr-0.5" />
+            <Filter className="w-4 h-4 text-slate-500 dark:text-slate-400 ml-1 mr-0.5" />
             {tabs.map((tab) => (
               <button
                 key={tab.key}
@@ -450,7 +450,7 @@ export default function ManagerDashboardPage() {
                           {/* Title */}
                           <td className="px-4 py-3 max-w-xs">
                             <div className="flex items-center gap-2">
-                              <FileText className="w-4 h-4 text-slate-400 dark:text-slate-500 flex-shrink-0" />
+                              <FileText className="w-4 h-4 text-slate-500 dark:text-slate-400 flex-shrink-0" />
                               <span className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
                                 {item.title || '(Untitled)'}
                               </span>
@@ -481,7 +481,7 @@ export default function ManagerDashboardPage() {
                                 {item.severity && <SeverityBadge severity={item.severity} />}
                               </div>
                             ) : (
-                              <span className="text-sm text-slate-400 dark:text-slate-500">—</span>
+                              <span className="text-sm text-slate-500 dark:text-slate-400">—</span>
                             )}
                           </td>
 
@@ -534,7 +534,7 @@ export default function ManagerDashboardPage() {
 
         {/* Result count */}
         {!loading && filtered.length > 0 && (
-          <p className="text-xs text-slate-400 dark:text-slate-500 text-right">
+          <p className="text-xs text-slate-500 dark:text-slate-400 text-right">
             Showing {filtered.length} of {content.length} item{content.length !== 1 ? 's' : ''}
           </p>
         )}

@@ -162,9 +162,9 @@ export default function DomainProtectionPage() {
               <div className="w-9 h-9 rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">
                 <Globe className="w-5 h-5" />
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Website & Domain Protection
-              </h1>
+              </h2>
             </div>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Autonomous SSRF-guarded inspection for lookalike domains, Cyrillic homoglyphs, credential harvesting, and suspicious TLS certs.

@@ -316,9 +316,9 @@ export default function CounterfeitProtectionPage() {
               <div className="w-9 h-9 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
                 <ShoppingBag className="w-5 h-5" />
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Counterfeit Products & Logo Misuse
-              </h1>
+              </h2>
             </div>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Autonomous inspection of marketplace listings, extreme price undercutting, unauthorized vendors, and trademark visual distortion.

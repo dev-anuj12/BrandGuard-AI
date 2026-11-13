@@ -127,7 +127,7 @@ export default function ApiDocsPage() {
         {/* Interactive Swagger Link */}
         <div className="p-5 rounded-2xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-slate-900 dark:text-white">OpenAPI Interactive Docs</h4>
+            <h3 className="font-bold text-sm text-slate-900 dark:text-white">OpenAPI Interactive Docs</h3>
             <p className="text-xs text-slate-500">Access interactive OpenAPI / Swagger specifications on the running backend server.</p>
           </div>
           <a

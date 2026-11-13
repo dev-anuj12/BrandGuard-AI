@@ -49,7 +49,7 @@ export default function ChangelogPage() {
       <div className="space-y-8 max-w-3xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         {releases.map((rel) => (
           <div key={rel.title} className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3">
-            <h3 className="font-bold text-base text-slate-900 dark:text-white">{rel.title}</h3>
+            <h2 className="font-bold text-base text-slate-900 dark:text-white">{rel.title}</h2>
             <ul className="space-y-1.5 pt-1">
               {rel.highlights.map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">

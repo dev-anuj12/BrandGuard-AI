@@ -39,7 +39,7 @@ export default function SupportPage() {
                 <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-white">{t.title}</h3>
+                <h2 className="font-bold text-base text-slate-900 dark:text-white">{t.title}</h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{t.desc}</p>
               </div>
             );
@@ -48,7 +48,7 @@ export default function SupportPage() {
 
         <div className="p-6 rounded-2xl bg-indigo-600 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-indigo-600/10">
           <div className="space-y-1">
-            <h4 className="font-bold text-base">Experiencing a technical issue or anomaly?</h4>
+            <h2 className="font-bold text-base">Experiencing a technical issue or anomaly?</h2>
             <p className="text-xs text-indigo-100">Submit a tracked ticket to our support team.</p>
           </div>
           <Link

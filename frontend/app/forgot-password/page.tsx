@@ -74,9 +74,9 @@ export default function ForgotPasswordPage() {
                 <CheckCircle2 className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                <h2 className="text-sm font-bold text-slate-900 dark:text-white">
                   Recovery Email Dispatched
-                </h3>
+                </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   If <strong className="text-slate-800 dark:text-slate-200">{email}</strong> matches an enterprise account, instructions to securely reset your credentials have been sent.
                 </p>

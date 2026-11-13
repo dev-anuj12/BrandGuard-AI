@@ -119,7 +119,7 @@ export default function CreatorDashboard() {
                 <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
               </div>
               <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">{totalSubmissions}</div>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-1 block">Active marketing drafts</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">Active marketing drafts</span>
             </div>
 
             <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card">
@@ -128,7 +128,7 @@ export default function CreatorDashboard() {
                 <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400">{underReview}</div>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-1 block">In auditor verification</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">In auditor verification</span>
             </div>
 
             <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card">
@@ -137,7 +137,7 @@ export default function CreatorDashboard() {
                 <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               </div>
               <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400">{changesRequired}</div>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-1 block">Flagged for revisions</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">Flagged for revisions</span>
             </div>
 
             <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card">
@@ -146,7 +146,7 @@ export default function CreatorDashboard() {
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">{approved}</div>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-1 block">Cleared for deployment</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">Cleared for deployment</span>
             </div>
           </div>
         )}
