@@ -16,7 +16,7 @@ export default function ComingSoonPage() {
       title="Exciting Capability Launching Soon"
       subtitle="Our engineering team is finalizing testing on this platform module."
     >
-      <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center space-y-4 max-w-xl mx-auto shadow-sm">
+      <div className="p-8 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center space-y-4 max-w-xl mx-auto shadow-sm">
         <div className="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/60 flex items-center justify-center mx-auto text-purple-600 dark:text-purple-400">
           <Sparkles className="w-6 h-6" />
         </div>
@@ -33,7 +33,7 @@ export default function ComingSoonPage() {
           </Link>
           <Link
             href="/"
-            className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#0D1224]/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
+            className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#120924]/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
           >
             Home
           </Link>

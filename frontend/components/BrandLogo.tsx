@@ -35,20 +35,20 @@ export function BrandLogoIcon({ size = 'md', className = '' }: { size?: 'sm' | '
         <defs>
           {/* Main Shield & Node Gradient */}
           <linearGradient id="bg-brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#4F46E5" />   {/* Deep Indigo */}
-            <stop offset="50%" stopColor="#7C3AED" />  {/* Electric Violet */}
-            <stop offset="100%" stopColor="#2563EB" /> {/* Precision Blue */}
+            <stop offset="0%" stopColor="#782BDB" />   {/* Rich Violet */}
+            <stop offset="50%" stopColor="#A855F7" />  {/* Electric Purple */}
+            <stop offset="100%" stopColor="#D946EF" /> {/* Accent Magenta */}
           </linearGradient>
 
           {/* Core AI Diamond Glow */}
           <linearGradient id="bg-core-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#38BDF8" />
+            <stop offset="0%" stopColor="#C084FC" />
             <stop offset="100%" stopColor="#FFFFFF" />
           </linearGradient>
 
           {/* Outer Protective Shadow */}
           <filter id="bg-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#4F46E5" floodOpacity="0.35" />
+            <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#A855F7" floodOpacity="0.4" />
           </filter>
         </defs>
 
@@ -66,9 +66,9 @@ export function BrandLogoIcon({ size = 'md', className = '' }: { size?: 'sm' | '
         {/* Inner Security Facet (Polygonal Shield Matrix) */}
         <path
           d="M20 7L31 11.5V20C31 26.5 26.3 32.2 20 34C13.7 32.2 9 26.5 9 20V11.5L20 7Z"
-          fill="#0B0F19"
-          fillOpacity="0.22"
-          stroke="rgba(255, 255, 255, 0.4)"
+          fill="#090414"
+          fillOpacity="0.35"
+          stroke="rgba(255, 255, 255, 0.45)"
           strokeWidth="1.2"
           strokeLinejoin="round"
         />
@@ -77,13 +77,13 @@ export function BrandLogoIcon({ size = 'md', className = '' }: { size?: 'sm' | '
         <path
           d="M20 12L27 20L20 28L13 20L20 12Z"
           fill="url(#bg-core-grad)"
-          fillOpacity="0.9"
+          fillOpacity="0.95"
         />
 
         {/* Precision Node Axis Points */}
-        <circle cx="20" cy="20" r="2.2" fill="#4F46E5" />
-        <line x1="20" y1="12" x2="20" y2="28" stroke="#4F46E5" strokeWidth="1" strokeDasharray="1.5 1.5" />
-        <line x1="13" y1="20" x2="27" y2="20" stroke="#4F46E5" strokeWidth="1" strokeDasharray="1.5 1.5" />
+        <circle cx="20" cy="20" r="2.2" fill="#782BDB" />
+        <line x1="20" y1="12" x2="20" y2="28" stroke="#782BDB" strokeWidth="1" strokeDasharray="1.5 1.5" />
+        <line x1="13" y1="20" x2="27" y2="20" stroke="#782BDB" strokeWidth="1" strokeDasharray="1.5 1.5" />
       </svg>
     </div>
   );
@@ -106,13 +106,13 @@ export default function BrandLogo({
             <span className="font-extrabold tracking-tight text-slate-900 dark:text-white transition-colors">
               BrandGuard
             </span>
-            <span className="px-1.5 py-0.5 text-[10px] font-black rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 text-white tracking-wide shadow-xs">
+            <span className="px-1.5 py-0.5 text-[10px] font-black rounded-md bg-gradient-to-r from-[#782BDB] via-[#A855F7] to-[#D946EF] text-white tracking-wide shadow-xs shadow-purple-900/40">
               AI
             </span>
           </div>
 
           {showSubtitle && (
-            <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 -mt-0.5 tracking-tight truncate">
+            <span className="text-[10px] font-medium text-slate-500 dark:text-purple-300/70 -mt-0.5 tracking-tight truncate">
               Content Governance
             </span>
           )}

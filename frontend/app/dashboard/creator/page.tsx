@@ -113,16 +113,16 @@ export default function CreatorDashboard() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card">
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-card">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Total Submissions</span>
-                <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <FileText className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
               </div>
               <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">{totalSubmissions}</div>
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">Active marketing drafts</span>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card">
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-card">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Under Review</span>
                 <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -131,7 +131,7 @@ export default function CreatorDashboard() {
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">In auditor verification</span>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card">
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-card">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Action Required</span>
                 <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
@@ -140,7 +140,7 @@ export default function CreatorDashboard() {
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">Flagged for revisions</span>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card">
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-card">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Approved Content</span>
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -152,9 +152,9 @@ export default function CreatorDashboard() {
         )}
 
         {/* Content Table Container */}
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 shadow-card overflow-hidden">
+        <div className="rounded-2xl border border-slate-200 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-card overflow-hidden">
           {/* Table Header & Controls */}
-          <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-purple-900/35 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <div className="relative flex-1 max-w-sm">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
@@ -162,7 +162,7 @@ export default function CreatorDashboard() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by title, channel, or audience..."
-                className="w-full bg-slate-50 dark:bg-[#080C16] border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full bg-slate-50 dark:bg-[#150A26] border border-slate-200 dark:border-purple-900/35 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
 
@@ -171,7 +171,7 @@ export default function CreatorDashboard() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="bg-slate-50 dark:bg-[#080C16] border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-slate-700 dark:text-slate-300 focus:outline-none focus:border-indigo-500 transition"
+                className="bg-slate-50 dark:bg-[#150A26] border border-slate-200 dark:border-purple-900/35 rounded-xl px-2.5 py-1.5 text-xs text-slate-700 dark:text-slate-300 focus:outline-none focus:border-indigo-500 transition"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="Draft">Draft</option>
@@ -204,7 +204,7 @@ export default function CreatorDashboard() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-100 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-950/50 text-slate-500 dark:text-slate-400 uppercase font-semibold text-[11px] tracking-wider">
+                  <tr className="border-b border-slate-100 dark:border-purple-900/35 bg-slate-50/70 dark:bg-slate-950/50 text-slate-500 dark:text-slate-400 uppercase font-semibold text-[11px] tracking-wider">
                     <th className="py-3 px-4">Campaign Title</th>
                     <th className="py-3 px-4">Channel</th>
                     <th className="py-3 px-4">Status</th>
@@ -215,7 +215,7 @@ export default function CreatorDashboard() {
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                   {filteredContents.map((c) => (
-                    <tr key={c.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
+                    <tr key={c.id} className="hover:bg-slate-50/60 dark:hover:bg-purple-950/40/40 transition-colors">
                       <td className="py-3.5 px-4 font-semibold text-slate-900 dark:text-slate-100">
                         <div className="flex flex-col">
                           <span>{c.title}</span>
@@ -251,7 +251,7 @@ export default function CreatorDashboard() {
                       <td className="py-3.5 px-4 text-right">
                         <Link
                           href={`/review/${c.id}`}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white transition"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-[#150A26] text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white transition"
                         >
                           <Sparkles className="w-3.5 h-3.5" />
                           <span>View Findings</span>

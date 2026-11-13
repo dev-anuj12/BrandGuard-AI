@@ -25,15 +25,15 @@ export default function ComplianceTrendChart({ data, height = 180 }: ComplianceT
           <XAxis dataKey="day" stroke="#64748B" fontSize={10} tickLine={false} />
           <YAxis stroke="#64748B" fontSize={10} domain={[60, 100]} tickLine={false} />
           <Tooltip 
-            contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '12px', color: '#fff' }}
+            contentStyle={{ backgroundColor: '#120924', borderColor: 'rgba(168, 85, 247, 0.3)', borderRadius: '8px', fontSize: '12px', color: '#fff' }}
           />
           <Line 
             type="monotone" 
             dataKey="score" 
             name="Compliance Score (%)" 
-            stroke="#6366F1" 
-            strokeWidth={2.5} 
-            dot={{ fill: '#6366F1', r: 3.5 }} 
+            stroke="#A855F7"
+            strokeWidth={2.5}
+            dot={{ fill: '#D946EF', r: 3.5 }}
           />
         </LineChart>
       </ResponsiveContainer>

@@ -154,12 +154,12 @@ function VerifyOtpContent() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#090414] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
       <div className="max-w-md w-full mx-auto flex items-center justify-between">
         <BrandLogo size="sm" showSubtitle={false} href="/" />
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 transition"
+          className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-purple-950/40 transition"
           title="Toggle theme"
           type="button"
         >
@@ -169,7 +169,7 @@ function VerifyOtpContent() {
 
       <div className="max-w-md w-full mx-auto my-8 space-y-6">
         <div className="text-center space-y-1.5">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center mx-auto text-indigo-600 dark:text-indigo-400">
+          <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-[#1A0D30] border border-indigo-200 dark:border-purple-500/30 flex items-center justify-center mx-auto text-indigo-600 dark:text-purple-400">
             <Mail className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -181,7 +181,7 @@ function VerifyOtpContent() {
           </p>
         </div>
 
-        <form onSubmit={handleVerify} className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-xl shadow-black/10 space-y-5">
+        <form onSubmit={handleVerify} className="p-6 rounded-2xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-xl shadow-black/10 space-y-5">
           {error && (
             <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -213,7 +213,7 @@ function VerifyOtpContent() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@company.com"
-              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
             />
           </div>
 
@@ -233,7 +233,7 @@ function VerifyOtpContent() {
                   value={digit}
                   onChange={(e) => handleOtpChange(idx, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(idx, e)}
-                  className="w-11 h-13 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-bold bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
+                  className="w-11 h-13 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-bold bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
                   autoFocus={idx === 0}
                 />
               ))}
@@ -262,7 +262,7 @@ function VerifyOtpContent() {
                 type="button"
                 onClick={handleResend}
                 disabled={resending}
-                className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline inline-flex items-center gap-1 disabled:opacity-50"
+                className="text-indigo-600 dark:text-purple-400 font-semibold hover:underline inline-flex items-center gap-1 disabled:opacity-50"
               >
                 {resending && <RefreshCw className="w-3 h-3 animate-spin" />}
                 Resend Code
@@ -270,7 +270,7 @@ function VerifyOtpContent() {
             )}
           </div>
 
-          <div className="text-center pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+          <div className="text-center pt-2 border-t border-slate-100 dark:border-purple-900/35 text-xs">
             <Link href="/login" className="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">
               &larr; Back to Sign In
             </Link>
@@ -287,7 +287,7 @@ function VerifyOtpContent() {
 
 export default function VerifyOtpPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex items-center justify-center text-xs text-slate-400">Loading verification...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 dark:bg-[#090414] flex items-center justify-center text-xs text-slate-400">Loading verification...</div>}>
       <VerifyOtpContent />
     </Suspense>
   );

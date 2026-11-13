@@ -65,7 +65,7 @@ export default function ContactForm() {
             setMessage('');
             setErrors({});
           }}
-          className="mt-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+          className="mt-2 text-xs font-semibold text-purple-600 dark:text-purple-400 hover:underline"
         >
           Send another inquiry
         </button>
@@ -77,11 +77,11 @@ export default function ContactForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5"
+      className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#120924] border border-slate-200 dark:border-purple-900/35 shadow-sm space-y-5"
     >
-      <div className="border-b border-slate-100 dark:border-slate-800 pb-4">
+      <div className="border-b border-slate-100 dark:border-purple-900/35 pb-4">
         <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-          <MessageSquare className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+          <MessageSquare className="w-4 h-4 text-purple-600 dark:text-purple-400" />
           <span>Direct Enterprise Inquiries</span>
         </h2>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -132,7 +132,7 @@ export default function ContactForm() {
             id="inquiry-type"
             value={inquiryType}
             onChange={(e) => setInquiryType(e.target.value)}
-            className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            className="w-full rounded-lg border border-slate-300 dark:border-purple-800/40 bg-white dark:bg-[#120924] px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
           >
             <option value="enterprise">Enterprise Deployment &amp; Dedicated Hosting</option>
             <option value="custom_rules">Custom Brand Guidelines &amp; LLM Configuration</option>
@@ -161,10 +161,10 @@ export default function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Please describe your deployment requirements, user volume, or compliance questions..."
-          className={`w-full rounded-lg border bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+          className={`w-full rounded-lg border bg-white dark:bg-[#120924] px-3.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 ${
             errors.message
               ? 'border-rose-400 dark:border-rose-600 focus-visible:ring-rose-500'
-              : 'border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600'
+              : 'border-slate-300 dark:border-purple-800/40 hover:border-slate-400 dark:hover:border-slate-600'
           }`}
         />
         {errors.message && (

@@ -196,7 +196,7 @@ export default function AdminDashboard() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Brand Rules</span>
                 <BookOpen className="w-4 h-4 text-indigo-500" />
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Active compliance rules</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Banned Terms</span>
                 <AlertOctagon className="w-4 h-4 text-rose-500" />
@@ -214,7 +214,7 @@ export default function AdminDashboard() {
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Zero-tolerance vocabulary</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Approved Sources</span>
                 <Link2 className="w-4 h-4 text-emerald-500" />
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Verified evidence repository</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Team Members</span>
                 <Users className="w-4 h-4 text-amber-500" />
@@ -235,7 +235,7 @@ export default function AdminDashboard() {
         )}
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-700 overflow-x-auto pb-px">
+        <div className="flex items-center gap-1.5 border-b border-slate-200 dark:border-purple-800/40 overflow-x-auto pb-px">
           {[
             { id: 'guidelines', label: 'Brand Guidelines', count: guidelines.length, icon: BookOpen },
             { id: 'banned', label: 'Banned Terms', count: bannedWords.length, icon: AlertOctagon },
@@ -251,7 +251,7 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${
                   isActive
-                    ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800/50'
+                    ? 'border-indigo-600 text-indigo-600 dark:text-purple-400 bg-white dark:bg-[#120924]/85 backdrop-blur-xl'
                     : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                 }`}
               >
@@ -259,8 +259,8 @@ export default function AdminDashboard() {
                 <span>{tab.label}</span>
                 <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-semibold ${
                   isActive 
-                    ? 'bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                    ? 'bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-purple-300'
+                    : 'bg-slate-100 dark:bg-[#150A26] text-slate-600 dark:text-slate-400'
                 }`}>
                   {tab.count}
                 </span>
@@ -273,7 +273,7 @@ export default function AdminDashboard() {
         {activeTab === 'guidelines' && (
           <div className="space-y-6">
             {/* Create Guideline Card */}
-            <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
                 <Plus className="w-4 h-4 text-indigo-500" />
                 Create New Brand Guideline
@@ -288,7 +288,7 @@ export default function AdminDashboard() {
                       value={newGuideline.title}
                       onChange={(e) => setNewGuideline({ ...newGuideline, title: e.target.value })}
                       required
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -296,7 +296,7 @@ export default function AdminDashboard() {
                     <select
                       value={newGuideline.category}
                       onChange={(e) => setNewGuideline({ ...newGuideline, category: e.target.value })}
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                       <option>Financial Claims</option>
                       <option>Tone &amp; Voice</option>
@@ -316,7 +316,7 @@ export default function AdminDashboard() {
                       value={newGuideline.description}
                       onChange={(e) => setNewGuideline({ ...newGuideline, description: e.target.value })}
                       required
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -324,7 +324,7 @@ export default function AdminDashboard() {
                     <select
                       value={newGuideline.severity}
                       onChange={(e) => setNewGuideline({ ...newGuideline, severity: e.target.value })}
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                       <option value="CRITICAL">CRITICAL (Immediate Reject)</option>
                       <option value="HIGH">HIGH (Block Approval)</option>
@@ -350,10 +350,10 @@ export default function AdminDashboard() {
                 description="Create your first compliance guideline to enforce rules in the AI engine."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#120924]/85 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50 dark:bg-[#150A26] border-b border-slate-200 dark:border-purple-800/40 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Title &amp; Rule</th>
                         <th className="py-3 px-4">Category</th>
@@ -397,7 +397,7 @@ export default function AdminDashboard() {
         {activeTab === 'banned' && (
           <div className="space-y-6">
             {/* Create Banned Card */}
-            <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
                 <Plus className="w-4 h-4 text-rose-500" />
                 Add Banned Expression / Term
@@ -412,7 +412,7 @@ export default function AdminDashboard() {
                       value={newBanned.word_or_phrase}
                       onChange={(e) => setNewBanned({ ...newBanned, word_or_phrase: e.target.value })}
                       required
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -420,7 +420,7 @@ export default function AdminDashboard() {
                     <select
                       value={newBanned.category}
                       onChange={(e) => setNewBanned({ ...newBanned, category: e.target.value })}
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
                     >
                       <option>Financial Claims</option>
                       <option>Urgency &amp; Pressure</option>
@@ -436,7 +436,7 @@ export default function AdminDashboard() {
                       placeholder="e.g. potential returns"
                       value={newBanned.suggested_replacement}
                       onChange={(e) => setNewBanned({ ...newBanned, suggested_replacement: e.target.value })}
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
                     />
                   </div>
                 </div>
@@ -450,7 +450,7 @@ export default function AdminDashboard() {
                       value={newBanned.explanation}
                       onChange={(e) => setNewBanned({ ...newBanned, explanation: e.target.value })}
                       required
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -458,7 +458,7 @@ export default function AdminDashboard() {
                     <select
                       value={newBanned.severity}
                       onChange={(e) => setNewBanned({ ...newBanned, severity: e.target.value })}
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500"
                     >
                       <option value="CRITICAL">CRITICAL</option>
                       <option value="HIGH">HIGH</option>
@@ -484,10 +484,10 @@ export default function AdminDashboard() {
                 description="Add zero-tolerance words or phrases that the deterministic engine must flag."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#120924]/85 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50 dark:bg-[#150A26] border-b border-slate-200 dark:border-purple-800/40 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Banned Term</th>
                         <th className="py-3 px-4">Suggested Replacement</th>
@@ -533,7 +533,7 @@ export default function AdminDashboard() {
         {activeTab === 'sources' && (
           <div className="space-y-6">
             {/* Create Source Card */}
-            <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
                 <Plus className="w-4 h-4 text-emerald-500" />
                 Register Approved Reference Source
@@ -548,7 +548,7 @@ export default function AdminDashboard() {
                       value={newSource.name}
                       onChange={(e) => setNewSource({ ...newSource, name: e.target.value })}
                       required
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -556,7 +556,7 @@ export default function AdminDashboard() {
                     <select
                       value={newSource.source_type}
                       onChange={(e) => setNewSource({ ...newSource, source_type: e.target.value })}
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     >
                       <option>Regulatory Filing</option>
                       <option>Official Documentation</option>
@@ -573,7 +573,7 @@ export default function AdminDashboard() {
                       value={newSource.url}
                       onChange={(e) => setNewSource({ ...newSource, url: e.target.value })}
                       required
-                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     />
                   </div>
                 </div>
@@ -585,7 +585,7 @@ export default function AdminDashboard() {
                     placeholder="e.g. Official statutory circular outlining compliance standards for retail advertising."
                     value={newSource.description}
                     onChange={(e) => setNewSource({ ...newSource, description: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
 
@@ -605,10 +605,10 @@ export default function AdminDashboard() {
                 description="Register official URLs or statutory filings for citation cross-validation."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#120924]/85 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50 dark:bg-[#150A26] border-b border-slate-200 dark:border-purple-800/40 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Source Title</th>
                         <th className="py-3 px-4">Classification</th>
@@ -627,7 +627,7 @@ export default function AdminDashboard() {
                             )}
                           </td>
                           <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{s.source_type}</td>
-                          <td className="py-3 px-4 font-mono text-[11px] text-indigo-600 dark:text-indigo-400 truncate max-w-xs">
+                          <td className="py-3 px-4 font-mono text-[11px] text-indigo-600 dark:text-purple-400 truncate max-w-xs">
                             <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
                               {s.url}
                             </a>
@@ -659,10 +659,10 @@ export default function AdminDashboard() {
         {/* TAB 4: USERS */}
         {activeTab === 'users' && (
           <div className="space-y-4">
-            <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
+            <div className="rounded-xl border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#120924]/85 backdrop-blur-xl overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                  <thead className="bg-slate-50 dark:bg-[#150A26] border-b border-slate-200 dark:border-purple-800/40 text-slate-500 dark:text-slate-400 font-semibold">
                     <tr>
                       <th className="py-3 px-4">Member Name</th>
                       <th className="py-3 px-4">Email Address</th>
@@ -700,7 +700,7 @@ export default function AdminDashboard() {
                           <select
                             value={u.role}
                             onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                            className="px-2 py-1 text-xs rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            className="px-2 py-1 text-xs rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#120924] text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                           >
                             <option value="CREATOR">CREATOR</option>
                             <option value="REVIEWER">REVIEWER</option>
@@ -727,10 +727,10 @@ export default function AdminDashboard() {
                 description="Workflow transactions and decisions will appear here chronologically."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#120924]/85 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50 dark:bg-[#150A26] border-b border-slate-200 dark:border-purple-800/40 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Timestamp</th>
                         <th className="py-3 px-4">Action</th>
@@ -745,7 +745,7 @@ export default function AdminDashboard() {
                           <td className="py-3 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap">
                             {new Date(log.created_at).toLocaleString()}
                           </td>
-                          <td className="py-3 px-4 font-bold text-indigo-600 dark:text-indigo-400">{log.action}</td>
+                          <td className="py-3 px-4 font-bold text-indigo-600 dark:text-purple-400">{log.action}</td>
                           <td className="py-3 px-4 text-slate-600 dark:text-slate-300">#{log.content_id}</td>
                           <td className="py-3 px-4 text-slate-700 dark:text-slate-300 font-sans">{log.user?.full_name || `User #${log.user_id}`}</td>
                           <td className="py-3 px-4 text-slate-500 dark:text-slate-400 font-sans">{log.details || log.comments || '—'}</td>

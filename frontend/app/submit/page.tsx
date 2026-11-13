@@ -175,7 +175,7 @@ function SelectField({
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`w-full appearance-none rounded-lg border px-3 py-2.5 pr-10 text-sm bg-white dark:bg-[#080C16] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
+          className={`w-full appearance-none rounded-lg border px-3 py-2.5 pr-10 text-sm bg-white dark:bg-[#150A26] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
             error
               ? 'border-red-400 dark:border-red-500'
               : 'border-slate-200 dark:border-slate-700'
@@ -308,7 +308,7 @@ export default function SubmitPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/30">
-              <FileText className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+              <FileText className="h-6 w-6 text-indigo-600 dark:text-purple-400" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -338,7 +338,7 @@ export default function SubmitPage() {
                   variant="ghost"
                   size="sm"
                   onClick={loadSample}
-                  className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
+                  className="text-indigo-600 dark:text-purple-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
                 >
                   <Sparkles className="h-4 w-4 mr-1.5" />
                   Load Sample Copy (Dev Only)
@@ -363,8 +363,8 @@ export default function SubmitPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* ── Left: Form ── */}
           <div className="lg:col-span-2">
-            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm">
-              <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm shadow-sm">
+              <div className="px-6 py-4 border-b border-slate-100 dark:border-purple-800/40">
                 <h3 className="font-semibold text-slate-900 dark:text-white text-base">
                   Submission Details
                 </h3>
@@ -388,7 +388,7 @@ export default function SubmitPage() {
                     value={form.title}
                     onChange={(e) => setField('title', e.target.value)}
                     placeholder="e.g. Q4 Investment Newsletter — October 2024"
-                    className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-[#080C16] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
+                    className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-[#150A26] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
                       errors.title
                         ? 'border-red-400 dark:border-red-500'
                         : 'border-slate-200 dark:border-slate-700'
@@ -441,7 +441,7 @@ export default function SubmitPage() {
                       value={form.original_body}
                       onChange={(e) => setField('original_body', e.target.value)}
                       placeholder="Paste or type your content here. The AI compliance engine will analyse it for brand, legal, and regulatory issues…"
-                      className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-[#080C16] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y transition leading-relaxed ${
+                      className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-[#150A26] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y transition leading-relaxed ${
                         errors.original_body
                           ? 'border-red-400 dark:border-red-500'
                           : 'border-slate-200 dark:border-slate-700'
@@ -464,7 +464,7 @@ export default function SubmitPage() {
                 </div>
 
                 {/* Auto Review Toggle */}
-                <div className="flex items-center justify-between rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 px-4 py-3">
+                <div className="flex items-center justify-between rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-purple-500/30 px-4 py-3">
                   <div className="flex items-center gap-2">
                     <Sparkles className="h-4 w-4 text-indigo-500" />
                     <div>
@@ -532,8 +532,8 @@ export default function SubmitPage() {
           {/* ── Right: Guidelines panel ── */}
           <div className="lg:col-span-1 flex flex-col gap-5">
             {/* Submission guidelines */}
-            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm">
-              <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm shadow-sm">
+              <div className="px-5 py-4 border-b border-slate-100 dark:border-purple-800/40 flex items-center gap-2">
                 <Lightbulb className="h-4 w-4 text-amber-500" />
                 <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
                   Submission Guidelines
@@ -551,7 +551,7 @@ export default function SubmitPage() {
 
             {/* Channel risk badge */}
             {form.channel && (
-              <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm px-5 py-4">
+              <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm shadow-sm px-5 py-4">
                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                   Selected Channel
                 </p>
@@ -571,14 +571,14 @@ export default function SubmitPage() {
             )}
 
             {/* AI check note */}
-            <div className="rounded-xl border border-indigo-100 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-900/20 px-5 py-4">
+            <div className="rounded-xl border border-indigo-100 dark:border-purple-500/30 bg-indigo-50 dark:bg-indigo-900/20 px-5 py-4">
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="h-4 w-4 text-indigo-500" />
-                <p className="text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+                <p className="text-xs font-semibold text-indigo-700 dark:text-purple-300">
                   AI Compliance Engine
                 </p>
               </div>
-              <p className="text-xs text-indigo-600 dark:text-indigo-400 leading-relaxed">
+              <p className="text-xs text-indigo-600 dark:text-purple-400 leading-relaxed">
                 When enabled, the AI engine scans for banned claims, missing disclaimers,
                 tone mismatches, and regulatory red flags — typically completing in under
                 30 seconds.

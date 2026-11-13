@@ -34,15 +34,15 @@ export default function SecurityAndCompliancePage() {
       <div className="space-y-10 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {controls.map((ctrl) => (
-            <div key={ctrl.title} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-2">
-              <ShieldCheck className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+            <div key={ctrl.title} className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-2">
+              <ShieldCheck className="w-5 h-5 text-indigo-600 dark:text-purple-400" />
               <h2 className="font-bold text-base text-slate-900 dark:text-white">{ctrl.title}</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{ctrl.desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="p-6 rounded-2xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-6 rounded-2xl bg-slate-100/70 dark:bg-[#120924]/60 border border-slate-200 dark:border-purple-900/35 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
             <h2 className="font-bold text-sm text-slate-900 dark:text-white">Require Security Questionnaires or documentation?</h2>
             {/* [[TO BE COMPLETED]] */}

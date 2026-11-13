@@ -54,14 +54,14 @@ export default function IntegrationsPage() {
       <div className="space-y-8 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {tools.map((t) => (
-            <div key={t.name} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-2">
+            <div key={t.name} className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-2">
               <div className="flex items-center justify-between">
                 <h2 className="font-bold text-sm text-slate-900 dark:text-white">{t.name}</h2>
                 <span
                   className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                     t.status === 'Supported'
                       ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400'
-                      : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400'
+                      : 'bg-indigo-50 dark:bg-[#1A0D30] text-indigo-600 dark:text-purple-400'
                   }`}
                 >
                   {t.status}
@@ -72,9 +72,9 @@ export default function IntegrationsPage() {
           ))}
         </div>
 
-        <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-xs flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-slate-100 dark:bg-[#120924]/60 border border-slate-200 dark:border-purple-900/35 text-xs flex items-center justify-between">
           <span>Looking to build custom integrations with our API?</span>
-          <Link href="/api-docs" className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+          <Link href="/api-docs" className="text-indigo-600 dark:text-purple-400 font-bold hover:underline">
             View API Documentation &rarr;
           </Link>
         </div>

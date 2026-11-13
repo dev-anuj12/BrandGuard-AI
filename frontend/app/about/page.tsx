@@ -42,8 +42,8 @@ export default function AboutPage() {
 
         {/* 4 Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-[#1A0D30] flex items-center justify-center text-indigo-600 dark:text-purple-400">
               <Cpu className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Deterministic &amp; AI Hybrid Engine</h3>
@@ -52,7 +52,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
               <Eye className="w-5 h-5" />
             </div>
@@ -62,7 +62,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-3">
             <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/60 flex items-center justify-center text-rose-600 dark:text-rose-400">
               <ShieldCheck className="w-5 h-5" />
             </div>
@@ -72,7 +72,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-3">
             <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400">
               <Lock className="w-5 h-5" />
             </div>
@@ -84,7 +84,7 @@ export default function AboutPage() {
         </div>
 
         {/* CTA */}
-        <div className="p-8 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-slate-900 border border-indigo-200/80 dark:border-indigo-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-8 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-slate-900 border border-indigo-200/80 dark:border-purple-500/30/50 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Want to see BrandGuard AI in action?</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400">Schedule a customized walkthrough tailored to your brand guidelines.</p>

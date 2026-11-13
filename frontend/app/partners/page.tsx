@@ -26,7 +26,7 @@ export default function PartnersPage() {
       subtitle="Collaborating with enterprise technology platforms, advisory partners, and developer ecosystems."
     >
       <div className="space-y-10 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
-        <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center space-y-3">
+        <div className="p-8 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center space-y-3">
           <Handshake className="w-8 h-8 text-indigo-500 mx-auto opacity-70" />
           <h2 className="font-bold text-base text-slate-900 dark:text-white">Partner Program</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
@@ -34,7 +34,7 @@ export default function PartnersPage() {
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-6 rounded-2xl bg-slate-100/70 dark:bg-[#120924]/60 border border-slate-200 dark:border-purple-900/35 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
             <h2 className="font-bold text-sm text-slate-900 dark:text-white">Interested in Partnering?</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">Reach out to our team to discuss technology integrations or advisory collaboration.</p>

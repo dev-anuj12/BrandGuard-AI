@@ -26,10 +26,10 @@ export default function BillingSettingsPage() {
         </div>
 
         {/* Current Plan Card */}
-        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-4">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-mono">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-purple-400 font-mono">
                 Active Tier
               </span>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">Professional Enterprise Tier</h3>
@@ -45,18 +45,18 @@ export default function BillingSettingsPage() {
             </Link>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+          <div className="pt-4 border-t border-slate-100 dark:border-purple-900/35 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-purple-900/35">
               <span className="text-slate-400 block text-[11px]">Seat Allocation</span>
               <span className="text-base font-bold text-slate-900 dark:text-white">12 / 50</span>
               <span className="text-[10px] text-slate-400 block">Active Team Members</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-purple-900/35">
               <span className="text-slate-400 block text-[11px]">Compliance Scans</span>
               <span className="text-base font-bold text-slate-900 dark:text-white">Unlimited</span>
               <span className="text-[10px] text-slate-400 block">Deterministic + LLM</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-purple-900/35">
               <span className="text-slate-400 block text-[11px]">Perimeter Defense</span>
               <span className="text-base font-bold text-emerald-600 dark:text-emerald-400">Active</span>
               <span className="text-[10px] text-slate-400 block">Homoglyph + Threat Scanners</span>

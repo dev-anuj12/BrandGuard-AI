@@ -31,27 +31,27 @@ export default function SecurityPolicyPage() {
             BrandGuard AI employs security practices to protect enterprise content and telemetry:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
-              <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Tenant Partitioning</span>
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-1.5">
+              <span className="font-bold text-xs text-indigo-600 dark:text-purple-400 uppercase tracking-wider">Tenant Partitioning</span>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Organization-level filters applied at the database querying layer in FastAPI prevent cross-tenant record leakage.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
-              <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Encryption at Rest &amp; Transit</span>
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-1.5">
+              <span className="font-bold text-xs text-indigo-600 dark:text-purple-400 uppercase tracking-wider">Encryption at Rest &amp; Transit</span>
               {/* [[TO BE COMPLETED]] */}
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Client interactions use HTTPS in transit. Database storage details will be published at launch.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
-              <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Server-Side Request Forgery Defense</span>
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-1.5">
+              <span className="font-bold text-xs text-indigo-600 dark:text-purple-400 uppercase tracking-wider">Server-Side Request Forgery Defense</span>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Perimeter domain scanners incorporate IP validation preventing internal network probing (RFC 1918 / Loopback address blocking).
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
-              <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Audit Trail Logging</span>
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-1.5">
+              <span className="font-bold text-xs text-indigo-600 dark:text-purple-400 uppercase tracking-wider">Audit Trail Logging</span>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Content creation, review, and approval actions write an audit record with actor ID, timestamp, and modification payload.
               </p>
@@ -65,7 +65,7 @@ export default function SecurityPolicyPage() {
             We welcome vulnerability reports from independent security researchers and customers. If you discover a potential security flaw:
           </p>
           <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm">
-            <li>Submit full details via our <Link href="/report-bug" className="text-indigo-600 dark:text-indigo-400 underline">Report a Bug / Vulnerability portal</Link>.</li>
+            <li>Submit full details via our <Link href="/report-bug" className="text-indigo-600 dark:text-purple-400 underline">Report a Bug / Vulnerability portal</Link>.</li>
             <li>Provide reasonable time for our engineering team to remediate before public disclosure.</li>
             <li>Do not access or tamper with data belonging to other tenant organizations.</li>
           </ul>

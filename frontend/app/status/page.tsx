@@ -45,7 +45,7 @@ export default function StatusPage() {
         {/* Real Status Banner */}
         <div className={`p-6 rounded-2xl border flex items-center justify-between gap-4 ${
           loading
-            ? 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800'
+            ? 'bg-slate-50 dark:bg-[#120924]/60 border-slate-200 dark:border-slate-800'
             : healthy
             ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/60'
             : 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800/60'
@@ -84,7 +84,7 @@ export default function StatusPage() {
             type="button"
             onClick={fetchHealth}
             disabled={loading}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-800 transition disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 hover:bg-slate-50 dark:hover:bg-purple-950/40 transition disabled:opacity-50"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
             <span>Check Now</span>

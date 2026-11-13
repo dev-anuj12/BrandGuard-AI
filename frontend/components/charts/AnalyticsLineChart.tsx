@@ -41,7 +41,7 @@ export default function AnalyticsLineChart({
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
           <XAxis dataKey={xKey} stroke="#64748B" fontSize={11} />
           <YAxis stroke="#64748B" fontSize={11} domain={domain} />
-          <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '12px', color: '#fff' }} />
+          <Tooltip contentStyle={{ backgroundColor: '#120924', borderColor: 'rgba(168, 85, 247, 0.3)', borderRadius: '8px', fontSize: '12px', color: '#fff' }} />
           {showLegend && <Legend iconSize={8} wrapperStyle={{ fontSize: '11px' }} />}
           {lines.map(({ dataKey, color, name }) => (
             <Line

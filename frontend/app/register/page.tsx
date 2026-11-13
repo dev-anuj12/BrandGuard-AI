@@ -77,14 +77,14 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#090414] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
       {/* Top Header */}
       <div className="max-w-md w-full mx-auto flex items-center justify-between">
         <BrandLogo size="sm" showSubtitle={false} href="/" />
 
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 transition"
+          className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-purple-950/40 transition"
           title="Toggle theme"
           aria-label="Toggle theme"
           type="button"
@@ -103,7 +103,7 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-xl shadow-black/10 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-xl shadow-black/10 space-y-4">
           {error && (
             <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -124,7 +124,7 @@ export default function RegisterPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Jordan Lee"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
           </div>
@@ -142,7 +142,7 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@company.com"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
           </div>
@@ -159,7 +159,7 @@ export default function RegisterPage() {
                 value={organization}
                 onChange={(e) => setOrganization(e.target.value)}
                 placeholder="FinNova Technologies"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
           </div>
@@ -177,14 +177,14 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
           </div>
 
           {/* Password Requirements Checklist */}
           {password.length > 0 && (
-            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-1 text-[11px]">
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-purple-900/35 space-y-1 text-[11px]">
               <span className="font-semibold text-slate-700 dark:text-slate-300 block mb-1">
                 Password Requirements:
               </span>
@@ -225,7 +225,7 @@ export default function RegisterPage() {
 
           <div className="text-center pt-2 text-xs text-slate-500 dark:text-slate-400">
             Already have an account?{' '}
-            <Link href="/login" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+            <Link href="/login" className="text-indigo-600 dark:text-purple-400 font-semibold hover:underline">
               Sign In
             </Link>
           </div>

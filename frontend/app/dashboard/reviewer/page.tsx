@@ -85,7 +85,7 @@ interface KPICardProps {
 
 function KPICard({ label, value, icon, accent }: KPICardProps) {
   return (
-    <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all p-5 flex items-center gap-4 shadow-sm">
+    <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all p-5 flex items-center gap-4 shadow-sm">
       <div className={`flex-shrink-0 w-11 h-11 rounded-lg flex items-center justify-center ${accent}`}>
         {icon}
       </div>
@@ -134,12 +134,12 @@ function ActionPanel({ item, onActionComplete }: ActionPanelProps) {
   }
 
   return (
-    <div className="border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 px-5 py-4 space-y-3">
+    <div className="border-t border-slate-100 dark:border-purple-800/40 bg-slate-50 dark:bg-[#120924]/60 px-5 py-4 space-y-3">
       <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wide">
         Reviewer Comments {comments.trim().length < 10 && <span className="text-amber-500 font-normal lowercase">(min 10 chars required to request changes)</span>}
       </label>
       <textarea
-        className="w-full rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+        className="w-full rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-[#150A26] text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
         rows={3}
         placeholder="Add comments or feedback for the content creator (min 10 chars required for change requests)…"
         value={comments}
@@ -185,11 +185,11 @@ function ContentRow({ item, onActionComplete }: ContentRowProps) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all shadow-sm overflow-hidden">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4">
         {/* Icon */}
         <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
-          <FileText className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+          <FileText className="w-5 h-5 text-indigo-600 dark:text-purple-400" />
         </div>
 
         {/* Main info */}
@@ -230,7 +230,7 @@ function ContentRow({ item, onActionComplete }: ContentRowProps) {
           </Link>
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="flex items-center gap-1 text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+            className="flex items-center gap-1 text-xs font-medium text-indigo-600 dark:text-purple-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
           >
             <MessageSquare className="w-4 h-4" />
             Actions
@@ -398,7 +398,7 @@ export default function ReviewerDashboardPage() {
             <KPICard
               label="Total Assigned"
               value={total}
-              icon={<CheckSquare className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />}
+              icon={<CheckSquare className="w-5 h-5 text-indigo-600 dark:text-purple-400" />}
               accent="bg-indigo-50 dark:bg-indigo-900/30"
             />
             <KPICard
@@ -434,7 +434,7 @@ export default function ReviewerDashboardPage() {
               placeholder="Search by title…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-[#150A26] text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -448,13 +448,13 @@ export default function ReviewerDashboardPage() {
         {/* ------------------------------------------------------------------ */}
         {/* Status Tabs */}
         {/* ------------------------------------------------------------------ */}
-        <div className="flex gap-1 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 w-fit flex-wrap">
+        <div className="flex gap-1 p-1 rounded-lg bg-slate-100 dark:bg-[#150A26] w-fit flex-wrap">
           {tabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${activeTab === tab.key
-                  ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                  ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-purple-400 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                 }`}
             >

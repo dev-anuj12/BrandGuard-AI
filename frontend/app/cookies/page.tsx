@@ -30,8 +30,8 @@ export default function CookiePolicyPage() {
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">2. Storage Technologies in Use</h2>
           <div className="overflow-x-auto">
-            <table className="w-full text-xs border border-slate-200 dark:border-slate-800 rounded-lg">
-              <thead className="bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl text-slate-900 dark:text-white">
+            <table className="w-full text-xs border border-slate-200 dark:border-purple-900/35 rounded-lg">
+              <thead className="bg-slate-100 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white">
                 <tr>
                   <th className="p-2.5 text-left font-semibold">Key / Identifier</th>
                   <th className="p-2.5 text-left font-semibold">Classification</th>
@@ -54,7 +54,7 @@ export default function CookiePolicyPage() {
                 </tr>
                 <tr>
                   <td className="p-2.5 font-mono">brandguard_theme</td>
-                  <td className="p-2.5 text-indigo-600 dark:text-indigo-400">Functional</td>
+                  <td className="p-2.5 text-indigo-600 dark:text-purple-400">Functional</td>
                   <td className="p-2.5">Persistent (1 Year)</td>
                   <td className="p-2.5">Remembers your preferred color theme mode (dark vs light).</td>
                 </tr>

@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#060913]">
-      <header className="border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between max-w-5xl mx-auto">
+    <div className="min-h-screen bg-white dark:bg-[#090414]">
+      <header className="border-b border-slate-200 dark:border-purple-900/35 px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between max-w-5xl mx-auto">
         <Link href="/" className="flex items-center gap-2">
-          <ShieldCheck className="w-6 h-6 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
+          <ShieldCheck className="w-6 h-6 text-indigo-600 dark:text-purple-400" aria-hidden="true" />
           <span className="font-bold text-slate-900 dark:text-white text-sm">BrandGuard AI</span>
         </Link>
         <Link
@@ -27,7 +27,7 @@ export default function ContactPage() {
 
       <main id="main-content" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="mb-10 text-center">
-          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 mb-3">Support</span>
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-indigo-600 dark:text-purple-400 mb-3">Support</span>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3">
             Contact BrandGuard AI
           </h1>
@@ -69,7 +69,7 @@ export default function ContactPage() {
           ].map(({ icon: Icon, color, title, body, action, href, external }) => (
             <div
               key={title}
-              className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition space-y-4 flex flex-col"
+              className="p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-sm hover:shadow-md transition space-y-4 flex flex-col"
             >
               <div className={`w-10 h-10 rounded-xl bg-${color}-100 dark:bg-${color}-950/50 flex items-center justify-center`}>
                 <Icon className={`w-5 h-5 text-${color}-600 dark:text-${color}-400`} aria-hidden="true" />
@@ -82,7 +82,7 @@ export default function ContactPage() {
                 href={href}
                 target={external ? '_blank' : undefined}
                 rel={external ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-purple-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition"
               >
                 {action}
                 {external && <ExternalLink className="w-3 h-3" aria-hidden="true" />}
@@ -97,9 +97,9 @@ export default function ContactPage() {
         </div>
 
         {/* Enterprise Support & Security Commitment */}
-        <div className="p-6 rounded-2xl bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
+        <div className="p-6 rounded-2xl bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
           <h2 className="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
+            <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-purple-400" aria-hidden="true" />
             Enterprise Support &amp; Response Times
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
@@ -113,7 +113,7 @@ export default function ContactPage() {
         </div>
       </main>
 
-      <footer className="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-400">
+      <footer className="border-t border-slate-200 dark:border-purple-900/35 py-6 text-center text-xs text-slate-400">
         &copy; {new Date().getFullYear()} BrandGuard AI — All rights reserved.
         <span className="mx-2">·</span>
         <Link href="/privacy" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Privacy</Link>

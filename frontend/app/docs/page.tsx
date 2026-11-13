@@ -63,7 +63,7 @@ export default function DocsPage() {
             placeholder="Search documentation, guides, or rules (e.g. 'homoglyph', 'RBAC', 'citations')..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition"
           />
         </div>
 
@@ -74,7 +74,7 @@ export default function DocsPage() {
             return (
               <div key={cat.category} className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Icon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <Icon className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
                   <h2 className="text-base font-bold text-slate-900 dark:text-white">{cat.category}</h2>
                 </div>
 
@@ -82,7 +82,7 @@ export default function DocsPage() {
                   {cat.items.map((item) => (
                     <div
                       key={item.title}
-                      className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-600 transition flex flex-col justify-between gap-3"
+                      className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 hover:border-indigo-400 dark:hover:border-indigo-600 transition flex flex-col justify-between gap-3"
                     >
                       <div className="space-y-1">
                         <h3 className="font-semibold text-xs text-slate-900 dark:text-white">{item.title}</h3>
@@ -90,7 +90,7 @@ export default function DocsPage() {
                       </div>
                       <Link
                         href="/api-docs"
-                        className="text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold inline-flex items-center gap-1 hover:underline pt-2"
+                        className="text-[11px] text-indigo-600 dark:text-purple-400 font-semibold inline-flex items-center gap-1 hover:underline pt-2"
                       >
                         <span>View Guide</span>
                         <ChevronRight className="w-3 h-3" />

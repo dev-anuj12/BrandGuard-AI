@@ -31,15 +31,18 @@ export default function PublicLayout({
   legalNotice = false,
 }: PublicLayoutProps) {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-200 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#090414] text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-200 relative overflow-hidden">
       {/* Atmospheric Top Radial Glow */}
       <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 pointer-events-none opacity-40 dark:opacity-25"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[32rem] pointer-events-none opacity-60 dark:opacity-40"
         style={{
-          background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99, 102, 241, 0.25), transparent 70%)',
+          background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(120, 43, 219, 0.3), rgba(217, 70, 239, 0.12) 40%, transparent 75%)',
         }}
         aria-hidden="true"
       />
+
+      {/* Subtle Fine Grid Texture */}
+      <div className="absolute inset-0 bg-fine-grid opacity-30 dark:opacity-20 pointer-events-none" aria-hidden="true" />
 
       <PublicHeader />
 
@@ -49,7 +52,7 @@ export default function PublicLayout({
           <nav aria-label="Breadcrumb" className="mb-6">
             <ol className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400">
               <li>
-                <Link href="/" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/" className="hover:text-purple-600 dark:hover:text-purple-300 transition">
                   Home
                 </Link>
               </li>
@@ -57,7 +60,7 @@ export default function PublicLayout({
                 <li key={idx} className="flex items-center space-x-2">
                   <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
                   {crumb.href ? (
-                    <Link href={crumb.href} className="hover:text-indigo-600 dark:hover:text-white transition">
+                    <Link href={crumb.href} className="hover:text-purple-600 dark:hover:text-purple-300 transition">
                       {crumb.label}
                     </Link>
                   ) : (
@@ -73,9 +76,9 @@ export default function PublicLayout({
 
         {/* Standard Page Header */}
         {(title || badge) && (
-          <div className="mb-10 pb-6 border-b border-slate-200 dark:border-slate-800/80">
+          <div className="mb-10 pb-6 border-b border-slate-200 dark:border-purple-900/30">
             {badge && (
-              <span className="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-indigo-50/80 dark:bg-indigo-950/60 border border-indigo-200/80 dark:border-indigo-800/60 text-indigo-700 dark:text-indigo-300 mb-3 shadow-2xs">
+              <span className="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-purple-50/80 dark:bg-[#1A0D30] border border-purple-200/80 dark:border-purple-500/30 text-purple-700 dark:text-purple-300 mb-3 shadow-2xs">
                 {badge}
               </span>
             )}
@@ -85,12 +88,12 @@ export default function PublicLayout({
               </h1>
             )}
             {subtitle && (
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
                 {subtitle}
               </p>
             )}
             {lastUpdated && (
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 font-mono">
+              <p className="text-xs text-slate-500 dark:text-purple-300/70 mt-3 font-mono">
                 Last reviewed: {lastUpdated}
               </p>
             )}

@@ -223,10 +223,10 @@ export default function KnowledgeBasePage() {
     >
       <div className="space-y-6 max-w-7xl mx-auto">
         {/* Top Header Card */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+              <span className="p-2 rounded-xl bg-indigo-50 dark:bg-[#1A0D30] text-indigo-600 dark:text-purple-400">
                 <BookOpen className="w-5 h-5" />
               </span>
               <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -242,7 +242,7 @@ export default function KnowledgeBasePage() {
             <button
               onClick={loadData}
               disabled={loading}
-              className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              className="p-2 rounded-xl border border-slate-200 dark:border-purple-900/35 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-purple-950/40 transition"
               title="Refresh Knowledge Base"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -251,7 +251,7 @@ export default function KnowledgeBasePage() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 overflow-x-auto pb-1 text-xs font-semibold">
+        <div className="flex items-center gap-1.5 border-b border-slate-200 dark:border-purple-900/35 overflow-x-auto pb-1 text-xs font-semibold">
           {[
             { id: 'guidelines', label: 'Brand Guidelines', count: guidelines.length },
             { id: 'facts', label: 'Verified Claims & Facts', count: facts.length },
@@ -265,13 +265,13 @@ export default function KnowledgeBasePage() {
               className={`px-4 py-2.5 rounded-xl transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeTab === tab.id
                   ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-purple-950/40'
               }`}
             >
               <span>{tab.label}</span>
               {tab.count !== undefined && (
                 <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  activeTab === tab.id ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                  activeTab === tab.id ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-[#150A26] text-slate-500'
                 }`}>
                   {tab.count}
                 </span>
@@ -284,9 +284,9 @@ export default function KnowledgeBasePage() {
         {activeTab === 'guidelines' && (
           <div className="space-y-6">
             {canEdit && (
-              <form onSubmit={handleAddGuideline} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-4">
+              <form onSubmit={handleAddGuideline} className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card space-y-4">
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <Plus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <Plus className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
                   <span>Define Brand Policy Rule</span>
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -298,7 +298,7 @@ export default function KnowledgeBasePage() {
                       value={newGuideline.title}
                       onChange={(e) => setNewGuideline({ ...newGuideline, title: e.target.value })}
                       placeholder="e.g. Prohibited Guaranteed Yield Terms"
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -306,7 +306,7 @@ export default function KnowledgeBasePage() {
                     <select
                       value={newGuideline.severity}
                       onChange={(e) => setNewGuideline({ ...newGuideline, severity: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                     >
                       <option value="CRITICAL">Critical</option>
                       <option value="HIGH">High</option>
@@ -322,7 +322,7 @@ export default function KnowledgeBasePage() {
                       value={newGuideline.description}
                       onChange={(e) => setNewGuideline({ ...newGuideline, description: e.target.value })}
                       placeholder="Marketing copy must never guarantee fixed double-digit returns without statutory regulatory disclosures..."
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 resize-none"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 resize-none"
                     />
                   </div>
                 </div>
@@ -337,12 +337,12 @@ export default function KnowledgeBasePage() {
             {/* List */}
             <div className="space-y-3">
               {guidelines.map((g) => (
-                <div key={g.id} className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card flex items-start justify-between gap-4">
+                <div key={g.id} className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card flex items-start justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <SeverityBadge severity={g.severity} />
                       <h4 className="text-sm font-bold text-slate-900 dark:text-white">{g.title}</h4>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-[#150A26] text-slate-500">
                         {g.category}
                       </span>
                     </div>
@@ -367,9 +367,9 @@ export default function KnowledgeBasePage() {
         {activeTab === 'facts' && (
           <div className="space-y-6">
             {canEdit && (
-              <form onSubmit={handleAddFact} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-4">
+              <form onSubmit={handleAddFact} className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card space-y-4">
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <Plus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <Plus className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
                   <span>Register Verified Claim or Company Fact</span>
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -381,7 +381,7 @@ export default function KnowledgeBasePage() {
                       value={newFact.statement}
                       onChange={(e) => setNewFact({ ...newFact, statement: e.target.value })}
                       placeholder="e.g. BrandGuard AI processes over 10,000 regulatory compliance evaluations daily."
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -389,7 +389,7 @@ export default function KnowledgeBasePage() {
                     <select
                       value={newFact.category}
                       onChange={(e) => setNewFact({ ...newFact, category: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                     >
                       <option value="Company Information">Company Information</option>
                       <option value="Product Details">Product Details</option>
@@ -408,7 +408,7 @@ export default function KnowledgeBasePage() {
 
             <div className="space-y-3">
               {facts.map((f) => (
-                <div key={f.id} className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card flex items-start justify-between gap-4">
+                <div key={f.id} className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                     <div>
@@ -430,9 +430,9 @@ export default function KnowledgeBasePage() {
         {activeTab === 'assets' && (
           <div className="space-y-6">
             {canEdit && (
-              <form onSubmit={handleAddAsset} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-4">
+              <form onSubmit={handleAddAsset} className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card space-y-4">
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <Plus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <Plus className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
                   <span>Register Approved Digital Asset</span>
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
@@ -444,7 +444,7 @@ export default function KnowledgeBasePage() {
                       value={newAsset.asset_name}
                       onChange={(e) => setNewAsset({ ...newAsset, asset_name: e.target.value })}
                       placeholder="e.g. BrandGuard Vector Primary Lockup"
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -452,7 +452,7 @@ export default function KnowledgeBasePage() {
                     <select
                       value={newAsset.asset_type}
                       onChange={(e) => setNewAsset({ ...newAsset, asset_type: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                     >
                       <option value="Primary Logo">Primary Logo</option>
                       <option value="Icon Mark">Icon Mark</option>
@@ -468,7 +468,7 @@ export default function KnowledgeBasePage() {
                       value={newAsset.dimensions}
                       onChange={(e) => setNewAsset({ ...newAsset, dimensions: e.target.value })}
                       placeholder="e.g. 1200x800"
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                     />
                   </div>
                 </div>
@@ -482,17 +482,17 @@ export default function KnowledgeBasePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {assets.map((asset) => (
-                <div key={asset.id} className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-3 flex flex-col justify-between">
+                <div key={asset.id} className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card space-y-3 flex flex-col justify-between">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-purple-300">
                         {asset.asset_type}
                       </span>
                       <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                         <Check className="w-3 h-3" /> Approved
                       </span>
                     </div>
-                    <div className="h-28 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-center p-3">
+                    <div className="h-28 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-purple-900/35 flex items-center justify-center p-3">
                       <ImageIcon className="w-10 h-10 text-slate-400" />
                     </div>
                     <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
@@ -506,7 +506,7 @@ export default function KnowledgeBasePage() {
                   {canEdit && (
                     <button
                       onClick={() => handleDeleteAsset(asset.id)}
-                      className="text-xs text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1 pt-2 border-t border-slate-100 dark:border-slate-800"
+                      className="text-xs text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1 pt-2 border-t border-slate-100 dark:border-purple-900/35"
                     >
                       <Trash2 className="w-3.5 h-3.5" /> Remove from Catalog
                     </button>
@@ -519,10 +519,10 @@ export default function KnowledgeBasePage() {
 
         {/* ── TAB 4: Document Ingestion ── */}
         {activeTab === 'documents' && (
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-6">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card space-y-6">
             <div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Upload className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                <Upload className="w-5 h-5 text-indigo-600 dark:text-purple-400" />
                 <span>Upload Brand Guideline Documents (PDF / DOCX)</span>
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -531,7 +531,7 @@ export default function KnowledgeBasePage() {
             </div>
 
             <form onSubmit={handleUploadDocument} className="space-y-4">
-              <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-8 text-center hover:border-indigo-500 dark:hover:border-indigo-400 transition cursor-pointer bg-slate-50/50 dark:bg-slate-950/50">
+              <div className="border-2 border-dashed border-slate-300 dark:border-purple-800/40 rounded-2xl p-8 text-center hover:border-indigo-500 dark:hover:border-indigo-400 transition cursor-pointer bg-slate-50/50 dark:bg-slate-950/50">
                 <input
                   type="file"
                   id="doc-upload"
@@ -540,7 +540,7 @@ export default function KnowledgeBasePage() {
                   className="hidden"
                 />
                 <label htmlFor="doc-upload" className="cursor-pointer space-y-2 block">
-                  <FileText className="w-10 h-10 text-indigo-600 dark:text-indigo-400 mx-auto" />
+                  <FileText className="w-10 h-10 text-indigo-600 dark:text-purple-400 mx-auto" />
                   <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
                     {docFile ? docFile.name : 'Click to select PDF or DOCX brand document'}
                   </p>
@@ -554,7 +554,7 @@ export default function KnowledgeBasePage() {
                   <select
                     value={docCategory}
                     onChange={(e) => setDocCategory(e.target.value)}
-                    className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-slate-900 dark:text-white focus:outline-none"
+                    className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-1.5 text-slate-900 dark:text-white focus:outline-none"
                   >
                     <option value="Financial Claims">Financial Claims</option>
                     <option value="Brand Tone">Brand Tone</option>
@@ -597,10 +597,10 @@ export default function KnowledgeBasePage() {
         {/* ── TAB 5: Advanced Asset Validation ── */}
         {activeTab === 'validation' && (
           <div className="space-y-6">
-            <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-6">
+            <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-card space-y-6">
               <div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <ShieldAlert className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  <ShieldAlert className="w-5 h-5 text-indigo-600 dark:text-purple-400" />
                   <span>Advanced Digital Brand Asset Validation</span>
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -610,7 +610,7 @@ export default function KnowledgeBasePage() {
               </div>
 
               <form onSubmit={handleValidateAsset} className="space-y-4">
-                <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-8 text-center hover:border-indigo-500 dark:hover:border-indigo-400 transition cursor-pointer bg-slate-50/50 dark:bg-slate-950/50">
+                <div className="border-2 border-dashed border-slate-300 dark:border-purple-800/40 rounded-2xl p-8 text-center hover:border-indigo-500 dark:hover:border-indigo-400 transition cursor-pointer bg-slate-50/50 dark:bg-slate-950/50">
                   <input
                     type="file"
                     id="val-upload"
@@ -619,7 +619,7 @@ export default function KnowledgeBasePage() {
                     className="hidden"
                   />
                   <label htmlFor="val-upload" className="cursor-pointer space-y-2 block">
-                    <ImageIcon className="w-10 h-10 text-indigo-600 dark:text-indigo-400 mx-auto" />
+                    <ImageIcon className="w-10 h-10 text-indigo-600 dark:text-purple-400 mx-auto" />
                     <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
                       {valFile ? valFile.name : 'Select or drag artwork (PNG, JPG, SVG, WEBP)'}
                     </p>
@@ -633,7 +633,7 @@ export default function KnowledgeBasePage() {
                     <select
                       value={valType}
                       onChange={(e) => setValType(e.target.value)}
-                      className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-slate-900 dark:text-white focus:outline-none"
+                      className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3 py-1.5 text-slate-900 dark:text-white focus:outline-none"
                     >
                       <option value="Primary Logo">Primary Logo</option>
                       <option value="Icon Mark">Icon Mark</option>
@@ -656,7 +656,7 @@ export default function KnowledgeBasePage() {
 
               {/* Validation Report Card */}
               {valReport && (
-                <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-purple-900/35">
                   <div className={`p-4 rounded-2xl border flex items-center justify-between gap-4 ${
                     valReport.valid
                       ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800'
@@ -694,7 +694,7 @@ export default function KnowledgeBasePage() {
                     {valReport.checks.map((chk: any, idx: number) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-xl bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 flex items-start gap-3 text-xs"
+                        className="p-3 rounded-xl bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35 flex items-start gap-3 text-xs"
                       >
                         {chk.passed ? (
                           <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -710,7 +710,7 @@ export default function KnowledgeBasePage() {
                   </div>
 
                   {/* Fingerprint Footnote */}
-                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-mono text-slate-500 flex items-center justify-between">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-[#150A26] text-[11px] font-mono text-slate-500 flex items-center justify-between">
                     <span>SHA-256 Fingerprint:</span>
                     <span className="truncate max-w-xs">{valReport.sha256_hash}</span>
                   </div>

@@ -310,7 +310,7 @@ export default function CounterfeitProtectionPage() {
     >
       <div className="space-y-6 max-w-7xl mx-auto">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 dark:border-purple-900/35 pb-5">
           <div>
             <div className="flex items-center space-x-2.5">
               <div className="w-9 h-9 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
@@ -325,7 +325,7 @@ export default function CounterfeitProtectionPage() {
             </p>
           </div>
 
-          <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl px-3 py-1.5 rounded-lg border border-slate-200/80 dark:border-slate-800/80">
+          <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-[#120924]/85 backdrop-blur-xl px-3 py-1.5 rounded-lg border border-slate-200/80 dark:border-purple-900/35">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Catalog Items Monitored: <strong className="text-slate-900 dark:text-white font-semibold">{stats.registered_products} Products / {stats.registered_brand_assets} Assets</strong></span>
           </div>
@@ -333,7 +333,7 @@ export default function CounterfeitProtectionPage() {
 
         {/* Telemetry Metrics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Infringements Flagged
@@ -348,7 +348,7 @@ export default function CounterfeitProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-rose-600 dark:text-rose-400 uppercase tracking-wider">
                 Critical IP Violations
@@ -363,7 +363,7 @@ export default function CounterfeitProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
                 Registered Products
@@ -378,15 +378,15 @@ export default function CounterfeitProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
+              <span className="text-xs font-medium text-indigo-600 dark:text-purple-400 uppercase tracking-wider">
                 Brand Asset Marks
               </span>
               <ImageIcon className="w-4 h-4 text-indigo-500" />
             </div>
             <div className="mt-2 flex items-baseline space-x-2">
-              <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+              <span className="text-2xl font-bold text-indigo-600 dark:text-purple-400">
                 {stats.registered_brand_assets}
               </span>
               <span className="text-xs text-slate-400">signatures</span>
@@ -395,12 +395,12 @@ export default function CounterfeitProtectionPage() {
         </div>
 
         {/* Tab Selector */}
-        <div className="flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex items-center space-x-2 border-b border-slate-200 dark:border-purple-900/35">
           <button
             onClick={() => setActiveTab('product')}
             className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all flex items-center space-x-2 ${
               activeTab === 'product'
-                ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
+                ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-purple-400'
                 : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
@@ -411,7 +411,7 @@ export default function CounterfeitProtectionPage() {
             onClick={() => setActiveTab('logo')}
             className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all flex items-center space-x-2 ${
               activeTab === 'logo'
-                ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
+                ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-purple-400'
                 : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
@@ -433,7 +433,7 @@ export default function CounterfeitProtectionPage() {
 
         {/* TAB A: Product Listing Scanner */}
         {activeTab === 'product' && (
-          <div className="p-5 sm:p-6 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="p-5 sm:p-6 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-sm space-y-4">
             <h2 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center space-x-2">
               <Search className="w-4 h-4 text-indigo-500" />
               <span>Evaluate Marketplace Product Listing</span>
@@ -447,7 +447,7 @@ export default function CounterfeitProtectionPage() {
                 <select
                   value={marketplace}
                   onChange={(e) => setMarketplace(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="AliExpress">AliExpress</option>
                   <option value="Amazon">Amazon</option>
@@ -466,7 +466,7 @@ export default function CounterfeitProtectionPage() {
                 <select
                   value={productSku}
                   onChange={(e) => setProductSku(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
                 >
                   {productsCatalog.map((p) => (
                     <option key={p.id} value={p.sku}>
@@ -485,7 +485,7 @@ export default function CounterfeitProtectionPage() {
                   value={listedPrice}
                   onChange={(e) => setListedPrice(e.target.value === '' ? '' : Number(e.target.value))}
                   placeholder="e.g. 1200.00"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
                 />
               </div>
             </div>
@@ -500,7 +500,7 @@ export default function CounterfeitProtectionPage() {
                   value={listingTitle}
                   onChange={(e) => setListingTitle(e.target.value)}
                   placeholder="e.g. SmartGrowth Portfolio certificate 1:1 replica"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -513,7 +513,7 @@ export default function CounterfeitProtectionPage() {
                   value={sellerName}
                   onChange={(e) => setSellerName(e.target.value)}
                   placeholder="e.g. Shenzhen Liquidity Direct"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
             </div>
@@ -527,7 +527,7 @@ export default function CounterfeitProtectionPage() {
                 onChange={(e) => setProductDesc(e.target.value)}
                 rows={2}
                 placeholder="Paste listing description text or notes to check for 'OEM surplus', '1:1 replica', or 'unauthorized authentic' flags..."
-                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
               />
             </div>
 
@@ -537,7 +537,7 @@ export default function CounterfeitProtectionPage() {
                   type="checkbox"
                   checked={autoEscalateProduct}
                   onChange={(e) => setAutoEscalateProduct(e.target.checked)}
-                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
+                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-purple-900/35 dark:bg-[#150A26]"
                 />
                 <span>Auto-register severe counterfeit infractions (&ge; 60%) to Threat Intel</span>
               </label>
@@ -563,7 +563,7 @@ export default function CounterfeitProtectionPage() {
 
             {/* Dev Presets Row */}
             {process.env.NODE_ENV === 'development' && (
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
+              <div className="pt-3 border-t border-slate-100 dark:border-purple-900/35">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 block">
                   Quick Test Targets (Dev Only):
                 </span>
@@ -573,10 +573,10 @@ export default function CounterfeitProtectionPage() {
                       key={idx}
                       type="button"
                       onClick={() => applyProductPreset(p)}
-                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition-colors"
+                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl hover:bg-slate-100 dark:hover:bg-purple-950/40 text-xs transition-colors"
                     >
                       <span className="font-medium text-slate-800 dark:text-slate-200">{p.name}</span>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-[#0D1224]/90 font-mono text-slate-600 dark:text-slate-400">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-[#120924]/90 font-mono text-slate-600 dark:text-slate-400">
                         {p.tag}
                       </span>
                     </button>
@@ -589,7 +589,7 @@ export default function CounterfeitProtectionPage() {
 
         {/* TAB B: Logo Misuse Scanner */}
         {activeTab === 'logo' && (
-          <div className="p-5 sm:p-6 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="p-5 sm:p-6 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-sm space-y-4">
             <h2 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center space-x-2">
               <ImageIcon className="w-4 h-4 text-indigo-500" />
               <span>Inspect Logo & Trademark Asset Usage</span>
@@ -605,7 +605,7 @@ export default function CounterfeitProtectionPage() {
                   value={partnerName}
                   onChange={(e) => setPartnerName(e.target.value)}
                   placeholder="e.g. Apex High-Yield Lending Portal"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -618,7 +618,7 @@ export default function CounterfeitProtectionPage() {
                   value={hostUrl}
                   onChange={(e) => setHostUrl(e.target.value)}
                   placeholder="e.g. https://apexyields.cc/partners"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
                 />
               </div>
 
@@ -629,7 +629,7 @@ export default function CounterfeitProtectionPage() {
                 <select
                   value={assetName}
                   onChange={(e) => setAssetName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   {assetsCatalog.map((a) => (
                     <option key={a.id} value={a.asset_name}>
@@ -642,13 +642,13 @@ export default function CounterfeitProtectionPage() {
             </div>
 
             {/* Compliance Flags */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-lg bg-slate-50/70 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-lg bg-slate-50/70 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-xs">
               <label className="flex items-center space-x-2 text-slate-700 dark:text-slate-300 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={hasWrittenAuth}
                   onChange={(e) => setHasWrittenAuth(e.target.checked)}
-                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
+                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-purple-900/35 dark:bg-[#150A26]"
                 />
                 <span>Entity possesses a signed Brand Partner License Agreement</span>
               </label>
@@ -658,7 +658,7 @@ export default function CounterfeitProtectionPage() {
                   type="checkbox"
                   checked={isColorMod}
                   onChange={(e) => setIsColorMod(e.target.checked)}
-                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
+                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-purple-900/35 dark:bg-[#150A26]"
                 />
                 <span className="text-rose-600 dark:text-rose-400 font-medium">Color Palette Modified (Non-standard hues / gradient)</span>
               </label>
@@ -668,7 +668,7 @@ export default function CounterfeitProtectionPage() {
                   type="checkbox"
                   checked={isAspectMod}
                   onChange={(e) => setIsAspectMod(e.target.checked)}
-                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
+                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-purple-900/35 dark:bg-[#150A26]"
                 />
                 <span className="text-amber-600 dark:text-amber-400 font-medium">Aspect Ratio Altered (Distorted or stretched mark)</span>
               </label>
@@ -678,7 +678,7 @@ export default function CounterfeitProtectionPage() {
                   type="checkbox"
                   checked={isUnauthorizedCollateral}
                   onChange={(e) => setIsUnauthorizedCollateral(e.target.checked)}
-                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
+                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-purple-900/35 dark:bg-[#150A26]"
                 />
                 <span className="text-rose-600 dark:text-rose-400 font-semibold">Affixed to Prohibited Product / Predatory Crypto Offer</span>
               </label>
@@ -690,7 +690,7 @@ export default function CounterfeitProtectionPage() {
                   type="checkbox"
                   checked={autoEscalateLogo}
                   onChange={(e) => setAutoEscalateLogo(e.target.checked)}
-                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
+                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-purple-900/35 dark:bg-[#150A26]"
                 />
                 <span>Auto-register trademark infringement (&ge; 60%) to Threat Intel</span>
               </label>
@@ -716,7 +716,7 @@ export default function CounterfeitProtectionPage() {
 
             {/* Dev Presets Row */}
             {process.env.NODE_ENV === 'development' && (
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
+              <div className="pt-3 border-t border-slate-100 dark:border-purple-900/35">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 block">
                   Quick Test Targets (Dev Only):
                 </span>
@@ -726,10 +726,10 @@ export default function CounterfeitProtectionPage() {
                       key={idx}
                       type="button"
                       onClick={() => applyLogoPreset(l)}
-                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition-colors"
+                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl hover:bg-slate-100 dark:hover:bg-purple-950/40 text-xs transition-colors"
                     >
                       <span className="font-medium text-slate-800 dark:text-slate-200">{l.name}</span>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-[#0D1224]/90 font-mono text-slate-600 dark:text-slate-400">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-[#120924]/90 font-mono text-slate-600 dark:text-slate-400">
                         {l.tag}
                       </span>
                     </button>
@@ -742,7 +742,7 @@ export default function CounterfeitProtectionPage() {
 
         {/* Product Diagnostic Report */}
         {productReport && (
-          <div className="rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden animate-in fade-in duration-300">
+          <div className="rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-md overflow-hidden animate-in fade-in duration-300">
             <div className={`p-5 border-b ${
               productReport.risk_score >= 80 
                 ? 'bg-rose-500/10 border-rose-200 dark:border-rose-900/60' 
@@ -757,7 +757,7 @@ export default function CounterfeitProtectionPage() {
                     <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                       {productReport.matched_product}
                     </h2>
-                    <span className="text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-[#0D1224]/90 text-slate-600 dark:text-slate-300 font-mono">
+                    <span className="text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-[#120924]/90 text-slate-600 dark:text-slate-300 font-mono">
                       {productReport.matched_sku}
                     </span>
                     {productReport.threat_code && (
@@ -806,7 +806,7 @@ export default function CounterfeitProtectionPage() {
             </div>
 
             {/* Playbook */}
-            <div className="p-5 border-b border-slate-200 dark:border-slate-800 bg-amber-500/5">
+            <div className="p-5 border-b border-slate-200 dark:border-purple-900/35 bg-amber-500/5">
               <span className="text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider block mb-1">
                 Remediation Playbook
               </span>
@@ -822,13 +822,13 @@ export default function CounterfeitProtectionPage() {
               </h3>
               <div className="space-y-3">
                 {productReport.findings?.map((f, idx) => (
-                  <div key={idx} className="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0D1224]/80 backdrop-blur-xl space-y-1.5">
+                  <div key={idx} className="p-3.5 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50/70 dark:bg-[#120924]/85 backdrop-blur-xl space-y-1.5">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                           f.severity === 'CRITICAL' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/80 dark:text-rose-400' :
                           f.severity === 'HIGH' ? 'bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-400' :
-                          'bg-slate-200 text-slate-700 dark:bg-[#0D1224]/90 dark:text-slate-300'
+                          'bg-slate-200 text-slate-700 dark:bg-[#120924]/90 dark:text-slate-300'
                         }`}>
                           {f.severity}
                         </span>
@@ -837,7 +837,7 @@ export default function CounterfeitProtectionPage() {
                       <span className="text-xs font-mono text-slate-400">{f.rule_id}</span>
                     </div>
                     <p className="text-xs text-slate-600 dark:text-slate-300">{f.description}</p>
-                    <div className="text-xs bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl p-2 rounded border border-slate-200/60 dark:border-slate-700/60 font-mono text-slate-700 dark:text-slate-300">
+                    <div className="text-xs bg-slate-100 dark:bg-[#120924]/85 backdrop-blur-xl p-2 rounded border border-slate-200/60 dark:border-purple-800/35 font-mono text-slate-700 dark:text-slate-300">
                       <strong>Evidence:</strong> {f.evidence}
                     </div>
                   </div>
@@ -849,7 +849,7 @@ export default function CounterfeitProtectionPage() {
 
         {/* Logo Diagnostic Report */}
         {logoReport && (
-          <div className="rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden animate-in fade-in duration-300">
+          <div className="rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-md overflow-hidden animate-in fade-in duration-300">
             <div className={`p-5 border-b ${
               logoReport.risk_score >= 80 
                 ? 'bg-rose-500/10 border-rose-200 dark:border-rose-900/60' 
@@ -875,7 +875,7 @@ export default function CounterfeitProtectionPage() {
                     )}
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    Asset Inspected: <span className="font-semibold text-slate-800 dark:text-slate-200">{logoReport.asset_name}</span> &bull; URL: <a href={logoReport.host_url} target="_blank" rel="noopener noreferrer" className="font-mono text-indigo-600 dark:text-indigo-400 hover:underline">{logoReport.host_url}</a>
+                    Asset Inspected: <span className="font-semibold text-slate-800 dark:text-slate-200">{logoReport.asset_name}</span> &bull; URL: <a href={logoReport.host_url} target="_blank" rel="noopener noreferrer" className="font-mono text-indigo-600 dark:text-purple-400 hover:underline">{logoReport.host_url}</a>
                   </p>
                 </div>
 
@@ -895,7 +895,7 @@ export default function CounterfeitProtectionPage() {
               </div>
             </div>
 
-            <div className="p-5 border-b border-slate-200 dark:border-slate-800 bg-amber-500/5">
+            <div className="p-5 border-b border-slate-200 dark:border-purple-900/35 bg-amber-500/5">
               <span className="text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider block mb-1">
                 Remediation Playbook
               </span>
@@ -910,13 +910,13 @@ export default function CounterfeitProtectionPage() {
               </h3>
               <div className="space-y-3">
                 {logoReport.findings?.map((f, idx) => (
-                  <div key={idx} className="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0D1224]/80 backdrop-blur-xl space-y-1.5">
+                  <div key={idx} className="p-3.5 rounded-lg border border-slate-200 dark:border-purple-900/35 bg-slate-50/70 dark:bg-[#120924]/85 backdrop-blur-xl space-y-1.5">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                           f.severity === 'CRITICAL' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/80 dark:text-rose-400' :
                           f.severity === 'HIGH' ? 'bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-400' :
-                          'bg-slate-200 text-slate-700 dark:bg-[#0D1224]/90 dark:text-slate-300'
+                          'bg-slate-200 text-slate-700 dark:bg-[#120924]/90 dark:text-slate-300'
                         }`}>
                           {f.severity}
                         </span>
@@ -925,7 +925,7 @@ export default function CounterfeitProtectionPage() {
                       <span className="text-xs font-mono text-slate-400">{f.rule_id}</span>
                     </div>
                     <p className="text-xs text-slate-600 dark:text-slate-300">{f.description}</p>
-                    <div className="text-xs bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl p-2 rounded border border-slate-200/60 dark:border-slate-700/60 font-mono text-slate-700 dark:text-slate-300">
+                    <div className="text-xs bg-slate-100 dark:bg-[#120924]/85 backdrop-blur-xl p-2 rounded border border-slate-200/60 dark:border-purple-800/35 font-mono text-slate-700 dark:text-slate-300">
                       <strong>Evidence:</strong> {f.evidence}
                     </div>
                   </div>
@@ -936,8 +936,8 @@ export default function CounterfeitProtectionPage() {
         )}
 
         {/* Counterfeit & Asset Threat Registry Table */}
-        <div className="rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-          <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <div className="rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-sm overflow-hidden">
+          <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-purple-900/35 flex items-center justify-between">
             <div>
               <h3 className="text-base font-semibold text-slate-900 dark:text-white">
                 Marketplace & Trademark Threat Registry
@@ -948,7 +948,7 @@ export default function CounterfeitProtectionPage() {
             </div>
             <button
               onClick={loadData}
-              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-purple-900/35 hover:bg-slate-50 dark:hover:bg-purple-950/40 text-slate-500 transition-colors"
               title="Refresh Registry"
             >
               <RefreshCw className="w-4 h-4" />
@@ -957,7 +957,7 @@ export default function CounterfeitProtectionPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 text-slate-500 uppercase tracking-wider font-semibold">
+              <thead className="bg-slate-50/80 dark:bg-[#120924]/85 backdrop-blur-xl border-b border-slate-200 dark:border-purple-900/35 text-slate-500 uppercase tracking-wider font-semibold">
                 <tr>
                   <th className="py-3 px-4">Threat Code</th>
                   <th className="py-3 px-3">Category</th>
@@ -984,7 +984,7 @@ export default function CounterfeitProtectionPage() {
                         </Link>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-[#0D1224]/90 text-slate-700 dark:text-slate-300">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-[#120924]/90 text-slate-700 dark:text-slate-300">
                           {t.category}
                         </span>
                       </td>
@@ -1001,7 +1001,7 @@ export default function CounterfeitProtectionPage() {
                           href={t.source_url} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          className="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center space-x-1"
+                          className="text-indigo-600 dark:text-purple-400 hover:underline flex items-center space-x-1"
                         >
                           <span className="truncate max-w-[150px]">{t.source_url}</span>
                           <ExternalLink className="w-3 h-3 shrink-0" />
@@ -1016,7 +1016,7 @@ export default function CounterfeitProtectionPage() {
                       <td className="py-3 px-4 text-right">
                         <Link
                           href="/threats"
-                          className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-[11px] font-medium"
+                          className="px-2.5 py-1 rounded border border-slate-200 dark:border-purple-900/35 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-950/40 transition-colors text-[11px] font-medium"
                         >
                           Triage in Intel
                         </Link>

@@ -54,9 +54,9 @@ export default function DataExportPage() {
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-4">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-[#1A0D30] flex items-center justify-center text-indigo-600 dark:text-purple-400">
               <Download className="w-5 h-5" />
             </div>
             <div>
@@ -65,7 +65,7 @@ export default function DataExportPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs space-y-2">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-purple-900/35 text-xs space-y-2">
             <span className="font-semibold text-slate-900 dark:text-white">Export Summary for {currentUser?.email || 'Account'}:</span>
             <ul className="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-400">
               <li>Organization Membership: <strong>{currentUser?.organization || 'Enterprise'}</strong></li>
@@ -86,7 +86,7 @@ export default function DataExportPage() {
             </button>
             <Link
               href="/settings"
-              className="px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#0D1224]/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
+              className="px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#120924]/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
             >
               Back to Settings
             </Link>
@@ -94,7 +94,7 @@ export default function DataExportPage() {
         </div>
 
         {exportedData && (
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-3">
             <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
               <CheckCircle2 className="w-4 h-4" />
               <span className="text-xs font-bold">Export Successfully Generated</span>

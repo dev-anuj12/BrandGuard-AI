@@ -16,10 +16,10 @@ export default function PublicFooter() {
   };
 
   return (
-    <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#060913] text-slate-600 dark:text-slate-400 transition-colors duration-200">
+    <footer className="border-t border-slate-200 dark:border-purple-900/30 bg-white dark:bg-[#070310] text-slate-600 dark:text-slate-400 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         {/* 5 Organized Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-200/80 dark:border-slate-800/80 text-xs">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-200/80 dark:border-purple-900/30 text-xs">
           {/* Column 1: COMPANY */}
           <div className="space-y-3">
             <h4 className="font-bold uppercase tracking-wider text-[11px] text-slate-900 dark:text-white">
@@ -27,37 +27,37 @@ export default function PublicFooter() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/about" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/contact" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/team" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/team" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Our Team
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/careers" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link href="/partners" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/partners" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Partners
                 </Link>
               </li>
               <li>
-                <Link href="/press" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/press" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Press &amp; Media
                 </Link>
               </li>
               <li>
-                <Link href="/testimonials" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/testimonials" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Testimonials
                 </Link>
               </li>
@@ -71,47 +71,47 @@ export default function PublicFooter() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/features" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/features" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="/pricing" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/pricing" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/docs" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/docs" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Documentation
                 </Link>
               </li>
               <li>
-                <Link href="/api-docs" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/api-docs" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   API Documentation
                 </Link>
               </li>
               <li>
-                <Link href="/integrations" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/integrations" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Integrations
                 </Link>
               </li>
               <li>
-                <Link href="/whats-new" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/whats-new" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   What&apos;s New
                 </Link>
               </li>
               <li>
-                <Link href="/changelog" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/changelog" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Changelog
                 </Link>
               </li>
               <li>
-                <Link href="/roadmap" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/roadmap" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Roadmap
                 </Link>
               </li>
               <li>
-                <Link href="/demo" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/demo" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Request a Demo
                 </Link>
               </li>
@@ -125,42 +125,42 @@ export default function PublicFooter() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/help" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/help" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Help Center
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/faq" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/support" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/support" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Support
                 </Link>
               </li>
               <li>
-                <Link href="/tickets" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/tickets" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Submit a Ticket
                 </Link>
               </li>
               <li>
-                <Link href="/community" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/community" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Community
                 </Link>
               </li>
               <li>
-                <Link href="/feedback" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/feedback" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Feedback
                 </Link>
               </li>
               <li>
-                <Link href="/report-bug" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/report-bug" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Report a Bug
                 </Link>
               </li>
               <li>
-                <Link href="/status" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/status" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   System Status
                 </Link>
               </li>
@@ -174,17 +174,17 @@ export default function PublicFooter() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/privacy" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/privacy" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/terms" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Terms &amp; Conditions
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/cookies" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Cookie Policy
                 </Link>
               </li>
@@ -192,38 +192,38 @@ export default function PublicFooter() {
                 <button
                   type="button"
                   onClick={handleOpenCookieModal}
-                  className="hover:text-indigo-600 dark:hover:text-white transition text-left cursor-pointer"
+                  className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition text-left cursor-pointer"
                 >
                   Cookie Preferences
                 </button>
               </li>
               <li>
-                <Link href="/disclaimer" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/disclaimer" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Disclaimer
                 </Link>
               </li>
               <li>
-                <Link href="/acceptable-use" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/acceptable-use" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Acceptable Use Policy
                 </Link>
               </li>
               <li>
-                <Link href="/dpa" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/dpa" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Data Processing Agreement
                 </Link>
               </li>
               <li>
-                <Link href="/refund-policy" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/refund-policy" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Refund &amp; Cancellation
                 </Link>
               </li>
               <li>
-                <Link href="/security-policy" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/security-policy" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Security Policy
                 </Link>
               </li>
               <li>
-                <Link href="/copyright" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/copyright" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Copyright &amp; IP Policy
                 </Link>
               </li>
@@ -237,32 +237,32 @@ export default function PublicFooter() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/login" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/login" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Sign In
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/register" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Create Account
                 </Link>
               </li>
               <li>
-                <Link href="/settings" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/settings" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Account Settings
                 </Link>
               </li>
               <li>
-                <Link href="/settings/security" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/settings/security" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Security Settings
                 </Link>
               </li>
               <li>
-                <Link href="/settings/billing" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/settings/billing" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Billing &amp; Subscription
                 </Link>
               </li>
               <li>
-                <Link href="/settings/data-export" className="hover:text-indigo-600 dark:hover:text-white transition">
+                <Link href="/settings/data-export" className="hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition">
                   Export My Data
                 </Link>
               </li>
@@ -286,7 +286,7 @@ export default function PublicFooter() {
             <button
               type="button"
               onClick={handleOpenCookieModal}
-              className="inline-flex items-center gap-1.5 hover:text-indigo-600 dark:hover:text-white transition"
+              className="inline-flex items-center gap-1.5 hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition"
             >
               <Sliders className="w-3.5 h-3.5 text-indigo-500" />
               <span>Cookie Preferences</span>
@@ -297,7 +297,7 @@ export default function PublicFooter() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="inline-flex items-center gap-1.5 hover:text-indigo-600 dark:hover:text-white transition"
+              className="inline-flex items-center gap-1.5 hover:text-purple-600 dark:hover:text-purple-300 dark:hover:text-white transition"
               title="Toggle theme"
             >
               {resolvedTheme === 'dark' ? (

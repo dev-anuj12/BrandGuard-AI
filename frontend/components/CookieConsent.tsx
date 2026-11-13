@@ -105,10 +105,10 @@ export default function CookieConsent() {
         <aside
           aria-label="Cookie and Privacy Consent Banner"
           role="region"
-          className="fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-xl z-50 p-5 rounded-2xl bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-2xl text-slate-900 dark:text-slate-100 transition-all duration-200 animate-in fade-in slide-in-from-bottom-4"
+          className="fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-xl z-50 p-5 rounded-2xl bg-white/95 dark:bg-[#120924]/95 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 shadow-2xl text-slate-900 dark:text-slate-100 transition-all duration-200 animate-in fade-in slide-in-from-bottom-4"
         >
           <div className="flex items-start gap-3.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/60 dark:border-indigo-800/60 flex items-center justify-center shrink-0 text-indigo-600 dark:text-indigo-400 mt-0.5">
+            <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-[#1A0D30] border border-indigo-200/60 dark:border-purple-500/30 flex items-center justify-center shrink-0 text-indigo-600 dark:text-purple-400 mt-0.5">
               <Cookie className="w-5 h-5" aria-hidden="true" />
             </div>
             <div className="flex-1 space-y-2">
@@ -131,7 +131,7 @@ export default function CookieConsent() {
                 <button
                   type="button"
                   onClick={handleRejectOptional}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition"
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-[#150A26] dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition"
                 >
                   Reject Optional
                 </button>
@@ -163,10 +163,10 @@ export default function CookieConsent() {
           aria-labelledby="cookie-modal-title"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-150"
         >
-          <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-[#0B0F19] border border-slate-200 dark:border-slate-800 shadow-2xl p-6 space-y-5 text-slate-900 dark:text-slate-100 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+          <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-[#090414] border border-slate-200 dark:border-purple-900/35 shadow-2xl p-6 space-y-5 text-slate-900 dark:text-slate-100 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-purple-900/35">
               <div className="flex items-center gap-2.5">
-                <Sliders className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                <Sliders className="w-5 h-5 text-indigo-600 dark:text-purple-400" />
                 <h2 id="cookie-modal-title" className="text-base font-bold text-slate-900 dark:text-white">
                   Cookie &amp; Tracking Preferences
                 </h2>
@@ -174,7 +174,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-purple-950/40 transition"
                 aria-label="Close preferences modal"
               >
                 <X className="w-4 h-4" />
@@ -187,11 +187,11 @@ export default function CookieConsent() {
 
             <div className="space-y-3.5">
               {/* Category 1: Necessary */}
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 flex items-start justify-between gap-3">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 flex items-start justify-between gap-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-xs text-slate-900 dark:text-white">Strictly Necessary</span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-200 dark:bg-[#150A26] text-slate-600 dark:text-slate-400">
                       Required
                     </span>
                   </div>
@@ -209,7 +209,7 @@ export default function CookieConsent() {
               </div>
 
               {/* Category 2: Functional */}
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 flex items-start justify-between gap-3">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 flex items-start justify-between gap-3">
                 <div className="space-y-1">
                   <span className="font-semibold text-xs text-slate-900 dark:text-white">Functional Preferences</span>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">
@@ -221,12 +221,12 @@ export default function CookieConsent() {
                   id="pref-functional"
                   checked={preferences.functional}
                   onChange={(e) => setPreferences({ ...preferences, functional: e.target.checked })}
-                  className="rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500 h-4 w-4 cursor-pointer mt-1"
+                  className="rounded border-slate-300 dark:border-purple-800/40 text-indigo-600 focus:ring-indigo-500 h-4 w-4 cursor-pointer mt-1"
                 />
               </div>
 
               {/* Category 3: Analytics */}
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 flex items-start justify-between gap-3">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 flex items-start justify-between gap-3">
                 <div className="space-y-1">
                   <span className="font-semibold text-xs text-slate-900 dark:text-white">Performance &amp; Telemetry</span>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">
@@ -238,12 +238,12 @@ export default function CookieConsent() {
                   id="pref-analytics"
                   checked={preferences.analytics}
                   onChange={(e) => setPreferences({ ...preferences, analytics: e.target.checked })}
-                  className="rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500 h-4 w-4 cursor-pointer mt-1"
+                  className="rounded border-slate-300 dark:border-purple-800/40 text-indigo-600 focus:ring-indigo-500 h-4 w-4 cursor-pointer mt-1"
                 />
               </div>
 
               {/* Category 4: Marketing */}
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 flex items-start justify-between gap-3">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 flex items-start justify-between gap-3">
                 <div className="space-y-1">
                   <span className="font-semibold text-xs text-slate-900 dark:text-white">Marketing &amp; Conversion</span>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">
@@ -255,16 +255,16 @@ export default function CookieConsent() {
                   id="pref-marketing"
                   checked={preferences.marketing}
                   onChange={(e) => setPreferences({ ...preferences, marketing: e.target.checked })}
-                  className="rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500 h-4 w-4 cursor-pointer mt-1"
+                  className="rounded border-slate-300 dark:border-purple-800/40 text-indigo-600 focus:ring-indigo-500 h-4 w-4 cursor-pointer mt-1"
                 />
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+            <div className="pt-3 border-t border-slate-200 dark:border-purple-900/35 flex items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={handleRejectOptional}
-                className="px-3.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                className="px-3.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-950/40 transition"
               >
                 Reject Optional
               </button>
@@ -272,7 +272,7 @@ export default function CookieConsent() {
                 <button
                   type="button"
                   onClick={handleAcceptAll}
-                  className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
+                  className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#150A26] dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
                 >
                   Accept All
                 </button>

@@ -48,12 +48,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             aria-invalid={!!error}
             aria-describedby={error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined}
-            className={`w-full rounded-xl border bg-white dark:bg-[#0D1224] px-3.5 py-2 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500/80 shadow-2xs disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-slate-800 disabled:cursor-not-allowed ${
+            className={`w-full rounded-xl border bg-white dark:bg-[#120924] px-3.5 py-2 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 focus-visible:border-purple-500/80 shadow-2xs disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-purple-950 disabled:cursor-not-allowed ${
               leftIcon ? 'pl-10' : ''
             } ${rightIcon ? 'pr-10' : ''} ${
               error
                 ? 'border-rose-400 dark:border-rose-600 focus-visible:ring-rose-500'
-                : 'border-slate-300 dark:border-slate-700/80 hover:border-slate-400 dark:hover:border-slate-600'
+                : 'border-slate-300 dark:border-purple-900/50 hover:border-slate-400 dark:hover:border-purple-500/60'
             } ${className}`}
             {...props}
           />

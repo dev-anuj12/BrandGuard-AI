@@ -76,7 +76,7 @@ export default function UnifiedDashboardPage() {
         {/* Top Executive Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-1">
           <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/70 border border-indigo-200 dark:border-indigo-800 text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 mb-1.5">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-[#1A0D30] border border-indigo-200 dark:border-purple-500/30 text-[11px] font-semibold text-indigo-700 dark:text-purple-300 mb-1.5">
               <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
               <span>{user?.organization || 'Enterprise Brand'}</span>
               <span>•</span>
@@ -117,9 +117,9 @@ export default function UnifiedDashboardPage() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {/* 1. Compliance Score */}
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
               <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Brand Compliance</span>
-              <div className="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">
+              <div className="text-2xl font-extrabold text-indigo-600 dark:text-purple-400 mt-1">
                 {complianceScore}%
               </div>
               <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold mt-0.5 block">
@@ -128,7 +128,7 @@ export default function UnifiedDashboardPage() {
             </div>
 
             {/* 2. Content Reviewed */}
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
               <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Content Reviewed</span>
               <div className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
                 {data?.total_content_reviewed ?? 0}
@@ -137,7 +137,7 @@ export default function UnifiedDashboardPage() {
             </div>
 
             {/* 3. Pending Approvals */}
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
               <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Pending Approvals</span>
               <div className="text-2xl font-extrabold text-amber-500 mt-1">
                 {data?.pending_approvals ?? 0}
@@ -146,7 +146,7 @@ export default function UnifiedDashboardPage() {
             </div>
 
             {/* 4. Total Threats */}
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
               <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Detected Threats</span>
               <div className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
                 {data?.total_detected_threats ?? 0}
@@ -155,7 +155,7 @@ export default function UnifiedDashboardPage() {
             </div>
 
             {/* 5. Critical & High */}
-            <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-rose-200 dark:border-rose-900/60 bg-rose-50/20 dark:bg-rose-950/20 shadow-sm">
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50/20 dark:bg-rose-950/20 shadow-sm">
               <span className="text-[11px] font-medium text-rose-600 dark:text-rose-400">Critical / High Risk</span>
               <div className="text-2xl font-extrabold text-rose-600 dark:text-rose-400 mt-1">
                 {data?.critical_high_threats ?? 0}
@@ -164,7 +164,7 @@ export default function UnifiedDashboardPage() {
             </div>
 
             {/* 6. Resolved Threats */}
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
               <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Threats Resolved</span>
               <div className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">
                 {data?.threats_resolved ?? 0}
@@ -177,10 +177,10 @@ export default function UnifiedDashboardPage() {
         {/* Dual Pillar Command Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* PILLAR 1: BRAND GOVERNANCE OVERVIEW */}
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700/60 pb-3">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-purple-800/35 pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-[#1A0D30] border border-indigo-200 dark:border-purple-500/30 flex items-center justify-center text-indigo-600 dark:text-purple-400">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div>
@@ -189,7 +189,7 @@ export default function UnifiedDashboardPage() {
                 </div>
               </div>
 
-              <Link href="/approvals" className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
+              <Link href="/approvals" className="text-xs font-semibold text-indigo-600 dark:text-purple-400 hover:underline flex items-center gap-1">
                 <span>Pipeline</span>
                 <ArrowRight className="w-3 h-3" />
               </Link>
@@ -201,16 +201,16 @@ export default function UnifiedDashboardPage() {
             </div>
 
             {/* Quick Actions & Status Strip */}
-            <div className="grid grid-cols-3 gap-2 pt-1 border-t border-slate-100 dark:border-slate-700/60 text-center">
-              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80">
+            <div className="grid grid-cols-3 gap-2 pt-1 border-t border-slate-100 dark:border-purple-800/35 text-center">
+              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35">
                 <span className="text-[10px] text-slate-400 block">Approved</span>
                 <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{data?.approved_content ?? 0}</span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80">
+              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35">
                 <span className="text-[10px] text-slate-400 block">In Review</span>
                 <span className="text-sm font-bold text-amber-500">{data?.pending_approvals ?? 0}</span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80">
+              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35">
                 <span className="text-[10px] text-slate-400 block">Rejected</span>
                 <span className="text-sm font-bold text-rose-500">{data?.rejected_content ?? 0}</span>
               </div>
@@ -231,8 +231,8 @@ export default function UnifiedDashboardPage() {
           </div>
 
           {/* PILLAR 2: DIGITAL BRAND PROTECTION OVERVIEW */}
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700/60 pb-3">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-purple-800/35 pb-3">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/80 border border-rose-200 dark:border-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-400">
                   <ShieldAlert className="w-4 h-4" />
@@ -279,16 +279,16 @@ export default function UnifiedDashboardPage() {
             )}
 
             {/* Threat Status Strip */}
-            <div className="grid grid-cols-3 gap-2 pt-1 border-t border-slate-100 dark:border-slate-700/60 text-center">
-              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80">
+            <div className="grid grid-cols-3 gap-2 pt-1 border-t border-slate-100 dark:border-purple-800/35 text-center">
+              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35">
                 <span className="text-[10px] text-slate-400 block">New Alerts</span>
-                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{data?.new_threats ?? 0}</span>
+                <span className="text-sm font-bold text-indigo-600 dark:text-purple-400">{data?.new_threats ?? 0}</span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80">
+              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35">
                 <span className="text-[10px] text-slate-400 block">Investigating</span>
                 <span className="text-sm font-bold text-amber-500">{data?.threats_investigating ?? 0}</span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80">
+              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35">
                 <span className="text-[10px] text-slate-400 block">Resolved</span>
                 <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{data?.threats_resolved ?? 0}</span>
               </div>
@@ -338,10 +338,10 @@ export default function UnifiedDashboardPage() {
                 description="No active digital brand threats detected at this time."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#120924]/85 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50/80 dark:bg-[#080C16] border-b border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50/80 dark:bg-[#150A26] border-b border-slate-200/80 dark:border-purple-900/35 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Threat Code</th>
                         <th className="py-3 px-4">Category &amp; Target</th>
@@ -353,7 +353,7 @@ export default function UnifiedDashboardPage() {
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50">
                       {recentThreats.map((t: any) => (
                         <tr key={t.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-700/30 transition-colors">
-                          <td className="py-3 px-4 font-mono font-bold text-indigo-600 dark:text-indigo-400">
+                          <td className="py-3 px-4 font-mono font-bold text-indigo-600 dark:text-purple-400">
                             {t.threat_code}
                           </td>
                           <td className="py-3 px-4">
@@ -396,7 +396,7 @@ export default function UnifiedDashboardPage() {
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all space-y-3">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all space-y-3">
               {activities.length === 0 ? (
                 <EmptyState
                   icon={Activity}

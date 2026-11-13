@@ -180,14 +180,14 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
 
   if (!mounted || !user) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-slate-50 dark:bg-[#090414] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-purple-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased transition-colors duration-200 relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#090414] text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased transition-colors duration-200 relative">
       {/* Mobile Drawer Backdrop */}
       {mobileOpen && (
         <div
@@ -198,13 +198,13 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:sticky top-0 h-screen z-40 bg-white dark:bg-[#080C18] border-r border-slate-200 dark:border-slate-800/80 transition-all duration-200 flex flex-col justify-between shrink-0 ${
+        className={`fixed md:sticky top-0 h-screen z-40 bg-white dark:bg-[#0C061A] border-r border-slate-200 dark:border-purple-900/30 transition-all duration-200 flex flex-col justify-between shrink-0 ${
           collapsed ? 'w-20' : 'w-64'
         } ${mobileOpen ? 'left-0' : '-left-full md:left-0'}`}
       >
         {/* Top Brand Bar */}
         <div>
-          <div className="h-16 px-4 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+          <div className="h-16 px-4 border-b border-slate-100 dark:border-purple-900/30 flex items-center justify-between">
             {collapsed ? (
               <div className="flex justify-center w-full">
                 <BrandLogoIcon size="sm" />
@@ -215,7 +215,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
 
             <button
               onClick={() => setCollapsed(!collapsed)}
-              className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition"
+              className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-purple-950/50 transition"
               title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
               aria-label={collapsed ? 'Expand sidebar navigation' : 'Collapse sidebar navigation'}
             >
@@ -232,9 +232,9 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
 
           {/* User Workspace Info Pill */}
           {!collapsed && (
-            <div className="p-3 mx-3 my-3 rounded-xl bg-slate-50 dark:bg-[#0D1224]/80 border border-slate-200/70 dark:border-slate-800/80 shadow-2xs">
+            <div className="p-3 mx-3 my-3 rounded-xl bg-slate-50 dark:bg-[#150A26] border border-slate-200/70 dark:border-purple-800/40 shadow-2xs">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-purple-300/70">
                   Workspace
                 </span>
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50" />
@@ -243,7 +243,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
                 {user?.organization || 'Enterprise Workspace'}
               </p>
               <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 shadow-2xs">
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-purple-50 dark:bg-[#251042] text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/40 shadow-2xs">
                   {user.role}
                 </span>
               </div>
@@ -263,11 +263,11 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
                   title={collapsed ? item.label : undefined}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 ${
                     isActive
-                      ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-white border border-indigo-200 dark:border-indigo-500/40 shadow-sm shadow-indigo-500/10'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100'
+                      ? 'bg-purple-50 dark:bg-[#200D3B] text-purple-700 dark:text-white border border-purple-200 dark:border-purple-500/50 shadow-sm shadow-purple-950/40'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100/80 dark:hover:bg-purple-950/40 hover:text-slate-900 dark:hover:text-purple-100'
                   } ${collapsed ? 'justify-center px-2' : ''}`}
                 >
-                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-indigo-600 dark:text-indigo-400' : ''}`} />
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-purple-600 dark:text-purple-400' : ''}`} />
                   {!collapsed && <span className="truncate">{item.label}</span>}
                 </Link>
               );
@@ -276,11 +276,11 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
         </div>
 
         {/* Sidebar Footer Controls */}
-        <div className="p-3 border-t border-slate-100 dark:border-slate-800/80 space-y-2">
+        <div className="p-3 border-t border-slate-100 dark:border-purple-900/30 space-y-2">
           {/* Theme Toggle Button in Sidebar */}
           <button
             onClick={toggleTheme}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 transition ${
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-purple-950/50 hover:text-slate-900 dark:hover:text-slate-100 transition ${
               collapsed ? 'justify-center px-2' : ''
             }`}
             title={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Dark'} Mode`}
@@ -289,7 +289,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
             {resolvedTheme === 'dark' ? (
               <Sun className="w-4 h-4 text-amber-400 shrink-0" />
             ) : (
-              <Moon className="w-4 h-4 text-indigo-500 shrink-0" />
+              <Moon className="w-4 h-4 text-purple-500 shrink-0" />
             )}
             {!collapsed && (
               <span>{resolvedTheme === 'dark' ? 'Light Theme' : 'Dark Theme'}</span>
@@ -298,11 +298,11 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
 
           {/* User Profile Summary */}
           <div
-            className={`flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition ${
+            className={`flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-purple-950/40 transition ${
               collapsed ? 'justify-center p-1.5' : ''
             }`}
           >
-            <div className="w-8 h-8 rounded-lg bg-indigo-600/10 dark:bg-indigo-900/40 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-purple-600/10 dark:bg-[#251042] border border-purple-200 dark:border-purple-700/50 text-purple-600 dark:text-purple-300 flex items-center justify-center text-xs font-bold shrink-0">
               {user.full_name?.charAt(0) || 'U'}
             </div>
             {!collapsed && (
@@ -310,7 +310,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
                 <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate">
                   {user.full_name}
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{user.email}</p>
+                <p className="text-[11px] text-slate-500 dark:text-purple-300/70 truncate">{user.email}</p>
               </div>
             )}
             {!collapsed && (
@@ -330,11 +330,11 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Navigation Bar */}
-        <header className="h-16 sticky top-0 z-30 bg-white/90 dark:bg-[#060913]/90 border-b border-slate-200/80 dark:border-slate-800/80 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+        <header className="h-16 sticky top-0 z-30 bg-white/90 dark:bg-[#090414]/90 border-b border-slate-200/80 dark:border-purple-900/30 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileOpen(true)}
-              className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-950/50"
               aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5" />
@@ -343,15 +343,15 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
             {/* Breadcrumbs & Title */}
             <div>
               {breadcrumbs && breadcrumbs.length > 0 && (
-                <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-purple-300/70 font-medium">
                   {breadcrumbs.map((b, i) => (
                     <React.Fragment key={i}>
                       {b.href ? (
-                        <Link href={b.href} className="hover:text-slate-700 dark:hover:text-slate-300">
+                        <Link href={b.href} className="hover:text-purple-600 dark:hover:text-white">
                           {b.label}
                         </Link>
                       ) : (
-                        <span className="text-slate-600 dark:text-slate-400">{b.label}</span>
+                        <span className="text-slate-600 dark:text-slate-300">{b.label}</span>
                       )}
                       {i < breadcrumbs.length - 1 && <span>/</span>}
                     </React.Fragment>
@@ -372,7 +372,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
             <div className="relative">
               <button
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className="relative p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition"
+                className="relative p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-purple-950/50 transition"
                 aria-label="Notifications"
                 title="Notifications"
               >
@@ -385,13 +385,13 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
               {notificationsOpen && (
                 <>
                   <div className="fixed inset-0 z-30" onClick={() => setNotificationsOpen(false)} />
-                  <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto rounded-2xl bg-white dark:bg-[#0D1224] border border-slate-200 dark:border-slate-800/90 shadow-2xl p-3 z-40 text-xs">
-                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800">
+                  <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto rounded-2xl bg-white dark:bg-[#120924] border border-slate-200 dark:border-purple-800/60 shadow-2xl p-3 z-40 text-xs">
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-purple-900/30">
                       <span className="font-bold text-slate-900 dark:text-slate-100">Workflow Notifications</span>
                       {unreadCount > 0 && (
                         <button
                           onClick={markAllAsRead}
-                          className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
+                          className="text-[11px] text-purple-600 dark:text-purple-400 hover:underline font-semibold"
                         >
                           Mark all read
                         </button>
@@ -409,15 +409,15 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
                               onClick={() => markAsRead(n.id)}
                               className={`p-2 rounded-xl transition cursor-pointer ${
                                 isUnread
-                                  ? 'bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/50 dark:border-indigo-800/50'
-                                  : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                                  ? 'bg-purple-50/70 dark:bg-purple-950/40 border border-purple-200/50 dark:border-purple-800/50'
+                                  : 'hover:bg-slate-50 dark:hover:bg-purple-950/30'
                               }`}
                             >
                               <div className="flex items-center gap-1.5 mb-0.5">
                                 <span className={`w-1.5 h-1.5 rounded-full ${
                                   n.type === 'approved' ? 'bg-emerald-500' :
                                   n.type === 'rejected' ? 'bg-rose-500' :
-                                  n.type === 'change_requested' ? 'bg-amber-500' : 'bg-indigo-500'
+                                  n.type === 'change_requested' ? 'bg-amber-500' : 'bg-purple-500'
                                 }`} />
                                 <span className="font-bold uppercase tracking-wider text-[10px] text-slate-600 dark:text-slate-300">
                                   {n.type.replace('_', ' ')}
@@ -444,7 +444,7 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
             {/* Theme Toggle Button in Header */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-purple-950/50 transition"
               title={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Dark'} mode`}
               aria-label="Toggle theme"
             >
@@ -456,17 +456,17 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
             </button>
 
             {/* Role indicator pill */}
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-[#120924] border border-slate-200 dark:border-purple-900/35 text-slate-700 dark:text-slate-300">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
               <span>Role:</span>
-              <span className="font-bold text-indigo-600 dark:text-indigo-400">{user.role}</span>
+              <span className="font-bold text-indigo-600 dark:text-purple-400">{user.role}</span>
             </div>
 
             {/* User Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
-                className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-purple-950/40 transition border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                 aria-label="User profile options"
                 aria-expanded={profileOpen}
               >
@@ -479,16 +479,16 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
               {profileOpen && (
                 <>
                   <div className="fixed inset-0 z-30" onClick={() => setProfileOpen(false)} />
-                  <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white dark:bg-[#0D1224] border border-slate-200 dark:border-slate-800/90 shadow-2xl p-2 z-40 text-xs">
-                    <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800/80 mb-1">
+                  <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white dark:bg-[#120924] border border-slate-200 dark:border-purple-800/60 shadow-2xl p-2 z-40 text-xs">
+                    <div className="px-3 py-2 border-b border-slate-100 dark:border-purple-900/30 mb-1">
                       <p className="font-bold text-slate-900 dark:text-slate-100">{user.full_name}</p>
-                      <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
+                      <p className="text-[11px] text-slate-500 dark:text-purple-300/70 truncate">{user.email}</p>
                     </div>
 
                     <Link
                       href="/settings"
                       onClick={() => setProfileOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-950/40 transition"
                     >
                       <Settings className="w-3.5 h-3.5 text-slate-400" />
                       <span>Account Settings</span>

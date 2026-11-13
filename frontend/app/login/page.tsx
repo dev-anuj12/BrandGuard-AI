@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ShieldCheck, ArrowRight, Lock, Mail, AlertCircle, Sun, Moon, Smartphone, Key, RefreshCw } from 'lucide-react';
 import { api, setAuthSession } from '../../lib/api';
 import { Button } from '../../components/ui/Button';
@@ -12,7 +12,6 @@ import BrandLogo from '../../components/BrandLogo';
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { resolvedTheme, toggleTheme } = useTheme();
   const { error: toastError, success: toastSuccess } = useToast();
 
@@ -37,7 +36,9 @@ export default function LoginPage() {
 
   // Resolve post-login destination: honour ?redirect= for protected routes, else route by role
   const getRedirectPath = () => {
-    const redirect = searchParams?.get('redirect') || searchParams?.get('returnTo');
+    if (typeof window === 'undefined') return null;
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get('redirect') || params.get('returnTo');
     if (redirect && redirect.startsWith('/') && !redirect.startsWith('/login') && !redirect.startsWith('/register')) {
       return redirect;
     }
@@ -131,14 +132,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#090414] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
       {/* Top Header */}
       <div className="max-w-md w-full mx-auto flex items-center justify-between">
         <BrandLogo size="sm" showSubtitle={false} href="/" />
 
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 transition"
+          className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-purple-950/40 transition"
           title="Toggle theme"
           aria-label="Toggle theme"
           type="button"
@@ -162,7 +163,7 @@ export default function LoginPage() {
 
         {/* MFA Challenge Form */}
         {mfaRequired ? (
-          <form onSubmit={handleMfaSubmit} className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-xl shadow-black/10 space-y-4">
+          <form onSubmit={handleMfaSubmit} className="p-6 rounded-2xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-xl shadow-black/10 space-y-4">
             {error && (
               <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
@@ -170,7 +171,7 @@ export default function LoginPage() {
               </div>
             )}
 
-            <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center mx-auto text-indigo-600 dark:text-indigo-400">
+            <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-[#1A0D30] border border-indigo-200 dark:border-purple-500/30 flex items-center justify-center mx-auto text-indigo-600 dark:text-purple-400">
               <Smartphone className="w-6 h-6" />
             </div>
 
@@ -187,7 +188,7 @@ export default function LoginPage() {
                   value={mfaCode}
                   onChange={(e) => setMfaCode(e.target.value)}
                   placeholder={useBackupCode ? 'A1B2C3D4E5' : '123456'}
-                  className="w-full text-center tracking-widest font-mono text-lg bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                  className="w-full text-center tracking-widest font-mono text-lg bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-4 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
             </div>
@@ -208,7 +209,7 @@ export default function LoginPage() {
                   setUseBackupCode(!useBackupCode);
                   setMfaCode('');
                 }}
-                className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+                className="text-indigo-600 dark:text-purple-400 font-semibold hover:underline"
               >
                 {useBackupCode ? 'Use Authenticator Code' : 'Use a Backup Code'}
               </button>
@@ -228,7 +229,7 @@ export default function LoginPage() {
           </form>
         ) : (
           /* Standard Login Form */
-          <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-xl shadow-black/10 space-y-4">
+          <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-xl shadow-black/10 space-y-4">
             {error && (
               <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex flex-col gap-2">
                 <div className="flex items-center gap-2">
@@ -238,7 +239,7 @@ export default function LoginPage() {
                 {unverifiedEmail && (
                   <Link
                     href={`/verify-otp?email=${encodeURIComponent(unverifiedEmail)}`}
-                    className="mt-1 text-xs font-bold underline text-indigo-700 dark:text-indigo-300"
+                    className="mt-1 text-xs font-bold underline text-indigo-700 dark:text-purple-300"
                   >
                     Click here to enter your 6-digit OTP &rarr;
                   </Link>
@@ -259,7 +260,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
                 />
               </div>
             </div>
@@ -271,7 +272,7 @@ export default function LoginPage() {
                 </label>
                 <Link
                   href="/forgot-password"
-                  className="text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+                  className="text-[11px] text-indigo-600 dark:text-purple-400 font-semibold hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -285,7 +286,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-9 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
                 />
               </div>
             </div>
@@ -301,7 +302,7 @@ export default function LoginPage() {
 
             <div className="text-center pt-2 text-xs text-slate-500 dark:text-slate-400">
               Need an enterprise account?{' '}
-              <Link href="/register" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+              <Link href="/register" className="text-indigo-600 dark:text-purple-400 font-semibold hover:underline">
                 Register here
               </Link>
             </div>

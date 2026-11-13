@@ -212,7 +212,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
           <div className="flex items-center space-x-3">
             <button
               onClick={() => router.back()}
-              className="p-2 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 text-slate-500 hover:text-slate-900 dark:hover:text-white transition"
+              className="p-2 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 text-slate-500 hover:text-slate-900 dark:hover:text-white transition"
               title="Go back"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -221,7 +221,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
               <div className="flex items-center gap-2">
                 <span className="text-xs text-slate-400 font-mono">Submission #{content.id}</span>
                 <StatusBadge status={content.status} />
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-[#150A26] border border-slate-200 dark:border-purple-800/40">
                   v{revisions.length}
                 </span>
                 {(content.title?.includes('[Demo') || content.organization === 'BrandGuard Demo Enterprise') && (
@@ -277,8 +277,8 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
         </div>
 
         {/* Compliance Score Gauge & Executive Summary */}
-        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 md:grid-cols-4 gap-6 items-center shadow-sm">
-          <div className="text-center md:border-r border-slate-200 dark:border-slate-700 pr-4">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 grid grid-cols-1 md:grid-cols-4 gap-6 items-center shadow-sm">
+          <div className="text-center md:border-r border-slate-200 dark:border-purple-800/40 pr-4">
             <span className="text-xs uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">
               Brand Compliance Score
             </span>
@@ -317,8 +317,8 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                 review.analysis_mode === 'ai'
                   ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
                   : review.analysis_mode === 'combined'
-                  ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700'
+                  ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-purple-300 border border-indigo-200 dark:border-purple-500/30'
+                  : 'bg-slate-100 dark:bg-[#150A26] text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700'
               }`}>
                 {review.analysis_mode === 'ai' ? '🤖 AI Mode' : review.analysis_mode === 'combined' ? '⚡ Combined' : '📋 Rules Mode'}
               </span>
@@ -328,10 +328,10 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
 
         {/* Human-Controlled Governance Decision Panel (Reviewer & Manager Roles) */}
         {(user?.role === 'REVIEWER' || user?.role === 'MANAGER') && (
-          <div className="p-5 rounded-2xl bg-gradient-to-r from-indigo-50/70 via-white to-purple-50/50 dark:from-indigo-950/40 dark:via-slate-900 dark:to-purple-950/30 border border-indigo-200 dark:border-indigo-800/60 shadow-sm space-y-4">
+          <div className="p-5 rounded-2xl bg-gradient-to-r from-indigo-50/70 via-white to-purple-50/50 dark:from-indigo-950/40 dark:via-slate-900 dark:to-purple-950/30 border border-indigo-200 dark:border-purple-500/30 shadow-sm space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 dark:border-indigo-900/60 pb-3">
               <div className="flex items-center gap-2">
-                <UserCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <UserCheck className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
                 <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                   Human Governance Gate — {user.role === 'REVIEWER' ? 'Reviewer Verification' : 'Manager Final Sign-off'}
                 </h3>
@@ -349,7 +349,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                 </span>
               </label>
               <textarea
-                className="w-full text-xs p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full text-xs p-3 rounded-xl border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#150A26] text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 rows={2}
                 placeholder={
                   user.role === 'REVIEWER'
@@ -433,15 +433,15 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
               </span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xs text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-mono space-y-3 shadow-inner">
-              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-2xs text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-mono space-y-3 shadow-inner">
+              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 text-slate-600 dark:text-slate-300 text-xs">
                 <strong>Channel:</strong> {content.channel}
               </div>
               <div className="whitespace-pre-wrap">{content.current_body}</div>
             </div>
 
             {/* Revisions History */}
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 space-y-3 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 space-y-3 shadow-sm">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
                 <History className="w-4 h-4 text-indigo-500" />
                 <span>Revision Audit Trail ({revisions.length} versions)</span>
@@ -450,10 +450,10 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                 {revisions.map((rev) => (
                   <div
                     key={rev.id}
-                    className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between text-slate-600 dark:text-slate-400"
+                    className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35 flex items-center justify-between text-slate-600 dark:text-slate-400"
                   >
                     <div>
-                      <span className="font-bold text-indigo-600 dark:text-indigo-400">v{rev.version}</span>
+                      <span className="font-bold text-indigo-600 dark:text-purple-400">v{rev.version}</span>
                       <span className="text-slate-500 ml-2">({rev.change_summary || 'Draft'})</span>
                     </div>
                     <span className="text-[10px] text-slate-400 font-mono">
@@ -465,7 +465,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
             </div>
 
             {/* Decision History */}
-            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 space-y-3 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 space-y-3 shadow-sm">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
                 <FileCheck className="w-4 h-4 text-emerald-500" />
                 <span>Decision History ({decisions.length} events)</span>
@@ -477,7 +477,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                   decisions.map((dec) => (
                     <div
                       key={dec.id}
-                      className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 space-y-1"
+                      className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35 space-y-1"
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-semibold text-slate-800 dark:text-slate-200">
@@ -490,11 +490,11 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                       </div>
                       {(dec.previous_status || dec.new_status) && (
                         <div className="text-[10px] font-mono flex items-center gap-1.5 text-slate-500">
-                          <span className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                          <span className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#150A26] border border-slate-200 dark:border-purple-800/40">
                             {dec.previous_status || 'Draft'}
                           </span>
                           <span>&rarr;</span>
-                          <span className="px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 font-semibold">
+                          <span className="px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-[#1A0D30] text-indigo-700 dark:text-purple-300 border border-indigo-200 dark:border-purple-500/30 font-semibold">
                             {dec.new_status || dec.action}
                           </span>
                         </div>
@@ -504,7 +504,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                         {dec.revision_id && <span className="font-mono text-[10px]">rev #{dec.revision_id}</span>}
                       </div>
                       {dec.reason && (
-                        <p className="text-[11px] text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-950 p-1.5 rounded border border-slate-100 dark:border-slate-800">
+                        <p className="text-[11px] text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-950 p-1.5 rounded border border-slate-100 dark:border-purple-900/35">
                           {dec.reason}
                         </p>
                       )}
@@ -555,14 +555,14 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                               key={f.id || idx}
                               className={`p-4 rounded-xl border transition-all space-y-3 ${
                                 isResolved
-                                  ? 'bg-slate-50 dark:bg-[#080C16]/50 border-slate-200/80 dark:border-slate-800/80 opacity-60'
+                                  ? 'bg-slate-50 dark:bg-[#150A26]/50 border-slate-200/80 dark:border-purple-900/35 opacity-60'
                                   : isOverridden
-                                  ? 'bg-slate-50 dark:bg-[#080C16]/50 border-slate-200/80 dark:border-slate-800/80'
-                                  : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm'
+                                  ? 'bg-slate-50 dark:bg-[#150A26]/50 border-slate-200/80 dark:border-purple-900/35'
+                                  : 'bg-white dark:bg-[#120924]/85 backdrop-blur-xl border-slate-200 dark:border-purple-800/40 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm'
                               }`}
                             >
                               {/* Finding Header */}
-                              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-700/60 pb-2.5">
+                              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-purple-800/35 pb-2.5">
                                 <div className="flex items-center gap-2">
                                   <span className="text-xs font-bold text-slate-900 dark:text-white">{f.category}</span>
                                   <SeverityBadge severity={f.severity} />
@@ -573,7 +573,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
                                     isAIEngine
                                       ? 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800'
-                                      : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
+                                      : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#150A26] dark:text-slate-300 dark:border-slate-700'
                                   }`}>
                                     {isAIEngine ? '🤖 LLM Engine' : '📋 Rule Engine'}
                                   </span>
@@ -581,7 +581,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                               </div>
 
                               {/* Matched Snippet */}
-                              <div className="p-2.5 rounded-lg bg-rose-50/50 dark:bg-slate-900 border border-rose-200 dark:border-rose-950/60 text-xs">
+                              <div className="p-2.5 rounded-lg bg-rose-50/50 dark:bg-[#120924] border border-rose-200 dark:border-rose-950/60 text-xs">
                                 <span className="text-rose-600 dark:text-rose-400 block mb-0.5 font-semibold uppercase text-[10px]">
                                   Exact Flagged Text:
                                 </span>
@@ -596,14 +596,14 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                   <strong className="text-slate-700 dark:text-slate-200">Reason: </strong>
                                   {f.explanation}
                                 </p>
-                                <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium text-[11px]">
+                                <div className="flex items-center gap-1.5 text-indigo-600 dark:text-purple-400 font-medium text-[11px]">
                                   <BookOpen className="w-3.5 h-3.5 shrink-0" />
                                   <span>Policy Reference: {f.guideline_reference || f.category || 'Brand Governance Standard'}</span>
                                 </div>
                               </div>
 
                               {/* Source Evidence */}
-                              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 text-[11px] space-y-1">
+                              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35 text-[11px] space-y-1">
                                 <span className="font-semibold text-slate-600 dark:text-slate-400 flex items-center gap-1">
                                   <Search className="w-3 h-3 text-blue-500" />
                                   <span>Supporting Evidence:</span>
@@ -623,9 +623,9 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
 
                               {/* Suggested Correction */}
                               {suggestedCorrectionText && (
-                                <div className="pt-2 border-t border-slate-100 dark:border-slate-700/60 space-y-2.5">
-                                  <div className="p-3 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 text-xs space-y-1">
-                                    <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
+                                <div className="pt-2 border-t border-slate-100 dark:border-purple-800/35 space-y-2.5">
+                                  <div className="p-3 rounded-lg bg-indigo-50/70 dark:bg-[#1A0D30] border border-indigo-200 dark:border-indigo-900/60 text-xs space-y-1">
+                                    <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-purple-400 block">
                                       {isAIEngine ? 'AI Suggested Correction:' : 'Recommended Correction:'}
                                     </span>
                                     <span className="font-mono text-emerald-700 dark:text-emerald-300 font-bold block text-sm">
@@ -678,9 +678,9 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                   )}
 
                                   {editingId === suggestion.id && (
-                                    <div className="p-3 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 space-y-2">
+                                    <div className="p-3 rounded-lg bg-slate-50 dark:bg-[#150A26] border border-slate-200/80 dark:border-purple-900/35 space-y-2">
                                       <textarea
-                                        className="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                                        className="w-full text-xs p-2 rounded border border-slate-300 dark:border-purple-800/40 bg-white dark:bg-[#150A26] text-slate-900 dark:text-white"
                                         rows={2}
                                         value={manualText[suggestion.id] ?? suggestion.suggested_text}
                                         onChange={(e) => setManualText({ ...manualText, [suggestion.id]: e.target.value })}
@@ -706,7 +706,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
 
                   {/* Separate Section: Needs Human Review */}
                   {needsReviewFindings.length > 0 && (
-                    <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-purple-900/35">
                       <div className="flex items-center justify-between">
                         <h2 className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
                           <AlertTriangle className="w-4 h-4 text-amber-500" />
@@ -744,14 +744,14 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
                                     isAIEngine
                                       ? 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800'
-                                      : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
+                                      : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#150A26] dark:text-slate-300 dark:border-slate-700'
                                   }`}>
                                     {isAIEngine ? '🤖 LLM Engine' : '📋 Rule Engine'}
                                   </span>
                                 </div>
                               </div>
 
-                              <div className="p-2.5 rounded-lg bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xs text-xs">
+                              <div className="p-2.5 rounded-lg bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-2xs text-xs">
                                 <span className="text-slate-500 block mb-0.5 font-semibold uppercase text-[10px]">
                                   Candidate Text Flagged for Review:
                                 </span>
@@ -766,7 +766,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                               </p>
 
                               {f.guideline_reference && (
-                                <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium text-[11px]">
+                                <div className="flex items-center gap-1.5 text-indigo-600 dark:text-purple-400 font-medium text-[11px]">
                                   <BookOpen className="w-3.5 h-3.5 shrink-0" />
                                   <span>Policy Reference: {f.guideline_reference}</span>
                                 </div>

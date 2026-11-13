@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 export function StatusBadge({ status }: { status: string }) {
-  let color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700';
+  let color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#150A26] dark:text-slate-300 dark:border-slate-700';
   let Icon = Clock;
 
   switch (status) {
@@ -22,7 +22,7 @@ export function StatusBadge({ status }: { status: string }) {
       break;
     case 'Pending Reviewer Verification':
     case 'Resubmitted':
-      color = 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800/60';
+      color = 'bg-purple-50 text-purple-800 border-purple-200 dark:bg-[#1E0E38] dark:text-purple-300 dark:border-purple-700/50';
       Icon = Clock;
       break;
     case 'Changes Required':
@@ -34,11 +34,11 @@ export function StatusBadge({ status }: { status: string }) {
       Icon = XCircle;
       break;
     case 'AI Review Completed':
-      color = 'bg-purple-50 text-purple-800 border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800/60';
+      color = 'bg-purple-50 text-purple-800 border-purple-200 dark:bg-[#200D3B] dark:text-purple-300 dark:border-purple-600/50';
       Icon = AlertCircle;
       break;
     case 'Draft':
-      color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700';
+      color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#150A26] dark:text-slate-300 dark:border-slate-700';
       Icon = FileEdit;
       break;
   }
@@ -52,7 +52,7 @@ export function StatusBadge({ status }: { status: string }) {
 }
 
 export function SeverityBadge({ severity }: { severity: string }) {
-  let color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700';
+  let color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#150A26] dark:text-slate-300 dark:border-slate-700';
 
   switch (severity) {
     case 'Critical':
@@ -79,7 +79,7 @@ export function SeverityBadge({ severity }: { severity: string }) {
 export function ConfidenceBadge({ confidence }: { confidence?: number | null }) {
   if (confidence === null || confidence === undefined || isNaN(confidence)) {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium border text-slate-600 bg-slate-50 border-slate-200 dark:text-slate-400 dark:bg-slate-800 dark:border-slate-700">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium border text-slate-600 bg-slate-50 border-slate-200 dark:text-slate-400 dark:bg-[#150A26] dark:border-purple-800/40">
         <span>Confidence:</span>
         <span className="font-semibold">N/A</span>
       </span>
@@ -106,11 +106,11 @@ export function ConfidenceBadge({ confidence }: { confidence?: number | null }) 
 }
 
 export function ThreatStatusBadge({ status }: { status: string }) {
-  let color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700';
+  let color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#150A26] dark:text-slate-300 dark:border-slate-700';
 
   switch (status) {
     case 'New':
-      color = 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800/60';
+      color = 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-[#1A0D30] dark:text-purple-300 dark:border-purple-500/30';
       break;
     case 'Under Investigation':
       color = 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60';
@@ -119,7 +119,7 @@ export function ThreatStatusBadge({ status }: { status: string }) {
       color = 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800/60';
       break;
     case 'False Positive':
-      color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700';
+      color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#150A26] dark:text-slate-300 dark:border-slate-700';
       break;
     case 'Resolved':
       color = 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60';
@@ -135,7 +135,7 @@ export function ThreatStatusBadge({ status }: { status: string }) {
 }
 
 export function ThreatRiskBadge({ risk }: { risk: string }) {
-  let color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700';
+  let color = 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#150A26] dark:text-slate-300 dark:border-slate-700';
 
   switch (risk?.toUpperCase()) {
     case 'CRITICAL':

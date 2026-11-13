@@ -58,10 +58,10 @@ export default function RoadmapPage() {
       <div className="space-y-6 max-w-3xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <div className="space-y-4">
           {items.map((item) => (
-            <div key={item.title} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-2">
+            <div key={item.title} className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-2">
               <div className="flex items-center justify-between">
                 <h2 className="font-bold text-sm text-slate-900 dark:text-white">{item.title}</h2>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-[#1A0D30] text-indigo-600 dark:text-purple-400 border border-indigo-200/60 dark:border-purple-500/30">
                   {item.status}
                 </span>
               </div>

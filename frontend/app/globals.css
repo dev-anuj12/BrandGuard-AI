@@ -16,15 +16,15 @@
   }
 
   .dark {
-    --bg-page: #060913;
-    --bg-surface: #0B0F19;
-    --bg-surface-subtle: #0E1424;
-    --text-primary: #F8FAFC;
+    --bg-page: #090414;
+    --bg-surface: #120924;
+    --bg-surface-subtle: #1A0D30;
+    --text-primary: #FFFFFF;
     --text-secondary: #CBD5E1;
     --text-muted: #94A3B8;
-    --border-subtle: #1E293B;
-    --border-strong: #334155;
-    --accent: #6366F1;
+    --border-subtle: rgba(168, 85, 247, 0.15);
+    --border-strong: rgba(168, 85, 247, 0.32);
+    --accent: #A855F7;
   }
 
   body {
@@ -35,29 +35,50 @@
   }
 }
 
-/* Glass panel & atmospheric elevation utilities */
+/* Glass panel, fine grid & atmospheric elevation utilities */
 @layer utilities {
   .glass-card {
-    background: rgba(13, 18, 36, 0.75);
+    background: rgba(18, 9, 36, 0.78);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(168, 85, 247, 0.18);
+    box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
   }
 
   .glass-panel {
-    background: rgba(11, 15, 25, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(14, 6, 28, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(168, 85, 247, 0.14);
   }
 
   .glow-subtle {
-    box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 0 35px -5px rgba(120, 43, 219, 0.25);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.28);
+  }
+
+  .glow-magenta {
+    box-shadow: 0 0 35px -5px rgba(217, 70, 239, 0.25);
   }
 
   .radial-glow {
-    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent 70%);
+    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 43, 219, 0.25), transparent 70%);
+  }
+
+  .radial-glow-ambient {
+    background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(168, 85, 247, 0.22), transparent 70%);
+  }
+
+  .bg-fine-grid {
+    background-size: 32px 32px;
+    background-image: linear-gradient(to right, rgba(168, 85, 247, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(168, 85, 247, 0.06) 1px, transparent 1px);
+  }
+
+  .bg-gradient-hero {
+    background: radial-gradient(circle at 50% 30%, rgba(120, 43, 219, 0.28), rgba(9, 4, 20, 0) 65%);
   }
 }
 

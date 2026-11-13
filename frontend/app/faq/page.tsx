@@ -51,7 +51,7 @@ export default function FAQPage() {
             placeholder="Search questions (e.g. 'training', 'scoring', 'roles')..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition"
           />
         </div>
 
@@ -61,7 +61,7 @@ export default function FAQPage() {
             return (
               <div
                 key={idx}
-                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden transition"
+                className="rounded-2xl border border-slate-200 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl overflow-hidden transition"
               >
                 <button
                   type="button"
@@ -72,7 +72,7 @@ export default function FAQPage() {
                   {isOpen ? <ChevronUp className="w-4 h-4 text-indigo-500 shrink-0" /> : <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />}
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
+                  <div className="px-5 pb-5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-purple-900/30 pt-3">
                     {item.a}
                   </div>
                 )}
@@ -81,9 +81,9 @@ export default function FAQPage() {
           })}
         </div>
 
-        <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-xs flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-slate-100 dark:bg-[#120924]/60 border border-slate-200 dark:border-purple-900/35 text-xs flex items-center justify-between">
           <span>Didn&apos;t find what you were looking for?</span>
-          <Link href="/tickets" className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+          <Link href="/tickets" className="text-indigo-600 dark:text-purple-400 font-bold hover:underline">
             Submit a Question &rarr;
           </Link>
         </div>

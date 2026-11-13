@@ -38,19 +38,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     switch (variant) {
       case 'primary':
         variantStyles =
-          'bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-600 hover:from-indigo-500 hover:via-indigo-500 hover:to-violet-500 text-white shadow-sm shadow-indigo-500/25 border border-indigo-400/30 focus-visible:ring-indigo-500';
+          'bg-gradient-to-r from-[#782BDB] via-[#8B24D6] to-[#A855F7] hover:from-[#6722BF] hover:via-[#7820BD] hover:to-[#9333EA] text-white shadow-md shadow-purple-950/40 border border-purple-300/30 focus-visible:ring-purple-500';
         break;
       case 'secondary':
         variantStyles =
-          'bg-slate-100 dark:bg-[#0E1424] text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 focus-visible:ring-slate-400';
+          'bg-slate-100 dark:bg-[#1A0D30] text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#251342] border border-slate-200 dark:border-purple-800/40 focus-visible:ring-purple-400';
         break;
       case 'outline':
         variantStyles =
-          'border border-slate-300 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-800/70 hover:border-slate-400 dark:hover:border-slate-600 focus-visible:ring-indigo-500 shadow-2xs';
+          'border border-slate-300 dark:border-purple-500/30 text-slate-700 dark:text-purple-100 bg-white/50 dark:bg-[#120924]/60 hover:bg-slate-50 dark:hover:bg-[#1A0D30] hover:border-slate-400 dark:hover:border-purple-400/60 focus-visible:ring-purple-500 shadow-2xs';
         break;
       case 'ghost':
         variantStyles =
-          'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/60 focus-visible:ring-slate-400';
+          'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-purple-950/40 focus-visible:ring-purple-400';
         break;
       case 'destructive':
         variantStyles =
@@ -58,7 +58,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         break;
       case 'icon':
         variantStyles =
-          'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/70 focus-visible:ring-slate-400 rounded-xl p-2';
+          'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-purple-950/50 focus-visible:ring-purple-400 rounded-xl p-2';
         break;
     }
 

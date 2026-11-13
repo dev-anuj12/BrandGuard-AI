@@ -89,43 +89,43 @@ export default function ApiDocsPage() {
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">Available API Route Groups</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
-              <code className="font-mono font-bold text-indigo-600 dark:text-indigo-400">/api/v1/auth</code>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
+              <code className="font-mono font-bold text-indigo-600 dark:text-purple-400">/api/v1/auth</code>
               <p className="text-slate-500 mt-1">Registration, token login, and profile lookup</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
-              <code className="font-mono font-bold text-indigo-600 dark:text-indigo-400">/api/v1/content</code>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
+              <code className="font-mono font-bold text-indigo-600 dark:text-purple-400">/api/v1/content</code>
               <p className="text-slate-500 mt-1">Draft creation, revision history, and export</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
-              <code className="font-mono font-bold text-indigo-600 dark:text-indigo-400">/api/v1/review</code>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
+              <code className="font-mono font-bold text-indigo-600 dark:text-purple-400">/api/v1/review</code>
               <p className="text-slate-500 mt-1">Review trigger, suggestions, and overrides</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
-              <code className="font-mono font-bold text-indigo-600 dark:text-indigo-400">/api/v1/approvals</code>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
+              <code className="font-mono font-bold text-indigo-600 dark:text-purple-400">/api/v1/approvals</code>
               <p className="text-slate-500 mt-1">Reviewer verify, manager decision, and audit logs</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
-              <code className="font-mono font-bold text-indigo-600 dark:text-indigo-400">/api/v1/guidelines</code>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
+              <code className="font-mono font-bold text-indigo-600 dark:text-purple-400">/api/v1/guidelines</code>
               <p className="text-slate-500 mt-1">Brand rules, approved facts, terminology, and sources</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
-              <code className="font-mono font-bold text-indigo-600 dark:text-indigo-400">/api/v1/protection/*</code>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
+              <code className="font-mono font-bold text-indigo-600 dark:text-purple-400">/api/v1/protection/*</code>
               <p className="text-slate-500 mt-1">Domain, social profile, and product asset scanners</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
-              <code className="font-mono font-bold text-indigo-600 dark:text-indigo-400">/api/v1/threats</code>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
+              <code className="font-mono font-bold text-indigo-600 dark:text-purple-400">/api/v1/threats</code>
               <p className="text-slate-500 mt-1">Perimeter threat item management and status triage</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
-              <code className="font-mono font-bold text-indigo-600 dark:text-indigo-400">/api/v1/analytics</code>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35">
+              <code className="font-mono font-bold text-indigo-600 dark:text-purple-400">/api/v1/analytics</code>
               <p className="text-slate-500 mt-1">Overview metrics and unified telemetry</p>
             </div>
           </div>
         </section>
 
         {/* Interactive Swagger Link */}
-        <div className="p-5 rounded-2xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <div className="p-5 rounded-2xl bg-slate-100/70 dark:bg-[#120924]/60 border border-slate-200 dark:border-purple-900/35 flex items-center justify-between">
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-slate-900 dark:text-white">OpenAPI Interactive Docs</h3>
             <p className="text-xs text-slate-500">Access interactive OpenAPI / Swagger specifications on the running backend server.</p>

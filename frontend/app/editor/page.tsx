@@ -212,7 +212,7 @@ function SelectField({
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none rounded-lg border px-3 py-2.5 pr-10 text-sm bg-white dark:bg-[#080C16] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-slate-200 dark:border-slate-700 transition"
+          className="w-full appearance-none rounded-lg border px-3 py-2.5 pr-10 text-sm bg-white dark:bg-[#150A26] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-slate-200 dark:border-purple-800/40 transition"
         >
           <option value="" disabled>
             {placeholder}
@@ -478,7 +478,7 @@ function EditorContent() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/30">
-              <Sparkles className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+              <Sparkles className="h-5 w-5 text-indigo-600 dark:text-purple-400" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">AI Content Editor</h2>
@@ -520,7 +520,7 @@ function EditorContent() {
           <div className="xl:col-span-2 space-y-4">
 
             {/* Metadata fields */}
-            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm p-5 space-y-4">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm shadow-sm p-5 space-y-4">
               {/* Title */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="title" className="text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -532,7 +532,7 @@ function EditorContent() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Q4 Investment Newsletter — October 2024"
-                  className="w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-[#080C16] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-slate-200 dark:border-slate-700 transition"
+                  className="w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-[#150A26] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-slate-200 dark:border-purple-800/40 transition"
                 />
               </div>
 
@@ -559,9 +559,9 @@ function EditorContent() {
             </div>
 
             {/* Editor toolbar + textarea */}
-            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm shadow-sm">
               {/* Toolbar */}
-              <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between gap-3 flex-wrap">
+              <div className="px-4 py-3 border-b border-slate-100 dark:border-purple-800/40 flex items-center justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                   <FileText className="w-3.5 h-3.5" />
                   <span className="tabular-nums">{wordCount} words / {charCount} chars</span>
@@ -589,7 +589,7 @@ function EditorContent() {
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition border ${
                       compareMode
                         ? 'bg-indigo-600 text-white border-indigo-600'
-                        : 'bg-white dark:bg-[#080C16] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
+                        : 'bg-white dark:bg-[#150A26] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-purple-800/40 hover:bg-slate-50 dark:hover:bg-purple-950/40'
                     }`}
                     title="Toggle side-by-side compare view"
                   >
@@ -617,7 +617,7 @@ function EditorContent() {
                 {/* Compare: highlighted preview (right) */}
                 {compareMode && (
                   <div className="relative">
-                    <div className="px-1 py-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-700 text-center">
+                    <div className="px-1 py-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-purple-800/40 text-center">
                       Highlighted Preview
                     </div>
                     <div
@@ -646,7 +646,7 @@ function EditorContent() {
                 size="sm"
                 onClick={handleAnalyze}
                 disabled={isLoading}
-                className="text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
+                className="text-indigo-600 dark:text-purple-400 border-indigo-200 dark:border-purple-500/30 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
               >
                 {analyzing ? <Loader2 className="w-4 h-4 mr-1.5 animate-spin" /> : <Zap className="w-4 h-4 mr-1.5" />}
                 {analyzing ? 'Analysing…' : 'Full AI Analysis'}
@@ -696,8 +696,8 @@ function EditorContent() {
           <div className="xl:col-span-1 space-y-4">
 
             {/* Real-time violations panel */}
-            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm">
-              <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm shadow-sm">
+              <div className="px-4 py-3 border-b border-slate-100 dark:border-purple-800/40 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 text-amber-500" />
                   <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
@@ -733,7 +733,7 @@ function EditorContent() {
                           <span
                             className={`inline-block w-1.5 h-1.5 rounded-full shrink-0 mt-1.5 ${severityDot(f.severity)}`}
                           />
-                          <code className="text-xs bg-slate-100 dark:bg-slate-900 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300 line-clamp-2">
+                          <code className="text-xs bg-slate-100 dark:bg-[#120924] px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300 line-clamp-2">
                             "{f.matched_text}"
                           </code>
                         </div>
@@ -756,7 +756,7 @@ function EditorContent() {
             </div>
 
             {/* Version history panel */}
-            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm shadow-sm">
               <button
                 onClick={toggleHistory}
                 className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/40 transition rounded-xl"
@@ -773,7 +773,7 @@ function EditorContent() {
               </button>
 
               {historyOpen && (
-                <div className="border-t border-slate-100 dark:border-slate-700">
+                <div className="border-t border-slate-100 dark:border-purple-800/40">
                   {!contentId ? (
                     <p className="px-4 py-4 text-xs text-slate-500 dark:text-slate-400">
                       Save a draft first to enable version history.
@@ -795,7 +795,7 @@ function EditorContent() {
                         >
                           <div className="min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono">
+                              <span className="text-xs font-bold text-indigo-600 dark:text-purple-400 font-mono">
                                 v{rev.version}
                               </span>
                               <span className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
@@ -809,7 +809,7 @@ function EditorContent() {
                           </div>
                           <button
                             onClick={() => restoreRevision(rev)}
-                            className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex-shrink-0"
+                            className="text-[10px] font-semibold text-indigo-600 dark:text-purple-400 hover:underline flex-shrink-0"
                           >
                             Restore
                           </button>
@@ -822,7 +822,7 @@ function EditorContent() {
             </div>
 
             {/* Legend */}
-            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm px-4 py-3">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm shadow-sm px-4 py-3">
               <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                 Severity Legend
               </p>
@@ -850,7 +850,7 @@ export default function EditorPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] flex items-center justify-center">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#090414] flex items-center justify-center">
           <div className="w-8 h-8 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
         </div>
       }

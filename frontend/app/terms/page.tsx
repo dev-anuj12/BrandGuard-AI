@@ -34,7 +34,7 @@ export default function TermsOfServicePage() {
     >
       <div className="space-y-8 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         {sections.map(({ title, text }) => (
-          <section key={title} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-2">
+          <section key={title} className="p-5 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 space-y-2">
             <h2 className="text-base font-bold text-slate-900 dark:text-white">{title}</h2>
             <p className="leading-relaxed">{text}</p>
           </section>
@@ -42,7 +42,7 @@ export default function TermsOfServicePage() {
 
         <div className="pt-4 flex items-center justify-between text-xs text-slate-500">
           <span>Need a customized Master Services Agreement?</span>
-          <Link href="/contact" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+          <Link href="/contact" className="text-indigo-600 dark:text-purple-400 font-semibold hover:underline">
             Contact Enterprise Legal Team &rarr;
           </Link>
         </div>

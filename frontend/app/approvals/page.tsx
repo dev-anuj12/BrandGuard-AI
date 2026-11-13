@@ -95,7 +95,7 @@ export default function ApprovalManagementPage() {
 
         {/* 4-Stage Pipeline Visual Banner */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 relative overflow-hidden shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 relative overflow-hidden shadow-sm">
             <div className="flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2">
               <span className="flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-700 dark:text-slate-300">1</span>
@@ -109,10 +109,10 @@ export default function ApprovalManagementPage() {
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Initial submission drafting</p>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 relative overflow-hidden shadow-sm">
-            <div className="flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-indigo-400 mb-2">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 relative overflow-hidden shadow-sm">
+            <div className="flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-purple-400 mb-2">
               <span className="flex items-center gap-1.5">
-                <span className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center text-[10px] font-bold text-indigo-600 dark:text-indigo-300">2</span>
+                <span className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center text-[10px] font-bold text-indigo-600 dark:text-purple-300">2</span>
                 AI Compliance Review
               </span>
               <span className="font-mono text-xs">{stage2Count} items</span>
@@ -123,7 +123,7 @@ export default function ApprovalManagementPage() {
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Deterministic &amp; LLM checks</p>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 relative overflow-hidden shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 relative overflow-hidden shadow-sm">
             <div className="flex items-center justify-between text-xs font-semibold text-purple-600 dark:text-purple-400 mb-2">
               <span className="flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded-full bg-purple-50 dark:bg-purple-950 flex items-center justify-center text-[10px] font-bold text-purple-600 dark:text-purple-300">3</span>
@@ -137,7 +137,7 @@ export default function ApprovalManagementPage() {
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Reviewer &amp; manager verification</p>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 relative overflow-hidden shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-800/40 relative overflow-hidden shadow-sm">
             <div className="flex items-center justify-between text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-2">
               <span className="flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded-full bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center text-[10px] font-bold text-emerald-600 dark:text-emerald-300">4</span>
@@ -155,7 +155,7 @@ export default function ApprovalManagementPage() {
         {/* Filter Bar & Search */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           {/* Tabs */}
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl overflow-x-auto">
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#120924]/85 backdrop-blur-xl p-1 rounded-xl overflow-x-auto">
             {[
               { id: 'ALL', label: 'All Items' },
               { id: 'DRAFT', label: 'Drafts' },
@@ -186,7 +186,7 @@ export default function ApprovalManagementPage() {
               placeholder="Search content or channel..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#150A26] text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
         </div>
@@ -201,10 +201,10 @@ export default function ApprovalManagementPage() {
             description="Adjust your search query or filter tab to view other workflow items."
           />
         ) : (
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
+          <div className="rounded-xl border border-slate-200 dark:border-purple-800/40 bg-white dark:bg-[#120924]/85 backdrop-blur-xl overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-50/80 dark:bg-[#080C16] border-b border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 font-semibold">
+                <thead className="bg-slate-50/80 dark:bg-[#150A26] border-b border-slate-200/80 dark:border-purple-900/35 text-slate-500 dark:text-slate-400 font-semibold">
                   <tr>
                     <th className="py-3 px-4">Content Title</th>
                     <th className="py-3 px-4">Channel</th>

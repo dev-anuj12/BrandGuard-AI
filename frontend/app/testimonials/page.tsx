@@ -24,15 +24,15 @@ export default function TestimonialsPage() {
       subtitle="Customer stories will be published as customer deployments become available."
     >
       <div className="space-y-6 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
-        <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center space-y-3">
+        <div className="p-8 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center space-y-3">
           <p className="text-base text-slate-600 dark:text-slate-300">
             Case studies will be published when real customers are available.
           </p>
         </div>
 
-        <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-xs flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-slate-100 dark:bg-[#120924]/60 border border-slate-200 dark:border-purple-900/35 text-xs flex items-center justify-between">
           <span>Interested in publishing a joint enterprise case study?</span>
-          <Link href="/contact" className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+          <Link href="/contact" className="text-indigo-600 dark:text-purple-400 font-bold hover:underline">
             Connect With Marketing &rarr;
           </Link>
         </div>

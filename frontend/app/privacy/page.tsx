@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Table of Contents Sticky Sidebar */}
         <aside className="lg:col-span-1 hidden lg:block">
-          <div className="sticky top-24 p-4 rounded-xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-xs space-y-2">
+          <div className="sticky top-24 p-4 rounded-xl bg-slate-100/70 dark:bg-[#120924]/60 border border-slate-200 dark:border-purple-900/35 text-xs space-y-2">
             <span className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
               Contents
             </span>
@@ -137,7 +137,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-disc pl-5 space-y-1.5">
               <li><strong>Local Storage (Necessary):</strong> Stores signed JWT bearer tokens, active user role context, and theme selection.</li>
-              <li><strong>Consent Management:</strong> Optional functional or analytics preferences can be managed via our <Link href="/cookie-preferences" className="text-indigo-600 dark:text-indigo-400 underline">Cookie Preferences</Link> manager.</li>
+              <li><strong>Consent Management:</strong> Optional functional or analytics preferences can be managed via our <Link href="/cookie-preferences" className="text-indigo-600 dark:text-purple-400 underline">Cookie Preferences</Link> manager.</li>
             </ul>
           </section>
 
@@ -149,8 +149,8 @@ export default function PrivacyPolicyPage() {
               Depending on customer configuration, data may be processed by third-party services:
             </p>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs border border-slate-200 dark:border-slate-800 rounded-lg">
-                <thead className="bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl text-slate-900 dark:text-white">
+              <table className="w-full text-xs border border-slate-200 dark:border-purple-900/35 rounded-lg">
+                <thead className="bg-slate-100 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-900 dark:text-white">
                   <tr>
                     <th className="p-2.5 text-left font-semibold">Subprocessor</th>
                     <th className="p-2.5 text-left font-semibold">Role / Service</th>
@@ -183,7 +183,7 @@ export default function PrivacyPolicyPage() {
               8. Data Retention &amp; Archival Policies
             </h2>
             <p>
-              Customer content and audit records are retained for the duration of the active subscription agreement. Customers may initiate self-service data exports or submit account deletion requests through our <Link href="/settings/data-export" className="text-indigo-600 dark:text-indigo-400 underline">Account Settings</Link>.
+              Customer content and audit records are retained for the duration of the active subscription agreement. Customers may initiate self-service data exports or submit account deletion requests through our <Link href="/settings/data-export" className="text-indigo-600 dark:text-purple-400 underline">Account Settings</Link>.
             </p>
           </section>
 
@@ -210,10 +210,10 @@ export default function PrivacyPolicyPage() {
             <p>
               For privacy inquiries or compliance questions:
             </p>
-            <div className="p-4 rounded-xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-xs space-y-1 font-mono">
+            <div className="p-4 rounded-xl bg-slate-100/70 dark:bg-[#120924]/60 border border-slate-200 dark:border-purple-900/35 text-xs space-y-1 font-mono">
               <p><strong>BrandGuard AI Privacy Office</strong></p>
               {/* [[TO BE COMPLETED]] */}
-              <p>Inquiries: via our <Link href="/contact" className="text-indigo-600 dark:text-indigo-400 hover:underline">Contact page</Link></p>
+              <p>Inquiries: via our <Link href="/contact" className="text-indigo-600 dark:text-purple-400 hover:underline">Contact page</Link></p>
               <p>Support details will be published at launch.</p>
             </div>
           </section>

@@ -9,7 +9,7 @@ export interface ThreatCategoryPieChartProps {
   height?: number;
 }
 
-const DEFAULT_COLORS = ['#EF4444', '#F59E0B', '#6366F1', '#8B5CF6', '#10B981'];
+const DEFAULT_COLORS = ['#EF4444', '#F59E0B', '#A855F7', '#D946EF', '#10B981'];
 
 export default function ThreatCategoryPieChart({
   data,
@@ -43,7 +43,7 @@ export default function ThreatCategoryPieChart({
             ))}
           </Pie>
           <Tooltip 
-            contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '11px', color: '#fff' }}
+            contentStyle={{ backgroundColor: '#120924', borderColor: 'rgba(168, 85, 247, 0.3)', borderRadius: '8px', fontSize: '11px', color: '#fff' }}
           />
         </PieChart>
       </ResponsiveContainer>

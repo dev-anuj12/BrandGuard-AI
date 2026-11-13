@@ -29,7 +29,7 @@ export default function PublicHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 dark:bg-[#060913]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
+    <header className="sticky top-0 z-40 bg-white/90 dark:bg-[#090414]/85 backdrop-blur-xl border-b border-slate-200/80 dark:border-purple-900/30 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <BrandLogo size="md" showSubtitle={true} href="/" />
 
@@ -43,8 +43,8 @@ export default function PublicHeader() {
                 href={item.href}
                 className={`transition-colors py-1 px-2.5 rounded-lg ${
                   isActive
-                    ? 'text-indigo-600 dark:text-white bg-indigo-50/80 dark:bg-indigo-950/40 font-bold border border-indigo-200/60 dark:border-indigo-800/60 shadow-2xs'
-                    : 'hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-800/40'
+                    ? 'text-purple-600 dark:text-white bg-purple-50/80 dark:bg-[#1A0D30] font-bold border border-purple-200/60 dark:border-purple-500/30 shadow-2xs'
+                    : 'hover:text-purple-600 dark:hover:text-purple-300 hover:bg-slate-100/60 dark:hover:bg-purple-950/40'
                 }`}
               >
                 {item.label}
@@ -57,21 +57,21 @@ export default function PublicHeader() {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 border border-transparent dark:hover:border-slate-700/60 transition"
+            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-purple-950/50 border border-transparent dark:hover:border-purple-800/40 transition"
             title="Toggle theme"
             aria-label="Toggle theme"
           >
             {resolvedTheme === 'dark' ? (
               <Sun className="w-4 h-4 text-amber-400" />
             ) : (
-              <Moon className="w-4 h-4 text-indigo-600" />
+              <Moon className="w-4 h-4 text-purple-600" />
             )}
           </button>
 
           {user ? (
             <Link
               href={`/dashboard/${user.role?.toLowerCase() || 'creator'}`}
-              className="inline-flex px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-sm shadow-indigo-500/25 border border-indigo-400/30 transition items-center gap-1.5"
+              className="inline-flex px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-[#782BDB] via-[#9333EA] to-[#D946EF] hover:from-[#6722BF] hover:to-[#C026D3] text-white shadow-sm shadow-purple-900/30 border border-purple-400/30 transition items-center gap-1.5"
             >
               <span>Workspace</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -86,7 +86,7 @@ export default function PublicHeader() {
               </Link>
               <Link
                 href="/register"
-                className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-sm shadow-indigo-500/25 border border-indigo-400/30 transition"
+                className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-[#782BDB] via-[#9333EA] to-[#D946EF] hover:from-[#6722BF] hover:to-[#C026D3] text-white shadow-sm shadow-purple-900/30 border border-purple-400/30 transition"
               >
                 Get Started
               </Link>
@@ -96,7 +96,7 @@ export default function PublicHeader() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+            className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-950/50 transition"
             aria-label="Toggle mobile navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -107,14 +107,14 @@ export default function PublicHeader() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-xl px-4 py-4 space-y-3 animate-in fade-in slide-in-from-top-2">
+        <div className="md:hidden border-t border-slate-200 dark:border-purple-900/40 bg-white/95 dark:bg-[#0E0620]/95 backdrop-blur-xl px-4 py-4 space-y-3 animate-in fade-in slide-in-from-top-2">
           <nav className="flex flex-col space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
             {navLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-purple-950/50 transition"
               >
                 {item.label}
               </Link>
@@ -122,7 +122,7 @@ export default function PublicHeader() {
             <Link
               href="/pricing"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition text-indigo-600 dark:text-indigo-400 font-bold"
+              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-purple-950/50 transition text-purple-600 dark:text-purple-400 font-bold"
             >
               Enterprise Pricing
             </Link>

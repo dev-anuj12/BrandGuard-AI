@@ -59,7 +59,7 @@ interface KpiCardProps {
 
 function KpiCard({ label, value, icon, colorClass, bgClass }: KpiCardProps) {
   return (
-    <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all p-5 flex items-center gap-4 shadow-sm">
+    <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all p-5 flex items-center gap-4 shadow-sm">
       <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center ${bgClass}`}>
         <span className={colorClass}>{icon}</span>
       </div>
@@ -120,7 +120,7 @@ function ActionPanel({ item, onDecision, onRejectRequest, loading }: ActionPanel
     item.status?.toLowerCase().includes('changes requested');
 
   return (
-    <div className="px-4 py-4 bg-slate-50/80 dark:bg-[#080C16] border-t border-slate-200 dark:border-slate-700">
+    <div className="px-4 py-4 bg-slate-50/80 dark:bg-[#150A26] border-t border-slate-200 dark:border-purple-800/40">
       <div className="max-w-3xl space-y-3">
         {/* Comment */}
         <div>
@@ -133,7 +133,7 @@ function ActionPanel({ item, onDecision, onRejectRequest, loading }: ActionPanel
             onChange={(e) => setComments(e.target.value)}
             disabled={isDecided || loading}
             placeholder={isDecided ? 'Decision already recorded.' : 'Add comments or feedback for this submission (min 10 chars for changes/reject)…'}
-            className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"
+            className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#150A26] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"
           />
         </div>
 
@@ -175,7 +175,7 @@ function ActionPanel({ item, onDecision, onRejectRequest, loading }: ActionPanel
 
             <Link
               href={`/review/${item.id}`}
-              className="ml-auto inline-flex items-center gap-1.5 text-sm text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+              className="ml-auto inline-flex items-center gap-1.5 text-sm text-indigo-600 dark:text-purple-400 hover:underline font-medium"
             >
               <Eye className="w-4 h-4" />
               Full Review
@@ -191,7 +191,7 @@ function ActionPanel({ item, onDecision, onRejectRequest, loading }: ActionPanel
             </span>
             <Link
               href={`/review/${item.id}`}
-              className="ml-auto inline-flex items-center gap-1.5 text-sm text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+              className="ml-auto inline-flex items-center gap-1.5 text-sm text-indigo-600 dark:text-purple-400 hover:underline font-medium"
             >
               <Eye className="w-4 h-4" />
               View Review
@@ -334,7 +334,7 @@ export default function ManagerDashboardPage() {
             label="Verified Items"
             value={kpiVerified}
             icon={<Award className="w-6 h-6" />}
-            colorClass="text-indigo-600 dark:text-indigo-400"
+            colorClass="text-indigo-600 dark:text-purple-400"
             bgClass="bg-indigo-50 dark:bg-indigo-900/30"
           />
           <KpiCard
@@ -363,12 +363,12 @@ export default function ManagerDashboardPage() {
               placeholder="Search by title…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#150A26] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           {/* Filter tabs */}
-          <div className="flex items-center gap-1 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-slate-100 dark:bg-[#150A26] border border-slate-200 dark:border-purple-800/40">
             <Filter className="w-4 h-4 text-slate-500 dark:text-slate-400 ml-1 mr-0.5" />
             {tabs.map((tab) => (
               <button
@@ -376,7 +376,7 @@ export default function ManagerDashboardPage() {
                 onClick={() => setActiveTab(tab.key)}
                 className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                   activeTab === tab.key
-                    ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                    ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-purple-400 shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
@@ -399,7 +399,7 @@ export default function ManagerDashboardPage() {
         </div>
 
         {/* ── Table / States ─────────────────────────────────────────────────── */}
-        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all shadow-sm overflow-hidden">
+        <div className="rounded-2xl border border-slate-200/80 dark:border-purple-900/35 bg-white dark:bg-[#120924]/85 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all shadow-sm overflow-hidden">
 
           {loading ? (
             <div className="p-4">
@@ -418,7 +418,7 @@ export default function ManagerDashboardPage() {
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
-                <thead className="bg-slate-50/80 dark:bg-[#080C16]">
+                <thead className="bg-slate-50/80 dark:bg-[#150A26]">
                   <tr>
                     {['Title', 'Status', 'Channel', 'Compliance Score', 'Submitted', ''].map(
                       (col, i) => (
@@ -492,7 +492,7 @@ export default function ManagerDashboardPage() {
 
                           {/* Expand toggle */}
                           <td className="px-4 py-3 whitespace-nowrap text-right">
-                            <span className="inline-flex items-center gap-1 text-xs font-medium text-indigo-600 dark:text-indigo-400 group-hover:underline">
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-indigo-600 dark:text-purple-400 group-hover:underline">
                               {isExpanded ? (
                                 <>
                                   <ChevronUp className="w-4 h-4" /> Collapse

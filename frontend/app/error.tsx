@@ -23,7 +23,7 @@ export default function GlobalError({
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-[#070A10] dark:to-slate-900 flex flex-col items-center justify-center px-4 text-center">
       <Link href="/" className="flex items-center gap-2 mb-10 group">
-        <ShieldCheck className="w-8 h-8 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform" aria-hidden="true" />
+        <ShieldCheck className="w-8 h-8 text-indigo-600 dark:text-purple-400 group-hover:scale-110 transition-transform" aria-hidden="true" />
         <span className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">BrandGuard AI</span>
       </Link>
 
@@ -53,7 +53,7 @@ export default function GlobalError({
         </button>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-semibold border border-slate-200 dark:border-slate-800/80 transition"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl hover:bg-slate-50 dark:hover:bg-purple-950/40 text-slate-800 dark:text-slate-200 text-sm font-semibold border border-slate-200 dark:border-purple-900/35 transition"
         >
           Go to Home
         </Link>

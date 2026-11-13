@@ -60,7 +60,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 antialiased selection:bg-indigo-600 selection:text-white font-sans">
+      <body className="min-h-screen bg-slate-50 dark:bg-[#090414] text-slate-900 dark:text-slate-100 antialiased selection:bg-indigo-600 selection:text-white font-sans">
         {/* Skip to Main Content Link for Keyboard Accessibility (WCAG 2.2 AA) */}
         <a
           href="#main-content"

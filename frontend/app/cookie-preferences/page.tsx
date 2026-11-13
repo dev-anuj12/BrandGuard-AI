@@ -52,15 +52,15 @@ export default function CookiePreferencesPage() {
     >
       <div className="max-w-2xl space-y-6">
         {preferences.consentTimestamp && (
-          <div className="p-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-xs flex items-center justify-between">
+          <div className="p-4 rounded-xl bg-indigo-50 dark:bg-[#1A0D30] border border-indigo-200 dark:border-purple-500/30 text-xs flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
               <span>Consent recorded on: <strong>{new Date(preferences.consentTimestamp).toLocaleString()}</strong></span>
             </div>
             <button
               type="button"
               onClick={handleResetToDefault}
-              className="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1 font-medium"
+              className="text-indigo-600 dark:text-purple-400 hover:underline inline-flex items-center gap-1 font-medium"
             >
               <RefreshCw className="w-3 h-3" />
               <span>Reset</span>
@@ -70,11 +70,11 @@ export default function CookiePreferencesPage() {
 
         <div className="space-y-4">
           {/* Necessary */}
-          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 flex items-start justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-sm text-slate-900 dark:text-white">Strictly Necessary Storage</span>
-                <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-100 dark:bg-[#0D1224]/90 text-slate-600 dark:text-slate-400">
+                <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-100 dark:bg-[#120924]/90 text-slate-600 dark:text-slate-400">
                   Always Active
                 </span>
               </div>
@@ -86,7 +86,7 @@ export default function CookiePreferencesPage() {
           </div>
 
           {/* Functional */}
-          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 flex items-start justify-between gap-4">
             <div className="space-y-1">
               <span className="font-semibold text-sm text-slate-900 dark:text-white">Functional Preferences</span>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -103,7 +103,7 @@ export default function CookiePreferencesPage() {
           </div>
 
           {/* Analytics */}
-          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 flex items-start justify-between gap-4">
             <div className="space-y-1">
               <span className="font-semibold text-sm text-slate-900 dark:text-white">Performance &amp; Telemetry</span>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -120,7 +120,7 @@ export default function CookiePreferencesPage() {
           </div>
 
           {/* Marketing */}
-          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 flex items-start justify-between gap-4">
             <div className="space-y-1">
               <span className="font-semibold text-sm text-slate-900 dark:text-white">Marketing &amp; Attribution</span>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">

@@ -10,7 +10,7 @@ interface AnalyticsPieChartProps {
   showLegend?: boolean;
 }
 
-const DEFAULT_COLORS = ['#6366F1', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#3B82F6'];
+const DEFAULT_COLORS = ['#A855F7', '#D946EF', '#10B981', '#F59E0B', '#EF4444', '#782BDB'];
 
 export default function AnalyticsPieChart({
   data,
@@ -43,7 +43,7 @@ export default function AnalyticsPieChart({
               <Cell key={`cell-${i}`} fill={colors[i % colors.length]} />
             ))}
           </Pie>
-          <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '12px', color: '#fff' }} />
+          <Tooltip contentStyle={{ backgroundColor: '#120924', borderColor: 'rgba(168, 85, 247, 0.3)', borderRadius: '8px', fontSize: '12px', color: '#fff' }} />
           {showLegend && (
             <Legend
               iconSize={8}

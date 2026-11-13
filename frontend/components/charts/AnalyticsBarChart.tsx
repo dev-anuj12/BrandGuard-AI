@@ -17,7 +17,7 @@ export default function AnalyticsBarChart({
   data,
   dataKey,
   xKey = 'name',
-  color = '#6366F1',
+  color = '#A855F7',
   name,
   height = 220,
   layout = 'horizontal',
@@ -38,7 +38,7 @@ export default function AnalyticsBarChart({
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} horizontal={false} />
             <XAxis type="number" stroke="#64748B" fontSize={11} />
             <YAxis type="category" dataKey={xKey} stroke="#64748B" fontSize={11} width={130} />
-            <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '12px', color: '#fff' }} />
+            <Tooltip contentStyle={{ backgroundColor: '#120924', borderColor: 'rgba(168, 85, 247, 0.3)', borderRadius: '8px', fontSize: '12px', color: '#fff' }} />
             <Bar dataKey={dataKey} name={name || dataKey} fill={color} radius={[0, 4, 4, 0]} />
           </BarChart>
         </ResponsiveContainer>
@@ -53,7 +53,7 @@ export default function AnalyticsBarChart({
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
           <XAxis dataKey={xKey} stroke="#64748B" fontSize={11} angle={-25} textAnchor="end" />
           <YAxis stroke="#64748B" fontSize={11} />
-          <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '12px', color: '#fff' }} />
+          <Tooltip contentStyle={{ backgroundColor: '#120924', borderColor: 'rgba(168, 85, 247, 0.3)', borderRadius: '8px', fontSize: '12px', color: '#fff' }} />
           <Bar dataKey={dataKey} name={name || dataKey} fill={color} radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>

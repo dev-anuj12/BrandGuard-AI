@@ -51,13 +51,13 @@ function ci(pair?: [number, number]): string {
 function MetricsRow({ label, m }: { label: string; m?: ModeMetrics }) {
   if (!m) {
     return (
-      <tr className="border-t border-slate-200 dark:border-slate-800">
+      <tr className="border-t border-slate-200 dark:border-purple-900/35">
         <td colSpan={6} className="text-slate-400 px-3 py-2 text-xs italic">No data</td>
       </tr>
     );
   }
   return (
-    <tr className="border-t border-slate-200 dark:border-slate-800 hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+    <tr className="border-t border-slate-200 dark:border-purple-900/35 hover:bg-slate-50/50 dark:hover:bg-purple-950/40/40">
       <td className="px-3 py-2.5 font-medium text-xs text-slate-800 dark:text-slate-200">{label}</td>
       <td className="px-3 py-2.5 text-xs tabular-nums text-slate-700 dark:text-slate-300 font-mono">
         {pct(m.precision)}{ci(m.precision_wilson_95)}
@@ -76,8 +76,8 @@ function MetricsRow({ label, m }: { label: string; m?: ModeMetrics }) {
 
 function ModeCard({ title, badgeText, data }: { title: string; badgeText: string; data?: ModeResult }) {
   return (
-    <div className="rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-indigo-500/30 transition-all overflow-hidden shadow-card">
-      <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+    <div className="rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm hover:border-indigo-500/30 transition-all overflow-hidden shadow-card">
+      <div className="p-4 border-b border-slate-100 dark:border-purple-900/35 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <BarChart2 className="w-4 h-4 text-indigo-500" />
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">{title}</h3>
@@ -87,7 +87,7 @@ function ModeCard({ title, badgeText, data }: { title: string; badgeText: string
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs">
           <thead>
-            <tr className="bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl text-slate-500 dark:text-slate-400 font-semibold border-b border-slate-100 dark:border-slate-800">
+            <tr className="bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl text-slate-500 dark:text-slate-400 font-semibold border-b border-slate-100 dark:border-purple-900/35">
               <th className="px-3 py-2">View</th>
               <th className="px-3 py-2">Precision (95% CI)</th>
               <th className="px-3 py-2">Recall (95% CI)</th>
@@ -158,19 +158,19 @@ export default function BenchmarkPage() {
 
         {data && !data.error && (
           <>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-mono p-3 rounded-xl bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/70 dark:border-slate-800">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-mono p-3 rounded-xl bg-slate-50 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/70 dark:border-purple-900/35">
               {data.split && <span>Split: <strong className="text-slate-900 dark:text-white">{data.split}</strong></span>}
               <span>•</span>
               {data.total_items && <span>Total Samples (N): <strong className="text-slate-900 dark:text-white">{data.total_items}</strong></span>}
               <span>•</span>
-              {data.git_commit && <span>Commit: <code className="text-indigo-600 dark:text-indigo-400">{data.git_commit.slice(0, 8)}</code></span>}
+              {data.git_commit && <span>Commit: <code className="text-indigo-600 dark:text-purple-400">{data.git_commit.slice(0, 8)}</code></span>}
             </div>
 
             {/* Verified Rules-Only Scorecard */}
             <div className="rounded-2xl border border-indigo-200 dark:border-indigo-900/60 bg-gradient-to-br from-indigo-50/70 via-white to-purple-50/40 dark:from-indigo-950/40 dark:via-slate-900 dark:to-purple-950/20 p-6 space-y-4 shadow-card">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 dark:border-indigo-900/60 pb-3">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                  <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-purple-400">
                     Primary Verified Baseline
                   </span>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -181,32 +181,32 @@ export default function BenchmarkPage() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">Precision</span>
-                  <span className="text-xl font-black text-indigo-600 dark:text-indigo-400 font-mono">0.909</span>
+                  <span className="text-xl font-black text-indigo-600 dark:text-purple-400 font-mono">0.909</span>
                   <span className="text-[10px] text-slate-400 font-mono block">[72.2%, 97.5%]</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">Recall</span>
                   <span className="text-xl font-black text-purple-600 dark:text-purple-400 font-mono">0.625</span>
                   <span className="text-[10px] text-slate-400 font-mono block">[45.3%, 77.1%]</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">F1 Score</span>
                   <span className="text-xl font-black text-emerald-600 dark:text-emerald-400 font-mono">0.741</span>
                   <span className="text-[10px] text-slate-400 font-mono block">Harmonic Mean</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">FPR</span>
                   <span className="text-xl font-black text-amber-600 dark:text-amber-400 font-mono">0.250</span>
                   <span className="text-[10px] text-slate-400 font-mono block">False Positives</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">FNR</span>
                   <span className="text-xl font-black text-rose-600 dark:text-rose-400 font-mono">0.375</span>
                   <span className="text-[10px] text-slate-400 font-mono block">False Negatives</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200 dark:border-purple-900/35 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">Samples</span>
                   <span className="text-xl font-black text-slate-800 dark:text-slate-200 font-mono">N = 40</span>
                   <span className="text-[10px] text-slate-400 font-mono block">Held-out Split</span>
@@ -228,7 +228,7 @@ export default function BenchmarkPage() {
 
             <div className="rounded-2xl border border-indigo-200 dark:border-indigo-900/60 bg-indigo-50/50 dark:bg-indigo-950/30 p-4">
               <div className="flex gap-2.5 items-start">
-                <CheckCircle2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400 mt-0.5 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-indigo-600 dark:text-purple-400 mt-0.5 shrink-0" />
                 <div className="text-xs text-slate-700 dark:text-slate-300 space-y-1">
                   <p className="font-bold text-slate-900 dark:text-white">Methodological Constraints &amp; Limitations</p>
                   <ul className="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-slate-400">

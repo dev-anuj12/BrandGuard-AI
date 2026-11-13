@@ -52,7 +52,7 @@ export default function DeleteAccountPage() {
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-rose-200 dark:border-rose-900/40 space-y-4 shadow-sm">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#120924]/90 backdrop-blur-xl border border-rose-200 dark:border-rose-900/40 space-y-4 shadow-sm">
           <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-900/40 text-xs text-rose-800 dark:text-rose-300 space-y-2">
             <div className="flex items-center gap-2 font-bold">
               <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
@@ -74,14 +74,14 @@ export default function DeleteAccountPage() {
                 value={confirmText}
                 onChange={(e) => setConfirmText(e.target.value)}
                 placeholder="DELETE"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 font-mono"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-purple-900/35 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 font-mono"
               />
             </div>
 
             <div className="flex items-center justify-between pt-2">
               <Link
                 href="/settings"
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#0D1224]/90 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition"
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#120924]/90 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition"
               >
                 Cancel &amp; Keep Account
               </Link>

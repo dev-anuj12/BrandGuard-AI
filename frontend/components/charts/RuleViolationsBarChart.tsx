@@ -25,9 +25,9 @@ export default function RuleViolationsBarChart({ data, height = 240 }: RuleViola
           <XAxis type="number" stroke="#64748B" fontSize={11} />
           <YAxis type="category" dataKey="name" stroke="#64748B" fontSize={11} width={130} />
           <Tooltip 
-            contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '12px', color: '#fff' }}
+            contentStyle={{ backgroundColor: '#120924', borderColor: 'rgba(168, 85, 247, 0.3)', borderRadius: '8px', fontSize: '12px', color: '#fff' }}
           />
-          <Bar dataKey="count" name="Violations" fill="#6366F1" radius={[0, 4, 4, 0]} />
+          <Bar dataKey="count" name="Violations" fill="#A855F7" radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

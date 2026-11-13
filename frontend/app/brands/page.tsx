@@ -106,10 +106,10 @@ export default function BrandsPage() {
     >
       <div className="space-y-6 max-w-7xl mx-auto">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm shadow-card">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm shadow-card">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+              <span className="p-2 rounded-xl bg-indigo-50 dark:bg-[#1A0D30] text-indigo-600 dark:text-purple-400">
                 <Building2 className="w-5 h-5" />
               </span>
               <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -125,7 +125,7 @@ export default function BrandsPage() {
             <button
               onClick={loadBrands}
               disabled={loading}
-              className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              className="p-2 rounded-xl border border-slate-200 dark:border-purple-900/35 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-purple-950/40 transition"
               title="Refresh brands"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -158,7 +158,7 @@ export default function BrandsPage() {
                 </span>
                 <p className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <span>{activeBrand.name}</span>
-                  <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+                  <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-purple-300">
                     {activeBrand.code}
                   </span>
                 </p>
@@ -174,7 +174,7 @@ export default function BrandsPage() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-48 rounded-2xl bg-slate-100 dark:bg-slate-800 animate-pulse" />
+              <div key={i} className="h-48 rounded-2xl bg-slate-100 dark:bg-[#150A26] animate-pulse" />
             ))}
           </div>
         ) : brands.length === 0 ? (
@@ -192,16 +192,16 @@ export default function BrandsPage() {
               return (
                 <div
                   key={brand.id}
-                  className={`p-5 rounded-2xl bg-white dark:bg-slate-900 border transition-all duration-200 flex flex-col justify-between ${
+                  className={`p-5 rounded-2xl bg-white dark:bg-[#120924] border transition-all duration-200 flex flex-col justify-between ${
                     isActive
                       ? 'border-indigo-500 dark:border-indigo-500 ring-2 ring-indigo-500/20 shadow-lg'
-                      : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 shadow-card'
+                      : 'border-slate-200 dark:border-purple-900/35 hover:border-slate-300 dark:hover:border-slate-700 shadow-card'
                   }`}
                 >
                   <div className="space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center font-bold text-sm text-indigo-600 dark:text-indigo-400">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-[#1A0D30] border border-indigo-200 dark:border-purple-500/30 flex items-center justify-center font-bold text-sm text-indigo-600 dark:text-purple-400">
                           {brand.name.charAt(0)}
                         </div>
                         <div>
@@ -224,7 +224,7 @@ export default function BrandsPage() {
                       {brand.description || 'Enterprise sub-brand workspace with dedicated compliance policies and asset catalog.'}
                     </p>
 
-                    <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/80 text-[11px] text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-purple-900/35 text-[11px] text-slate-500 dark:text-slate-400">
                       <span className="font-semibold text-slate-700 dark:text-slate-300">Industry:</span>
                       <span>{brand.industry}</span>
                     </div>
@@ -236,8 +236,8 @@ export default function BrandsPage() {
                       disabled={isActive}
                       className={`w-full py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
                         isActive
-                          ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-default'
-                          : 'bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/60 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800'
+                          ? 'bg-slate-100 dark:bg-[#150A26] text-slate-500 dark:text-slate-400 cursor-default'
+                          : 'bg-indigo-50 hover:bg-indigo-100 dark:bg-[#1A0D30] dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-purple-300 border border-indigo-200 dark:border-purple-500/30'
                       }`}
                     >
                       {isActive ? (
@@ -261,8 +261,8 @@ export default function BrandsPage() {
         {/* Create Brand Modal */}
         {showModal && (
           <div className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm rounded-2xl p-6 shadow-dropdown space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div className="w-full max-w-md bg-white dark:bg-[#120924]/85 backdrop-blur-xl border border-slate-200/80 dark:border-purple-900/35 shadow-sm rounded-2xl p-6 shadow-dropdown space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-purple-900/35">
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   Add Brand Workspace
                 </h3>
@@ -285,7 +285,7 @@ export default function BrandsPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. BrandGuard Wealth"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -299,7 +299,7 @@ export default function BrandsPage() {
                     value={code}
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
                     placeholder="e.g. BGAI-WLTH"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2.5 font-mono text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3.5 py-2.5 font-mono text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -312,7 +312,7 @@ export default function BrandsPage() {
                     value={industry}
                     onChange={(e) => setIndustry(e.target.value)}
                     placeholder="e.g. Wealth Management"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -325,7 +325,7 @@ export default function BrandsPage() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Describe target audience and key brand positioning..."
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 resize-none"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-purple-900/35 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 resize-none"
                   />
                 </div>
 
