@@ -341,7 +341,7 @@ export default function LandingPage() {
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Digital Perimeter Defense</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Autonomous reconnaissance for lookalike phishing domains, Cyrillic homoglyph mimics, social impersonation, and counterfeit listings.
+              On-demand inspection for lookalike phishing domains, Cyrillic homoglyph mimics, social impersonation, and counterfeit listings.
             </p>
           </div>
 
@@ -568,7 +568,7 @@ export default function LandingPage() {
           <div className="space-y-3">
             <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 dark:text-indigo-400">Enterprise Security</span>
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              Complete Auditability &amp; Role-Based Access Control
+              Structured Audit Logging &amp; Role-Based Access Control
             </h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm">
               Every status transition, content modification, and managerial sign-off is logged in an audit ledger.

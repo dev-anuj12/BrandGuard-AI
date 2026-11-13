@@ -109,12 +109,7 @@ export default function AnalyticsDashboardPage() {
         score: item.score || 0,
         submissions: item.violations || 0,
       }))
-    : [
-        { name: 'Month -3', score: 72, submissions: 8 },
-        { name: 'Month -2', score: 79, submissions: 14 },
-        { name: 'Month -1', score: 85, submissions: 22 },
-        { name: 'Current', score: data?.average_compliance_score ? Math.round(data.average_compliance_score) : 91, submissions: 28 },
-      ];
+    : [];
 
   const avgScore = data?.average_review_score !== undefined && data?.average_review_score !== null
     ? Math.round(data.average_review_score)

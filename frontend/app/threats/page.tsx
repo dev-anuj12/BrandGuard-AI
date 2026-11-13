@@ -80,7 +80,7 @@ We confirm under penalty of perjury that:
 3. This notice is issued in good faith with the expectation of immediate remedial suspension within twenty-four (24) hours of receipt.
 
 Signed,
-BrandGuard AI Autonomous Brand Protection & Legal Governance Operations
+BrandGuard AI Perimeter Threat Inspection & Legal Governance Operations
 On behalf of ${brandName}`;
   };
 

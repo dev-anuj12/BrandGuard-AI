@@ -434,7 +434,8 @@ def init_db(db: Session = None) -> None:
                 channel="Social Media Campaign",
                 target_audience="Retail Investors & Young Professionals",
                 status=ContentStatus.AI_REVIEW_COMPLETED,
-                creator_id=users[1].id
+                creator_id=users[1].id,
+                organization="BrandGuard Demo Enterprise"
             )
             db.add(sample_content)
             db.commit()

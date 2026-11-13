@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { 
   ShieldCheck, AlertTriangle, CheckCircle2, ArrowLeft, Sparkles, 
   RefreshCw, Check, X, Edit3, History, BookOpen, Search, Send, FileCheck,
-  Download, UserCheck, CheckSquare, MessageSquare
+  Download, UserCheck, CheckSquare, MessageSquare, Printer
 } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout';
 import { Button } from '../../../components/ui/Button';
@@ -224,6 +224,11 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                 <span className="text-xs text-slate-500 dark:text-slate-400 font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
                   v{revisions.length}
                 </span>
+                {(content.title?.includes('[Demo') || content.organization === 'BrandGuard Demo Enterprise') && (
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                    Sample Demo Data
+                  </span>
+                )}
               </div>
               <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">
                 {content.title}
@@ -240,6 +245,15 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
               leftIcon={<Download className="w-3.5 h-3.5 text-indigo-500" />}
             >
               Export CSV Report
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => typeof window !== 'undefined' && window.print()}
+              leftIcon={<Printer className="w-3.5 h-3.5 text-slate-500" />}
+            >
+              Print / Save PDF
             </Button>
 
             <Button

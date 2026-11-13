@@ -71,3 +71,14 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Print Styles for Governance Audit Reports */
+@media print {
+  header, nav, aside, button, .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+}
