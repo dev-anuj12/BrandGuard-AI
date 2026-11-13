@@ -76,7 +76,7 @@ function ResetPasswordContent() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
       <div className="max-w-md w-full mx-auto flex items-center justify-between">
         <BrandLogo size="sm" showSubtitle={false} href="/" />
         <button
@@ -102,7 +102,7 @@ function ResetPasswordContent() {
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card space-y-4">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-xl shadow-black/10 space-y-4">
           {completed ? (
             <div className="space-y-4 text-center py-2">
               <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
@@ -254,7 +254,7 @@ function ResetPasswordContent() {
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] flex items-center justify-center text-xs text-slate-400">Loading reset password...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex items-center justify-center text-xs text-slate-400">Loading reset password...</div>}>
       <ResetPasswordContent />
     </Suspense>
   );

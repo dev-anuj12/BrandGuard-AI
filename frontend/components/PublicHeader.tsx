@@ -29,7 +29,7 @@ export default function PublicHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/85 dark:bg-[#0B0F19]/85 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
+    <header className="sticky top-0 z-40 bg-white/90 dark:bg-[#060913]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <BrandLogo size="md" showSubtitle={true} href="/" />
 
@@ -41,10 +41,10 @@ export default function PublicHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`transition ${
+                className={`transition-colors py-1 px-2.5 rounded-lg ${
                   isActive
-                    ? 'text-indigo-600 dark:text-indigo-400 font-bold'
-                    : 'hover:text-indigo-600 dark:hover:text-white'
+                    ? 'text-indigo-600 dark:text-white bg-indigo-50/80 dark:bg-indigo-950/40 font-bold border border-indigo-200/60 dark:border-indigo-800/60 shadow-2xs'
+                    : 'hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-800/40'
                 }`}
               >
                 {item.label}
@@ -57,7 +57,7 @@ export default function PublicHeader() {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 border border-transparent dark:hover:border-slate-700/60 transition"
             title="Toggle theme"
             aria-label="Toggle theme"
           >
@@ -71,7 +71,7 @@ export default function PublicHeader() {
           {user ? (
             <Link
               href={`/dashboard/${user.role?.toLowerCase() || 'creator'}`}
-              className="inline-flex px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition items-center gap-1.5"
+              className="inline-flex px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-sm shadow-indigo-500/25 border border-indigo-400/30 transition items-center gap-1.5"
             >
               <span>Workspace</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -86,7 +86,7 @@ export default function PublicHeader() {
               </Link>
               <Link
                 href="/register"
-                className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition"
+                className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-sm shadow-indigo-500/25 border border-indigo-400/30 transition"
               >
                 Get Started
               </Link>

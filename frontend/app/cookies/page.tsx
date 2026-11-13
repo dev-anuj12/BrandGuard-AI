@@ -31,7 +31,7 @@ export default function CookiePolicyPage() {
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">2. Storage Technologies in Use</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-xs border border-slate-200 dark:border-slate-800 rounded-lg">
-              <thead className="bg-slate-100 dark:bg-slate-900/60 text-slate-900 dark:text-white">
+              <thead className="bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl text-slate-900 dark:text-white">
                 <tr>
                   <th className="p-2.5 text-left font-semibold">Key / Identifier</th>
                   <th className="p-2.5 text-left font-semibold">Classification</th>

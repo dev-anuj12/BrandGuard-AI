@@ -287,7 +287,7 @@ export default function AnalyticsDashboardPage() {
           <div className="space-y-3">
             {/* Top Row: Pipeline Metrics */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Total Submissions</span>
                 <div className="text-xl font-bold text-slate-900 dark:text-white mt-1">
                   {totalReviewed}
@@ -295,7 +295,7 @@ export default function AnalyticsDashboardPage() {
                 <span className="text-[10px] text-slate-400 mt-0.5 block">Database-backed volume</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Approved Assets</span>
                 <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
                   {approvedCount}
@@ -303,7 +303,7 @@ export default function AnalyticsDashboardPage() {
                 <span className="text-[10px] text-emerald-500/80 mt-0.5 block">Certified for release</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Pending Reviews</span>
                 <div className="text-xl font-bold text-amber-500 mt-1">
                   {pendingCount}
@@ -311,7 +311,7 @@ export default function AnalyticsDashboardPage() {
                 <span className="text-[10px] text-amber-500/80 mt-0.5 block">In human approval queue</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Rejected / Returned</span>
                 <div className="text-xl font-bold text-rose-500 mt-1">
                   {rejectedCount}
@@ -319,7 +319,7 @@ export default function AnalyticsDashboardPage() {
                 <span className="text-[10px] text-rose-500/80 mt-0.5 block">Requires author revision</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Overall Compliance</span>
                 <div className="text-xl font-bold text-indigo-600 dark:text-indigo-400 mt-1">
                   {avgScore}%
@@ -330,7 +330,7 @@ export default function AnalyticsDashboardPage() {
 
             {/* Bottom Row: Violation & Operational Metrics */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Violations Flagged</span>
                 <div className="text-xl font-bold text-slate-900 dark:text-white mt-1">
                   {totalViolations}
@@ -338,7 +338,7 @@ export default function AnalyticsDashboardPage() {
                 <span className="text-[10px] text-slate-400 mt-0.5 block">Guideline infractions</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Critical Severity</span>
                 <div className="text-xl font-bold text-rose-600 dark:text-rose-400 mt-1">
                   {criticalViolations}
@@ -346,7 +346,7 @@ export default function AnalyticsDashboardPage() {
                 <span className="text-[10px] text-rose-500/80 mt-0.5 block">High regulatory risk</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Avg Review Turnaround</span>
                 <div className="text-xl font-bold text-blue-600 dark:text-blue-400 mt-1">
                   {avgReviewTime}
@@ -354,7 +354,7 @@ export default function AnalyticsDashboardPage() {
                 <span className="text-[10px] text-blue-500/80 mt-0.5 block">Submission to decision</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">AI Remediation Adoption</span>
                 <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
                   {acceptanceRate}%
@@ -362,7 +362,7 @@ export default function AnalyticsDashboardPage() {
                 <span className="text-[10px] text-emerald-500/80 mt-0.5 block">{suggestionsAccepted} / {suggestionsGenerated} applied</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div className="p-3.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Active Brand Rules</span>
                 <div className="text-xl font-bold text-purple-600 dark:text-purple-400 mt-1">
                   {data?.active_guidelines_count ?? data?.total_guidelines ?? '—'}
@@ -376,7 +376,7 @@ export default function AnalyticsDashboardPage() {
         {/* Section 1: Monthly Compliance Trends & Brand-Wise Performance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Monthly Compliance Trends */}
-          <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
@@ -411,7 +411,7 @@ export default function AnalyticsDashboardPage() {
           </div>
 
           {/* Multi-Brand Performance */}
-          <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
@@ -482,7 +482,7 @@ export default function AnalyticsDashboardPage() {
         {/* Section 2: Most Frequently Violated Guidelines & Violation Categories */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Most Frequently Violated Guidelines */}
-          <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
@@ -537,7 +537,7 @@ export default function AnalyticsDashboardPage() {
           </div>
 
           {/* Violations by Category */}
-          <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
@@ -567,7 +567,7 @@ export default function AnalyticsDashboardPage() {
         {/* Section 3: Status Breakdown & Severity Distribution */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Content Governance Status */}
-          <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
@@ -594,7 +594,7 @@ export default function AnalyticsDashboardPage() {
           </div>
 
           {/* Risk Severity Distribution */}
-          <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">

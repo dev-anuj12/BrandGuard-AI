@@ -76,8 +76,8 @@ export default function PricingPage() {
                 key={tier.name}
                 className={`p-6 rounded-2xl flex flex-col justify-between gap-6 transition ${
                   tier.highlighted
-                    ? 'bg-white dark:bg-slate-900 border-2 border-indigo-600 dark:border-indigo-500 shadow-xl'
-                    : 'bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800'
+                    ? 'bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border-2 border-indigo-600 dark:border-indigo-500 shadow-xl'
+                    : 'bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800'
                 }`}
               >
                 <div className="space-y-4">
@@ -110,7 +110,7 @@ export default function PricingPage() {
                     className={`w-full py-2.5 rounded-xl text-xs font-semibold text-center transition block ${
                       tier.highlighted
                         ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm'
-                        : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200'
+                        : 'bg-slate-100 hover:bg-slate-200 dark:bg-[#0D1224]/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     Contact us for pricing &rarr;

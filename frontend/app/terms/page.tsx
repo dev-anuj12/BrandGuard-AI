@@ -34,7 +34,7 @@ export default function TermsOfServicePage() {
     >
       <div className="space-y-8 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         {sections.map(({ title, text }) => (
-          <section key={title} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
+          <section key={title} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-2">
             <h2 className="text-base font-bold text-slate-900 dark:text-white">{title}</h2>
             <p className="leading-relaxed">{text}</p>
           </section>

@@ -27,6 +27,15 @@ module.exports = {
           800: '#111827',
           900: '#0B0F19',
           950: '#070A10',
+          canvas: '#060913',
+          card: '#0D1224',
+          subtle: '#131B30',
+        },
+        electric: {
+          blue: '#38BDF8',
+          indigo: '#6366F1',
+          purple: '#A855F7',
+          cyan: '#06B6D4',
         }
       },
       fontFamily: {
@@ -34,9 +43,13 @@ module.exports = {
       },
       boxShadow: {
         'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08)',
-        'dropdown': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
-        'modal': '0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.15)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px -1px rgba(0, 0, 0, 0.08)',
+        'dropdown': '0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2)',
+        'modal': '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
+        'glow-sm': '0 0 15px -3px rgba(99, 102, 241, 0.2)',
+        'glow-md': '0 0 25px -5px rgba(99, 102, 241, 0.25)',
+        'glow-cyan': '0 0 20px -4px rgba(56, 189, 248, 0.2)',
+        'inner-light': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.08)',
       }
     },
   },

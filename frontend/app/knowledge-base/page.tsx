@@ -223,7 +223,7 @@ export default function KnowledgeBasePage() {
     >
       <div className="space-y-6 max-w-7xl mx-auto">
         {/* Top Header Card */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card">
           <div>
             <div className="flex items-center gap-2">
               <span className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
@@ -284,7 +284,7 @@ export default function KnowledgeBasePage() {
         {activeTab === 'guidelines' && (
           <div className="space-y-6">
             {canEdit && (
-              <form onSubmit={handleAddGuideline} className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card space-y-4">
+              <form onSubmit={handleAddGuideline} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-4">
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <Plus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   <span>Define Brand Policy Rule</span>
@@ -337,7 +337,7 @@ export default function KnowledgeBasePage() {
             {/* List */}
             <div className="space-y-3">
               {guidelines.map((g) => (
-                <div key={g.id} className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card flex items-start justify-between gap-4">
+                <div key={g.id} className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card flex items-start justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <SeverityBadge severity={g.severity} />
@@ -367,7 +367,7 @@ export default function KnowledgeBasePage() {
         {activeTab === 'facts' && (
           <div className="space-y-6">
             {canEdit && (
-              <form onSubmit={handleAddFact} className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card space-y-4">
+              <form onSubmit={handleAddFact} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-4">
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <Plus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   <span>Register Verified Claim or Company Fact</span>
@@ -408,7 +408,7 @@ export default function KnowledgeBasePage() {
 
             <div className="space-y-3">
               {facts.map((f) => (
-                <div key={f.id} className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card flex items-start justify-between gap-4">
+                <div key={f.id} className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                     <div>
@@ -430,7 +430,7 @@ export default function KnowledgeBasePage() {
         {activeTab === 'assets' && (
           <div className="space-y-6">
             {canEdit && (
-              <form onSubmit={handleAddAsset} className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card space-y-4">
+              <form onSubmit={handleAddAsset} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-4">
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <Plus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   <span>Register Approved Digital Asset</span>
@@ -482,7 +482,7 @@ export default function KnowledgeBasePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {assets.map((asset) => (
-                <div key={asset.id} className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card space-y-3 flex flex-col justify-between">
+                <div key={asset.id} className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-3 flex flex-col justify-between">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
@@ -519,7 +519,7 @@ export default function KnowledgeBasePage() {
 
         {/* ── TAB 4: Document Ingestion ── */}
         {activeTab === 'documents' && (
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card space-y-6">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-6">
             <div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Upload className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
@@ -597,7 +597,7 @@ export default function KnowledgeBasePage() {
         {/* ── TAB 5: Advanced Asset Validation ── */}
         {activeTab === 'validation' && (
           <div className="space-y-6">
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card space-y-6">
+            <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-card space-y-6">
               <div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <ShieldAlert className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
@@ -694,7 +694,7 @@ export default function KnowledgeBasePage() {
                     {valReport.checks.map((chk: any, idx: number) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 flex items-start gap-3 text-xs"
+                        className="p-3 rounded-xl bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 flex items-start gap-3 text-xs"
                       >
                         {chk.passed ? (
                           <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />

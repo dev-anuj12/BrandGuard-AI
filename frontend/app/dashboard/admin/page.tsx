@@ -196,7 +196,7 @@ export default function AdminDashboard() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Brand Rules</span>
                 <BookOpen className="w-4 h-4 text-indigo-500" />
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Active compliance rules</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Banned Terms</span>
                 <AlertOctagon className="w-4 h-4 text-rose-500" />
@@ -214,7 +214,7 @@ export default function AdminDashboard() {
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Zero-tolerance vocabulary</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Approved Sources</span>
                 <Link2 className="w-4 h-4 text-emerald-500" />
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
               <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 block">Verified evidence repository</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Team Members</span>
                 <Users className="w-4 h-4 text-amber-500" />
@@ -273,7 +273,7 @@ export default function AdminDashboard() {
         {activeTab === 'guidelines' && (
           <div className="space-y-6">
             {/* Create Guideline Card */}
-            <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
                 <Plus className="w-4 h-4 text-indigo-500" />
                 Create New Brand Guideline
@@ -350,10 +350,10 @@ export default function AdminDashboard() {
                 description="Create your first compliance guideline to enforce rules in the AI engine."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Title &amp; Rule</th>
                         <th className="py-3 px-4">Category</th>
@@ -397,7 +397,7 @@ export default function AdminDashboard() {
         {activeTab === 'banned' && (
           <div className="space-y-6">
             {/* Create Banned Card */}
-            <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
                 <Plus className="w-4 h-4 text-rose-500" />
                 Add Banned Expression / Term
@@ -484,10 +484,10 @@ export default function AdminDashboard() {
                 description="Add zero-tolerance words or phrases that the deterministic engine must flag."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Banned Term</th>
                         <th className="py-3 px-4">Suggested Replacement</th>
@@ -533,7 +533,7 @@ export default function AdminDashboard() {
         {activeTab === 'sources' && (
           <div className="space-y-6">
             {/* Create Source Card */}
-            <div className="p-5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+            <div className="p-5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
                 <Plus className="w-4 h-4 text-emerald-500" />
                 Register Approved Reference Source
@@ -605,10 +605,10 @@ export default function AdminDashboard() {
                 description="Register official URLs or statutory filings for citation cross-validation."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Source Title</th>
                         <th className="py-3 px-4">Classification</th>
@@ -659,10 +659,10 @@ export default function AdminDashboard() {
         {/* TAB 4: USERS */}
         {activeTab === 'users' && (
           <div className="space-y-4">
-            <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                  <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
                     <tr>
                       <th className="py-3 px-4">Member Name</th>
                       <th className="py-3 px-4">Email Address</th>
@@ -727,10 +727,10 @@ export default function AdminDashboard() {
                 description="Workflow transactions and decisions will appear here chronologically."
               />
             ) : (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
+              <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                    <thead className="bg-slate-50 dark:bg-[#080C16] border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="py-3 px-4">Timestamp</th>
                         <th className="py-3 px-4">Action</th>

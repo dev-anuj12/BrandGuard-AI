@@ -12,8 +12,8 @@ export default function OfflinePage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#070A10] flex flex-col items-center justify-center px-4 text-center">
-      <div className="w-16 h-16 rounded-2xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center mb-6 text-slate-600 dark:text-slate-400">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex flex-col items-center justify-center px-4 text-center">
+      <div className="w-16 h-16 rounded-2xl bg-slate-200 dark:bg-[#0D1224]/90 flex items-center justify-center mb-6 text-slate-600 dark:text-slate-400">
         <WifiOff className="w-8 h-8" />
       </div>
 
@@ -35,7 +35,7 @@ export default function OfflinePage() {
         </button>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition"
         >
           <Home className="w-4 h-4" />
           <span>Home</span>

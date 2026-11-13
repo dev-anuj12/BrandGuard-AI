@@ -31,34 +31,34 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const showLoading = isLoading || loading;
     // Base styles
     let baseStyles =
-      'inline-flex items-center justify-center font-medium transition-colors duration-150 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none select-none';
+      'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none select-none active:scale-[0.99]';
 
     // Variant styles
     let variantStyles = '';
     switch (variant) {
       case 'primary':
         variantStyles =
-          'bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 focus-visible:ring-indigo-500 shadow-sm dark:bg-indigo-600 dark:hover:bg-indigo-500';
+          'bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-600 hover:from-indigo-500 hover:via-indigo-500 hover:to-violet-500 text-white shadow-sm shadow-indigo-500/25 border border-indigo-400/30 focus-visible:ring-indigo-500';
         break;
       case 'secondary':
         variantStyles =
-          'bg-slate-100 text-slate-800 hover:bg-slate-200 active:bg-slate-300 focus-visible:ring-slate-400 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700';
+          'bg-slate-100 dark:bg-[#0E1424] text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 focus-visible:ring-slate-400';
         break;
       case 'outline':
         variantStyles =
-          'border border-slate-300 text-slate-700 hover:bg-slate-50 active:bg-slate-100 focus-visible:ring-slate-400 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800/80';
+          'border border-slate-300 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-800/70 hover:border-slate-400 dark:hover:border-slate-600 focus-visible:ring-indigo-500 shadow-2xs';
         break;
       case 'ghost':
         variantStyles =
-          'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 active:bg-slate-200 focus-visible:ring-slate-400 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/60';
+          'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/60 focus-visible:ring-slate-400';
         break;
       case 'destructive':
         variantStyles =
-          'bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800 focus-visible:ring-rose-500 shadow-sm dark:bg-rose-600 dark:hover:bg-rose-500';
+          'bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white shadow-sm shadow-rose-600/25 border border-rose-500/30 focus-visible:ring-rose-500';
         break;
       case 'icon':
         variantStyles =
-          'text-slate-500 hover:text-slate-900 hover:bg-slate-100 active:bg-slate-200 focus-visible:ring-slate-400 rounded-lg p-2 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800';
+          'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/70 focus-visible:ring-slate-400 rounded-xl p-2';
         break;
     }
 

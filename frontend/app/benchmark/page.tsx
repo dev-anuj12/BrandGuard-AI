@@ -76,7 +76,7 @@ function MetricsRow({ label, m }: { label: string; m?: ModeMetrics }) {
 
 function ModeCard({ title, badgeText, data }: { title: string; badgeText: string; data?: ModeResult }) {
   return (
-    <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 overflow-hidden shadow-card">
+    <div className="rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-indigo-500/30 transition-all overflow-hidden shadow-card">
       <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <BarChart2 className="w-4 h-4 text-indigo-500" />
@@ -87,7 +87,7 @@ function ModeCard({ title, badgeText, data }: { title: string; badgeText: string
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs">
           <thead>
-            <tr className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-semibold border-b border-slate-100 dark:border-slate-800">
+            <tr className="bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl text-slate-500 dark:text-slate-400 font-semibold border-b border-slate-100 dark:border-slate-800">
               <th className="px-3 py-2">View</th>
               <th className="px-3 py-2">Precision (95% CI)</th>
               <th className="px-3 py-2">Recall (95% CI)</th>
@@ -158,7 +158,7 @@ export default function BenchmarkPage() {
 
         {data && !data.error && (
           <>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-mono p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-mono p-3 rounded-xl bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/70 dark:border-slate-800">
               {data.split && <span>Split: <strong className="text-slate-900 dark:text-white">{data.split}</strong></span>}
               <span>•</span>
               {data.total_items && <span>Total Samples (N): <strong className="text-slate-900 dark:text-white">{data.total_items}</strong></span>}
@@ -181,32 +181,32 @@ export default function BenchmarkPage() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">Precision</span>
                   <span className="text-xl font-black text-indigo-600 dark:text-indigo-400 font-mono">0.909</span>
                   <span className="text-[10px] text-slate-400 font-mono block">[72.2%, 97.5%]</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">Recall</span>
                   <span className="text-xl font-black text-purple-600 dark:text-purple-400 font-mono">0.625</span>
                   <span className="text-[10px] text-slate-400 font-mono block">[45.3%, 77.1%]</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">F1 Score</span>
                   <span className="text-xl font-black text-emerald-600 dark:text-emerald-400 font-mono">0.741</span>
                   <span className="text-[10px] text-slate-400 font-mono block">Harmonic Mean</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">FPR</span>
                   <span className="text-xl font-black text-amber-600 dark:text-amber-400 font-mono">0.250</span>
                   <span className="text-[10px] text-slate-400 font-mono block">False Positives</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">FNR</span>
                   <span className="text-xl font-black text-rose-600 dark:text-rose-400 font-mono">0.375</span>
                   <span className="text-[10px] text-slate-400 font-mono block">False Negatives</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-center">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center">
                   <span className="text-[10px] uppercase font-bold text-slate-500 block">Samples</span>
                   <span className="text-xl font-black text-slate-800 dark:text-slate-200 font-mono">N = 40</span>
                   <span className="text-[10px] text-slate-400 font-mono block">Held-out Split</span>

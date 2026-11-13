@@ -35,7 +35,7 @@ export default function SupportPage() {
           {tiers.map((t) => {
             const Icon = t.icon;
             return (
-              <div key={t.title} className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div key={t.title} className="p-5 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-3">
                 <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                   <Icon className="w-5 h-5" />
                 </div>

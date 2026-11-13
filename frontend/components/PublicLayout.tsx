@@ -31,10 +31,19 @@ export default function PublicLayout({
   legalNotice = false,
 }: PublicLayoutProps) {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-200 relative overflow-hidden">
+      {/* Atmospheric Top Radial Glow */}
+      <div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 pointer-events-none opacity-40 dark:opacity-25"
+        style={{
+          background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99, 102, 241, 0.25), transparent 70%)',
+        }}
+        aria-hidden="true"
+      />
+
       <PublicHeader />
 
-      <main id="main-content" className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <main id="main-content" className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 relative z-10">
         {/* Breadcrumbs */}
         {breadcrumbs && breadcrumbs.length > 0 && (
           <nav aria-label="Breadcrumb" className="mb-6">
@@ -64,9 +73,9 @@ export default function PublicLayout({
 
         {/* Standard Page Header */}
         {(title || badge) && (
-          <div className="mb-10 pb-6 border-b border-slate-200 dark:border-slate-800">
+          <div className="mb-10 pb-6 border-b border-slate-200 dark:border-slate-800/80">
             {badge && (
-              <span className="inline-block text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/60 dark:border-indigo-800/60 text-indigo-600 dark:text-indigo-400 mb-3">
+              <span className="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-indigo-50/80 dark:bg-indigo-950/60 border border-indigo-200/80 dark:border-indigo-800/60 text-indigo-700 dark:text-indigo-300 mb-3 shadow-2xs">
                 {badge}
               </span>
             )}
@@ -87,7 +96,7 @@ export default function PublicLayout({
             )}
 
             {legalNotice && (
-              <div className="mt-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/50 text-xs text-amber-800 dark:text-amber-300">
+              <div className="mt-4 p-4 rounded-xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/50 text-xs text-amber-900 dark:text-amber-300">
                 <strong>Notice:</strong> This policy describes the governance standards, architecture, and contractual provisions of BrandGuard AI. For custom enterprise MSAs, DPA riders, or jurisdictional legal review, consult your organization&apos;s corporate legal counsel.
               </div>
             )}

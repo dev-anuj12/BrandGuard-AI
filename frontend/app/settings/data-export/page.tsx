@@ -54,7 +54,7 @@ export default function DataExportPage() {
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-4">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
               <Download className="w-5 h-5" />
@@ -86,7 +86,7 @@ export default function DataExportPage() {
             </button>
             <Link
               href="/settings"
-              className="px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
+              className="px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#0D1224]/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
             >
               Back to Settings
             </Link>
@@ -94,7 +94,7 @@ export default function DataExportPage() {
         </div>
 
         {exportedData && (
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-3">
             <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
               <CheckCircle2 className="w-4 h-4" />
               <span className="text-xs font-bold">Export Successfully Generated</span>

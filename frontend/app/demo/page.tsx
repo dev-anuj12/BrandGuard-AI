@@ -37,7 +37,7 @@ export default function DemoPage() {
     >
       <div className="max-w-2xl mx-auto">
         {submitted ? (
-          <div className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-4">
+          <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-center space-y-4">
             <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center">
               <CheckCircle2 className="w-6 h-6" />
             </div>
@@ -55,7 +55,7 @@ export default function DemoPage() {
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm">
+          <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
@@ -141,7 +141,7 @@ export default function DemoPage() {
               />
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="p-3 rounded-xl bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
               Note: This is an interactive demo interface; form submissions are processed locally in your browser and not transmitted to a backend server.
             </div>
 

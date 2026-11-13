@@ -59,7 +59,7 @@ interface KpiCardProps {
 
 function KpiCard({ label, value, icon, colorClass, bgClass }: KpiCardProps) {
   return (
-    <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 flex items-center gap-4 shadow-sm">
+    <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all p-5 flex items-center gap-4 shadow-sm">
       <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center ${bgClass}`}>
         <span className={colorClass}>{icon}</span>
       </div>
@@ -120,7 +120,7 @@ function ActionPanel({ item, onDecision, onRejectRequest, loading }: ActionPanel
     item.status?.toLowerCase().includes('changes requested');
 
   return (
-    <div className="px-4 py-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700">
+    <div className="px-4 py-4 bg-slate-50/80 dark:bg-[#080C16] border-t border-slate-200 dark:border-slate-700">
       <div className="max-w-3xl space-y-3">
         {/* Comment */}
         <div>
@@ -399,7 +399,7 @@ export default function ManagerDashboardPage() {
         </div>
 
         {/* ── Table / States ─────────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm overflow-hidden">
+        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all shadow-sm overflow-hidden">
 
           {loading ? (
             <div className="p-4">
@@ -418,7 +418,7 @@ export default function ManagerDashboardPage() {
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
-                <thead className="bg-slate-50 dark:bg-slate-900/50">
+                <thead className="bg-slate-50/80 dark:bg-[#080C16]">
                   <tr>
                     {['Title', 'Status', 'Channel', 'Compliance Score', 'Submitted', ''].map(
                       (col, i) => (

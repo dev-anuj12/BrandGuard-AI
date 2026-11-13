@@ -85,7 +85,7 @@ interface KPICardProps {
 
 function KPICard({ label, value, icon, accent }: KPICardProps) {
   return (
-    <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 flex items-center gap-4 shadow-sm">
+    <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all p-5 flex items-center gap-4 shadow-sm">
       <div className={`flex-shrink-0 w-11 h-11 rounded-lg flex items-center justify-center ${accent}`}>
         {icon}
       </div>
@@ -185,7 +185,7 @@ function ContentRow({ item, onActionComplete }: ContentRowProps) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all shadow-sm overflow-hidden">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4">
         {/* Icon */}
         <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">

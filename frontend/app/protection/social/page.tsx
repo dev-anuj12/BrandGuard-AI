@@ -204,7 +204,7 @@ export default function SocialProtectionPage() {
             </p>
           </div>
 
-          <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-200/80 dark:border-slate-700">
+          <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl px-3 py-1.5 rounded-lg border border-slate-200/80 dark:border-slate-800/80">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Canonical Brand Handle: <strong className="text-slate-900 dark:text-white font-semibold">@brandguardhq</strong></span>
           </div>
@@ -212,7 +212,7 @@ export default function SocialProtectionPage() {
 
         {/* Telemetry Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Flagged Accounts
@@ -227,7 +227,7 @@ export default function SocialProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-rose-600 dark:text-rose-400 uppercase tracking-wider">
                 Critical & High Threats
@@ -242,7 +242,7 @@ export default function SocialProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wider">
                 Investigating
@@ -257,7 +257,7 @@ export default function SocialProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
                 Takedowns Resolved
@@ -274,7 +274,7 @@ export default function SocialProtectionPage() {
         </div>
 
         {/* Profile Scanner Form & Quick Presets */}
-        <div className="p-5 sm:p-6 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="p-5 sm:p-6 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="space-y-4">
             <h2 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center space-x-2">
               <Search className="w-4 h-4 text-indigo-500" />
@@ -289,7 +289,7 @@ export default function SocialProtectionPage() {
                 <select
                   value={platform}
                   onChange={(e) => setPlatform(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="telegram">Telegram (@channel / @user)</option>
                   <option value="twitter">X / Twitter</option>
@@ -310,7 +310,7 @@ export default function SocialProtectionPage() {
                   value={handle}
                   onChange={(e) => setHandle(e.target.value)}
                   placeholder="e.g. brand_support_desk"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
                 />
               </div>
 
@@ -323,7 +323,7 @@ export default function SocialProtectionPage() {
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   placeholder="e.g. Brand Official Support"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
             </div>
@@ -337,7 +337,7 @@ export default function SocialProtectionPage() {
                 onChange={(e) => setBioText(e.target.value)}
                 rows={2}
                 placeholder="Paste the profile bio text or description to scan for scam intent, fake support lures, or seed phrase requests..."
-                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
               />
             </div>
 
@@ -351,7 +351,7 @@ export default function SocialProtectionPage() {
                   value={followers}
                   onChange={(e) => setFollowers(e.target.value === '' ? '' : Number(e.target.value))}
                   placeholder="e.g. 25"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -364,7 +364,7 @@ export default function SocialProtectionPage() {
                   value={following}
                   onChange={(e) => setFollowing(e.target.value === '' ? '' : Number(e.target.value))}
                   placeholder="e.g. 350"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -374,7 +374,7 @@ export default function SocialProtectionPage() {
                     type="checkbox"
                     checked={isVerified}
                     onChange={(e) => setIsVerified(e.target.checked)}
-                    className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800"
+                    className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
                   />
                   <span>Has Verified Badge (Blue/Gold Check)</span>
                 </label>
@@ -383,7 +383,7 @@ export default function SocialProtectionPage() {
                     type="checkbox"
                     checked={autoEscalate}
                     onChange={(e) => setAutoEscalate(e.target.checked)}
-                    className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800"
+                    className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
                   />
                   <span>Auto-escalate threat (&ge; 60%)</span>
                 </label>
@@ -422,10 +422,10 @@ export default function SocialProtectionPage() {
                       key={idx}
                       type="button"
                       onClick={() => applyPreset(p)}
-                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition-colors"
+                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition-colors"
                     >
                       <span className="font-medium text-slate-800 dark:text-slate-200">{p.name}</span>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 font-mono text-slate-600 dark:text-slate-400">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-[#0D1224]/90 font-mono text-slate-600 dark:text-slate-400">
                         {p.tag}
                       </span>
                     </button>
@@ -449,7 +449,7 @@ export default function SocialProtectionPage() {
 
         {/* Diagnostic Report Card */}
         {activeReport && (
-          <div className="rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden animate-in fade-in duration-300">
+          <div className="rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden animate-in fade-in duration-300">
             {/* Header Banner */}
             <div className={`p-5 border-b ${
               activeReport.risk_score >= 80 
@@ -531,7 +531,7 @@ export default function SocialProtectionPage() {
                 {activeReport.findings?.map((finding, idx) => (
                   <div 
                     key={idx}
-                    className="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 space-y-1.5"
+                    className="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0D1224]/80 backdrop-blur-xl space-y-1.5"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
@@ -539,7 +539,7 @@ export default function SocialProtectionPage() {
                           finding.severity === 'CRITICAL' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/80 dark:text-rose-400' :
                           finding.severity === 'HIGH' ? 'bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-400' :
                           finding.severity === 'MEDIUM' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950/80 dark:text-amber-400' :
-                          'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                          'bg-slate-200 text-slate-700 dark:bg-[#0D1224]/90 dark:text-slate-300'
                         }`}>
                           {finding.severity}
                         </span>
@@ -556,7 +556,7 @@ export default function SocialProtectionPage() {
                       {finding.description}
                     </p>
 
-                    <div className="text-xs bg-slate-100 dark:bg-slate-800/80 p-2 rounded border border-slate-200/60 dark:border-slate-700/60 font-mono text-slate-700 dark:text-slate-300">
+                    <div className="text-xs bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl p-2 rounded border border-slate-200/60 dark:border-slate-700/60 font-mono text-slate-700 dark:text-slate-300">
                       <strong>Evidence:</strong> {finding.evidence}
                     </div>
 
@@ -571,7 +571,7 @@ export default function SocialProtectionPage() {
         )}
 
         {/* Flagged Accounts Registry Table */}
-        <div className="rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div>
               <h3 className="text-base font-semibold text-slate-900 dark:text-white">
@@ -583,7 +583,7 @@ export default function SocialProtectionPage() {
             </div>
             <button
               onClick={loadData}
-              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 transition-colors"
               title="Refresh Registry"
             >
               <RefreshCw className="w-4 h-4" />
@@ -592,7 +592,7 @@ export default function SocialProtectionPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 uppercase tracking-wider font-semibold">
+              <thead className="bg-slate-50/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 text-slate-500 uppercase tracking-wider font-semibold">
                 <tr>
                   <th className="py-3 px-4">Threat Code</th>
                   <th className="py-3 px-3">Account Title / Handle</th>
@@ -652,7 +652,7 @@ export default function SocialProtectionPage() {
                       <td className="py-3 px-4 text-right">
                         <Link
                           href="/threats"
-                          className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-[11px] font-medium"
+                          className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-[11px] font-medium"
                         >
                           View in Intel
                         </Link>

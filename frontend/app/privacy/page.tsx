@@ -150,7 +150,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <div className="overflow-x-auto">
               <table className="w-full text-xs border border-slate-200 dark:border-slate-800 rounded-lg">
-                <thead className="bg-slate-100 dark:bg-slate-900/60 text-slate-900 dark:text-white">
+                <thead className="bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl text-slate-900 dark:text-white">
                   <tr>
                     <th className="p-2.5 text-left font-semibold">Subprocessor</th>
                     <th className="p-2.5 text-left font-semibold">Role / Service</th>

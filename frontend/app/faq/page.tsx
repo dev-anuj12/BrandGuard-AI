@@ -51,7 +51,7 @@ export default function FAQPage() {
             placeholder="Search questions (e.g. 'training', 'scoring', 'roles')..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition"
           />
         </div>
 
@@ -61,7 +61,7 @@ export default function FAQPage() {
             return (
               <div
                 key={idx}
-                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 overflow-hidden transition"
+                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl overflow-hidden transition"
               >
                 <button
                   type="button"

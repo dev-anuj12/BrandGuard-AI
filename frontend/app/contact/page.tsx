@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#070A10]">
+    <div className="min-h-screen bg-white dark:bg-[#060913]">
       <header className="border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between max-w-5xl mx-auto">
         <Link href="/" className="flex items-center gap-2">
           <ShieldCheck className="w-6 h-6 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
@@ -69,7 +69,7 @@ export default function ContactPage() {
           ].map(({ icon: Icon, color, title, body, action, href, external }) => (
             <div
               key={title}
-              className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition space-y-4 flex flex-col"
+              className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition space-y-4 flex flex-col"
             >
               <div className={`w-10 h-10 rounded-xl bg-${color}-100 dark:bg-${color}-950/50 flex items-center justify-center`}>
                 <Icon className={`w-5 h-5 text-${color}-600 dark:text-${color}-400`} aria-hidden="true" />
@@ -97,7 +97,7 @@ export default function ContactPage() {
         </div>
 
         {/* Enterprise Support & Security Commitment */}
-        <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+        <div className="p-6 rounded-2xl bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800">
           <h2 className="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
             Enterprise Support &amp; Response Times

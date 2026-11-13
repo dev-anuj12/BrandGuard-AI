@@ -178,7 +178,7 @@ On behalf of ${brandName}`;
 
         {/* 4 Summary Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Total Incidents</span>
             <div className="text-2xl font-bold text-slate-900 dark:text-white mt-1.5">{threats.length}</div>
             <span className="text-[11px] text-slate-400 mt-0.5 block">Cataloged brand threats</span>
@@ -190,13 +190,13 @@ On behalf of ${brandName}`;
             <span className="text-[11px] text-rose-500/80 mt-0.5 block">Priority takedown actions</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Under Investigation</span>
             <div className="text-2xl font-bold text-amber-500 mt-1.5">{investigatingCount}</div>
             <span className="text-[11px] text-amber-500/80 mt-0.5 block">Active forensic reviews</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Remediated &amp; Resolved</span>
             <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1.5">{resolvedCount}</div>
             <span className="text-[11px] text-emerald-500 mt-0.5 block">Takedowns completed</span>
@@ -204,7 +204,7 @@ On behalf of ${brandName}`;
         </div>
 
         {/* Filters & Search Toolbar */}
-        <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-sm space-y-3">
+        <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700/80 transition-all space-y-3">
           <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <div className="relative flex-1">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -289,7 +289,7 @@ On behalf of ${brandName}`;
           <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                <thead className="bg-slate-50/80 dark:bg-[#080C16] border-b border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 font-semibold">
                   <tr>
                     <th className="py-3 px-4">Threat Code</th>
                     <th className="py-3 px-4">Category &amp; Source</th>

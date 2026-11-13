@@ -106,7 +106,7 @@ export default function BrandsPage() {
     >
       <div className="space-y-6 max-w-7xl mx-auto">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-card">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm shadow-card">
           <div>
             <div className="flex items-center gap-2">
               <span className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
@@ -261,7 +261,7 @@ export default function BrandsPage() {
         {/* Create Brand Modal */}
         {showModal && (
           <div className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-dropdown space-y-4">
+            <div className="w-full max-w-md bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm rounded-2xl p-6 shadow-dropdown space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   Add Brand Workspace

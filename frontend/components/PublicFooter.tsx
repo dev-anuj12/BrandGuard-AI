@@ -16,7 +16,7 @@ export default function PublicFooter() {
   };
 
   return (
-    <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#070A10] text-slate-600 dark:text-slate-400 transition-colors duration-200">
+    <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#060913] text-slate-600 dark:text-slate-400 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         {/* 5 Organized Columns */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-200/80 dark:border-slate-800/80 text-xs">

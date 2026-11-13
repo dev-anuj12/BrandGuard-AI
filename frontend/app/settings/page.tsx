@@ -72,8 +72,8 @@ export default function SettingsPage() {
       <div className="max-w-3xl mx-auto space-y-8 py-6 px-4 sm:px-0">
 
         {/* ── User Identity Card ───────────────────────────────────────── */}
-        <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+        <section className="bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/80 overflow-hidden">
+          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800/80">
             <User className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <h2 className="text-base font-semibold text-slate-800 dark:text-slate-100">
               User Profile
@@ -117,8 +117,8 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Active Workspace ─────────────────────────────────────────── */}
-        <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+        <section className="bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/80 overflow-hidden">
+          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800/80">
             <Building2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <h2 className="text-base font-semibold text-slate-800 dark:text-slate-100">
               Active Workspace
@@ -149,8 +149,8 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Theme Preference ─────────────────────────────────────────── */}
-        <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+        <section className="bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/80 overflow-hidden">
+          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800/80">
             <Sun className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <h2 className="text-base font-semibold text-slate-800 dark:text-slate-100">
               Theme Preference
@@ -185,8 +185,8 @@ export default function SettingsPage() {
         </section>
 
         {/* ── AI Engine Status ─────────────────────────────────────────── */}
-        <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+        <section className="bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/80 overflow-hidden">
+          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800/80">
             <Cpu className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <h2 className="text-base font-semibold text-slate-800 dark:text-slate-100">
               AI Engine Status
@@ -219,7 +219,7 @@ export default function SettingsPage() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-700"
+                  className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-800/80"
                 >
                   <span className="mt-0.5">{item.icon}</span>
                   <div>
@@ -246,8 +246,8 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Privacy & Data Governance ──────────────────── */}
-        <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+        <section className="bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/80 overflow-hidden">
+          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800/80">
             <Shield className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <h2 className="text-base font-semibold text-slate-800 dark:text-slate-100">
               Privacy, Billing &amp; Data Governance
@@ -257,7 +257,7 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => router.push('/settings/security')}
-              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-left transition space-y-1"
+              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80 hover:border-indigo-400 text-left transition space-y-1"
             >
               <span className="font-bold text-slate-900 dark:text-white block">Security &amp; 2FA</span>
               <span className="text-[11px] text-slate-400 block">Manage password and access</span>
@@ -265,7 +265,7 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => router.push('/settings/billing')}
-              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-left transition space-y-1"
+              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80 hover:border-indigo-400 text-left transition space-y-1"
             >
               <span className="font-bold text-slate-900 dark:text-white block">Billing &amp; Plan</span>
               <span className="text-[11px] text-slate-400 block">Subscription &amp; quotas</span>
@@ -273,7 +273,7 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => router.push('/settings/data-export')}
-              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-left transition space-y-1"
+              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80 hover:border-indigo-400 text-left transition space-y-1"
             >
               <span className="font-bold text-indigo-600 dark:text-indigo-400 block">Export My Data</span>
               <span className="text-[11px] text-slate-400 block">Download audit archive (JSON)</span>
@@ -290,8 +290,8 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Account Actions ───────────────────────────────────────────── */}
-        <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+        <section className="bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/80 overflow-hidden">
+          <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800/80">
             <Shield className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <h2 className="text-base font-semibold text-slate-800 dark:text-slate-100">
               Account Actions

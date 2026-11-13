@@ -204,7 +204,7 @@ export default function ApprovalManagementPage() {
           <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 font-semibold">
+                <thead className="bg-slate-50/80 dark:bg-[#080C16] border-b border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 font-semibold">
                   <tr>
                     <th className="py-3 px-4">Content Title</th>
                     <th className="py-3 px-4">Channel</th>

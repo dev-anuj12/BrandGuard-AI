@@ -77,7 +77,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#060913] flex flex-col justify-between p-4 sm:p-6 transition-colors duration-200">
       {/* Top Header */}
       <div className="max-w-md w-full mx-auto flex items-center justify-between">
         <BrandLogo size="sm" showSubtitle={false} href="/" />
@@ -103,7 +103,7 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-card space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-xl shadow-black/10 space-y-4">
           {error && (
             <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />

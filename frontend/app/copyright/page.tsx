@@ -38,7 +38,7 @@ export default function CopyrightPolicyPage() {
           </ul>
         </section>
 
-        <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-xs font-mono space-y-1">
+        <div className="p-4 rounded-xl bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-xs font-mono space-y-1">
           <p><strong>Designated Copyright Agent:</strong></p>
           <p>BrandGuard AI Legal Operations</p>
           <p>Email: <Link href="/contact" className="text-indigo-600 dark:text-indigo-400 hover:underline">legal@brandguard.io</Link></p>

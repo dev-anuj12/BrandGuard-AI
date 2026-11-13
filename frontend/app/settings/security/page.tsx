@@ -127,7 +127,7 @@ export default function SecuritySettingsPage() {
         </div>
 
         {/* Change Password Card */}
-        <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-4">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-4">
           <div className="flex items-center gap-2.5">
             <Key className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <div>
@@ -183,7 +183,7 @@ export default function SecuritySettingsPage() {
         </div>
 
         {/* 2FA / TOTP Card */}
-        <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-4">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <Smartphone className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
@@ -227,7 +227,7 @@ export default function SecuritySettingsPage() {
                   Enter this manual Base32 secret key into Google Authenticator or 1Password:
                 </p>
                 <div className="flex items-center gap-2 pt-1">
-                  <code className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400 select-all">
+                  <code className="px-3 py-1.5 rounded-lg bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400 select-all">
                     {mfaData.secret}
                   </code>
                   <button
@@ -268,7 +268,7 @@ export default function SecuritySettingsPage() {
                   {mfaData.backup_codes.map((code, idx) => (
                     <div
                       key={idx}
-                      className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-center font-bold text-slate-800 dark:text-slate-200"
+                      className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 font-mono text-[11px] text-center font-bold text-slate-800 dark:text-slate-200"
                     >
                       {code}
                     </div>
@@ -289,7 +289,7 @@ export default function SecuritySettingsPage() {
                     value={mfaCode}
                     onChange={(e) => setMfaCode(e.target.value)}
                     placeholder="123456"
-                    className="w-36 text-center tracking-widest font-mono text-sm px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-36 text-center tracking-widest font-mono text-sm px-3 py-1.5 rounded-xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                   <Button type="submit" isLoading={mfaLoading} size="sm">
                     Enable 2FA
@@ -310,7 +310,7 @@ export default function SecuritySettingsPage() {
         </div>
 
         {/* Active Sessions & Global Revocation */}
-        <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <LogOut className="w-4 h-4 text-rose-600 dark:text-rose-400" />

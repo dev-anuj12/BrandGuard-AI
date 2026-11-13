@@ -212,7 +212,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
           <div className="flex items-center space-x-3">
             <button
               onClick={() => router.back()}
-              className="p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white transition"
+              className="p-2 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 text-slate-500 hover:text-slate-900 dark:hover:text-white transition"
               title="Go back"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -277,7 +277,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
         </div>
 
         {/* Compliance Score Gauge & Executive Summary */}
-        <div className="p-6 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 grid grid-cols-1 md:grid-cols-4 gap-6 items-center shadow-sm">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 md:grid-cols-4 gap-6 items-center shadow-sm">
           <div className="text-center md:border-r border-slate-200 dark:border-slate-700 pr-4">
             <span className="text-xs uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">
               Brand Compliance Score
@@ -433,7 +433,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
               </span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-mono space-y-3 shadow-inner">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xs text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-mono space-y-3 shadow-inner">
               <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs">
                 <strong>Channel:</strong> {content.channel}
               </div>
@@ -441,7 +441,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
             </div>
 
             {/* Revisions History */}
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 space-y-3 shadow-sm">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
                 <History className="w-4 h-4 text-indigo-500" />
                 <span>Revision Audit Trail ({revisions.length} versions)</span>
@@ -450,7 +450,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                 {revisions.map((rev) => (
                   <div
                     key={rev.id}
-                    className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-slate-600 dark:text-slate-400"
+                    className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between text-slate-600 dark:text-slate-400"
                   >
                     <div>
                       <span className="font-bold text-indigo-600 dark:text-indigo-400">v{rev.version}</span>
@@ -465,7 +465,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
             </div>
 
             {/* Decision History */}
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3 shadow-sm">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 space-y-3 shadow-sm">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
                 <FileCheck className="w-4 h-4 text-emerald-500" />
                 <span>Decision History ({decisions.length} events)</span>
@@ -477,7 +477,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                   decisions.map((dec) => (
                     <div
                       key={dec.id}
-                      className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1"
+                      className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 space-y-1"
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-semibold text-slate-800 dark:text-slate-200">
@@ -555,9 +555,9 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                               key={f.id || idx}
                               className={`p-4 rounded-xl border transition-all space-y-3 ${
                                 isResolved
-                                  ? 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60'
+                                  ? 'bg-slate-50 dark:bg-[#080C16]/50 border-slate-200/80 dark:border-slate-800/80 opacity-60'
                                   : isOverridden
-                                  ? 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800'
+                                  ? 'bg-slate-50 dark:bg-[#080C16]/50 border-slate-200/80 dark:border-slate-800/80'
                                   : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm'
                               }`}
                             >
@@ -603,7 +603,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                               </div>
 
                               {/* Source Evidence */}
-                              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-[11px] space-y-1">
+                              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 text-[11px] space-y-1">
                                 <span className="font-semibold text-slate-600 dark:text-slate-400 flex items-center gap-1">
                                   <Search className="w-3 h-3 text-blue-500" />
                                   <span>Supporting Evidence:</span>
@@ -678,7 +678,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                   )}
 
                                   {editingId === suggestion.id && (
-                                    <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+                                    <div className="p-3 rounded-lg bg-slate-50 dark:bg-[#080C16] border border-slate-200/80 dark:border-slate-800/80 space-y-2">
                                       <textarea
                                         className="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                                         rows={2}
@@ -751,7 +751,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                 </div>
                               </div>
 
-                              <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
+                              <div className="p-2.5 rounded-lg bg-white dark:bg-[#0D1224]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xs text-xs">
                                 <span className="text-slate-500 block mb-0.5 font-semibold uppercase text-[10px]">
                                   Candidate Text Flagged for Review:
                                 </span>

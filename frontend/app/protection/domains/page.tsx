@@ -171,7 +171,7 @@ export default function DomainProtectionPage() {
             </p>
           </div>
 
-          <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-200/80 dark:border-slate-700">
+          <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl px-3 py-1.5 rounded-lg border border-slate-200/80 dark:border-slate-800/80">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Monitored Brand: <strong className="text-slate-900 dark:text-white font-semibold">brandguard.io</strong></span>
           </div>
@@ -179,7 +179,7 @@ export default function DomainProtectionPage() {
 
         {/* Telemetry Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Total Inspected
@@ -194,7 +194,7 @@ export default function DomainProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-rose-600 dark:text-rose-400 uppercase tracking-wider">
                 Active Threats Flagged
@@ -209,7 +209,7 @@ export default function DomainProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
                 Safe Brand Assets
@@ -224,7 +224,7 @@ export default function DomainProtectionPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Avg Threat Score
@@ -241,7 +241,7 @@ export default function DomainProtectionPage() {
         </div>
 
         {/* Scanner Form & Quick Presets */}
-        <div className="p-5 sm:p-6 rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="p-5 sm:p-6 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-1.5">
@@ -257,7 +257,7 @@ export default function DomainProtectionPage() {
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
                     placeholder="e.g. brand-secure-login.cc, lookalike-domain.xyz, or full https:// URL"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-mono"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/70 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-mono"
                   />
                 </div>
                 <button
@@ -287,7 +287,7 @@ export default function DomainProtectionPage() {
                   type="checkbox"
                   checked={autoEscalate}
                   onChange={(e) => setAutoEscalate(e.target.checked)}
-                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800"
+                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-800/80 dark:bg-slate-800"
                 />
                 <span>Auto-register detected threats (&ge; 60% risk) into Threat Intelligence Center</span>
               </label>
@@ -313,10 +313,10 @@ export default function DomainProtectionPage() {
                         setTargetUrl(p.url);
                         handleScan(p.url);
                       }}
-                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition-colors"
+                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0D1224]/80 backdrop-blur-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition-colors"
                     >
                       <span className="font-medium text-slate-800 dark:text-slate-200">{p.name}</span>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 font-mono text-slate-600 dark:text-slate-400">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-[#0D1224]/90 font-mono text-slate-600 dark:text-slate-400">
                         {p.type}
                       </span>
                     </button>
@@ -340,7 +340,7 @@ export default function DomainProtectionPage() {
 
         {/* Active Scan Diagnostic Report Card */}
         {activeReport && (
-          <div className="rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden animate-in fade-in duration-300">
+          <div className="rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden animate-in fade-in duration-300">
             {/* Report Header Bar */}
             <div className={`p-5 border-b ${
               activeReport.risk_score >= 80 
@@ -483,7 +483,7 @@ export default function DomainProtectionPage() {
                 {activeReport.findings?.map((finding, idx) => (
                   <div 
                     key={idx}
-                    className="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 space-y-1.5"
+                    className="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0D1224]/80 backdrop-blur-xl space-y-1.5"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
@@ -491,7 +491,7 @@ export default function DomainProtectionPage() {
                           finding.severity === 'CRITICAL' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/80 dark:text-rose-400' :
                           finding.severity === 'HIGH' ? 'bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-400' :
                           finding.severity === 'MEDIUM' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950/80 dark:text-amber-400' :
-                          'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                          'bg-slate-200 text-slate-700 dark:bg-[#0D1224]/90 dark:text-slate-300'
                         }`}>
                           {finding.severity}
                         </span>
@@ -508,7 +508,7 @@ export default function DomainProtectionPage() {
                       {finding.description}
                     </p>
 
-                    <div className="text-xs bg-slate-100 dark:bg-slate-800/80 p-2 rounded border border-slate-200/60 dark:border-slate-700/60 font-mono text-slate-700 dark:text-slate-300">
+                    <div className="text-xs bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl p-2 rounded border border-slate-200/60 dark:border-slate-700/60 font-mono text-slate-700 dark:text-slate-300">
                       <strong>Evidence:</strong> {finding.evidence}
                     </div>
 
@@ -523,7 +523,7 @@ export default function DomainProtectionPage() {
         )}
 
         {/* Historical Scans Table */}
-        <div className="rounded-xl bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div>
               <h3 className="text-base font-semibold text-slate-900 dark:text-white">
@@ -535,7 +535,7 @@ export default function DomainProtectionPage() {
             </div>
             <button
               onClick={loadData}
-              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 transition-colors"
               title="Refresh History"
               aria-label="Refresh domain inspection history"
             >
@@ -545,7 +545,7 @@ export default function DomainProtectionPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 uppercase tracking-wider font-semibold">
+              <thead className="bg-slate-50/80 dark:bg-[#0D1224]/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 text-slate-500 uppercase tracking-wider font-semibold">
                 <tr>
                   <th className="py-3 px-4">Scanned Domain / URL</th>
                   <th className="py-3 px-3">IP Address</th>
@@ -609,7 +609,7 @@ export default function DomainProtectionPage() {
                       <td className="py-3 px-4 text-right">
                         <button
                           onClick={() => loadPastReport(scan.id)}
-                          className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-[11px] font-medium"
+                          className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-[11px] font-medium"
                         >
                           View Report
                         </button>

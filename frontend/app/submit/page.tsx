@@ -175,7 +175,7 @@ function SelectField({
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`w-full appearance-none rounded-lg border px-3 py-2.5 pr-10 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
+          className={`w-full appearance-none rounded-lg border px-3 py-2.5 pr-10 text-sm bg-white dark:bg-[#080C16] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
             error
               ? 'border-red-400 dark:border-red-500'
               : 'border-slate-200 dark:border-slate-700'
@@ -363,7 +363,7 @@ export default function SubmitPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* ── Left: Form ── */}
           <div className="lg:col-span-2">
-            <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm">
               <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700">
                 <h3 className="font-semibold text-slate-900 dark:text-white text-base">
                   Submission Details
@@ -388,7 +388,7 @@ export default function SubmitPage() {
                     value={form.title}
                     onChange={(e) => setField('title', e.target.value)}
                     placeholder="e.g. Q4 Investment Newsletter — October 2024"
-                    className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
+                    className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-[#080C16] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
                       errors.title
                         ? 'border-red-400 dark:border-red-500'
                         : 'border-slate-200 dark:border-slate-700'
@@ -441,7 +441,7 @@ export default function SubmitPage() {
                       value={form.original_body}
                       onChange={(e) => setField('original_body', e.target.value)}
                       placeholder="Paste or type your content here. The AI compliance engine will analyse it for brand, legal, and regulatory issues…"
-                      className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y transition leading-relaxed ${
+                      className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white dark:bg-[#080C16] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y transition leading-relaxed ${
                         errors.original_body
                           ? 'border-red-400 dark:border-red-500'
                           : 'border-slate-200 dark:border-slate-700'
@@ -532,7 +532,7 @@ export default function SubmitPage() {
           {/* ── Right: Guidelines panel ── */}
           <div className="lg:col-span-1 flex flex-col gap-5">
             {/* Submission guidelines */}
-            <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm">
               <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
                 <Lightbulb className="h-4 w-4 text-amber-500" />
                 <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
@@ -551,7 +551,7 @@ export default function SubmitPage() {
 
             {/* Channel risk badge */}
             {form.channel && (
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm px-5 py-4">
+              <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl shadow-sm shadow-sm px-5 py-4">
                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                   Selected Channel
                 </p>

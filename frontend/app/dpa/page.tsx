@@ -46,7 +46,7 @@ export default function DPAPage() {
           </p>
         </section>
 
-        <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-xs flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-slate-100 dark:bg-[#0D1224]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 text-xs flex items-center justify-between">
           <span>Require a countersigned enterprise DPA?</span>
           <Link href="/contact" className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
             Request DPA Information &rarr;

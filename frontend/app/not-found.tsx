@@ -48,7 +48,7 @@ export default function NotFound() {
         </Link>
         <Link
           href="/login"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-semibold border border-slate-200 dark:border-slate-700 transition"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-[#0D1224]/80 backdrop-blur-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-semibold border border-slate-200 dark:border-slate-800/80 transition"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden="true" />
           Sign In
