@@ -1,7 +1,7 @@
 import socket
 import ipaddress
 import urllib.parse
-from typing import Tuple, Optional
+from typing import Tuple
 
 # Denied IP ranges: loopback, private RFC1918, link-local (cloud metadata), multicast, reserved
 FORBIDDEN_NETWORKS = [

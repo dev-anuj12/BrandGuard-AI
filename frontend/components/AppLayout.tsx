@@ -4,10 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
-  ShieldCheck, LayoutDashboard, FileEdit, CheckSquare, 
+  LayoutDashboard, FileEdit, CheckSquare, 
   BarChart3, Settings, LogOut, ChevronLeft, ChevronRight, 
-  Sun, Moon, Bell, Search, User, Menu, X, HelpCircle, 
-  BookOpen, Sliders, Layers, ChevronDown, ShieldAlert, Globe, Activity, Share2, ShoppingBag,
+  Sun, Moon, Bell, User, Menu, X, 
+  BookOpen, Sliders, ChevronDown, ShieldAlert, Globe, Share2, ShoppingBag,
   Building2
 } from 'lucide-react';
 import { getCurrentUser, clearAuthSession, api } from '../lib/api';

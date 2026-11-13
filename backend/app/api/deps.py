@@ -1,4 +1,4 @@
-from typing import Generator, List, Optional
+from typing import List
 import time
 from datetime import datetime, timezone
 from collections import defaultdict
@@ -112,26 +112,6 @@ def get_current_user(
         )
 
     return user
-
-def get_current_org(current_user: User = Depends(get_current_user)) -> str:
-    org = getattr(current_user, "organization", None)
-    if not org:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="User does not belong to any organization"
-        )
-    return org
-
-def require_roles(allowed_roles: List[UserRole]):
-    def role_checker(current_user: User = Depends(get_current_user)) -> User:
-        if current_user.role not in allowed_roles:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail=f"Access denied. Required roles: {[r.value for r in allowed_roles]}"
-            )
-        return current_user
-    return role_checker
-
 
 def get_current_org(current_user: User = Depends(get_current_user)) -> str:
     org = getattr(current_user, "organization", None)

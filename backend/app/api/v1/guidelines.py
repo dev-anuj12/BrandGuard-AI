@@ -8,7 +8,7 @@ from app.schemas.guideline import (
     BrandGuidelineCreate, BrandGuidelineUpdate, BrandGuidelineOut,
     ApprovedSourceCreate, ApprovedSourceOut,
     ApprovedFactCreate, ApprovedFactOut,
-    BannedWordCreate, BannedWordUpdate, BannedWordOut,
+    BannedWordCreate, BannedWordOut,
     ApprovedTerminologyCreate, ApprovedTerminologyOut
 )
 from app.api.deps import get_current_user, require_roles, get_current_org

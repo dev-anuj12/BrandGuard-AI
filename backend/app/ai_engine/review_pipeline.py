@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Dict, Any
 from sqlalchemy.orm import Session
 from app.ai_engine.rule_engine import RuleEngine
 from app.ai_engine.llm_engine import LLMEngine

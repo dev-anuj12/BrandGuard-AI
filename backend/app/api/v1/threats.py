@@ -8,14 +8,13 @@ from sqlalchemy import desc
 from app.database.session import get_db
 from app.api.deps import get_current_user, get_current_org
 from app.models.user import User
-from app.models.threat import ThreatItem, ThreatEvidence
+from app.models.threat import ThreatItem
 from app.models.audit import AuditLog
-from app.models.enums import ThreatCategory, ThreatRiskLevel, ThreatStatus
+from app.models.enums import ThreatStatus
 from app.schemas.threat import (
     ThreatItemOut,
     ThreatItemCreate,
-    ThreatItemUpdate,
-    ThreatEvidenceOut
+    ThreatItemUpdate
 )
 
 router = APIRouter(prefix="/threats", tags=["Threat Intelligence"])

@@ -1,9 +1,8 @@
-import os
 import re
 import hashlib
 import struct
-from datetime import datetime, timezone
-from typing import List, Optional, Dict, Any
+from datetime import datetime
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy.orm import Session
@@ -13,7 +12,7 @@ from app.database.session import get_db
 from app.api.deps import get_current_user, require_roles, get_current_org
 from app.models.user import User
 from app.models.enums import UserRole, SeverityLevel
-from app.models.guideline import BrandGuideline, ApprovedFact, BannedWord, ApprovedTerminology
+from app.models.guideline import BrandGuideline
 from app.models.threat import BrandAsset
 from app.models.audit import AuditLog
 

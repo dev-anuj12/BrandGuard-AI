@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database.session import get_db
@@ -8,7 +8,7 @@ from app.models.workflow import Approval, ReviewerAssignment, Comment
 from app.models.enums import ContentStatus, UserRole, ApprovalAction
 from app.schemas.workflow import (
     ApprovalDecision, ApprovalOut,
-    ReviewerVerificationDecision, ReviewerAssignmentOut,
+    ReviewerVerificationDecision,
     CommentCreate, CommentOut, AuditLogOut
 )
 from app.models.user import User

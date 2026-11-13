@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
-  Moon, Sun, Menu, X, ChevronRight, Sliders, Shield, BookOpen, Layers, PhoneCall 
+  Moon, Sun, Menu, X, ChevronRight 
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { getCurrentUser } from '../lib/api';

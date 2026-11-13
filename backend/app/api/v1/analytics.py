@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any, Optional
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -6,12 +6,10 @@ from sqlalchemy import func, desc
 from app.database.session import get_db
 from app.models.content import Content
 from app.models.brand import Brand
-from app.models.guideline import BrandGuideline
 from app.models.review import AIReview, Finding, Suggestion
-from app.models.workflow import Approval
 from app.models.audit import AuditLog
 from app.models.threat import ThreatItem
-from app.models.enums import ContentStatus, SuggestionStatus, SeverityLevel, ThreatRiskLevel, ThreatStatus
+from app.models.enums import ContentStatus, SuggestionStatus, ThreatRiskLevel, ThreatStatus
 from app.schemas.analytics import AnalyticsOverview, CommonViolationItem, StatusBreakdownItem, SeverityBreakdownItem
 from app.schemas.threat import UnifiedAnalyticsOut, ThreatCategoryCount, ThreatStatusCount, ActivityEvent
 from app.api.deps import get_current_user, get_current_org

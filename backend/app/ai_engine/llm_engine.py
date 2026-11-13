@@ -1,6 +1,6 @@
 import json
 import re
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 import httpx
 from sqlalchemy.orm import Session
 from app.core.config import settings

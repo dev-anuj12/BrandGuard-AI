@@ -1,10 +1,9 @@
 from datetime import datetime, timezone
-from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from app.database.session import get_db
-from app.models.content import Content, ContentRevision
+from app.models.content import Content
 from app.models.review import AIReview, Finding, Suggestion
 from app.models.enums import SuggestionStatus, ContentStatus, UserRole
 from app.schemas.review import AIReviewOut, FindingOut, SuggestionAction, SuggestionOut, FindingOverrideRequest

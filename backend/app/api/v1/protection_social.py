@@ -1,4 +1,4 @@
-from typing import List, Optional, Any
+from typing import List, Optional
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
@@ -6,7 +6,7 @@ from sqlalchemy import desc
 
 from app.database.session import get_db
 from app.api.deps import get_current_user
-from app.models.threat import ThreatItem, ThreatEvidence
+from app.models.threat import ThreatItem
 from app.models.enums import ThreatCategory, ThreatRiskLevel, ThreatStatus
 from app.schemas.threat import ThreatItemOut
 from app.protection.social_scanner import SocialMediaScanner

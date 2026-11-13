@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { ShieldCheck, LogOut, User, BarChart3, FileEdit, CheckCircle2, Sliders, ChevronDown } from 'lucide-react';
+import { ShieldCheck, LogOut, User } from 'lucide-react';
 import { getCurrentUser, clearAuthSession } from '../lib/api';
 
 export default function Navbar() {

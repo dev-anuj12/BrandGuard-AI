@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Moon, Sun, Sliders, Globe } from 'lucide-react';
+import { Moon, Sun, Sliders } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import BrandLogo from './BrandLogo';
 

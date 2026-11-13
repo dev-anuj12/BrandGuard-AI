@@ -2,7 +2,7 @@ import re
 import json
 import datetime
 from datetime import timezone
-from typing import Dict, List, Optional, Any
+from typing import Dict, Optional, Any
 from sqlalchemy.orm import Session
 
 from app.models.threat import ThreatItem, ThreatEvidence

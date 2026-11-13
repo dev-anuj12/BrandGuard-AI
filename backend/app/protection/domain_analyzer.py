@@ -4,14 +4,13 @@ import ssl
 import json
 import datetime
 from datetime import timezone
-import urllib.parse
 from typing import Dict, List, Tuple, Optional, Any
 from sqlalchemy.orm import Session
 
 from app.models.threat import ThreatItem, ThreatEvidence, DomainScan
 from app.models.enums import ThreatCategory, ThreatRiskLevel, ThreatStatus
 from app.schemas.threat import DomainFinding, DomainScanReport
-from app.protection.ssrf_guard import validate_and_resolve_url, SSRFSecurityError
+from app.protection.ssrf_guard import validate_and_resolve_url
 from app.core.config import settings
 
 # Brand parameters — driven by settings; demo values used as fallback

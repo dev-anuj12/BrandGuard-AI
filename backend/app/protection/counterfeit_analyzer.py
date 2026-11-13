@@ -4,7 +4,7 @@ from datetime import timezone
 from typing import Dict, List, Optional, Any
 from sqlalchemy.orm import Session
 
-from app.models.threat import ThreatItem, ThreatEvidence, BrandProduct, BrandAsset
+from app.models.threat import ThreatItem, ThreatEvidence, BrandProduct
 from app.models.enums import ThreatCategory, ThreatRiskLevel, ThreatStatus
 
 COUNTERFEIT_PHRASES = [

@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, timezone
-from typing import Optional
 import json
 import secrets
 from fastapi import APIRouter, Depends, HTTPException, status, Request
