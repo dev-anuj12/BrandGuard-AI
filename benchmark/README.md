@@ -122,6 +122,35 @@ All metrics below are generated directly from benchmark result JSON files (`benc
 - **`semantic_fallback`** (8 items): `t002, t003, t006, t007, t008, t009, t010, t014`
 - **`combined`** (2 items): `t010, t014`
 
+### Holdout v2 (40 New Unseen Items)
+- **Dataset**: `benchmark/holdout_v2.json` (N = 40; 20 violations, 20 compliant; 20 hard cases)
+- Evaluated strictly once without any rule tuning or parameter adjustments.
+
+#### Metric Summary (CONFIRMED view)
+| Mode | Subset | N | TP | FP | TN | FN | Prec | Rec | F1 | FPR | FNR | Prec 95% CI | Rec 95% CI |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `rules_only` | All | 40 | 13 | 6 | 14 | 7 | 0.684 | 0.650 | 0.667 | 0.300 | 0.350 | [0.46, 0.85] | [0.43, 0.82] |
+| `rules_only` | Hard Cases | 20 | 4 | 6 | 4 | 6 | 0.400 | 0.400 | 0.400 | 0.600 | 0.600 | [0.17, 0.69] | [0.17, 0.69] |
+| `semantic_fallback` | All | 40 | 8 | 1 | 19 | 12 | 0.889 | 0.400 | 0.552 | 0.050 | 0.600 | [0.56, 0.98] | [0.22, 0.61] |
+| `semantic_fallback` | Hard Cases | 20 | 4 | 1 | 9 | 6 | 0.800 | 0.400 | 0.533 | 0.100 | 0.600 | [0.38, 0.96] | [0.17, 0.69] |
+| `combined` | All | 40 | 15 | 6 | 14 | 5 | 0.714 | 0.750 | 0.732 | 0.300 | 0.250 | [0.50, 0.86] | [0.53, 0.89] |
+| `combined` | Hard Cases | 20 | 6 | 6 | 4 | 4 | 0.500 | 0.600 | 0.545 | 0.600 | 0.400 | [0.25, 0.75] | [0.31, 0.83] |
+
+#### Metric Summary (SURFACED view)
+| Mode | Subset | N | TP | FP | TN | FN | Prec | Rec | F1 | FPR | FNR | Prec 95% CI | Rec 95% CI |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `rules_only` | All | 40 | 13 | 6 | 14 | 7 | 0.684 | 0.650 | 0.667 | 0.300 | 0.350 | [0.46, 0.85] | [0.43, 0.82] |
+| `rules_only` | Hard Cases | 20 | 4 | 6 | 4 | 6 | 0.400 | 0.400 | 0.400 | 0.600 | 0.600 | [0.17, 0.69] | [0.17, 0.69] |
+| `semantic_fallback` | All | 40 | 10 | 1 | 19 | 10 | 0.909 | 0.500 | 0.645 | 0.050 | 0.500 | [0.62, 0.98] | [0.30, 0.70] |
+| `semantic_fallback` | Hard Cases | 20 | 5 | 1 | 9 | 5 | 0.833 | 0.500 | 0.625 | 0.100 | 0.500 | [0.44, 0.97] | [0.24, 0.76] |
+| `combined` | All | 40 | 17 | 6 | 14 | 3 | 0.739 | 0.850 | 0.791 | 0.300 | 0.150 | [0.54, 0.87] | [0.64, 0.95] |
+| `combined` | Hard Cases | 20 | 7 | 6 | 4 | 3 | 0.538 | 0.700 | 0.609 | 0.600 | 0.300 | [0.29, 0.77] | [0.40, 0.89] |
+
+#### Misclassified Item IDs per Mode (Confirmed View)
+- **`rules_only`** (13 items): `h009, h011, h014, h016, h017, h018, h020, h031, h032, h034, h035, h036, h037`
+- **`semantic_fallback`** (13 items): `h002, h003, h006, h007, h008, h009, h011, h013, h014, h017, h018, h019, h034`
+- **`combined`** (11 items): `h009, h011, h014, h017, h018, h031, h032, h034, h035, h036, h037`
+
 ## Limitations
 
-The benchmark dataset was written with AI assistance and only partly reviewed by the team. Due to the small sample size (N=63 for dev, N=27 for frozen test), confidence intervals are wide. During evaluation development, dev-specific phrases were found in initial rules and replaced by general patterns to avoid overfitting. The `semantic_fallback` mode is a local deterministic heuristics engine, not an actual LLM inference model. No real-LLM benchmark was run unless an API key is configured (currently no external LLM key, `OPENAI_API_KEY` or `GEMINI_API_KEY`, was active, so the evaluation executed using the deterministic fallback engine).
+The benchmark dataset was written with AI assistance and only partly reviewed by the team. Due to the small sample size (N=63 for dev, N=27 for frozen test, N=40 for holdout_v2), confidence intervals are wide. During evaluation development, dev-specific phrases were found in initial rules and replaced by general patterns to avoid overfitting. The `semantic_fallback` mode is a local deterministic heuristics engine, not an actual LLM inference model. No real-LLM benchmark was run unless an API key is configured (currently no external LLM key, `OPENAI_API_KEY` or `GEMINI_API_KEY`, was active, so the evaluation executed using the deterministic fallback engine). On Holdout v2, hard negative disclaimers (e.g. `h031-h037` where banned phrases appear within negation or cautionary advice) remain challenging for exact string rules, highlighting the value of semantic grounding and human review.

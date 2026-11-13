@@ -8,6 +8,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 
 # Insert backend directory into sys.path
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -87,6 +88,8 @@ def compute_metrics(items, predictions):
         "fnr": round(fnr, 4),
         "precision_wilson_95": wilson_score_interval(tp, tp + fp),
         "recall_wilson_95": wilson_score_interval(tp, tp + fn),
+        "fpr_wilson_95": wilson_score_interval(fp, fp + tn),
+        "fnr_wilson_95": wilson_score_interval(fn, tp + fn),
         "per_category_recall": cat_recall,
         "misclassified_ids": misclassified,
     }
@@ -109,12 +112,29 @@ def get_file_sha256(filepath: Path) -> str:
     return h.hexdigest()
 
 
-async def run_evaluation(split: str, confirm_final: bool = False, save_baseline: bool = False, save_tuned: bool = False):
-    if split == "test" and not confirm_final:
-        print("ERROR: Refusing to evaluate test split without --confirm-final. The test split is frozen.", file=sys.stderr)
-        sys.exit(1)
+async def run_evaluation(
+    split: Optional[str] = None,
+    dataset: str = "dataset",
+    confirm_final: bool = False,
+    save_baseline: bool = False,
+    save_tuned: bool = False
+):
+    if dataset == "holdout_v2":
+        if not confirm_final:
+            print("ERROR: Refusing to evaluate holdout_v2 without --confirm-final. The holdout dataset is strictly evaluated once.", file=sys.stderr)
+            sys.exit(1)
+        dataset_path = REPO_ROOT / "benchmark" / "holdout_v2.json"
+        target_split = split or "holdout_v2"
+    else:
+        if not split:
+            print("ERROR: --split is required when --dataset is dataset (choose 'dev' or 'test')", file=sys.stderr)
+            sys.exit(1)
+        if split == "test" and not confirm_final:
+            print("ERROR: Refusing to evaluate test split without --confirm-final. The test split is frozen.", file=sys.stderr)
+            sys.exit(1)
+        dataset_path = REPO_ROOT / "benchmark" / "dataset.json"
+        target_split = split
 
-    dataset_path = REPO_ROOT / "benchmark" / "dataset.json"
     if not dataset_path.exists():
         print(f"ERROR: Dataset not found at {dataset_path}", file=sys.stderr)
         sys.exit(1)
@@ -122,12 +142,16 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
     with open(dataset_path, "r", encoding="utf-8") as f:
         full_dataset = json.load(f)
 
-    items = [x for x in full_dataset if x.get("split") == split]
+    if dataset == "holdout_v2" and not split:
+        items = full_dataset
+    else:
+        items = [x for x in full_dataset if x.get("split") == target_split]
+
     if not items:
-        print(f"ERROR: No items found for split '{split}'", file=sys.stderr)
+        print(f"ERROR: No items found for split '{target_split}'", file=sys.stderr)
         sys.exit(1)
 
-    print(f"Loaded {len(items)} items for split '{split}' from {dataset_path.name}")
+    print(f"Loaded {len(items)} items from {dataset_path.name}")
 
     # Set up in-memory fixture database
     engine = create_engine("sqlite:///:memory:")
@@ -314,7 +338,8 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
     results_dir.mkdir(parents=True, exist_ok=True)
 
     payload = {
-        "split": split,
+        "dataset": dataset,
+        "split": target_split,
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "git_commit": get_git_commit(),
         "dataset_sha256": get_file_sha256(dataset_path),
@@ -322,7 +347,12 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
         "modes": results_by_mode,
     }
 
-    if save_baseline:
+    if dataset == "holdout_v2":
+        holdout_path = results_dir / "holdout_v2.json"
+        with open(holdout_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+        print(f"Holdout v2 results saved to: {holdout_path}")
+    elif save_baseline:
         baseline_path = results_dir / "baseline_dev.json"
         with open(baseline_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
@@ -332,7 +362,7 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
         with open(tuned_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
         print(f"Tuned dev results saved to: {tuned_path}")
-    elif split == "test":
+    elif target_split == "test":
         final_test_path = results_dir / "final_test.json"
         with open(final_test_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
@@ -349,13 +379,20 @@ async def run_evaluation(split: str, confirm_final: bool = False, save_baseline:
 
 def main():
     parser = argparse.ArgumentParser(description="BrandGuard AI Benchmark Evaluation Runner")
-    parser.add_argument("--split", choices=["dev", "test"], required=True, help="Dataset split to evaluate")
-    parser.add_argument("--confirm-final", action="store_true", help="Confirmation required to evaluate frozen test split")
+    parser.add_argument("--dataset", choices=["dataset", "holdout_v2"], default="dataset", help="Dataset file to evaluate")
+    parser.add_argument("--split", choices=["dev", "test", "holdout_v2"], default=None, help="Dataset split to evaluate")
+    parser.add_argument("--confirm-final", action="store_true", help="Confirmation required to evaluate frozen test or holdout split")
     parser.add_argument("--save-baseline", action="store_true", help="Explicitly save output as baseline_dev.json")
     parser.add_argument("--save-tuned", action="store_true", help="Save output as tuned_dev.json")
     args = parser.parse_args()
 
-    asyncio.run(run_evaluation(args.split, args.confirm_final, args.save_baseline, args.save_tuned))
+    asyncio.run(run_evaluation(
+        split=args.split,
+        dataset=args.dataset,
+        confirm_final=args.confirm_final,
+        save_baseline=args.save_baseline,
+        save_tuned=args.save_tuned
+    ))
 
 
 if __name__ == "__main__":

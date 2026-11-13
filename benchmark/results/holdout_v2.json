@@ -1,0 +1,1014 @@
+{
+  "dataset": "holdout_v2",
+  "split": "holdout_v2",
+  "timestamp": "2026-11-13T12:58:18.325749+00:00",
+  "git_commit": "890642f26ddc4cacb650fdbfce9564761a126102",
+  "dataset_sha256": "76f3cb36a85aae80b06c09a16fd38ff11e3886eb663ccc4d82aea5498b248862",
+  "total_items": 40,
+  "modes": {
+    "rules_only": {
+      "confirmed": {
+        "all": {
+          "tp": 13,
+          "fp": 6,
+          "tn": 14,
+          "fn": 7,
+          "precision": 0.6842,
+          "recall": 0.65,
+          "f1": 0.6667,
+          "fpr": 0.3,
+          "fnr": 0.35,
+          "precision_wilson_95": [
+            0.4601,
+            0.8464
+          ],
+          "recall_wilson_95": [
+            0.4329,
+            0.8188
+          ],
+          "fpr_wilson_95": [
+            0.1455,
+            0.519
+          ],
+          "fnr_wilson_95": [
+            0.1812,
+            0.5671
+          ],
+          "per_category_recall": {
+            "bad_citation": 0.0,
+            "banned_phrase": 0.7,
+            "missing_disclaimer": 0.6667,
+            "terminology": 1.0,
+            "tone": 1.0,
+            "unsupported_claim": 0.0
+          },
+          "misclassified_ids": [
+            "h009",
+            "h011",
+            "h014",
+            "h016",
+            "h017",
+            "h018",
+            "h020",
+            "h031",
+            "h032",
+            "h034",
+            "h035",
+            "h036",
+            "h037"
+          ]
+        },
+        "hard_cases": {
+          "tp": 4,
+          "fp": 6,
+          "tn": 4,
+          "fn": 6,
+          "precision": 0.4,
+          "recall": 0.4,
+          "f1": 0.4,
+          "fpr": 0.6,
+          "fnr": 0.6,
+          "precision_wilson_95": [
+            0.1682,
+            0.6873
+          ],
+          "recall_wilson_95": [
+            0.1682,
+            0.6873
+          ],
+          "fpr_wilson_95": [
+            0.3127,
+            0.8318
+          ],
+          "fnr_wilson_95": [
+            0.3127,
+            0.8318
+          ],
+          "per_category_recall": {
+            "bad_citation": 0.0,
+            "banned_phrase": 0.4,
+            "missing_disclaimer": 0.5,
+            "terminology": 1.0,
+            "tone": 1.0,
+            "unsupported_claim": 0.0
+          },
+          "misclassified_ids": [
+            "h011",
+            "h014",
+            "h016",
+            "h017",
+            "h018",
+            "h020",
+            "h031",
+            "h032",
+            "h034",
+            "h035",
+            "h036",
+            "h037"
+          ]
+        },
+        "misclassified_ids": [
+          "h009",
+          "h011",
+          "h014",
+          "h016",
+          "h017",
+          "h018",
+          "h020",
+          "h031",
+          "h032",
+          "h034",
+          "h035",
+          "h036",
+          "h037"
+        ]
+      },
+      "surfaced": {
+        "all": {
+          "tp": 13,
+          "fp": 6,
+          "tn": 14,
+          "fn": 7,
+          "precision": 0.6842,
+          "recall": 0.65,
+          "f1": 0.6667,
+          "fpr": 0.3,
+          "fnr": 0.35,
+          "precision_wilson_95": [
+            0.4601,
+            0.8464
+          ],
+          "recall_wilson_95": [
+            0.4329,
+            0.8188
+          ],
+          "fpr_wilson_95": [
+            0.1455,
+            0.519
+          ],
+          "fnr_wilson_95": [
+            0.1812,
+            0.5671
+          ],
+          "per_category_recall": {
+            "bad_citation": 0.0,
+            "banned_phrase": 0.7,
+            "missing_disclaimer": 0.6667,
+            "terminology": 1.0,
+            "tone": 1.0,
+            "unsupported_claim": 0.0
+          },
+          "misclassified_ids": [
+            "h009",
+            "h011",
+            "h014",
+            "h016",
+            "h017",
+            "h018",
+            "h020",
+            "h031",
+            "h032",
+            "h034",
+            "h035",
+            "h036",
+            "h037"
+          ]
+        },
+        "hard_cases": {
+          "tp": 4,
+          "fp": 6,
+          "tn": 4,
+          "fn": 6,
+          "precision": 0.4,
+          "recall": 0.4,
+          "f1": 0.4,
+          "fpr": 0.6,
+          "fnr": 0.6,
+          "precision_wilson_95": [
+            0.1682,
+            0.6873
+          ],
+          "recall_wilson_95": [
+            0.1682,
+            0.6873
+          ],
+          "fpr_wilson_95": [
+            0.3127,
+            0.8318
+          ],
+          "fnr_wilson_95": [
+            0.3127,
+            0.8318
+          ],
+          "per_category_recall": {
+            "bad_citation": 0.0,
+            "banned_phrase": 0.4,
+            "missing_disclaimer": 0.5,
+            "terminology": 1.0,
+            "tone": 1.0,
+            "unsupported_claim": 0.0
+          },
+          "misclassified_ids": [
+            "h011",
+            "h014",
+            "h016",
+            "h017",
+            "h018",
+            "h020",
+            "h031",
+            "h032",
+            "h034",
+            "h035",
+            "h036",
+            "h037"
+          ]
+        },
+        "misclassified_ids": [
+          "h009",
+          "h011",
+          "h014",
+          "h016",
+          "h017",
+          "h018",
+          "h020",
+          "h031",
+          "h032",
+          "h034",
+          "h035",
+          "h036",
+          "h037"
+        ]
+      },
+      "all": {
+        "tp": 13,
+        "fp": 6,
+        "tn": 14,
+        "fn": 7,
+        "precision": 0.6842,
+        "recall": 0.65,
+        "f1": 0.6667,
+        "fpr": 0.3,
+        "fnr": 0.35,
+        "precision_wilson_95": [
+          0.4601,
+          0.8464
+        ],
+        "recall_wilson_95": [
+          0.4329,
+          0.8188
+        ],
+        "fpr_wilson_95": [
+          0.1455,
+          0.519
+        ],
+        "fnr_wilson_95": [
+          0.1812,
+          0.5671
+        ],
+        "per_category_recall": {
+          "bad_citation": 0.0,
+          "banned_phrase": 0.7,
+          "missing_disclaimer": 0.6667,
+          "terminology": 1.0,
+          "tone": 1.0,
+          "unsupported_claim": 0.0
+        },
+        "misclassified_ids": [
+          "h009",
+          "h011",
+          "h014",
+          "h016",
+          "h017",
+          "h018",
+          "h020",
+          "h031",
+          "h032",
+          "h034",
+          "h035",
+          "h036",
+          "h037"
+        ]
+      },
+      "hard_cases": {
+        "tp": 4,
+        "fp": 6,
+        "tn": 4,
+        "fn": 6,
+        "precision": 0.4,
+        "recall": 0.4,
+        "f1": 0.4,
+        "fpr": 0.6,
+        "fnr": 0.6,
+        "precision_wilson_95": [
+          0.1682,
+          0.6873
+        ],
+        "recall_wilson_95": [
+          0.1682,
+          0.6873
+        ],
+        "fpr_wilson_95": [
+          0.3127,
+          0.8318
+        ],
+        "fnr_wilson_95": [
+          0.3127,
+          0.8318
+        ],
+        "per_category_recall": {
+          "bad_citation": 0.0,
+          "banned_phrase": 0.4,
+          "missing_disclaimer": 0.5,
+          "terminology": 1.0,
+          "tone": 1.0,
+          "unsupported_claim": 0.0
+        },
+        "misclassified_ids": [
+          "h011",
+          "h014",
+          "h016",
+          "h017",
+          "h018",
+          "h020",
+          "h031",
+          "h032",
+          "h034",
+          "h035",
+          "h036",
+          "h037"
+        ]
+      },
+      "misclassified_ids": [
+        "h009",
+        "h011",
+        "h014",
+        "h016",
+        "h017",
+        "h018",
+        "h020",
+        "h031",
+        "h032",
+        "h034",
+        "h035",
+        "h036",
+        "h037"
+      ],
+      "needs_human_review_count": 0
+    },
+    "semantic_fallback": {
+      "confirmed": {
+        "all": {
+          "tp": 8,
+          "fp": 1,
+          "tn": 19,
+          "fn": 12,
+          "precision": 0.8889,
+          "recall": 0.4,
+          "f1": 0.5517,
+          "fpr": 0.05,
+          "fnr": 0.6,
+          "precision_wilson_95": [
+            0.565,
+            0.9801
+          ],
+          "recall_wilson_95": [
+            0.2188,
+            0.6134
+          ],
+          "fpr_wilson_95": [
+            0.0089,
+            0.2361
+          ],
+          "fnr_wilson_95": [
+            0.3866,
+            0.7812
+          ],
+          "per_category_recall": {
+            "bad_citation": 0.0,
+            "banned_phrase": 0.5,
+            "missing_disclaimer": 0.3333,
+            "terminology": 0.0,
+            "tone": 1.0,
+            "unsupported_claim": 1.0
+          },
+          "misclassified_ids": [
+            "h002",
+            "h003",
+            "h006",
+            "h007",
+            "h008",
+            "h009",
+            "h011",
+            "h013",
+            "h014",
+            "h017",
+            "h018",
+            "h019",
+            "h034"
+          ]
+        },
+        "hard_cases": {
+          "tp": 4,
+          "fp": 1,
+          "tn": 9,
+          "fn": 6,
+          "precision": 0.8,
+          "recall": 0.4,
+          "f1": 0.5333,
+          "fpr": 0.1,
+          "fnr": 0.6,
+          "precision_wilson_95": [
+            0.3755,
+            0.9638
+          ],
+          "recall_wilson_95": [
+            0.1682,
+            0.6873
+          ],
+          "fpr_wilson_95": [
+            0.0179,
+            0.4042
+          ],
+          "fnr_wilson_95": [
+            0.3127,
+            0.8318
+          ],
+          "per_category_recall": {
+            "bad_citation": 0.0,
+            "banned_phrase": 0.4,
+            "missing_disclaimer": 0.5,
+            "terminology": 0.0,
+            "tone": 1.0,
+            "unsupported_claim": 1.0
+          },
+          "misclassified_ids": [
+            "h011",
+            "h013",
+            "h014",
+            "h017",
+            "h018",
+            "h019",
+            "h034"
+          ]
+        },
+        "misclassified_ids": [
+          "h002",
+          "h003",
+          "h006",
+          "h007",
+          "h008",
+          "h009",
+          "h011",
+          "h013",
+          "h014",
+          "h017",
+          "h018",
+          "h019",
+          "h034"
+        ]
+      },
+      "surfaced": {
+        "all": {
+          "tp": 10,
+          "fp": 1,
+          "tn": 19,
+          "fn": 10,
+          "precision": 0.9091,
+          "recall": 0.5,
+          "f1": 0.6452,
+          "fpr": 0.05,
+          "fnr": 0.5,
+          "precision_wilson_95": [
+            0.6226,
+            0.9838
+          ],
+          "recall_wilson_95": [
+            0.2993,
+            0.7007
+          ],
+          "fpr_wilson_95": [
+            0.0089,
+            0.2361
+          ],
+          "fnr_wilson_95": [
+            0.2993,
+            0.7007
+          ],
+          "per_category_recall": {
+            "bad_citation": 1.0,
+            "banned_phrase": 0.5,
+            "missing_disclaimer": 0.3333,
+            "terminology": 0.0,
+            "tone": 1.0,
+            "unsupported_claim": 1.0
+          },
+          "misclassified_ids": [
+            "h002",
+            "h003",
+            "h006",
+            "h007",
+            "h008",
+            "h011",
+            "h013",
+            "h014",
+            "h018",
+            "h019",
+            "h034"
+          ]
+        },
+        "hard_cases": {
+          "tp": 5,
+          "fp": 1,
+          "tn": 9,
+          "fn": 5,
+          "precision": 0.8333,
+          "recall": 0.5,
+          "f1": 0.625,
+          "fpr": 0.1,
+          "fnr": 0.5,
+          "precision_wilson_95": [
+            0.4365,
+            0.9699
+          ],
+          "recall_wilson_95": [
+            0.2366,
+            0.7634
+          ],
+          "fpr_wilson_95": [
+            0.0179,
+            0.4042
+          ],
+          "fnr_wilson_95": [
+            0.2366,
+            0.7634
+          ],
+          "per_category_recall": {
+            "bad_citation": 1.0,
+            "banned_phrase": 0.4,
+            "missing_disclaimer": 0.5,
+            "terminology": 0.0,
+            "tone": 1.0,
+            "unsupported_claim": 1.0
+          },
+          "misclassified_ids": [
+            "h011",
+            "h013",
+            "h014",
+            "h018",
+            "h019",
+            "h034"
+          ]
+        },
+        "misclassified_ids": [
+          "h002",
+          "h003",
+          "h006",
+          "h007",
+          "h008",
+          "h011",
+          "h013",
+          "h014",
+          "h018",
+          "h019",
+          "h034"
+        ]
+      },
+      "all": {
+        "tp": 8,
+        "fp": 1,
+        "tn": 19,
+        "fn": 12,
+        "precision": 0.8889,
+        "recall": 0.4,
+        "f1": 0.5517,
+        "fpr": 0.05,
+        "fnr": 0.6,
+        "precision_wilson_95": [
+          0.565,
+          0.9801
+        ],
+        "recall_wilson_95": [
+          0.2188,
+          0.6134
+        ],
+        "fpr_wilson_95": [
+          0.0089,
+          0.2361
+        ],
+        "fnr_wilson_95": [
+          0.3866,
+          0.7812
+        ],
+        "per_category_recall": {
+          "bad_citation": 0.0,
+          "banned_phrase": 0.5,
+          "missing_disclaimer": 0.3333,
+          "terminology": 0.0,
+          "tone": 1.0,
+          "unsupported_claim": 1.0
+        },
+        "misclassified_ids": [
+          "h002",
+          "h003",
+          "h006",
+          "h007",
+          "h008",
+          "h009",
+          "h011",
+          "h013",
+          "h014",
+          "h017",
+          "h018",
+          "h019",
+          "h034"
+        ]
+      },
+      "hard_cases": {
+        "tp": 4,
+        "fp": 1,
+        "tn": 9,
+        "fn": 6,
+        "precision": 0.8,
+        "recall": 0.4,
+        "f1": 0.5333,
+        "fpr": 0.1,
+        "fnr": 0.6,
+        "precision_wilson_95": [
+          0.3755,
+          0.9638
+        ],
+        "recall_wilson_95": [
+          0.1682,
+          0.6873
+        ],
+        "fpr_wilson_95": [
+          0.0179,
+          0.4042
+        ],
+        "fnr_wilson_95": [
+          0.3127,
+          0.8318
+        ],
+        "per_category_recall": {
+          "bad_citation": 0.0,
+          "banned_phrase": 0.4,
+          "missing_disclaimer": 0.5,
+          "terminology": 0.0,
+          "tone": 1.0,
+          "unsupported_claim": 1.0
+        },
+        "misclassified_ids": [
+          "h011",
+          "h013",
+          "h014",
+          "h017",
+          "h018",
+          "h019",
+          "h034"
+        ]
+      },
+      "misclassified_ids": [
+        "h002",
+        "h003",
+        "h006",
+        "h007",
+        "h008",
+        "h009",
+        "h011",
+        "h013",
+        "h014",
+        "h017",
+        "h018",
+        "h019",
+        "h034"
+      ],
+      "needs_human_review_count": 2
+    },
+    "combined": {
+      "confirmed": {
+        "all": {
+          "tp": 15,
+          "fp": 6,
+          "tn": 14,
+          "fn": 5,
+          "precision": 0.7143,
+          "recall": 0.75,
+          "f1": 0.7317,
+          "fpr": 0.3,
+          "fnr": 0.25,
+          "precision_wilson_95": [
+            0.5004,
+            0.8619
+          ],
+          "recall_wilson_95": [
+            0.5313,
+            0.8881
+          ],
+          "fpr_wilson_95": [
+            0.1455,
+            0.519
+          ],
+          "fnr_wilson_95": [
+            0.1119,
+            0.4687
+          ],
+          "per_category_recall": {
+            "bad_citation": 0.0,
+            "banned_phrase": 0.8,
+            "missing_disclaimer": 0.6667,
+            "terminology": 1.0,
+            "tone": 1.0,
+            "unsupported_claim": 1.0
+          },
+          "misclassified_ids": [
+            "h009",
+            "h011",
+            "h014",
+            "h017",
+            "h018",
+            "h031",
+            "h032",
+            "h034",
+            "h035",
+            "h036",
+            "h037"
+          ]
+        },
+        "hard_cases": {
+          "tp": 6,
+          "fp": 6,
+          "tn": 4,
+          "fn": 4,
+          "precision": 0.5,
+          "recall": 0.6,
+          "f1": 0.5455,
+          "fpr": 0.6,
+          "fnr": 0.4,
+          "precision_wilson_95": [
+            0.2538,
+            0.7462
+          ],
+          "recall_wilson_95": [
+            0.3127,
+            0.8318
+          ],
+          "fpr_wilson_95": [
+            0.3127,
+            0.8318
+          ],
+          "fnr_wilson_95": [
+            0.1682,
+            0.6873
+          ],
+          "per_category_recall": {
+            "bad_citation": 0.0,
+            "banned_phrase": 0.6,
+            "missing_disclaimer": 0.5,
+            "terminology": 1.0,
+            "tone": 1.0,
+            "unsupported_claim": 1.0
+          },
+          "misclassified_ids": [
+            "h011",
+            "h014",
+            "h017",
+            "h018",
+            "h031",
+            "h032",
+            "h034",
+            "h035",
+            "h036",
+            "h037"
+          ]
+        },
+        "misclassified_ids": [
+          "h009",
+          "h011",
+          "h014",
+          "h017",
+          "h018",
+          "h031",
+          "h032",
+          "h034",
+          "h035",
+          "h036",
+          "h037"
+        ]
+      },
+      "surfaced": {
+        "all": {
+          "tp": 17,
+          "fp": 6,
+          "tn": 14,
+          "fn": 3,
+          "precision": 0.7391,
+          "recall": 0.85,
+          "f1": 0.7907,
+          "fpr": 0.3,
+          "fnr": 0.15,
+          "precision_wilson_95": [
+            0.5353,
+            0.8745
+          ],
+          "recall_wilson_95": [
+            0.6396,
+            0.9476
+          ],
+          "fpr_wilson_95": [
+            0.1455,
+            0.519
+          ],
+          "fnr_wilson_95": [
+            0.0524,
+            0.3604
+          ],
+          "per_category_recall": {
+            "bad_citation": 1.0,
+            "banned_phrase": 0.8,
+            "missing_disclaimer": 0.6667,
+            "terminology": 1.0,
+            "tone": 1.0,
+            "unsupported_claim": 1.0
+          },
+          "misclassified_ids": [
+            "h011",
+            "h014",
+            "h018",
+            "h031",
+            "h032",
+            "h034",
+            "h035",
+            "h036",
+            "h037"
+          ]
+        },
+        "hard_cases": {
+          "tp": 7,
+          "fp": 6,
+          "tn": 4,
+          "fn": 3,
+          "precision": 0.5385,
+          "recall": 0.7,
+          "f1": 0.6087,
+          "fpr": 0.6,
+          "fnr": 0.3,
+          "precision_wilson_95": [
+            0.2914,
+            0.7679
+          ],
+          "recall_wilson_95": [
+            0.3968,
+            0.8922
+          ],
+          "fpr_wilson_95": [
+            0.3127,
+            0.8318
+          ],
+          "fnr_wilson_95": [
+            0.1078,
+            0.6032
+          ],
+          "per_category_recall": {
+            "bad_citation": 1.0,
+            "banned_phrase": 0.6,
+            "missing_disclaimer": 0.5,
+            "terminology": 1.0,
+            "tone": 1.0,
+            "unsupported_claim": 1.0
+          },
+          "misclassified_ids": [
+            "h011",
+            "h014",
+            "h018",
+            "h031",
+            "h032",
+            "h034",
+            "h035",
+            "h036",
+            "h037"
+          ]
+        },
+        "misclassified_ids": [
+          "h011",
+          "h014",
+          "h018",
+          "h031",
+          "h032",
+          "h034",
+          "h035",
+          "h036",
+          "h037"
+        ]
+      },
+      "all": {
+        "tp": 15,
+        "fp": 6,
+        "tn": 14,
+        "fn": 5,
+        "precision": 0.7143,
+        "recall": 0.75,
+        "f1": 0.7317,
+        "fpr": 0.3,
+        "fnr": 0.25,
+        "precision_wilson_95": [
+          0.5004,
+          0.8619
+        ],
+        "recall_wilson_95": [
+          0.5313,
+          0.8881
+        ],
+        "fpr_wilson_95": [
+          0.1455,
+          0.519
+        ],
+        "fnr_wilson_95": [
+          0.1119,
+          0.4687
+        ],
+        "per_category_recall": {
+          "bad_citation": 0.0,
+          "banned_phrase": 0.8,
+          "missing_disclaimer": 0.6667,
+          "terminology": 1.0,
+          "tone": 1.0,
+          "unsupported_claim": 1.0
+        },
+        "misclassified_ids": [
+          "h009",
+          "h011",
+          "h014",
+          "h017",
+          "h018",
+          "h031",
+          "h032",
+          "h034",
+          "h035",
+          "h036",
+          "h037"
+        ]
+      },
+      "hard_cases": {
+        "tp": 6,
+        "fp": 6,
+        "tn": 4,
+        "fn": 4,
+        "precision": 0.5,
+        "recall": 0.6,
+        "f1": 0.5455,
+        "fpr": 0.6,
+        "fnr": 0.4,
+        "precision_wilson_95": [
+          0.2538,
+          0.7462
+        ],
+        "recall_wilson_95": [
+          0.3127,
+          0.8318
+        ],
+        "fpr_wilson_95": [
+          0.3127,
+          0.8318
+        ],
+        "fnr_wilson_95": [
+          0.1682,
+          0.6873
+        ],
+        "per_category_recall": {
+          "bad_citation": 0.0,
+          "banned_phrase": 0.6,
+          "missing_disclaimer": 0.5,
+          "terminology": 1.0,
+          "tone": 1.0,
+          "unsupported_claim": 1.0
+        },
+        "misclassified_ids": [
+          "h011",
+          "h014",
+          "h017",
+          "h018",
+          "h031",
+          "h032",
+          "h034",
+          "h035",
+          "h036",
+          "h037"
+        ]
+      },
+      "misclassified_ids": [
+        "h009",
+        "h011",
+        "h014",
+        "h017",
+        "h018",
+        "h031",
+        "h032",
+        "h034",
+        "h035",
+        "h036",
+        "h037"
+      ],
+      "needs_human_review_count": 4
+    }
+  }
+}
