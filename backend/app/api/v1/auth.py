@@ -176,9 +176,23 @@ def verify_otp(data: VerifyOTPRequest, request: Request, db: Session = Depends(g
         )
 
     if user.is_verified:
-        access_token = create_access_token(subject=user.id, role=user.role.value)
+        access_jti = secrets.token_hex(16)
+        refresh_jti = secrets.token_hex(16)
+        access_token = create_access_token(subject=user.id, role=user.role.value, jti=access_jti)
+        refresh_tok = create_refresh_token(subject=user.id, jti=refresh_jti)
+        session = UserSession(
+            user_id=user.id,
+            refresh_token_jti=refresh_jti,
+            refresh_token_hash=hash_secret(refresh_tok),
+            expires_at=now + timedelta(days=7),
+            ip_address=client_ip,
+            user_agent=request.headers.get("user-agent", "unknown")[:255]
+        )
+        db.add(session)
+        db.commit()
         return {
             "access_token": access_token,
+            "refresh_token": refresh_tok,
             "token_type": "bearer",
             "user": user
         }
