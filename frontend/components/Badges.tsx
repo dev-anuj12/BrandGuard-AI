@@ -76,7 +76,15 @@ export function SeverityBadge({ severity }: { severity: string }) {
   );
 }
 
-export function ConfidenceBadge({ confidence }: { confidence: number }) {
+export function ConfidenceBadge({ confidence }: { confidence?: number | null }) {
+  if (confidence === null || confidence === undefined || isNaN(confidence)) {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium border text-slate-600 bg-slate-50 border-slate-200 dark:text-slate-400 dark:bg-slate-800 dark:border-slate-700">
+        <span>Confidence:</span>
+        <span className="font-semibold">N/A</span>
+      </span>
+    );
+  }
   const pct = Math.round(confidence * 100);
   let tier = 'High Confidence';
   let color = 'text-emerald-700 bg-emerald-50 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-950/50 dark:border-emerald-800/50';

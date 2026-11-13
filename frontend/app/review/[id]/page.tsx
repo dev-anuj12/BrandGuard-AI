@@ -355,8 +355,10 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                       <div className="space-y-4">
                         {groundedFindings.map((f: any, idx: number) => {
                           const suggestion = f.suggestions?.[0];
+                          const suggestedCorrectionText = suggestion?.suggested_text || f.suggested_correction;
                           const isResolved = f.status === 'Resolved' || suggestion?.status === 'Accepted';
                           const isOverridden = f.status === 'Overridden' || suggestion?.status === 'Rejected';
+                          const isAIEngine = f.engine_source?.toLowerCase().includes('llm') || f.engine_source?.toLowerCase().includes('ai');
 
                           return (
                             <div
@@ -378,8 +380,12 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                 </div>
                                 <div className="flex items-center gap-2">
                                   <ConfidenceBadge confidence={f.confidence} />
-                                  <span className="text-[10px] text-slate-500 font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900">
-                                    {f.engine_source}
+                                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                                    isAIEngine
+                                      ? 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800'
+                                      : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
+                                  }`}>
+                                    {isAIEngine ? '🤖 LLM Engine' : '📋 Rule Engine'}
                                   </span>
                                 </div>
                               </div>
@@ -387,7 +393,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                               {/* Matched Snippet */}
                               <div className="p-2.5 rounded-lg bg-rose-50/50 dark:bg-slate-900 border border-rose-200 dark:border-rose-950/60 text-xs">
                                 <span className="text-rose-600 dark:text-rose-400 block mb-0.5 font-semibold uppercase text-[10px]">
-                                  Problematic Text Detected:
+                                  Exact Flagged Text:
                                 </span>
                                 <span className="font-mono font-bold text-rose-700 dark:text-rose-300 text-sm">
                                   &quot;{f.matched_text}&quot;
@@ -396,39 +402,44 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
 
                               {/* Explanation & Guideline Reference */}
                               <div className="space-y-1.5 text-xs">
-                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{f.explanation}</p>
-                                {f.guideline_reference && (
-                                  <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium text-[11px]">
-                                    <BookOpen className="w-3.5 h-3.5 shrink-0" />
-                                    <span>Policy Reference: {f.guideline_reference}</span>
+                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                                  <strong className="text-slate-700 dark:text-slate-200">Reason: </strong>
+                                  {f.explanation}
+                                </p>
+                                <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium text-[11px]">
+                                  <BookOpen className="w-3.5 h-3.5 shrink-0" />
+                                  <span>Policy Reference: {f.guideline_reference || f.category || 'Brand Governance Standard'}</span>
+                                </div>
+                              </div>
+
+                              {/* Source Evidence */}
+                              <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-[11px] space-y-1">
+                                <span className="font-semibold text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                                  <Search className="w-3 h-3 text-blue-500" />
+                                  <span>Supporting Evidence:</span>
+                                </span>
+                                {f.evidence && f.evidence.length > 0 ? (
+                                  f.evidence.map((ev: any, evIdx: number) => (
+                                    <div key={evIdx} className="text-slate-500 dark:text-slate-400 font-mono text-[10px]">
+                                      • {typeof ev === 'string' ? ev : `${ev.source || ev.rule || 'Evidence'}: ${ev.text || ev.note || ev.requirement || ''}`}
+                                    </div>
+                                  ))
+                                ) : (
+                                  <div className="text-slate-400 dark:text-slate-500 text-[10px] italic">
+                                    Direct pattern rule match; no external citation database entry required.
                                   </div>
                                 )}
                               </div>
 
-                              {/* Source Evidence */}
-                              {f.evidence && f.evidence.length > 0 && (
-                                <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-[11px] space-y-1">
-                                  <span className="font-semibold text-slate-600 dark:text-slate-400 flex items-center gap-1">
-                                    <Search className="w-3 h-3 text-blue-500" />
-                                    <span>Supporting Evidence:</span>
-                                  </span>
-                                  {f.evidence.map((ev: any, evIdx: number) => (
-                                    <div key={evIdx} className="text-slate-500 dark:text-slate-400 font-mono text-[10px]">
-                                      • {typeof ev === 'string' ? ev : `${ev.source || ev.rule || 'Evidence'}: ${ev.text || ev.note || ev.requirement || ''}`}
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-
                               {/* Suggested Correction */}
-                              {suggestion && (
+                              {suggestedCorrectionText && (
                                 <div className="pt-2 border-t border-slate-100 dark:border-slate-700/60 space-y-2.5">
                                   <div className="p-3 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 text-xs space-y-1">
                                     <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
-                                      AI Suggested Correction:
+                                      {isAIEngine ? 'AI Suggested Correction:' : 'Recommended Correction:'}
                                     </span>
                                     <span className="font-mono text-emerald-700 dark:text-emerald-300 font-bold block text-sm">
-                                      &quot;{suggestion.suggested_text}&quot;
+                                      &quot;{suggestedCorrectionText}&quot;
                                     </span>
                                   </div>
 
@@ -445,7 +456,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                     </div>
                                   )}
 
-                                  {!isResolved && !isOverridden && (
+                                  {!isResolved && !isOverridden && suggestion && (
                                     <div className="flex flex-wrap items-center gap-2 pt-1">
                                       <Button
                                         size="sm"
@@ -517,6 +528,7 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                       <div className="space-y-4">
                         {needsReviewFindings.map((f: any, idx: number) => {
                           const evidenceState = f.evidence_state || 'unverified_source';
+                          const isAIEngine = f.engine_source?.toLowerCase().includes('llm') || f.engine_source?.toLowerCase().includes('ai');
                           const badgeVariant =
                             evidenceState === 'verified'
                               ? 'success'
@@ -537,21 +549,38 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                                     Evidence: {evidenceState}
                                   </Badge>
                                 </div>
-                                <span className="text-[10px] text-slate-500 font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900">
-                                  {f.engine_source}
-                                </span>
+                                <div className="flex items-center gap-2">
+                                  <ConfidenceBadge confidence={f.confidence} />
+                                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                                    isAIEngine
+                                      ? 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800'
+                                      : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
+                                  }`}>
+                                    {isAIEngine ? '🤖 LLM Engine' : '📋 Rule Engine'}
+                                  </span>
+                                </div>
                               </div>
 
                               <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
                                 <span className="text-slate-500 block mb-0.5 font-semibold uppercase text-[10px]">
-                                  Candidate Text:
+                                  Candidate Text Flagged for Review:
                                 </span>
                                 <span className="font-mono text-slate-700 dark:text-slate-300 text-sm">
                                   &quot;{f.matched_text}&quot;
                                 </span>
                               </div>
 
-                              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{f.explanation}</p>
+                              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                                <strong className="text-slate-700 dark:text-slate-200">Reason: </strong>
+                                {f.explanation}
+                              </p>
+
+                              {f.guideline_reference && (
+                                <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium text-[11px]">
+                                  <BookOpen className="w-3.5 h-3.5 shrink-0" />
+                                  <span>Policy Reference: {f.guideline_reference}</span>
+                                </div>
+                              )}
 
                               {f.grounding_reasons && (
                                 <div className="p-2 rounded-lg bg-amber-100/60 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 text-xs font-medium">
