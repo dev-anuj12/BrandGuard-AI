@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
   ShieldCheck, AlertTriangle, CheckCircle2, ArrowLeft, Sparkles, 
-  RefreshCw, Check, X, Edit3, History, BookOpen, Search, Send, FileCheck
+  RefreshCw, Check, X, Edit3, History, BookOpen, Search, Send, FileCheck,
+  Download, UserCheck, CheckSquare, MessageSquare
 } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout';
 import { Button } from '../../../components/ui/Button';
@@ -30,6 +31,9 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
   const [manualText, setManualText] = useState<Record<number, string>>({});
   const [editingId, setEditingId] = useState<number | null>(null);
   const [resubmitting, setResubmitting] = useState(false);
+  const [downloadingCSV, setDownloadingCSV] = useState(false);
+  const [govComments, setGovComments] = useState('');
+  const [govLoading, setGovLoading] = useState<string | null>(null);
 
   const loadAll = async () => {
     setLoading(true);
@@ -95,6 +99,63 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
       showToast(err.message || 'Resubmission failed', 'error');
     } finally {
       setResubmitting(false);
+    }
+  };
+
+  const handleDownloadAuditCSV = async () => {
+    setDownloadingCSV(true);
+    try {
+      const csvText = await api.exportContentAuditCsv(contentId);
+      const blob = new Blob([csvText], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `brandguard_audit_content_${contentId}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast('Audit CSV report downloaded successfully.', 'success');
+    } catch (err: any) {
+      showToast(err?.message || 'Failed to download audit CSV', 'error');
+    } finally {
+      setDownloadingCSV(false);
+    }
+  };
+
+  const handleReviewerAction = async (action: 'verify' | 'request_changes') => {
+    if (action === 'request_changes' && govComments.trim().length < 10) {
+      showToast('Minimum 10 characters comment required to request changes.', 'error');
+      return;
+    }
+    setGovLoading(action);
+    try {
+      await api.verifyContent(contentId, { action, comments: govComments });
+      showToast(action === 'verify' ? 'Content verified by reviewer.' : 'Change request submitted.', 'success');
+      setGovComments('');
+      await loadAll();
+    } catch (err: any) {
+      showToast(err?.message || 'Reviewer action failed.', 'error');
+    } finally {
+      setGovLoading(null);
+    }
+  };
+
+  const handleManagerAction = async (action: 'Approved' | 'Rejected' | 'Changes Requested') => {
+    if ((action === 'Rejected' || action === 'Changes Requested') && govComments.trim().length < 10) {
+      showToast('Minimum 10 characters decision reason required.', 'error');
+      return;
+    }
+    setGovLoading(action);
+    try {
+      await api.managerDecision(contentId, { action, comments: govComments });
+      showToast(`Manager decision '${action}' recorded successfully.`, 'success');
+      setGovComments('');
+      await loadAll();
+    } catch (err: any) {
+      showToast(err?.message || 'Manager decision failed.', 'error');
+    } finally {
+      setGovLoading(null);
     }
   };
 
@@ -174,6 +235,16 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
             <Button
               variant="outline"
               size="sm"
+              onClick={handleDownloadAuditCSV}
+              isLoading={downloadingCSV}
+              leftIcon={<Download className="w-3.5 h-3.5 text-indigo-500" />}
+            >
+              Export CSV Report
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
               onClick={loadAll}
               leftIcon={<RefreshCw className="w-3.5 h-3.5" />}
             >
@@ -240,6 +311,100 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
             </div>
           </div>
         </div>
+
+        {/* Human-Controlled Governance Decision Panel (Reviewer & Manager Roles) */}
+        {(user?.role === 'REVIEWER' || user?.role === 'MANAGER') && (
+          <div className="p-5 rounded-2xl bg-gradient-to-r from-indigo-50/70 via-white to-purple-50/50 dark:from-indigo-950/40 dark:via-slate-900 dark:to-purple-950/30 border border-indigo-200 dark:border-indigo-800/60 shadow-sm space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 dark:border-indigo-900/60 pb-3">
+              <div className="flex items-center gap-2">
+                <UserCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                  Human Governance Gate — {user.role === 'REVIEWER' ? 'Reviewer Verification' : 'Manager Final Sign-off'}
+                </h3>
+              </div>
+              <span className="text-xs text-slate-500 font-mono">
+                Current Status: <strong className="text-slate-800 dark:text-slate-200">{content.status}</strong>
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                Decision Notes / Rationale{' '}
+                <span className="text-amber-600 dark:text-amber-400 font-normal">
+                  (min 10 characters required for change requests &amp; rejections)
+                </span>
+              </label>
+              <textarea
+                className="w-full text-xs p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                rows={2}
+                placeholder={
+                  user.role === 'REVIEWER'
+                    ? 'Provide compliance verification comments or specific feedback for changes requested…'
+                    : 'Provide formal managerial justification for final approval, changes requested, or rejection…'
+                }
+                value={govComments}
+                onChange={(e) => setGovComments(e.target.value)}
+              />
+
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                {user.role === 'REVIEWER' && (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      onClick={() => handleReviewerAction('verify')}
+                      isLoading={govLoading === 'verify'}
+                      leftIcon={<CheckCircle2 className="w-3.5 h-3.5" />}
+                    >
+                      Verify Content
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleReviewerAction('request_changes')}
+                      isLoading={govLoading === 'request_changes'}
+                      leftIcon={<X className="w-3.5 h-3.5 text-amber-500" />}
+                    >
+                      Request Changes
+                    </Button>
+                  </>
+                )}
+
+                {user.role === 'MANAGER' && (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      onClick={() => handleManagerAction('Approved')}
+                      isLoading={govLoading === 'Approved'}
+                      leftIcon={<CheckCircle2 className="w-3.5 h-3.5" />}
+                    >
+                      Approve &amp; Sign-Off
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleManagerAction('Changes Requested')}
+                      isLoading={govLoading === 'Changes Requested'}
+                      leftIcon={<Edit3 className="w-3.5 h-3.5 text-amber-500" />}
+                    >
+                      Request Changes
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleManagerAction('Rejected')}
+                      isLoading={govLoading === 'Rejected'}
+                      leftIcon={<X className="w-3.5 h-3.5 text-rose-500" />}
+                    >
+                      Reject Submission
+                    </Button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Main Review Split Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -309,6 +474,17 @@ export default function AIReviewResultsPage({ params }: { params: { id: string }
                           {new Date(dec.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
+                      {(dec.previous_status || dec.new_status) && (
+                        <div className="text-[10px] font-mono flex items-center gap-1.5 text-slate-500">
+                          <span className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                            {dec.previous_status || 'Draft'}
+                          </span>
+                          <span>&rarr;</span>
+                          <span className="px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 font-semibold">
+                            {dec.new_status || dec.action}
+                          </span>
+                        </div>
+                      )}
                       <div className="text-[11px] text-slate-500 flex items-center justify-between">
                         <span>{dec.actor_name} {dec.role ? `(${dec.role})` : ''}</span>
                         {dec.revision_id && <span className="font-mono text-[10px]">rev #{dec.revision_id}</span>}

@@ -462,6 +462,15 @@ export const api = {
   getBrandPerformance: () => request<any[]>('/api/v1/analytics/brand-performance'),
   exportReport: (brandId?: number) =>
     request<any>(brandId ? `/api/v1/analytics/export/report?brand_id=${brandId}` : '/api/v1/analytics/export/report'),
+  exportContentAuditCsv: async (contentId: number | string) => {
+    const token = getAuthToken();
+    const base = getApiBase();
+    const headers: Record<string, string> = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const res = await fetch(`${base}/api/v1/content/${contentId}/export`, { headers });
+    if (!res.ok) throw new Error('Failed to download content audit CSV export');
+    return res.text();
+  },
 
   checkHealth: () =>
     request<any>('/health'),

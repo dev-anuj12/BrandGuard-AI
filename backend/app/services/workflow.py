@@ -72,9 +72,10 @@ def execute_transition(
     Enforces centralized workflow state machine rules, segregation of duties,
     reason requirements, optimistic locking concurrency, and append-only audit logging.
     """
-    # 1. Multi-tenant organization isolation
+    # 1. Multi-tenant organization isolation (Fail-closed)
     user_org = getattr(user, "organization", None)
-    if user_org and getattr(content, "organization", None) and content.organization != user_org:
+    content_org = getattr(content, "organization", None)
+    if not user_org or not content_org or str(user_org).strip() != str(content_org).strip():
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Cross-organization workflow transition prohibited."
