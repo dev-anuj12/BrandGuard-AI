@@ -105,6 +105,11 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     if (response.status === 404 && (errorDetail === 'Not Found' || errorDetail.includes('404'))) {
       errorDetail = `API route '${cleanEndpoint}' returned 404 from ${base}. Please verify that the backend is running the latest deployment and API version.`;
     }
+    // 401 Unauthorized: session expired or invalid — redirect to login with safe return URL
+    if (response.status === 401 && typeof window !== 'undefined') {
+      const returnTo = encodeURIComponent(window.location.pathname);
+      window.location.href = `/login?returnTo=${returnTo}`;
+    }
     throw new Error(errorDetail);
   }
 

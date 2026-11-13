@@ -7,7 +7,7 @@ Hackathon project; not affiliated with any commercial product of the same name.
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6+-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-38B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
-[![Tests](https://img.shields.io/badge/Pytest-112%2F112%20Passing-success.svg?logo=pytest&logoColor=white)](backend/tests/)
+[![Tests](https://img.shields.io/badge/Pytest-150%2F150%20Passing-success.svg?logo=pytest&logoColor=white)](backend/tests/)
 
 > **BrandGuard AI** is an intelligent brand compliance and content governance platform that helps organizations review, validate, manage, and approve brand-related content using AI-assisted analysis and human oversight, while proactively defending against external digital brand threats.
 
@@ -141,12 +141,12 @@ The application is configured using environment variables based on `.env.example
 ## 7. Automated Test Suite & Platform Verification
 
 ### Pytest Test Suite
-To run all 112 automated unit and integration tests:
+To run all 150 automated unit and integration tests:
 
 ```powershell
 & "backend\venv\Scripts\python.exe" -m pytest backend/tests -v
 ```
-**Results:** `112 passed in ~26s` (100% pass rate).
+**Results:** `150 passed in ~20s` (100% pass rate).
 
 ### Comprehensive End-to-End Platform Verification Script
 ```powershell
@@ -162,3 +162,6 @@ python scripts/verify_e2e_platform.py
 - **Render Free-Tier Cold Starts:** When hosted on free-tier infrastructure, backend services spin down after inactivity and may take 30–50 seconds to respond on initial wake-up.
 - **In-Memory Rate Limiting:** Rate limiting operates in-memory on a single instance rather than via a distributed cluster (e.g., Redis).
 - **Audit Log Append-Only:** The audit log is append-only at the API level, not tamper-proof.
+- **Benchmark Holdout Provenance:** Items in `benchmark/holdout_v2.json` were AI-assisted drafts. The agent had access to `rule_engine.py`, `llm_engine.py`, and `normalizer.py` before writing holdout items; contamination cannot be fully excluded. N=40; confidence intervals are wide.
+- **No Live-LLM Benchmark:** All benchmark results use the deterministic rule engine (`rules_only` mode). No external LLM has been benchmarked.
+- **Demo Seed Data:** Default demo users and passwords (`Admin@123` etc.) are seeded only in non-production environments (`ENVIRONMENT != production`). Do not use demo credentials in production.
