@@ -7,7 +7,7 @@ Hackathon project; not affiliated with any commercial product of the same name.
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6+-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-38B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
-[![Tests](https://img.shields.io/badge/Pytest-25%2F25%20Passing-success.svg?logo=pytest&logoColor=white)](backend/tests/)
+[![Tests](https://img.shields.io/badge/Pytest-112%2F112%20Passing-success.svg?logo=pytest&logoColor=white)](backend/tests/)
 
 > **BrandGuard AI** is an intelligent brand compliance and content governance platform that helps organizations review, validate, manage, and approve brand-related content using AI-assisted analysis and human oversight, while proactively defending against external digital brand threats.
 
@@ -141,12 +141,12 @@ The application is configured using environment variables based on `.env.example
 ## 7. Automated Test Suite & Platform Verification
 
 ### Pytest Test Suite
-To run all 25 automated regression unit and integration tests:
+To run all 112 automated unit and integration tests:
 
 ```powershell
 & "backend\venv\Scripts\python.exe" -m pytest backend/tests -v
 ```
-**Results:** `25 passed in ~5s` (100% pass rate).
+**Results:** `112 passed in ~26s` (100% pass rate).
 
 ### Comprehensive End-to-End Platform Verification Script
 ```powershell
@@ -160,5 +160,5 @@ python scripts/verify_e2e_platform.py
 - **Deterministic Fallback Engine:** Semantic tone analysis operates via local deterministic rule-based evaluation unless an external LLM API key (`OPENAI_API_KEY` or `GEMINI_API_KEY`) is configured.
 - **Input-Based Scanners:** Perimeter protection scanners analyze user-supplied input (domain names, social handles, and marketplace URLs) on demand and do not monitor platforms autonomously.
 - **Render Free-Tier Cold Starts:** When hosted on free-tier infrastructure, backend services spin down after inactivity and may take 30–50 seconds to respond on initial wake-up.
+- **In-Memory Rate Limiting:** Rate limiting operates in-memory on a single instance rather than via a distributed cluster (e.g., Redis).
 - **Audit Log Append-Only:** The audit log is append-only at the API level, not tamper-proof.
-- **Simulated External Metadata:** WHOIS and external registrar threat evaluations use heuristic similarity scoring algorithms when live external registrar API credentials are not provided.

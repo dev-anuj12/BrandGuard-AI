@@ -4,8 +4,16 @@ import { Code, Terminal, Key, ArrowRight } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'API Documentation & Endpoints',
+  title: 'API Documentation & Endpoints | BrandGuard AI',
   description: 'BrandGuard AI REST API documentation — endpoints for authentication, content review, and perimeter scanning.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/api-docs',
+  },
+  openGraph: {
+    title: 'API Documentation & Endpoints | BrandGuard AI',
+    description: 'BrandGuard AI REST API documentation — endpoints for authentication, content review, and perimeter scanning.',
+    url: 'https://brandguard-ai-eight.vercel.app/api-docs',
+  },
 };
 
 export default function ApiDocsPage() {

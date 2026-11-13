@@ -3,8 +3,16 @@ import type { Metadata } from 'next';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Security Policy',
+  title: 'Security Policy | BrandGuard AI',
   description: 'BrandGuard AI Security Architecture — encryption standards, tenant isolation, SSRF defenses, vulnerability reporting, and audit trails.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/security-policy',
+  },
+  openGraph: {
+    title: 'Security Policy | BrandGuard AI',
+    description: 'BrandGuard AI Security Architecture — encryption standards, tenant isolation, SSRF defenses, vulnerability reporting, and audit trails.',
+    url: 'https://brandguard-ai-eight.vercel.app/security-policy',
+  },
 };
 
 export default function SecurityPolicyPage() {
@@ -31,8 +39,9 @@ export default function SecurityPolicyPage() {
             </div>
             <div className="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
               <span className="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Encryption at Rest &amp; Transit</span>
+              {/* [[TO BE COMPLETED]] */}
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Client interactions use HTTPS in transit. Relational database storage is encrypted at rest [[TO BE COMPLETED]].
+                Client interactions use HTTPS in transit. Database storage details will be published at launch.
               </p>
             </div>
             <div className="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">

@@ -123,7 +123,8 @@ export default function PrivacyPolicyPage() {
               5. Multi-Tenant Storage &amp; Security Controls
             </h2>
             <p>
-              All customer records are partitioned with organization-level tenant filters across relational database tables. Row-level data isolation prevents cross-organization access. Data at rest is protected [[TO BE COMPLETED]], and data in transit is protected via HTTPS. Server-Side Request Forgery (SSRF) protections guard scanner engines from accessing private network ranges.
+              {/* [[TO BE COMPLETED]] */}
+              All customer records are partitioned with organization-level tenant filters across relational database tables. Row-level data isolation prevents cross-organization access. Standard encryption is applied in transit via HTTPS. Server-Side Request Forgery (SSRF) protections guard scanner engines from accessing private network ranges.
             </p>
           </section>
 
@@ -190,8 +191,9 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
               9. Rights Under Data Protection Regulations
             </h2>
+            {/* [[TO BE COMPLETED]] */}
             <p>
-              Under applicable data protection laws [[TO BE COMPLETED]], users maintain rights to:
+              Under applicable data protection laws, users maintain rights to:
             </p>
             <ul className="list-disc pl-5 space-y-1">
               <li>Request access to personal data being processed.</li>
@@ -210,8 +212,9 @@ export default function PrivacyPolicyPage() {
             </p>
             <div className="p-4 rounded-xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-xs space-y-1 font-mono">
               <p><strong>BrandGuard AI Privacy Office</strong></p>
-              <p>Contact: [[TO BE COMPLETED]] (via our <Link href="/contact" className="text-indigo-600 dark:text-indigo-400 hover:underline">Contact page</Link>)</p>
-              <p>Response SLA: [[TO BE COMPLETED]]</p>
+              {/* [[TO BE COMPLETED]] */}
+              <p>Inquiries: via our <Link href="/contact" className="text-indigo-600 dark:text-indigo-400 hover:underline">Contact page</Link></p>
+              <p>Support details will be published at launch.</p>
             </div>
           </section>
         </div>

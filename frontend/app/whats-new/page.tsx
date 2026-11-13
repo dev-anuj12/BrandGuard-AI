@@ -5,6 +5,14 @@ import PublicLayout from '../../components/PublicLayout';
 export const metadata: Metadata = {
   title: "What's New in BrandGuard AI",
   description: 'Explore recent updates and platform enhancements.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/whats-new',
+  },
+  openGraph: {
+    title: "What's New in BrandGuard AI",
+    description: 'Explore recent updates and platform enhancements.',
+    url: 'https://brandguard-ai-eight.vercel.app/whats-new',
+  },
 };
 
 export default function WhatsNewPage() {

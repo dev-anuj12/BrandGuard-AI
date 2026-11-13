@@ -4,8 +4,16 @@ import { Users, BookOpen, MessageSquare } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Community & Guidelines Exchange',
+  title: 'Community & Guidelines Exchange | BrandGuard AI',
   description: 'Connect with enterprise brand governance practitioners, compliance officers, and security researchers.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/community',
+  },
+  openGraph: {
+    title: 'Community & Guidelines Exchange | BrandGuard AI',
+    description: 'Connect with enterprise brand governance practitioners, compliance officers, and security researchers.',
+    url: 'https://brandguard-ai-eight.vercel.app/community',
+  },
 };
 
 export default function CommunityPage() {

@@ -4,8 +4,16 @@ import { Briefcase } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Careers',
+  title: 'Careers | BrandGuard AI',
   description: 'Join the BrandGuard AI team — building the future of automated brand compliance and threat intelligence.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/careers',
+  },
+  openGraph: {
+    title: 'Careers | BrandGuard AI',
+    description: 'Join the BrandGuard AI team — building the future of automated brand compliance and threat intelligence.',
+    url: 'https://brandguard-ai-eight.vercel.app/careers',
+  },
 };
 
 export default function CareersPage() {

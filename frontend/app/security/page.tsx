@@ -4,14 +4,22 @@ import { ShieldCheck, Lock, FileCheck, Key } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Security & Compliance Standards',
+  title: 'Security & Compliance Standards | BrandGuard AI',
   description: 'BrandGuard AI Security & Compliance — multi-tenant isolation, data safeguards, and audit trails.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/security',
+  },
+  openGraph: {
+    title: 'Security & Compliance Standards | BrandGuard AI',
+    description: 'BrandGuard AI Security & Compliance — multi-tenant isolation, data safeguards, and audit trails.',
+    url: 'https://brandguard-ai-eight.vercel.app/security',
+  },
 };
 
 export default function SecurityAndCompliancePage() {
   const controls = [
     { title: 'Zero Cross-Tenant Data Access', desc: 'All database queries enforce organization tenancy parameters preventing inadvertent cross-tenant visibility.' },
-    { title: 'Data Encryption', desc: 'Encrypted in transit over HTTPS and encrypted at rest [[TO BE COMPLETED]].' },
+    { title: 'Data Encryption', desc: 'Encrypted in transit over HTTPS. Details will be published at launch.' },
     { title: 'Audit Trail Records', desc: 'Every content edit, score change, and managerial sign-off writes an audit entry.' },
     { title: 'SSRF Perimeter Protection', desc: 'Domain and threat scanners validate IP ranges to eliminate internal network probing risks.' },
   ];
@@ -37,7 +45,8 @@ export default function SecurityAndCompliancePage() {
         <div className="p-6 rounded-2xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
             <h4 className="font-bold text-sm text-slate-900 dark:text-white">Require Security Questionnaires or documentation?</h4>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Our security team can assist with vendor assessments and documentation [[TO BE COMPLETED]].</p>
+            {/* [[TO BE COMPLETED]] */}
+            <p className="text-xs text-slate-500 dark:text-slate-400">Our security team can assist with vendor assessments and documentation. Details will be published at launch.</p>
           </div>
           <Link
             href="/contact"

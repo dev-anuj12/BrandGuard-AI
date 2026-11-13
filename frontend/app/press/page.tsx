@@ -4,8 +4,16 @@ import { Newspaper } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Press & Media Resources',
+  title: 'Press & Media Resources | BrandGuard AI',
   description: 'BrandGuard AI Press & Media — announcements and official media inquiries.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/press',
+  },
+  openGraph: {
+    title: 'Press & Media Resources | BrandGuard AI',
+    description: 'BrandGuard AI Press & Media — announcements and official media inquiries.',
+    url: 'https://brandguard-ai-eight.vercel.app/press',
+  },
 };
 
 export default function PressPage() {

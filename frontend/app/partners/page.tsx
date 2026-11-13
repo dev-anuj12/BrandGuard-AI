@@ -4,8 +4,16 @@ import { Handshake, Shield, Globe } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Partners & Ecosystem',
+  title: 'Partners & Ecosystem | BrandGuard AI',
   description: 'BrandGuard AI Partner Program — technology integrations, advisory alliances, and developer ecosystem.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/partners',
+  },
+  openGraph: {
+    title: 'Partners & Ecosystem | BrandGuard AI',
+    description: 'BrandGuard AI Partner Program — technology integrations, advisory alliances, and developer ecosystem.',
+    url: 'https://brandguard-ai-eight.vercel.app/partners',
+  },
 };
 
 export default function PartnersPage() {

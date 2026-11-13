@@ -4,8 +4,16 @@ import { Check, Shield, Zap, Building } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Pricing & Plans',
+  title: 'Pricing & Plans | BrandGuard AI',
   description: 'Enterprise subscription options for BrandGuard AI.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/pricing',
+  },
+  openGraph: {
+    title: 'Pricing & Plans | BrandGuard AI',
+    description: 'Enterprise subscription options for BrandGuard AI.',
+    url: 'https://brandguard-ai-eight.vercel.app/pricing',
+  },
 };
 
 export default function PricingPage() {

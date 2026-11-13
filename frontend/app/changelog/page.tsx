@@ -3,8 +3,16 @@ import { Check } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Changelog',
+  title: 'Changelog | BrandGuard AI',
   description: 'BrandGuard AI Changelog — track platform updates, AI engine improvements, and security patches.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/changelog',
+  },
+  openGraph: {
+    title: 'Changelog | BrandGuard AI',
+    description: 'BrandGuard AI Changelog — track platform updates, AI engine improvements, and security patches.',
+    url: 'https://brandguard-ai-eight.vercel.app/changelog',
+  },
 };
 
 export default function ChangelogPage() {

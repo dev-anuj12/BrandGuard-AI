@@ -4,8 +4,16 @@ import { HelpCircle, BookOpen, MessageSquare, ShieldCheck, Ticket } from 'lucide
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Help Center & Support Hub',
+  title: 'Help Center & Support Hub | BrandGuard AI',
   description: 'BrandGuard AI Help Center — customer onboarding, troubleshooting, FAQ, and technical support.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/help',
+  },
+  openGraph: {
+    title: 'Help Center & Support Hub | BrandGuard AI',
+    description: 'BrandGuard AI Help Center — customer onboarding, troubleshooting, FAQ, and technical support.',
+    url: 'https://brandguard-ai-eight.vercel.app/help',
+  },
 };
 
 export default function HelpCenterPage() {

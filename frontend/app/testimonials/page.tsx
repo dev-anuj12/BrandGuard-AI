@@ -3,17 +3,25 @@ import type { Metadata } from 'next';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Customer Testimonials & Case Studies',
-  description: 'Enterprise governance case studies and verified user feedback on BrandGuard AI.',
+  title: 'Customer Stories | BrandGuard AI',
+  description: 'Customer stories will be published as customer deployments become available.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/testimonials',
+  },
+  openGraph: {
+    title: 'Customer Stories | BrandGuard AI',
+    description: 'Customer stories will be published as customer deployments become available.',
+    url: 'https://brandguard-ai-eight.vercel.app/testimonials',
+  },
 };
 
 export default function TestimonialsPage() {
   return (
     <PublicLayout
-      breadcrumbs={[{ label: 'Company' }, { label: 'Testimonials' }]}
-      badge="Customer Success"
-      title="Customer Testimonials & Case Studies"
-      subtitle="Verified user feedback and enterprise deployment case studies."
+      breadcrumbs={[{ label: 'Company' }, { label: 'Customer Stories' }]}
+      badge="Customer Stories"
+      title="Customer Stories"
+      subtitle="Customer stories will be published as customer deployments become available."
     >
       <div className="space-y-6 max-w-4xl text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
         <div className="p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-center space-y-3">

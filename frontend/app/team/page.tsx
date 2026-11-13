@@ -4,8 +4,16 @@ import { Users } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Our Team',
+  title: 'Our Team | BrandGuard AI',
   description: 'The team behind BrandGuard AI.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/team',
+  },
+  openGraph: {
+    title: 'Our Team | BrandGuard AI',
+    description: 'The team behind BrandGuard AI.',
+    url: 'https://brandguard-ai-eight.vercel.app/team',
+  },
 };
 
 export default function TeamPage() {

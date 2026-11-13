@@ -4,8 +4,16 @@ import { Mail, HelpCircle, ShieldAlert, ArrowRight } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Customer Support Services',
+  title: 'Customer Support Services | BrandGuard AI',
   description: 'BrandGuard AI Support — technical assistance, incident reporting, and platform guidance.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/support',
+  },
+  openGraph: {
+    title: 'Customer Support Services | BrandGuard AI',
+    description: 'BrandGuard AI Support — technical assistance, incident reporting, and platform guidance.',
+    url: 'https://brandguard-ai-eight.vercel.app/support',
+  },
 };
 
 export default function SupportPage() {

@@ -3,8 +3,16 @@ import type { Metadata } from 'next';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Refund & Cancellation Policy',
+  title: 'Refund & Cancellation Policy | BrandGuard AI',
   description: 'BrandGuard AI Refund and Cancellation Policy.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/refund-policy',
+  },
+  openGraph: {
+    title: 'Refund & Cancellation Policy | BrandGuard AI',
+    description: 'BrandGuard AI Refund and Cancellation Policy.',
+    url: 'https://brandguard-ai-eight.vercel.app/refund-policy',
+  },
 };
 
 export default function RefundPolicyPage() {

@@ -3,8 +3,16 @@ import type { Metadata } from 'next';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Integrations & Webhooks',
+  title: 'Integrations & Webhooks | BrandGuard AI',
   description: 'Connect BrandGuard AI with your existing enterprise stack via REST APIs and planned integrations.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/integrations',
+  },
+  openGraph: {
+    title: 'Integrations & Webhooks | BrandGuard AI',
+    description: 'Connect BrandGuard AI with your existing enterprise stack via REST APIs and planned integrations.',
+    url: 'https://brandguard-ai-eight.vercel.app/integrations',
+  },
 };
 
 export default function IntegrationsPage() {

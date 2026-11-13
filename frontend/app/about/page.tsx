@@ -4,8 +4,16 @@ import { ShieldCheck, Cpu, Eye, Lock, ArrowRight } from 'lucide-react';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'About Us',
+  title: 'About Us | BrandGuard AI',
   description: 'Learn about BrandGuard AI — our mission to bridge internal regulatory compliance review with external digital brand perimeter defense.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/about',
+  },
+  openGraph: {
+    title: 'About Us | BrandGuard AI',
+    description: 'Learn about BrandGuard AI — our mission to bridge internal regulatory compliance review with external digital brand perimeter defense.',
+    url: 'https://brandguard-ai-eight.vercel.app/about',
+  },
 };
 
 export default function AboutPage() {

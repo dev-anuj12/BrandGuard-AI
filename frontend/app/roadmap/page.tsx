@@ -2,8 +2,16 @@ import type { Metadata } from 'next';
 import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
-  title: 'Product Roadmap',
+  title: 'Product Roadmap | BrandGuard AI',
   description: 'BrandGuard AI Product Roadmap — planned architectural milestones and future enhancements.',
+  alternates: {
+    canonical: 'https://brandguard-ai-eight.vercel.app/roadmap',
+  },
+  openGraph: {
+    title: 'Product Roadmap | BrandGuard AI',
+    description: 'BrandGuard AI Product Roadmap — planned architectural milestones and future enhancements.',
+    url: 'https://brandguard-ai-eight.vercel.app/roadmap',
+  },
 };
 
 export default function RoadmapPage() {

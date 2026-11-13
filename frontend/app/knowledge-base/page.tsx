@@ -605,7 +605,7 @@ export default function KnowledgeBasePage() {
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                   Validate creative collateral, logos, and digital artwork against approved assets in your Knowledge Base.
-                  Automatically checks cryptographic uniqueness, resolution, format standards, and detects unapproved duplicates.
+                  Automatically checks file uniqueness, resolution, format standards, and detects unapproved duplicates.
                 </p>
               </div>
 

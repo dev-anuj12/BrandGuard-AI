@@ -4,7 +4,7 @@ import PublicLayout from '../../components/PublicLayout';
 
 export const metadata: Metadata = {
   title: 'Data Processing Agreement (DPA)',
-  description: 'BrandGuard AI Data Processing Agreement — enterprise data processing terms [[TO BE COMPLETED]].',
+  description: 'BrandGuard AI Data Processing Agreement — enterprise data processing terms. Details will be published at launch.',
 };
 
 export default function DPAPage() {
@@ -21,7 +21,8 @@ export default function DPAPage() {
         <section className="space-y-2">
           <h2 className="text-base font-bold text-slate-900 dark:text-white">1. Scope and Applicability</h2>
           <p>
-            This Data Processing Agreement (&quot;DPA&quot;) supplements the BrandGuard AI Terms of Service and applies whenever BrandGuard AI processes data on behalf of an enterprise Customer in connection with our compliance review and brand governance services. Specific details [[TO BE COMPLETED]].
+            {/* [[TO BE COMPLETED]] */}
+            This Data Processing Agreement (&quot;DPA&quot;) supplements the BrandGuard AI Terms of Service and applies whenever BrandGuard AI processes data on behalf of an enterprise Customer in connection with our compliance review and brand governance services. Details will be published at launch.
           </p>
         </section>
 
@@ -30,7 +31,8 @@ export default function DPAPage() {
           <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
             <li>Process customer data in accordance with Customer&apos;s documented instructions.</li>
             <li>Ensure authorized personnel are bound by appropriate confidentiality commitments.</li>
-            <li>Maintain technical and organizational measures (TOMs) including encryption in transit, logical tenant database partitioning, and controls [[TO BE COMPLETED]].</li>
+            {/* [[TO BE COMPLETED]] */}
+            <li>Maintain technical and organizational measures (TOMs) including encryption in transit, logical tenant database partitioning, and access controls. Details will be published at launch.</li>
             <li>Notify the Customer without undue delay upon confirming a personal data breach affecting Customer data.</li>
             <li>Assist Customer in fulfilling data subject requests using available account export and deletion tools.</li>
           </ul>
@@ -39,7 +41,8 @@ export default function DPAPage() {
         <section className="space-y-2">
           <h2 className="text-base font-bold text-slate-900 dark:text-white">3. Deletion and Return of Data</h2>
           <p>
-            Upon termination of the service agreement, BrandGuard AI shall delete or return customer content in accordance with contractual terms [[TO BE COMPLETED]].
+            {/* [[TO BE COMPLETED]] */}
+            Upon termination of the service agreement, BrandGuard AI shall delete or return customer content in accordance with contractual terms. Details will be published at launch.
           </p>
         </section>
 
