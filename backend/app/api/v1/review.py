@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.models.content import Content, ContentRevision
@@ -11,8 +12,60 @@ from app.api.deps import get_current_user, require_roles, get_current_org
 from app.models.user import User
 from app.models.audit import AuditLog
 from app.ai_engine.review_pipeline import AIReviewPipeline
+from app.ai_engine.rule_engine import RuleEngine
 
 router = APIRouter(prefix="/review", tags=["AI Review & Suggestions"])
+
+
+class QuickCheckRequest(BaseModel):
+    text: str
+
+
+@router.post("/quick-check")
+def quick_check(
+    body: QuickCheckRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Fast rules-only compliance check for real-time editor feedback. No AI engine, no DB writes."""
+    if not body.text or not body.text.strip():
+        return {"findings": [], "violation_count": 0, "severity_counts": {"HIGH": 0, "MEDIUM": 0, "LOW": 0}}
+
+    engine = RuleEngine(db)
+    findings = engine.analyze(body.text)
+
+    severity_counts = {"HIGH": 0, "MEDIUM": 0, "LOW": 0}
+    simplified = []
+    for f in findings:
+        sev_raw = f.get("severity", "")
+        sev_str = sev_raw.value if hasattr(sev_raw, "value") else str(sev_raw)
+        sev_upper = sev_str.upper()
+        cat_raw = f.get("category", "")
+        cat_str = cat_raw.value if hasattr(cat_raw, "value") else str(cat_raw)
+
+        if sev_upper in ("CRITICAL", "HIGH"):
+            severity_counts["HIGH"] += 1
+            bucket = "HIGH"
+        elif sev_upper == "MEDIUM":
+            severity_counts["MEDIUM"] += 1
+            bucket = "MEDIUM"
+        else:
+            severity_counts["LOW"] += 1
+            bucket = "LOW"
+
+        simplified.append({
+            "matched_text": f.get("matched_text", ""),
+            "category": cat_str,
+            "severity": bucket,
+            "explanation": f.get("explanation", ""),
+            "suggestion": f.get("suggested_correction", ""),
+        })
+
+    return {
+        "findings": simplified,
+        "violation_count": len(simplified),
+        "severity_counts": severity_counts,
+    }
 
 @router.get("/{content_id}/latest", response_model=AIReviewOut)
 def get_latest_review(

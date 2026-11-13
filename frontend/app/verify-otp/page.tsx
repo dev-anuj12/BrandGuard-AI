@@ -22,7 +22,7 @@ function VerifyOtpContent() {
   const [resending, setResending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [cooldown, setCooldown] = useState(60);
+  const [cooldown, setCooldown] = useState(0);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -80,6 +80,11 @@ function VerifyOtpContent() {
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanEmail = email.trim();
+    if (!cleanEmail) {
+      setError('Please provide your email address.');
+      return;
+    }
     if (fullCode.length !== 6) {
       setError('Please enter all 6 digits of the verification code.');
       return;
@@ -88,11 +93,12 @@ function VerifyOtpContent() {
     setError(null);
     setLoading(true);
     try {
-      const data = await api.verifyOtp({ email, otp: fullCode });
+      const data = await api.verifyOtp({ email: cleanEmail, otp: fullCode });
       setAuthSession(data.access_token, data.user, data.refresh_token);
       toastSuccess('Email verified successfully! Welcome to BrandGuard AI.');
 
-      switch (data.user.role) {
+      const roleStr = typeof data.user?.role === 'string' ? data.user.role.toUpperCase() : 'CREATOR';
+      switch (roleStr) {
         case 'CREATOR':
           router.push('/dashboard/creator');
           break;
@@ -118,11 +124,17 @@ function VerifyOtpContent() {
   };
 
   const handleResend = async () => {
-    if (cooldown > 0 || !email) return;
+    const cleanEmail = email.trim();
+    if (!cleanEmail) {
+      setError('Please enter your email address to resend code.');
+      toastError('Please enter your email address.');
+      return;
+    }
+    if (cooldown > 0) return;
     setError(null);
     setResending(true);
     try {
-      const data = await api.resendOtp({ email });
+      const data = await api.resendOtp({ email: cleanEmail });
       if (data.email_sent === false) {
         setError(data.message || 'Verification email could not be delivered.');
         toastError(data.message || 'Verification email could not be delivered.');
@@ -184,23 +196,26 @@ function VerifyOtpContent() {
             </div>
           )}
 
-          {/* Email input if not in query */}
-          {!searchParams.get('email') && (
-            <div className="space-y-1">
+          {/* Email input */}
+          <div className="space-y-1">
+            <div className="flex items-center justify-between">
               <label htmlFor="verify-email" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                 Email Address
               </label>
-              <input
-                id="verify-email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@company.com"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-white"
-              />
+              {email && (
+                <span className="text-[10px] text-slate-400">Verifying this address</span>
+              )}
             </div>
-          )}
+            <input
+              id="verify-email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="name@company.com"
+              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+            />
+          </div>
 
           {/* 6-Digit OTP Box Grid */}
           <div className="space-y-2">
@@ -228,7 +243,7 @@ function VerifyOtpContent() {
           <Button
             type="submit"
             isLoading={loading}
-            disabled={fullCode.length !== 6}
+            disabled={fullCode.length !== 6 || loading || !email.trim()}
             className="w-full"
             size="md"
           >

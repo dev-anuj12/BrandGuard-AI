@@ -56,9 +56,15 @@ export function clearAuthSession() {
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = getAuthToken();
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
     ...(options.headers as Record<string, string> || {}),
   };
+
+  if (typeof FormData !== 'undefined' && options.body instanceof FormData) {
+    // Delete Content-Type so browser generates boundary multipart/form-data
+    delete headers['Content-Type'];
+  } else if (!headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json';
+  }
 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
@@ -196,6 +202,13 @@ export const api = {
     request<any>(`/api/v1/content/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
+    }),
+
+  // Quick compliance check (rules-only, no DB write)
+  quickCheck: (text: string) =>
+    request<any>('/api/v1/review/quick-check', {
+      method: 'POST',
+      body: JSON.stringify({ text }),
     }),
 
   // Review
@@ -384,6 +397,53 @@ export const api = {
     request<any>('/api/v1/users/me/delete-request', {
       method: 'POST',
     }),
+
+  // Multi-Brand Workspace
+  getBrands: () => request<any[]>('/api/v1/brands/'),
+  createBrand: (data: any) =>
+    request<any>('/api/v1/brands/', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  getBrandById: (id: number | string) => request<any>(`/api/v1/brands/${id}`),
+  updateBrand: (id: number | string, data: any) =>
+    request<any>(`/api/v1/brands/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+  deleteBrand: (id: number | string) =>
+    request<void>(`/api/v1/brands/${id}`, { method: 'DELETE' }),
+  getBrandAnalytics: (id: number | string) =>
+    request<any>(`/api/v1/brands/${id}/analytics`),
+
+  // Knowledge Base & Advanced Asset Validation
+  getBrandAssets: (category?: string) =>
+    request<any[]>(category ? `/api/v1/knowledge-base/assets?category=${category}` : '/api/v1/knowledge-base/assets'),
+  createBrandAsset: (data: any) =>
+    request<any>('/api/v1/knowledge-base/assets', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  deleteBrandAsset: (id: number) =>
+    request<void>(`/api/v1/knowledge-base/assets/${id}`, { method: 'DELETE' }),
+  validateAsset: (formData: FormData) =>
+    request<any>('/api/v1/knowledge-base/assets/validate', {
+      method: 'POST',
+      body: formData,
+    }),
+  uploadGuidelineDocument: (formData: FormData) =>
+    request<any>('/api/v1/knowledge-base/upload-document', {
+      method: 'POST',
+      body: formData,
+    }),
+
+  // Advanced Brand Intelligence & Telemetry
+  getMonthlyTrends: () => request<any[]>('/api/v1/analytics/trends/monthly'),
+  getTopGuidelines: (limit = 5) =>
+    request<any[]>(`/api/v1/analytics/violations/top-guidelines?limit=${limit}`),
+  getBrandPerformance: () => request<any[]>('/api/v1/analytics/brand-performance'),
+  exportReport: (brandId?: number) =>
+    request<any>(brandId ? `/api/v1/analytics/export/report?brand_id=${brandId}` : '/api/v1/analytics/export/report'),
 
   checkHealth: () =>
     request<any>('/health'),

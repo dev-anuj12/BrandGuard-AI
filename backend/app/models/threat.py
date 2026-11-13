@@ -72,6 +72,11 @@ class BrandAsset(Base):
     asset_type = Column(String(50), nullable=False)  # Primary Logo, Icon Mark, Watermark, Product Emblem
     image_path = Column(String(255), nullable=True)
     perceptual_hash = Column(String(64), nullable=True)
+    organization = Column(String(100), default="BrandGuard Demo Enterprise", nullable=False, index=True)
+    category = Column(String(50), default="logo", nullable=False)  # logo, image, typography, packaging
+    approval_status = Column(String(30), default="approved", nullable=False)  # approved, pending, rejected
+    dimensions = Column(String(50), nullable=True)  # e.g. "800x600"
+    file_size_kb = Column(Float, nullable=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=lambda: datetime.datetime.now(timezone.utc))
 

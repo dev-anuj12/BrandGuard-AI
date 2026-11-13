@@ -15,6 +15,7 @@ class Content(Base):
     target_audience = Column(String(100), default="Retail Investors")
     status = Column(SQLEnum(ContentStatus), default=ContentStatus.DRAFT, nullable=False, index=True)
     creator_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    brand_id = Column(Integer, ForeignKey("brands.id"), nullable=True, index=True)
     organization = Column(String(100), default="BrandGuard Demo Enterprise", nullable=False, index=True)
     verified_by_id = Column(Integer, nullable=True)
     verified_revision_id = Column(Integer, nullable=True)
@@ -26,6 +27,7 @@ class Content(Base):
 
     # Relationships
     creator = relationship("User", back_populates="created_content", foreign_keys=[creator_id])
+    brand = relationship("Brand", back_populates="contents")
     revisions = relationship("ContentRevision", back_populates="content", cascade="all, delete-orphan", foreign_keys="[ContentRevision.content_id]", order_by="ContentRevision.version.desc()")
     reviews = relationship("AIReview", back_populates="content", cascade="all, delete-orphan")
     assignments = relationship("ReviewerAssignment", back_populates="content", cascade="all, delete-orphan")

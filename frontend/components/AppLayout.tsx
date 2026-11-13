@@ -7,7 +7,8 @@ import {
   ShieldCheck, LayoutDashboard, FileEdit, CheckSquare, 
   BarChart3, Settings, LogOut, ChevronLeft, ChevronRight, 
   Sun, Moon, Bell, Search, User, Menu, X, HelpCircle, 
-  BookOpen, Sliders, Layers, ChevronDown, ShieldAlert, Globe, Activity, Share2, ShoppingBag
+  BookOpen, Sliders, Layers, ChevronDown, ShieldAlert, Globe, Activity, Share2, ShoppingBag,
+  Building2
 } from 'lucide-react';
 import { getCurrentUser, clearAuthSession, api } from '../lib/api';
 import { useTheme } from './ThemeProvider';
@@ -105,6 +106,12 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
         roles: ['CREATOR', 'REVIEWER', 'MANAGER', 'ADMIN'],
       },
       {
+        label: 'Multi-Brand Workspace',
+        href: '/brands',
+        icon: Building2,
+        roles: ['CREATOR', 'REVIEWER', 'MANAGER', 'ADMIN'],
+      },
+      {
         label: 'Domain Protection',
         href: '/protection/domains',
         icon: Globe,
@@ -129,6 +136,12 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
         roles: ['CREATOR', 'REVIEWER', 'MANAGER', 'ADMIN'],
       },
       {
+        label: 'AI Content Editor',
+        href: '/editor',
+        icon: Sliders,
+        roles: ['CREATOR', 'ADMIN', 'MANAGER'],
+      },
+      {
         label: 'Create Submission',
         href: '/submit',
         icon: FileEdit,
@@ -148,9 +161,9 @@ export default function AppLayout({ children, pageTitle, breadcrumbs }: AppLayou
       },
       {
         label: 'Brand Knowledge Base',
-        href: '/dashboard/admin',
+        href: '/knowledge-base',
         icon: BookOpen,
-        roles: ['ADMIN'],
+        roles: ['CREATOR', 'REVIEWER', 'MANAGER', 'ADMIN'],
       },
       {
         label: 'Settings & Identity',

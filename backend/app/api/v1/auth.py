@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
+from sqlalchemy import func
 from app.database.session import get_db
 from app.core.security import (
     verify_password,
@@ -55,9 +56,10 @@ def _get_client_ip(request: Request) -> str:
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED, dependencies=[Depends(rate_limit_auth)])
 def register(user_in: UserCreate, request: Request, db: Session = Depends(get_db)):
     client_ip = _get_client_ip(request)
+    clean_email = user_in.email.strip().lower()
 
     # Check if user already exists
-    existing = db.query(User).filter(User.email == user_in.email).first()
+    existing = db.query(User).filter(func.lower(User.email) == clean_email).first()
     if existing:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -93,8 +95,8 @@ def register(user_in: UserCreate, request: Request, db: Session = Depends(get_db
         is_verified = True
 
     user = User(
-        email=user_in.email,
-        full_name=user_in.full_name,
+        email=clean_email,
+        full_name=user_in.full_name.strip(),
         hashed_password=get_password_hash(user_in.password),
         role=assigned_role,
         organization=org_name,
@@ -163,11 +165,13 @@ def register(user_in: UserCreate, request: Request, db: Session = Depends(get_db
 def verify_otp(data: VerifyOTPRequest, request: Request, db: Session = Depends(get_db)):
     client_ip = _get_client_ip(request)
     now = datetime.now(timezone.utc)
+    clean_email = data.email.strip().lower()
+    clean_otp = data.otp.strip()
 
-    user = db.query(User).filter(User.email == data.email).first()
-    if not user and "@brandguard.io" in data.email:
-        legacy_email = data.email.replace("@brandguard.io", "@finnova.com")
-        user = db.query(User).filter(User.email == legacy_email).first()
+    user = db.query(User).filter(func.lower(User.email) == clean_email).first()
+    if not user and "@brandguard.io" in clean_email:
+        legacy_email = clean_email.replace("@brandguard.io", "@finnova.com")
+        user = db.query(User).filter(func.lower(User.email) == legacy_email).first()
     if not user:
         # Generic error message to prevent account enumeration
         raise HTTPException(
@@ -201,26 +205,37 @@ def verify_otp(data: VerifyOTPRequest, request: Request, db: Session = Depends(g
     if user.otp_expires_at:
         otp_exp = user.otp_expires_at.replace(tzinfo=timezone.utc) if user.otp_expires_at.tzinfo is None else user.otp_expires_at
         if otp_exp < now:
+            user.otp_hash = None
+            user.otp_expires_at = None
+            db.commit()
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Verification code has expired. Please request a new code."
             )
 
     # Check attempt limit (max 5 failed attempts)
-    if user.otp_attempts >= 5:
+    if user.otp_attempts >= 5 or not user.otp_hash:
         user.otp_hash = None
         user.otp_expires_at = None
         db.commit()
         raise HTTPException(
-            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-            detail="Too many failed verification attempts. Please request a new verification code."
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS if user.otp_attempts >= 5 else status.HTTP_400_BAD_REQUEST,
+            detail="Too many failed verification attempts. Please request a new verification code." if user.otp_attempts >= 5 else "No active verification code found. Please request a new verification code."
         )
 
     # Constant-time OTP comparison
-    if not user.otp_hash or not verify_secret_hash(data.otp.strip(), user.otp_hash):
+    if not verify_secret_hash(clean_otp, user.otp_hash):
         user.otp_attempts += 1
         db.commit()
         remaining = max(0, 5 - user.otp_attempts)
+        if remaining == 0:
+            user.otp_hash = None
+            user.otp_expires_at = None
+            db.commit()
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail="Too many failed verification attempts. Please request a new verification code."
+            )
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Invalid verification code. {remaining} attempt(s) remaining."
@@ -273,11 +288,12 @@ def verify_otp(data: VerifyOTPRequest, request: Request, db: Session = Depends(g
 def resend_otp(data: ResendOTPRequest, request: Request, db: Session = Depends(get_db)):
     client_ip = _get_client_ip(request)
     now = datetime.now(timezone.utc)
+    clean_email = data.email.strip().lower()
 
-    user = db.query(User).filter(User.email == data.email).first()
-    if not user and "@brandguard.io" in data.email:
-        legacy_email = data.email.replace("@brandguard.io", "@finnova.com")
-        user = db.query(User).filter(User.email == legacy_email).first()
+    user = db.query(User).filter(func.lower(User.email) == clean_email).first()
+    if not user and "@brandguard.io" in clean_email:
+        legacy_email = clean_email.replace("@brandguard.io", "@finnova.com")
+        user = db.query(User).filter(func.lower(User.email) == legacy_email).first()
     # Return generic response if user not found to prevent user enumeration
     if not user:
         return {"message": "If this email address is registered, a new verification code has been dispatched."}
@@ -338,11 +354,12 @@ def resend_otp(data: ResendOTPRequest, request: Request, db: Session = Depends(g
 def login_json(credentials: UserLogin, request: Request, db: Session = Depends(get_db)):
     client_ip = _get_client_ip(request)
     now = datetime.now(timezone.utc)
+    clean_email = credentials.email.strip().lower()
 
-    user = db.query(User).filter(User.email == credentials.email).first()
-    if not user and "@brandguard.io" in credentials.email:
-        legacy_email = credentials.email.replace("@brandguard.io", "@finnova.com")
-        user = db.query(User).filter(User.email == legacy_email).first()
+    user = db.query(User).filter(func.lower(User.email) == clean_email).first()
+    if not user and "@brandguard.io" in clean_email:
+        legacy_email = clean_email.replace("@brandguard.io", "@finnova.com")
+        user = db.query(User).filter(func.lower(User.email) == legacy_email).first()
 
     # Progressive Account Lockout Check
     if user and user.locked_until:

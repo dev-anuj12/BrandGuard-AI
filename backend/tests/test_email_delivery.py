@@ -1,245 +1,292 @@
 import pytest
-import smtplib
 from unittest.mock import MagicMock, patch
+import httpx
+from datetime import datetime, timezone, timedelta
 from app.services.email import (
     send_email,
     send_otp_email,
     send_password_reset_email,
     send_suspicious_login_alert,
     verify_smtp_connection,
+    verify_email_connection,
+    is_emailjs_configured,
 )
 from app.core.config import settings
 
-def test_smtp_delivery_success_starttls():
-    """Verifies successful SMTP delivery with STARTTLS on port 587."""
-    with patch("smtplib.SMTP") as mock_smtp_class:
-        mock_server = MagicMock()
-        mock_server.sendmail.return_value = {}  # Empty dict means all recipients accepted
-        mock_smtp_class.return_value = mock_server
-        mock_server.__enter__.return_value = mock_server
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. Configuration & Diagnostics Tests
+# ─────────────────────────────────────────────────────────────────────────────
 
-        orig_host = settings.SMTP_HOST
-        orig_port = settings.SMTP_PORT
-        orig_user = settings.SMTP_USER
-        orig_pwd = settings.SMTP_PASSWORD
+def test_emailjs_configuration_loading():
+    """Verifies that is_emailjs_configured() correctly detects full vs partial config."""
+    orig_sid = settings.EMAILJS_SERVICE_ID
+    orig_tid = settings.EMAILJS_TEMPLATE_ID
+    orig_pub = settings.EMAILJS_PUBLIC_KEY
+    orig_priv = settings.EMAILJS_PRIVATE_KEY
 
-        try:
-            settings.SMTP_HOST = "smtp.mailgun.org"
-            settings.SMTP_PORT = 587
-            settings.SMTP_USER = "postmaster@brandguard.ai"
-            settings.SMTP_PASSWORD = "secret_password"
+    try:
+        # Fully configured
+        settings.EMAILJS_SERVICE_ID = "srv_test"
+        settings.EMAILJS_TEMPLATE_ID = "tpl_test"
+        settings.EMAILJS_PUBLIC_KEY = "pub_test"
+        settings.EMAILJS_PRIVATE_KEY = "priv_test"
+        assert is_emailjs_configured() is True
 
-            success, msg = send_otp_email("test@example.com", "123456", "Test User")
+        # Incomplete configs
+        settings.EMAILJS_PRIVATE_KEY = None
+        assert is_emailjs_configured() is False
+
+        settings.EMAILJS_PRIVATE_KEY = "priv_test"
+        settings.EMAILJS_SERVICE_ID = None
+        assert is_emailjs_configured() is False
+    finally:
+        settings.EMAILJS_SERVICE_ID = orig_sid
+        settings.EMAILJS_TEMPLATE_ID = orig_tid
+        settings.EMAILJS_PUBLIC_KEY = orig_pub
+        settings.EMAILJS_PRIVATE_KEY = orig_priv
+
+
+def test_emailjs_diagnostics():
+    """Verifies that verify_email_connection and verify_smtp_connection report status accurately."""
+    orig_sid = settings.EMAILJS_SERVICE_ID
+    orig_tid = settings.EMAILJS_TEMPLATE_ID
+    orig_pub = settings.EMAILJS_PUBLIC_KEY
+    orig_priv = settings.EMAILJS_PRIVATE_KEY
+
+    try:
+        # Unconfigured
+        settings.EMAILJS_SERVICE_ID = None
+        settings.EMAILJS_TEMPLATE_ID = None
+        settings.EMAILJS_PUBLIC_KEY = None
+        settings.EMAILJS_PRIVATE_KEY = None
+
+        status = verify_email_connection()
+        assert status["configured"] is False
+        assert status["provider"] == "emailjs"
+        assert "EMAILJS_SERVICE_ID" in status["message"]
+
+        # Configured
+        settings.EMAILJS_SERVICE_ID = "service_live"
+        settings.EMAILJS_TEMPLATE_ID = "template_live"
+        settings.EMAILJS_PUBLIC_KEY = "pub_live_key"
+        settings.EMAILJS_PRIVATE_KEY = "priv_live_secret"
+
+        status_conf = verify_email_connection()
+        assert status_conf["configured"] is True
+        assert status_conf["provider"] == "emailjs"
+        assert status_conf["service_id"] == "service_live"
+        assert "priv_live_secret" not in str(status_conf)
+
+        # Alias check
+        alias = verify_smtp_connection()
+        assert alias["configured"] is True
+        assert alias["provider"] == "emailjs"
+    finally:
+        settings.EMAILJS_SERVICE_ID = orig_sid
+        settings.EMAILJS_TEMPLATE_ID = orig_tid
+        settings.EMAILJS_PUBLIC_KEY = orig_pub
+        settings.EMAILJS_PRIVATE_KEY = orig_priv
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2. EmailJS REST API Dispatch Tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_emailjs_delivery_success():
+    """Verifies that EmailJS REST API receives all required payload fields and handles success."""
+    orig_sid = settings.EMAILJS_SERVICE_ID
+    orig_tid = settings.EMAILJS_TEMPLATE_ID
+    orig_pub = settings.EMAILJS_PUBLIC_KEY
+    orig_priv = settings.EMAILJS_PRIVATE_KEY
+
+    try:
+        settings.EMAILJS_SERVICE_ID = "service_brandguard"
+        settings.EMAILJS_TEMPLATE_ID = "template_otp_v1"
+        settings.EMAILJS_PUBLIC_KEY = "public_key_abc"
+        settings.EMAILJS_PRIVATE_KEY = "private_key_xyz"
+
+        with patch("httpx.Client") as mock_client_cls:
+            mock_client = MagicMock()
+            mock_client_cls.return_value.__enter__.return_value = mock_client
+            mock_response = MagicMock()
+            mock_response.status_code = 200
+            mock_response.text = "OK"
+            mock_client.post.return_value = mock_response
+
+            success, msg = send_otp_email("founder@acmecorp.com", "789123", "Acme Founder")
 
             assert success is True
-            assert "dispatched" in msg.lower() or "delivered" in msg.lower()
-            mock_smtp_class.assert_called_once_with("smtp.mailgun.org", 587, timeout=15)
-            mock_server.starttls.assert_called_once()
-            mock_server.login.assert_called_once_with("postmaster@brandguard.ai", "secret_password")
-            assert mock_server.sendmail.called
-            args, _ = mock_server.sendmail.call_args
-            assert args[0] == settings.SMTP_FROM_EMAIL
-            assert args[1] == ["test@example.com"]
-            assert "123456" in args[2]
-            assert "Message-ID" in args[2]
-            assert "Date" in args[2]
-        finally:
-            settings.SMTP_HOST = orig_host
-            settings.SMTP_PORT = orig_port
-            settings.SMTP_USER = orig_user
-            settings.SMTP_PASSWORD = orig_pwd
+            assert "dispatched via emailjs" in msg.lower()
+
+            mock_client.post.assert_called_once()
+            call_args = mock_client.post.call_args
+            assert call_args[0][0] == "https://api.emailjs.com/api/v1.0/email/send"
+
+            payload = call_args[1]["json"]
+            assert payload["service_id"] == "service_brandguard"
+            assert payload["template_id"] == "template_otp_v1"
+            assert payload["user_id"] == "public_key_abc"
+            assert payload["accessToken"] == "private_key_xyz"
+            assert payload["template_params"]["to_email"] == "founder@acmecorp.com"
+            assert payload["template_params"]["to_name"] == "Acme Founder"
+            assert payload["template_params"]["otp"] == "789123"
+    finally:
+        settings.EMAILJS_SERVICE_ID = orig_sid
+        settings.EMAILJS_TEMPLATE_ID = orig_tid
+        settings.EMAILJS_PUBLIC_KEY = orig_pub
+        settings.EMAILJS_PRIVATE_KEY = orig_priv
 
 
-def test_smtp_delivery_success_ssl_port_465():
-    """Verifies that port 465 automatically switches to SMTP_SSL."""
-    with patch("smtplib.SMTP_SSL") as mock_ssl_class:
-        mock_server = MagicMock()
-        mock_server.sendmail.return_value = {}
-        mock_ssl_class.return_value = mock_server
-        mock_server.__enter__.return_value = mock_server
+def test_emailjs_delivery_failure_sanitizes_credentials():
+    """Verifies that EmailJS API failures redact private and public keys from error output."""
+    orig_sid = settings.EMAILJS_SERVICE_ID
+    orig_tid = settings.EMAILJS_TEMPLATE_ID
+    orig_pub = settings.EMAILJS_PUBLIC_KEY
+    orig_priv = settings.EMAILJS_PRIVATE_KEY
 
-        orig_host = settings.SMTP_HOST
-        orig_port = settings.SMTP_PORT
+    try:
+        settings.EMAILJS_SERVICE_ID = "service_error"
+        settings.EMAILJS_TEMPLATE_ID = "template_error"
+        settings.EMAILJS_PUBLIC_KEY = "pub_key_leaked"
+        settings.EMAILJS_PRIVATE_KEY = "priv_key_leaked"
 
-        try:
-            settings.SMTP_HOST = "smtp.gmail.com"
-            settings.SMTP_PORT = 465
+        with patch("httpx.Client") as mock_client_cls:
+            mock_client = MagicMock()
+            mock_client_cls.return_value.__enter__.return_value = mock_client
+            mock_response = MagicMock()
+            mock_response.status_code = 403
+            mock_response.text = "Forbidden: Invalid accessToken priv_key_leaked for user pub_key_leaked"
+            mock_client.post.return_value = mock_response
 
-            success, msg = send_email("alice@example.com", "Subject", "<h1>Test</h1>", "Test")
-
-            assert success is True
-            mock_ssl_class.assert_called_once_with("smtp.gmail.com", 465, timeout=15)
-            assert mock_server.sendmail.called
-        finally:
-            settings.SMTP_HOST = orig_host
-            settings.SMTP_PORT = orig_port
-
-
-def test_smtp_invalid_credentials_returns_failure_without_leak():
-    """Verifies that authentication errors return failure without exposing password."""
-    with patch("smtplib.SMTP") as mock_smtp_class:
-        mock_server = MagicMock()
-        mock_server.login.side_effect = smtplib.SMTPAuthenticationError(535, b"Authentication credentials invalid")
-        mock_smtp_class.return_value = mock_server
-        mock_server.__enter__.return_value = mock_server
-
-        orig_host = settings.SMTP_HOST
-        orig_user = settings.SMTP_USER
-        orig_pwd = settings.SMTP_PASSWORD
-
-        try:
-            settings.SMTP_HOST = "smtp.example.com"
-            settings.SMTP_USER = "user@example.com"
-            settings.SMTP_PASSWORD = "super_secret_password_123"
-
-            success, msg = send_otp_email("recipient@example.com", "654321")
+            success, msg = send_otp_email("user@example.com", "654321")
 
             assert success is False
-            assert "authentication failed" in msg.lower()
-            assert "super_secret_password_123" not in msg
-        finally:
-            settings.SMTP_HOST = orig_host
-            settings.SMTP_USER = orig_user
-            settings.SMTP_PASSWORD = orig_pwd
+            assert "email delivery rejected by emailjs" in msg.lower()
+            # Ensure secrets are NEVER present in return message
+            assert "priv_key_leaked" not in msg
+            assert "pub_key_leaked" not in msg
+            assert "[REDACTED]" in msg
+    finally:
+        settings.EMAILJS_SERVICE_ID = orig_sid
+        settings.EMAILJS_TEMPLATE_ID = orig_tid
+        settings.EMAILJS_PUBLIC_KEY = orig_pub
+        settings.EMAILJS_PRIVATE_KEY = orig_priv
 
 
-def test_smtp_server_unavailable_returns_failure():
-    """Verifies that connection failure to an unavailable server is handled cleanly."""
-    with patch("smtplib.SMTP") as mock_smtp_class:
-        mock_smtp_class.side_effect = smtplib.SMTPConnectError(421, b"Connection refused")
+def test_emailjs_timeout_handling():
+    """Verifies that network timeout is caught and handled cleanly."""
+    orig_sid = settings.EMAILJS_SERVICE_ID
+    orig_tid = settings.EMAILJS_TEMPLATE_ID
+    orig_pub = settings.EMAILJS_PUBLIC_KEY
+    orig_priv = settings.EMAILJS_PRIVATE_KEY
 
-        orig_host = settings.SMTP_HOST
-        try:
-            settings.SMTP_HOST = "unreachable.smtp.host"
-            success, msg = send_email("target@example.com", "Subject", "<h1>Body</h1>")
+    try:
+        settings.EMAILJS_SERVICE_ID = "service_test"
+        settings.EMAILJS_TEMPLATE_ID = "template_test"
+        settings.EMAILJS_PUBLIC_KEY = "pub_test"
+        settings.EMAILJS_PRIVATE_KEY = "priv_test"
+
+        with patch("httpx.Client") as mock_client_cls:
+            mock_client = MagicMock()
+            mock_client_cls.return_value.__enter__.return_value = mock_client
+            mock_client.post.side_effect = httpx.TimeoutException("Connection timed out")
+
+            success, msg = send_otp_email("user@example.com", "554433")
 
             assert success is False
-            assert "connect" in msg.lower()
-        finally:
-            settings.SMTP_HOST = orig_host
+            assert "timed out" in msg.lower()
+    finally:
+        settings.EMAILJS_SERVICE_ID = orig_sid
+        settings.EMAILJS_TEMPLATE_ID = orig_tid
+        settings.EMAILJS_PUBLIC_KEY = orig_pub
+        settings.EMAILJS_PRIVATE_KEY = orig_priv
 
 
-def test_production_fails_when_smtp_unconfigured():
-    """Ensures production environment never silently succeeds when SMTP is unconfigured."""
+def test_production_fails_with_clear_emailjs_message_when_unconfigured():
+    """Verifies that production mode explains that EmailJS is missing, not SMTP."""
     orig_env = settings.ENVIRONMENT
-    orig_host = settings.SMTP_HOST
+    orig_sid = settings.EMAILJS_SERVICE_ID
     try:
         settings.ENVIRONMENT = "production"
-        settings.SMTP_HOST = None
+        settings.EMAILJS_SERVICE_ID = None
 
         success, msg = send_otp_email("prod_user@example.com", "999888")
 
         assert success is False
-        assert "not configured" in msg.lower()
+        assert "emailjs service is not configured" in msg.lower()
+        assert "smtp" not in msg.lower()
     finally:
         settings.ENVIRONMENT = orig_env
-        settings.SMTP_HOST = orig_host
+        settings.EMAILJS_SERVICE_ID = orig_sid
 
 
-def test_password_recovery_email_content():
-    """Verifies password reset email includes token, reset url, and proper MIME headers."""
-    with patch("smtplib.SMTP") as mock_smtp_class:
-        mock_server = MagicMock()
-        mock_server.sendmail.return_value = {}
-        mock_smtp_class.return_value = mock_server
-        mock_server.__enter__.return_value = mock_server
+# ─────────────────────────────────────────────────────────────────────────────
+# 3. Registration & Verification Workflow Tests
+# ─────────────────────────────────────────────────────────────────────────────
 
-        orig_host = settings.SMTP_HOST
-        try:
-            settings.SMTP_HOST = "smtp.sendgrid.net"
-            token = "secure_reset_token_xyz"
-            success, _ = send_password_reset_email("recovery@example.com", token, "Recovery User")
-
-            assert success is True
-            args, _ = mock_server.sendmail.call_args
-            raw_msg = args[2]
-            import email
-            parsed_msg = email.message_from_string(raw_msg)
-            payloads = [
-                part.get_payload(decode=True).decode("utf-8")
-                for part in parsed_msg.walk()
-                if part.get_content_type() in ("text/plain", "text/html")
-            ]
-            combined_body = "\n".join(payloads)
-            assert "reset-password?token=secure_reset_token_xyz" in combined_body
-            assert "secure_reset_token_xyz" in combined_body
-            assert "Recovery User" in combined_body
-        finally:
-            settings.SMTP_HOST = orig_host
-
-
-def test_verify_smtp_connection_diagnostics():
-    """Tests the SMTP connectivity diagnostics tool."""
-    # 1. Unconfigured state
-    orig_host = settings.SMTP_HOST
-    try:
-        settings.SMTP_HOST = None
-        status = verify_smtp_connection()
-        assert status["configured"] is False
-        assert status["status"] == "unconfigured"
-
-        # 2. Configured and connected state
-        with patch("smtplib.SMTP") as mock_smtp:
-            mock_server = MagicMock()
-            mock_smtp.return_value.__enter__.return_value = mock_server
-            settings.SMTP_HOST = "smtp.example.com"
-            settings.SMTP_PORT = 587
-
-            status = verify_smtp_connection()
-            assert status["configured"] is True
-            assert status["status"] == "connected"
-    finally:
-        settings.SMTP_HOST = orig_host
-
-
-def test_registration_fails_cleanly_when_smtp_fails_in_production(client, db):
+def test_production_registration_fails_cleanly_when_emailjs_rejects(client, db):
     """
-    In production mode, if SMTP delivery fails during user registration,
-    the API must return HTTP 502, explain the failure, and not leave an orphaned user.
+    In production mode, if EmailJS rejects OTP delivery during registration,
+    the API returns HTTP 502, explains the failure, and does not leave an unverified or orphaned user.
     """
     from app.models.user import User
 
-    test_email = "prod_fail_user@example.com"
+    test_email = "prod_reg_fail@example.com"
     orig_env = settings.ENVIRONMENT
-    orig_host = settings.SMTP_HOST
+    orig_sid = settings.EMAILJS_SERVICE_ID
+    orig_tid = settings.EMAILJS_TEMPLATE_ID
+    orig_pub = settings.EMAILJS_PUBLIC_KEY
+    orig_priv = settings.EMAILJS_PRIVATE_KEY
 
     try:
         settings.ENVIRONMENT = "production"
-        settings.SMTP_HOST = "smtp.mockserver.com"
+        settings.EMAILJS_SERVICE_ID = "srv_prod"
+        settings.EMAILJS_TEMPLATE_ID = "tpl_prod"
+        settings.EMAILJS_PUBLIC_KEY = "pub_prod"
+        settings.EMAILJS_PRIVATE_KEY = "priv_prod"
 
-        with patch("smtplib.SMTP") as mock_smtp:
-            mock_smtp.side_effect = smtplib.SMTPConnectError(421, b"Connection refused")
+        with patch("httpx.Client") as mock_client_cls:
+            mock_client = MagicMock()
+            mock_client_cls.return_value.__enter__.return_value = mock_client
+            mock_response = MagicMock()
+            mock_response.status_code = 400
+            mock_response.text = "Bad Request: service not found"
+            mock_client.post.return_value = mock_response
 
             res = client.post("/api/v1/auth/register", json={
                 "email": test_email,
-                "full_name": "Prod Fail User",
+                "full_name": "Prod Reg User",
                 "password": "StrongPassword@2026",
                 "role": "CREATOR"
             })
 
             assert res.status_code == 502
             assert "verification email delivery failed" in res.json()["detail"].lower()
+            assert "emailjs" in res.json()["detail"].lower()
 
             # Ensure user was not left orphaned in database
             user = db.query(User).filter(User.email == test_email).first()
             assert user is None
     finally:
         settings.ENVIRONMENT = orig_env
-        settings.SMTP_HOST = orig_host
+        settings.EMAILJS_SERVICE_ID = orig_sid
+        settings.EMAILJS_TEMPLATE_ID = orig_tid
+        settings.EMAILJS_PUBLIC_KEY = orig_pub
+        settings.EMAILJS_PRIVATE_KEY = orig_priv
 
 
-def test_resend_otp_fails_cleanly_when_smtp_fails_in_production(client, db):
+def test_production_resend_otp_fails_cleanly_when_emailjs_rejects(client, db):
     """
-    In production mode, resending OTP must return HTTP 502 when SMTP is unreachable.
+    In production mode, resending OTP returns HTTP 502 when EmailJS rejects delivery.
     """
     from app.models.user import User
     from app.models.enums import UserRole
     from app.core.security import get_password_hash
 
-    test_email = "resend_prod_user@example.com"
+    test_email = "prod_resend_fail@example.com"
     user = User(
         email=test_email,
-        full_name="Resend Prod User",
+        full_name="Resend Fail User",
         hashed_password=get_password_hash("StrongPassword@2026"),
         role=UserRole.CREATOR,
         is_verified=False
@@ -248,21 +295,138 @@ def test_resend_otp_fails_cleanly_when_smtp_fails_in_production(client, db):
     db.commit()
 
     orig_env = settings.ENVIRONMENT
-    orig_host = settings.SMTP_HOST
+    orig_sid = settings.EMAILJS_SERVICE_ID
+    orig_tid = settings.EMAILJS_TEMPLATE_ID
+    orig_pub = settings.EMAILJS_PUBLIC_KEY
+    orig_priv = settings.EMAILJS_PRIVATE_KEY
 
     try:
         settings.ENVIRONMENT = "production"
-        settings.SMTP_HOST = "smtp.mockserver.com"
+        settings.EMAILJS_SERVICE_ID = "srv_prod"
+        settings.EMAILJS_TEMPLATE_ID = "tpl_prod"
+        settings.EMAILJS_PUBLIC_KEY = "pub_prod"
+        settings.EMAILJS_PRIVATE_KEY = "priv_prod"
 
-        with patch("smtplib.SMTP") as mock_smtp:
-            mock_smtp.side_effect = smtplib.SMTPConnectError(421, b"Connection refused")
+        with patch("httpx.Client") as mock_client_cls:
+            mock_client = MagicMock()
+            mock_client_cls.return_value.__enter__.return_value = mock_client
+            mock_response = MagicMock()
+            mock_response.status_code = 500
+            mock_response.text = "Internal Server Error"
+            mock_client.post.return_value = mock_response
 
             res = client.post("/api/v1/auth/resend-otp", json={"email": test_email})
             assert res.status_code == 502
             assert "verification email delivery failed" in res.json()["detail"].lower()
     finally:
         settings.ENVIRONMENT = orig_env
-        settings.SMTP_HOST = orig_host
+        settings.EMAILJS_SERVICE_ID = orig_sid
+        settings.EMAILJS_TEMPLATE_ID = orig_tid
+        settings.EMAILJS_PUBLIC_KEY = orig_pub
+        settings.EMAILJS_PRIVATE_KEY = orig_priv
         db.delete(user)
         db.commit()
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. OTP Security Lifecycle Tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_otp_full_lifecycle(client, db):
+    """
+    Tests complete OTP lifecycle:
+    - User registration
+    - Invalid OTP rejection and attempt decrement
+    - Expired OTP rejection
+    - Resend OTP invalidates old OTP
+    - Valid OTP marks user verified
+    - Verified user cannot reuse OTP
+    """
+    from app.models.user import User
+    from app.core.security import hash_secret
+
+    test_email = "lifecycle_user@example.com"
+    password = "StrongPassword@2026"
+
+    # 1. Register user
+    reg_res = client.post("/api/v1/auth/register", json={
+        "email": test_email,
+        "full_name": "Lifecycle User",
+        "password": password,
+        "role": "CREATOR"
+    })
+    assert reg_res.status_code == 201
+
+    user = db.query(User).filter(User.email == test_email).first()
+    assert user is not None
+    assert user.is_verified is False
+    assert user.otp_hash is not None
+
+    # Set known OTP '123456'
+    user.otp_hash = hash_secret("123456")
+    user.otp_expires_at = datetime.now(timezone.utc) + timedelta(minutes=5)
+    db.commit()
+
+    # 2. Test incorrect OTP
+    bad_res = client.post("/api/v1/auth/verify-otp", json={
+        "email": test_email,
+        "otp": "000000"
+    })
+    assert bad_res.status_code == 400
+    assert "invalid verification code" in bad_res.json()["detail"].lower()
+
+    # 3. Test expired OTP
+    user.otp_expires_at = datetime.now(timezone.utc) - timedelta(minutes=1)
+    db.commit()
+
+    exp_res = client.post("/api/v1/auth/verify-otp", json={
+        "email": test_email,
+        "otp": "123456"
+    })
+    assert exp_res.status_code == 400
+    assert "expired" in exp_res.json()["detail"].lower()
+
+    # 4. Resend OTP creates fresh code and resets expiry
+    # Reset last_sent_at to satisfy 60s cooldown
+    user.otp_last_sent_at = datetime.now(timezone.utc) - timedelta(seconds=70)
+    db.commit()
+
+    resend_res = client.post("/api/v1/auth/resend-otp", json={"email": test_email})
+    assert resend_res.status_code == 200
+
+    # Old code '123456' must now be invalid
+    old_res = client.post("/api/v1/auth/verify-otp", json={
+        "email": test_email,
+        "otp": "123456"
+    })
+    assert old_res.status_code == 400
+
+    # Set new known OTP '654321'
+    db.refresh(user)
+    user.otp_hash = hash_secret("654321")
+    user.otp_expires_at = datetime.now(timezone.utc) + timedelta(minutes=5)
+    db.commit()
+
+    # 5. Successful verification
+    good_res = client.post("/api/v1/auth/verify-otp", json={
+        "email": test_email,
+        "otp": "654321"
+    })
+    assert good_res.status_code == 200
+    assert good_res.json()["user"]["is_verified"] is True
+    assert "access_token" in good_res.json()
+
+    # 6. Verify single-use: OTP cannot be reused
+    db.refresh(user)
+    assert user.is_verified is True
+    assert user.otp_hash is None
+
+    reuse_res = client.post("/api/v1/auth/verify-otp", json={
+        "email": test_email,
+        "otp": "654321"
+    })
+    assert reuse_res.status_code == 200  # Returns active token session for already-verified user
+
+    # Cleanup
+    db.delete(user)
+    db.commit()

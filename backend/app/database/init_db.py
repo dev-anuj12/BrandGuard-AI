@@ -15,6 +15,7 @@ from app.models.content import Content, ContentRevision
 from app.models.review import AIReview, Finding, Suggestion
 from app.models.audit import AuditLog
 from app.models.threat import ThreatItem, ThreatEvidence, DomainScan, BrandAsset, BrandProduct
+from app.models.brand import Brand
 from app.core.security import get_password_hash
 from app.core.config import settings
 
@@ -131,12 +132,29 @@ def ensure_workflow_columns() -> None:
     ]
     ensure_columns_for_table("audit_logs", audit_cols)
 
+def ensure_brand_and_asset_columns() -> None:
+    """Idempotently ensure brand workspace and extended asset validation columns exist."""
+    ensure_columns_for_table("contents", [
+        ("brand_id", "INTEGER")
+    ])
+    ensure_columns_for_table("brand_guidelines", [
+        ("brand_id", "INTEGER")
+    ])
+    ensure_columns_for_table("brand_assets", [
+        ("organization", "VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'"),
+        ("category", "VARCHAR(50) DEFAULT 'logo'"),
+        ("approval_status", "VARCHAR(30) DEFAULT 'approved'"),
+        ("dimensions", "VARCHAR(50)"),
+        ("file_size_kb", "FLOAT")
+    ])
+
 def ensure_all_schema_columns() -> None:
     """Runs all schema column migrations in safe sequence."""
     ensure_security_columns()
     ensure_organization_columns()
     ensure_finding_grounding_columns()
     ensure_workflow_columns()
+    ensure_brand_and_asset_columns()
 
 def backfill_audit_hashes(db: Session = None) -> None:
     """
@@ -527,10 +545,53 @@ def init_db(db: Session = None) -> None:
             db.commit()
 
         print("--- Database seeding complete! ---")
+        ensure_default_brands(db)
         seed_threat_data(db)
     finally:
         if close_db_at_end:
             db.close()
+
+def ensure_default_brands(db: Session) -> None:
+    """Idempotently ensures default enterprise brands exist for multi-brand workspaces."""
+    existing_brand = db.query(Brand).first()
+    if not existing_brand:
+        default_brands = [
+            Brand(
+                name="BrandGuard AI Core",
+                code="BGAI-CORE",
+                description="Primary Enterprise Brand Governance & Protection Platform",
+                industry="Enterprise SaaS & AI",
+                organization="BrandGuard Demo Enterprise",
+                is_active=True
+            ),
+            Brand(
+                name="BrandGuard Wealth",
+                code="BGAI-WLTH",
+                description="Wealth Management & Institutional Asset Governance",
+                industry="Wealth Management",
+                organization="BrandGuard Demo Enterprise",
+                is_active=True
+            ),
+            Brand(
+                name="FinNova Prime",
+                code="FN-PRIME",
+                description="Fintech Infrastructure & Cross-Border Treasury Solutions",
+                industry="Fintech & Banking",
+                organization="BrandGuard Demo Enterprise",
+                is_active=True
+            )
+        ]
+        db.add_all(default_brands)
+        db.commit()
+        existing_brand = default_brands[0]
+
+    # Associate contents that have null brand_id with the primary brand
+    try:
+        if existing_brand:
+            db.query(Content).filter(Content.brand_id.is_(None)).update({"brand_id": existing_brand.id})
+            db.commit()
+    except Exception as e:
+        logger.warning(f"Could not link default brand to existing contents: {e}")
 
 def seed_threat_data(db: Session) -> None:
     # Check if threat data already seeded

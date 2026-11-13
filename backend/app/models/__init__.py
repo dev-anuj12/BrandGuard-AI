@@ -11,6 +11,7 @@ from app.models.enums import (
     ThreatStatus,
 )
 from app.models.user import User, UserSession, RevokedToken
+from app.models.brand import Brand
 from app.models.guideline import (
     BrandGuideline,
     ApprovedSource,
@@ -38,6 +39,7 @@ __all__ = [
     "User",
     "UserSession",
     "RevokedToken",
+    "Brand",
     "BrandGuideline",
     "ApprovedSource",
     "ApprovedFact",

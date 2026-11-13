@@ -47,8 +47,13 @@ class Settings(BaseSettings):
     # Accept comma-separated extra origins from environment (e.g. custom Vercel previews)
     ALLOWED_ORIGINS_EXTRA: Optional[str] = Field(default=None, validation_alias="ALLOWED_ORIGINS")
     
-    # Resend HTTP API (preferred over SMTP on Render — bypasses SMTP port firewall)
-    RESEND_API_KEY: Optional[str] = Field(default=None, validation_alias="RESEND_API_KEY")
+    # EmailJS REST API Configuration (bypasses Render SMTP port firewall)
+    EMAILJS_SERVICE_ID: Optional[str] = Field(default=None, validation_alias="EMAILJS_SERVICE_ID")
+    EMAILJS_TEMPLATE_ID: Optional[str] = Field(default=None, validation_alias="EMAILJS_TEMPLATE_ID")
+    EMAILJS_PUBLIC_KEY: Optional[str] = Field(default=None, validation_alias="EMAILJS_PUBLIC_KEY")
+    EMAILJS_PRIVATE_KEY: Optional[str] = Field(default=None, validation_alias="EMAILJS_PRIVATE_KEY")
+    EMAILJS_API_URL: str = Field(default="https://api.emailjs.com/api/v1.0/email/send", validation_alias="EMAILJS_API_URL")
+    EMAILJS_TIMEOUT: int = Field(default=15, validation_alias="EMAILJS_TIMEOUT")
 
     # SMTP Email Configuration (used only when RESEND_API_KEY is not set)
     SMTP_HOST: Optional[str] = Field(default=None, validation_alias="SMTP_HOST")
