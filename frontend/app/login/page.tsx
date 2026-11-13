@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ShieldCheck, ArrowRight, Lock, Mail, AlertCircle, Sun, Moon, Smartphone, Key, RefreshCw } from 'lucide-react';
 import { api, setAuthSession } from '../../lib/api';
 import { Button } from '../../components/ui/Button';
@@ -12,6 +12,7 @@ import BrandLogo from '../../components/BrandLogo';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { resolvedTheme, toggleTheme } = useTheme();
   const { error: toastError, success: toastSuccess } = useToast();
 
@@ -34,7 +35,21 @@ export default function LoginPage() {
     }
   }, []);
 
+  // Resolve post-login destination: honour ?redirect= for protected routes, else route by role
+  const getRedirectPath = () => {
+    const redirect = searchParams?.get('redirect') || searchParams?.get('returnTo');
+    if (redirect && redirect.startsWith('/') && !redirect.startsWith('/login') && !redirect.startsWith('/register')) {
+      return redirect;
+    }
+    return null;
+  };
+
   const routeUserByRole = (user: any) => {
+    const redirect = getRedirectPath();
+    if (redirect) {
+      router.push(redirect);
+      return;
+    }
     switch (user.role) {
       case 'CREATOR':
         router.push('/dashboard/creator');
