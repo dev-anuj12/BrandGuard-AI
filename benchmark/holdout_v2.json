@@ -4,180 +4,241 @@
     "split": "holdout_v2",
     "text": "Open an account today and enjoy guaranteed returns on all treasury-backed deposits.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": false,
-    "note": "Literal banned phrase 'guaranteed returns'."
+    "note": "Literal banned phrase 'guaranteed returns'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h002",
     "split": "holdout_v2",
     "text": "Our flagship pension solution delivers a completely risk-free investment for retirees.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": false,
-    "note": "Literal banned phrase 'risk-free investment'."
+    "note": "Literal banned phrase 'risk-free investment'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h003",
     "split": "holdout_v2",
     "text": "Experience instant wealth through automated algorithmic asset rebalancing.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": false,
-    "note": "Literal banned phrase 'instant wealth'."
+    "note": "Literal banned phrase 'instant wealth'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h004",
     "split": "holdout_v2",
     "text": "Ride the next crypto moon rally with our premium high-beta digital currency tracker.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": false,
-    "note": "Literal banned phrase 'crypto moon'."
+    "note": "Literal banned phrase 'crypto moon'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h005",
     "split": "holdout_v2",
     "text": "Our structured liquidity pools guarantee 100% profit when held for six months.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": false,
-    "note": "Literal banned phrase '100% profit'."
+    "note": "Literal banned phrase '100% profit'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h006",
     "split": "holdout_v2",
     "text": "Our modern money app lets users send remittances and buy global stocks effortlessly.",
     "label": "violation",
-    "categories": ["terminology"],
+    "categories": [
+      "terminology"
+    ],
     "hard_case": false,
-    "note": "Uses non-standard terminology 'money app' instead of 'digital financial services'."
+    "note": "Uses non-standard terminology 'money app' instead of 'digital financial services'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h007",
     "split": "holdout_v2",
     "text": "Every corporate client benefits from unhackable transfers across international jurisdictions.",
     "label": "violation",
-    "categories": ["terminology"],
+    "categories": [
+      "terminology"
+    ],
     "hard_case": false,
-    "note": "Uses non-standard terminology 'unhackable transfers' instead of 'secure transactions'."
+    "note": "Uses non-standard terminology 'unhackable transfers' instead of 'secure transactions'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h008",
     "split": "holdout_v2",
     "text": "Invest in our sovereign bond fund for stable dividend yields and high quarterly income.",
     "label": "violation",
-    "categories": ["missing_disclaimer"],
+    "categories": [
+      "missing_disclaimer"
+    ],
     "hard_case": false,
-    "note": "Promotes investment product without mandatory market risk disclaimer."
+    "note": "Promotes investment product without mandatory market risk disclaimer.",
+    "source": "ai_drafted"
   },
   {
     "id": "h009",
     "split": "holdout_v2",
     "text": "According to marketanalysts.fakereports.example.com, our equity strategies beat 99% of global funds.",
     "label": "violation",
-    "categories": ["bad_citation"],
+    "categories": [
+      "bad_citation"
+    ],
     "hard_case": false,
-    "note": "Cites unverified fake domain to justify outperformance claim."
+    "note": "Cites unverified fake domain to justify outperformance claim.",
+    "source": "ai_drafted"
   },
   {
     "id": "h010",
     "split": "holdout_v2",
     "text": "ACT NOW! Limited spots remain for our elite high-yield growth fund — sign up before midnight!",
     "label": "violation",
-    "categories": ["tone"],
+    "categories": [
+      "tone"
+    ],
     "hard_case": false,
-    "note": "High-pressure urgency and artificial scarcity contradict professional brand tone."
+    "note": "High-pressure urgency and artificial scarcity contradict professional brand tone.",
+    "source": "ai_drafted"
   },
   {
     "id": "h011",
     "split": "holdout_v2",
     "text": "Because of our innovative downside hedge, your capital will simply never diminish under any market stress.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": true,
-    "note": "Hard positive: paraphrase guarantee ('never diminish') without literal keywords."
+    "note": "Hard positive: paraphrase guarantee ('never diminish') without literal keywords.",
+    "source": "ai_drafted"
   },
   {
     "id": "h012",
     "split": "holdout_v2",
     "text": "Institutional clients achieve guaranteed rеturns across balanced credit instruments.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": true,
-    "note": "Hard positive: Cyrillic 'е' (U+0435) inside 'rеturns' to evade exact ASCII pattern matches."
+    "note": "Hard positive: Cyrillic 'е' (U+0435) inside 'rеturns' to evade exact ASCII pattern matches.",
+    "source": "ai_drafted"
   },
   {
     "id": "h013",
     "split": "holdout_v2",
     "text": "Our dynamic allocation model guarantees 10O% profit for disciplined participants over two years.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": true,
-    "note": "Hard positive: visual lookalike using letter 'O' instead of digit '0' in '10O%'."
+    "note": "Hard positive: visual lookalike using letter 'O' instead of digit '0' in '10O%'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h014",
     "split": "holdout_v2",
     "text": "We have engineered an investment framework that is, in practical terms, risk-free for all depositors.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": true,
-    "note": "Hard positive: qualifying phrase 'in practical terms' before 'risk-free'."
+    "note": "Hard positive: qualifying phrase 'in practical terms' before 'risk-free'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h015",
     "split": "holdout_v2",
     "text": "Our capital allocation algorithm has consistently generated outsized, life-changing returns for early adopters.",
     "label": "violation",
-    "categories": ["tone", "missing_disclaimer"],
+    "categories": [
+      "tone",
+      "missing_disclaimer"
+    ],
     "hard_case": true,
-    "note": "Hard positive: hyperbolic wealth promise ('life-changing returns') combined with missing disclaimer."
+    "note": "Hard positive: hyperbolic wealth promise ('life-changing returns') combined with missing disclaimer.",
+    "source": "ai_drafted"
   },
   {
     "id": "h016",
     "split": "holdout_v2",
     "text": "Nine out of ten retail accounts achieved positive alpha in our automated retirement model.",
     "label": "violation",
-    "categories": ["unsupported_claim"],
+    "categories": [
+      "unsupported_claim"
+    ],
     "hard_case": true,
-    "note": "Hard positive: unsupported statistical claim ('nine out of ten') without audit or source citation."
+    "note": "Hard positive: unsupported statistical claim ('nine out of ten') without audit or source citation.",
+    "source": "ai_drafted"
   },
   {
     "id": "h017",
     "split": "holdout_v2",
     "text": "Reviewers at financepulse.exampleonly.com independently confirmed our algorithm outperforms market benchmarks.",
     "label": "violation",
-    "categories": ["bad_citation"],
+    "categories": [
+      "bad_citation"
+    ],
     "hard_case": true,
-    "note": "Hard positive: fictitious domain 'exampleonly.com' used as authoritative validation."
+    "note": "Hard positive: fictitious domain 'exampleonly.com' used as authoritative validation.",
+    "source": "ai_drafted"
   },
   {
     "id": "h018",
     "split": "holdout_v2",
     "text": "Managing family wealth requires steady oversight. Our multi-asset fund offers capital appreciation and quarterly income distributions.",
     "label": "violation",
-    "categories": ["missing_disclaimer"],
+    "categories": [
+      "missing_disclaimer"
+    ],
     "hard_case": true,
-    "note": "Hard positive: professional multi-sentence promotional text omitting mandatory risk disclaimer."
+    "note": "Hard positive: professional multi-sentence promotional text omitting mandatory risk disclaimer.",
+    "source": "ai_drafted"
   },
   {
     "id": "h019",
     "split": "holdout_v2",
     "text": "Download the all-new money app from our portal to monitor diversified index positions.",
     "label": "violation",
-    "categories": ["terminology"],
+    "categories": [
+      "terminology"
+    ],
     "hard_case": true,
-    "note": "Hard positive: casual terminology 'money app' buried in standard onboarding copy."
+    "note": "Hard positive: casual terminology 'money app' buried in standard onboarding copy.",
+    "source": "ai_drafted"
   },
   {
     "id": "h020",
     "split": "holdout_v2",
     "text": "With our proprietary hedge structure, investors can't lose capital even during unprecedented volatility.",
     "label": "violation",
-    "categories": ["banned_phrase"],
+    "categories": [
+      "banned_phrase"
+    ],
     "hard_case": true,
-    "note": "Hard positive: contraction 'can't lose capital' guarantees principal without forbidden keyword."
+    "note": "Hard positive: contraction 'can't lose capital' guarantees principal without forbidden keyword.",
+    "source": "ai_drafted"
   },
   {
     "id": "h021",
@@ -186,7 +247,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: uses approved term 'digital financial services'; purely informational."
+    "note": "Compliant: uses approved term 'digital financial services'; purely informational.",
+    "source": "ai_drafted"
   },
   {
     "id": "h022",
@@ -195,7 +257,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: uses approved term 'secure transactions'; factual security statement."
+    "note": "Compliant: uses approved term 'secure transactions'; factual security statement.",
+    "source": "ai_drafted"
   },
   {
     "id": "h023",
@@ -204,7 +267,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: promotional copy accompanied by mandatory disclaimer."
+    "note": "Compliant: promotional copy accompanied by mandatory disclaimer.",
+    "source": "ai_drafted"
   },
   {
     "id": "h024",
@@ -213,7 +277,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: standard factual regulatory disclosure."
+    "note": "Compliant: standard factual regulatory disclosure.",
+    "source": "ai_drafted"
   },
   {
     "id": "h025",
@@ -222,7 +287,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: non-promotional customer service statement."
+    "note": "Compliant: non-promotional customer service statement.",
+    "source": "ai_drafted"
   },
   {
     "id": "h026",
@@ -231,7 +297,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: balanced educational statement with required disclaimer."
+    "note": "Compliant: balanced educational statement with required disclaimer.",
+    "source": "ai_drafted"
   },
   {
     "id": "h027",
@@ -240,7 +307,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: transparent and verifiable pricing information."
+    "note": "Compliant: transparent and verifiable pricing information.",
+    "source": "ai_drafted"
   },
   {
     "id": "h028",
@@ -249,7 +317,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: institutional governance disclosure with required disclaimer."
+    "note": "Compliant: institutional governance disclosure with required disclaimer.",
+    "source": "ai_drafted"
   },
   {
     "id": "h029",
@@ -258,7 +327,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: factual custody description."
+    "note": "Compliant: factual custody description.",
+    "source": "ai_drafted"
   },
   {
     "id": "h030",
@@ -267,7 +337,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": false,
-    "note": "Compliant: factual documentation reference."
+    "note": "Compliant: factual documentation reference.",
+    "source": "ai_drafted"
   },
   {
     "id": "h031",
@@ -276,7 +347,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: contains 'guarantee returns' in an explicitly negative/disclaiming context."
+    "note": "Hard negative: contains 'guarantee returns' in an explicitly negative/disclaiming context.",
+    "source": "ai_drafted"
   },
   {
     "id": "h032",
@@ -285,7 +357,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: mentions 'instant wealth' within an advisory caution warning."
+    "note": "Hard negative: mentions 'instant wealth' within an advisory caution warning.",
+    "source": "ai_drafted"
   },
   {
     "id": "h033",
@@ -294,7 +367,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: uses 'risk-free' to explicitly state that securities are never risk-free."
+    "note": "Hard negative: uses 'risk-free' to explicitly state that securities are never risk-free.",
+    "source": "ai_drafted"
   },
   {
     "id": "h034",
@@ -303,7 +377,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: uses 'crypto moon' as a negative contrast against safe sovereign instruments."
+    "note": "Hard negative: uses 'crypto moon' as a negative contrast against safe sovereign instruments.",
+    "source": "ai_drafted"
   },
   {
     "id": "h035",
@@ -312,7 +387,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: contains '100% profit' negated by 'does not promise'."
+    "note": "Hard negative: contains '100% profit' negated by 'does not promise'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h036",
@@ -321,7 +397,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: mentions colloquial 'money app' only to contrast with approved 'digital financial services'."
+    "note": "Hard negative: mentions colloquial 'money app' only to contrast with approved 'digital financial services'.",
+    "source": "ai_drafted"
   },
   {
     "id": "h037",
@@ -330,7 +407,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: disclaims the concept of 'unhackable transfers' to emphasize security diligence."
+    "note": "Hard negative: disclaims the concept of 'unhackable transfers' to emphasize security diligence.",
+    "source": "ai_drafted"
   },
   {
     "id": "h038",
@@ -339,7 +417,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: multi-sentence growth promotion with complete, valid market risk disclaimer."
+    "note": "Hard negative: multi-sentence growth promotion with complete, valid market risk disclaimer.",
+    "source": "ai_drafted"
   },
   {
     "id": "h039",
@@ -348,7 +427,8 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: mentions 'wealth' and 'risk' multiple times in compliant professional prose with disclaimer."
+    "note": "Hard negative: mentions 'wealth' and 'risk' multiple times in compliant professional prose with disclaimer.",
+    "source": "ai_drafted"
   },
   {
     "id": "h040",
@@ -357,6 +437,7 @@
     "label": "compliant",
     "categories": [],
     "hard_case": true,
-    "note": "Hard negative: discusses capital preservation and market downturns without making false guarantees."
+    "note": "Hard negative: discusses capital preservation and market downturns without making false guarantees.",
+    "source": "ai_drafted"
   }
 ]

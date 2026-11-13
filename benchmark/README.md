@@ -154,3 +154,13 @@ All metrics below are generated directly from benchmark result JSON files (`benc
 ## Limitations
 
 The benchmark dataset was written with AI assistance and only partly reviewed by the team. Due to the small sample size (N=63 for dev, N=27 for frozen test, N=40 for holdout_v2), confidence intervals are wide. During evaluation development, dev-specific phrases were found in initial rules and replaced by general patterns to avoid overfitting. The `semantic_fallback` mode is a local deterministic heuristics engine, not an actual LLM inference model. No real-LLM benchmark was run unless an API key is configured (currently no external LLM key, `OPENAI_API_KEY` or `GEMINI_API_KEY`, was active, so the evaluation executed using the deterministic fallback engine). On Holdout v2, hard negative disclaimers (e.g. `h031-h037` where banned phrases appear within negation or cautionary advice) remain challenging for exact string rules, highlighting the value of semantic grounding and human review.
+
+## Holdout Provenance & Limitations
+
+- Items in holdout_v2.json were AI-assisted drafts (source: ai_drafted). The agent had read 
+ule_engine.py, llm_engine.py, and 
+ormalizer.py prior to authoring items; contamination cannot be fully excluded.
+- Baseline-code evaluation (commit 6c4234a) used a one-off worktree run; results stored in enchmark/results/holdout_v2_baseline_code.json.
+- N=40 holdout items; 95% Wilson CIs are wide — treat point estimates with caution.
+- No live-LLM benchmark has been run; semantic_fallback mode uses deterministic heuristics only.
+- Do not use holdout_v2.json for rule tuning. It is a held-out evaluation set.

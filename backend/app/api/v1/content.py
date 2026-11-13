@@ -27,7 +27,10 @@ async def submit_content(
     current_user: User = Depends(get_current_user)
 ):
     # Create content record with organization isolation
-    user_org = getattr(current_user, "organization", None) or settings.DEMO_COMPANY_NAME
+    user_org = getattr(current_user, "organization", None)
+    if not user_org or not str(user_org).strip():
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Organization context missing or invalid")
+    user_org = str(user_org).strip()
     initial_status = ContentStatus.SUBMITTED if auto_review else ContentStatus.DRAFT
     content = Content(
         title=content_in.title,
@@ -137,8 +140,9 @@ def list_content(
 
     # Multi-tenant isolation: enforce organization boundary
     user_org = getattr(current_user, "organization", None)
-    if user_org:
-        query = query.filter(Content.organization == user_org)
+    if not user_org or not str(user_org).strip():
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Organization context missing or invalid")
+    query = query.filter(Content.organization == str(user_org).strip())
 
     # Creators only see their own content by default, unless Admin/Manager/Reviewer
     if current_user.role == UserRole.CREATOR:
@@ -169,14 +173,20 @@ def get_content_by_id(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    # Fail-closed: validate org context before any DB query
+    user_org = getattr(current_user, "organization", None)
+    if not user_org or not str(user_org).strip():
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Organization context missing or invalid")
+    user_org = str(user_org).strip()
+
     c = db.query(Content).filter(Content.id == content_id).first()
     if not c:
         raise HTTPException(status_code=404, detail="Content not found")
-    
+
     # Multi-tenant organization check
-    user_org = getattr(current_user, "organization", None)
-    if user_org and getattr(c, "organization", None) and c.organization != user_org:
-        raise HTTPException(status_code=403, detail="Cross-organization data access prohibited")
+    content_org = getattr(c, "organization", None)
+    if not content_org or content_org != user_org:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Cross-organization data access prohibited")
 
     # Creator permission check
     if current_user.role == UserRole.CREATOR and c.creator_id != current_user.id:
@@ -198,12 +208,18 @@ def get_content_revisions(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    # Fail-closed: validate org context before any DB query
+    user_org = getattr(current_user, "organization", None)
+    if not user_org or not str(user_org).strip():
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Organization context missing or invalid")
+    user_org = str(user_org).strip()
+
     c = db.query(Content).filter(Content.id == content_id).first()
     if not c:
         raise HTTPException(status_code=404, detail="Content not found")
-    user_org = getattr(current_user, "organization", None)
-    if user_org and getattr(c, "organization", None) and c.organization != user_org:
-        raise HTTPException(status_code=403, detail="Cross-organization data access prohibited")
+    content_org = getattr(c, "organization", None)
+    if not content_org or content_org != user_org:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Cross-organization data access prohibited")
     return db.query(ContentRevision).filter(ContentRevision.content_id == content_id).order_by(ContentRevision.version.desc()).all()
 
 @router.put("/{content_id}", response_model=ContentOut)
@@ -218,8 +234,9 @@ async def revise_content(
         raise HTTPException(status_code=404, detail="Content not found")
     
     user_org = getattr(current_user, "organization", None)
-    if user_org and getattr(c, "organization", None) and c.organization != user_org:
-        raise HTTPException(status_code=403, detail="Cross-organization content modification prohibited")
+    content_org = getattr(c, "organization", None)
+    if not user_org or not content_org or content_org != user_org:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Cross-organization content modification prohibited")
 
     if current_user.role == UserRole.CREATOR and c.creator_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized to edit this content")
@@ -334,8 +351,9 @@ def export_content_audit_csv(
         raise HTTPException(status_code=404, detail="Content not found")
 
     user_org = getattr(current_user, "organization", None)
-    if user_org and getattr(c, "organization", None) and c.organization != user_org:
-        raise HTTPException(status_code=403, detail="Cross-organization data access prohibited")
+    content_org = getattr(c, "organization", None)
+    if not user_org or not content_org or content_org != user_org:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Cross-organization data access prohibited")
 
     if current_user.role == UserRole.CREATOR and c.creator_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized to export this content")
@@ -419,8 +437,9 @@ def get_content_decision_history(
         raise HTTPException(status_code=404, detail="Content not found")
 
     user_org = getattr(current_user, "organization", None)
-    if user_org and getattr(c, "organization", None) and c.organization != user_org:
-        raise HTTPException(status_code=403, detail="Cross-organization data access prohibited")
+    content_org = getattr(c, "organization", None)
+    if not user_org or not content_org or content_org != user_org:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Cross-organization data access prohibited")
 
     # Fetch audit logs pertaining to this content item
     logs = (

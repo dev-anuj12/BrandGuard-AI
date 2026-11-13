@@ -17,18 +17,40 @@ class AIReviewPipeline:
 
     async def execute_review(self, text: str, org: Optional[str] = None) -> Dict[str, Any]:
         # 0. Retrieve active knowledge set for this review context, isolated by organization
-        g_query = self.db.query(BrandGuideline).filter(BrandGuideline.is_active == True)
-        f_query = self.db.query(ApprovedFact).filter(ApprovedFact.is_active == True)
-        s_query = self.db.query(ApprovedSource).filter(ApprovedSource.is_verified == True)
-        if org:
-            g_query = g_query.filter(BrandGuideline.organization == org)
-            f_query = f_query.filter(ApprovedFact.organization == org)
-            s_query = s_query.filter(ApprovedSource.organization == org)
+        DEFAULT_ORG = "BrandGuard Demo Enterprise"
+        using_default_guidelines = False
 
-        guidelines = g_query.all()
-        facts = f_query.all()
-        sources = s_query.all()
-        chunks = retrieve_kb_chunks(self.db, org=org, query_text=text, top_k=5) if org else []
+        if not org or not str(org).strip():
+            effective_org = DEFAULT_ORG
+            using_default_guidelines = True
+        else:
+            effective_org = str(org).strip()
+
+        # Organization's own active guidelines take priority
+        guidelines = self.db.query(BrandGuideline).filter(
+            BrandGuideline.is_active == True,
+            BrandGuideline.organization == effective_org
+        ).all()
+
+        # If the organization has no active guidelines, allow read-only fallback to default-organization guidelines
+        if not guidelines and effective_org != DEFAULT_ORG:
+            guidelines = self.db.query(BrandGuideline).filter(
+                BrandGuideline.is_active == True,
+                BrandGuideline.organization == DEFAULT_ORG
+            ).all()
+            using_default_guidelines = True
+
+        facts = self.db.query(ApprovedFact).filter(
+            ApprovedFact.is_active == True,
+            ApprovedFact.organization == (DEFAULT_ORG if using_default_guidelines and effective_org != DEFAULT_ORG else effective_org)
+        ).all()
+
+        sources = self.db.query(ApprovedSource).filter(
+            ApprovedSource.is_verified == True,
+            ApprovedSource.organization == (DEFAULT_ORG if using_default_guidelines and effective_org != DEFAULT_ORG else effective_org)
+        ).all()
+
+        chunks = retrieve_kb_chunks(self.db, org=effective_org, query_text=text, top_k=5)
 
         retrieved_knowledge = {
             "guideline_ids": {g.id for g in guidelines},
@@ -123,5 +145,6 @@ class AIReviewPipeline:
             "findings": merged_findings,
             "grounded_findings": grounded_findings,
             "needs_human_review_findings": needs_review_findings,
-            "citation_metrics": citation_metrics
+            "citation_metrics": citation_metrics,
+            "using_default_guidelines": using_default_guidelines,
         }
