@@ -9,6 +9,10 @@ const PROTECTED_PREFIXES = [
   '/settings',
   '/threats',
   '/protection',
+  '/analytics',
+  '/editor',
+  '/brands',
+  '/knowledge-base',
 ];
 
 const AUTH_PAGES = ['/login', '/register'];
@@ -42,8 +46,17 @@ export const config = {
     '/approvals/:path*',
     '/review/:path*',
     '/settings',
+    '/settings/:path*',
     '/threats/:path*',
     '/protection/:path*',
+    '/analytics',
+    '/analytics/:path*',
+    '/editor',
+    '/editor/:path*',
+    '/brands',
+    '/brands/:path*',
+    '/knowledge-base',
+    '/knowledge-base/:path*',
     '/login',
     '/register',
   ],

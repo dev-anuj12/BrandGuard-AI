@@ -85,7 +85,20 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     let errorDetail = `API request failed (${response.status})`;
     try {
       const errJson = await response.json();
-      errorDetail = errJson.detail || errJson.message || errorDetail;
+      if (errJson) {
+        if (typeof errJson.detail === 'string') {
+          errorDetail = errJson.detail;
+        } else if (Array.isArray(errJson.detail)) {
+          // Format FastAPI 422 validation errors into human-readable string
+          errorDetail = errJson.detail
+            .map((item: any) => item.msg || (typeof item === 'string' ? item : JSON.stringify(item)))
+            .join('; ');
+        } else if (typeof errJson.detail === 'object') {
+          errorDetail = JSON.stringify(errJson.detail);
+        } else if (errJson.message) {
+          errorDetail = errJson.message;
+        }
+      }
     } catch {
       // fallback text
     }

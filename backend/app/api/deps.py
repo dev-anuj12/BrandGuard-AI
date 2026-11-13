@@ -99,7 +99,11 @@ def get_current_user(
 
     # Phase C: Mandatory TOTP MFA for Admin accounts
     path = request.url.path
-    is_mfa_setup_route = path.startswith("/api/v1/auth/mfa") or path == "/api/v1/auth/me" or path == "/api/v1/auth/logout"
+    is_mfa_setup_route = (
+        "/auth/mfa" in path 
+        or path.endswith("/auth/me") 
+        or path.endswith("/auth/logout")
+    )
     enforce_admin_mfa = (
         getattr(settings, "MFA_ENFORCE_ADMIN", False)
         or settings.ENVIRONMENT.lower() == "production"

@@ -125,8 +125,7 @@ async def trigger_ai_review(
             evidence_state=f.get("evidence_state", "verified")
         )
         db.add(finding_record)
-        db.commit()
-        db.refresh(finding_record)
+        db.flush()
 
         if f.get("suggested_correction"):
             sugg = Suggestion(
