@@ -9,7 +9,8 @@ from app.models.guideline import (
     ApprovedSource,
     ApprovedFact,
     BannedWord,
-    ApprovedTerminology
+    ApprovedTerminology,
+    KBChunk
 )
 from app.models.content import Content, ContentRevision
 from app.models.review import AIReview, Finding, Suggestion
@@ -93,7 +94,8 @@ def ensure_organization_columns() -> None:
     """Idempotently ensure organization column exists in tables for multi-tenant isolation."""
     for table in [
         "users", "contents", "brand_guidelines", "threat_items",
-        "approved_sources", "approved_facts", "banned_words", "approved_terminology"
+        "approved_sources", "approved_facts", "banned_words", "approved_terminology",
+        "kb_chunks"
     ]:
         ensure_columns_for_table(table, [
             ("organization", "VARCHAR(100) DEFAULT 'BrandGuard Demo Enterprise'")

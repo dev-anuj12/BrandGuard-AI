@@ -69,7 +69,7 @@ async def submit_content(
     # Automatically trigger AI Review if requested
     if auto_review:
         pipeline = AIReviewPipeline(db)
-        review_result = await pipeline.execute_review(content.current_body)
+        review_result = await pipeline.execute_review(content.current_body, org=content.organization)
 
         review = AIReview(
             content_id=content.id,
@@ -255,7 +255,7 @@ async def revise_content(
 
     # Re-run AI Review Pipeline automatically for the revision
     pipeline = AIReviewPipeline(db)
-    review_result = await pipeline.execute_review(c.current_body)
+    review_result = await pipeline.execute_review(c.current_body, org=c.organization)
 
     review = AIReview(
         content_id=c.id,

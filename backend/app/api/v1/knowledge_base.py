@@ -15,6 +15,7 @@ from app.models.enums import UserRole, SeverityLevel
 from app.models.guideline import BrandGuideline
 from app.models.threat import BrandAsset
 from app.models.audit import AuditLog
+from app.services.kb_retrieval import save_document_chunks
 
 router = APIRouter(prefix="/knowledge-base", tags=["Brand Knowledge Base & Asset Validation"])
 
@@ -437,11 +438,15 @@ async def upload_guideline_document(
                 created_rules_count += 1
         db.commit()
 
+    # Persist document chunks for knowledge base retrieval grounding
+    created_chunks = save_document_chunks(db=db, filename=filename, text=extracted_text, org=org)
+    chunks_count = len(created_chunks)
+
     audit = AuditLog(
         user_id=current_user.id,
         action="GUIDELINE_DOCUMENT_IMPORTED",
         entity_type="BrandGuideline",
-        details=f"Imported document '{filename}' ({word_count} words). Extracted {created_rules_count} brand rule(s).",
+        details=f"Imported document '{filename}' ({word_count} words). Extracted {created_rules_count} brand rule(s), {chunks_count} KB chunk(s).",
         organization=org
     )
     db.add(audit)
@@ -452,6 +457,7 @@ async def upload_guideline_document(
         "filename": filename,
         "word_count": word_count,
         "extracted_rules_count": created_rules_count,
+        "chunks_count": chunks_count,
         "sample_extracted_text": extracted_text[:400] + ("..." if len(extracted_text) > 400 else ""),
-        "message": f"Successfully parsed '{filename}' and registered {created_rules_count} active brand guideline rules."
+        "message": f"Successfully parsed '{filename}' and registered {created_rules_count} active brand guideline rules ({chunks_count} knowledge chunks)."
     }

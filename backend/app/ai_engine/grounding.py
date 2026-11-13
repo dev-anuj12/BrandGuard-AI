@@ -27,6 +27,7 @@ def validate_finding(
     retrieved_guideline_ids = set(retrieved.get("guideline_ids", set()))
     retrieved_fact_ids = set(retrieved.get("fact_ids", set()))
     retrieved_source_ids = set(retrieved.get("source_ids", set()))
+    retrieved_chunk_ids = set(retrieved.get("chunk_ids", set()))
 
     engine_source = finding.get("engine_source", "")
     matched_text = finding.get("matched_text", "")
@@ -50,6 +51,7 @@ def validate_finding(
     guideline_id = finding.get("guideline_id")
     fact_id = finding.get("fact_id")
     source_id = finding.get("source_id")
+    chunk_id = finding.get("chunk_id")
 
     has_explicit_id = False
     if guideline_id is not None:
@@ -66,6 +68,11 @@ def validate_finding(
         has_explicit_id = True
         if source_id not in retrieved_source_ids:
             reasons.append(f"Referenced source ID {source_id} was not in the retrieved knowledge set for this review.")
+
+    if chunk_id is not None:
+        has_explicit_id = True
+        if chunk_id not in retrieved_chunk_ids:
+            reasons.append(f"Referenced KB chunk ID {chunk_id} was not in the retrieved knowledge set for this review.")
 
     # Rule-engine findings are grounded by design if text matches
     if engine_source == "Rule Engine":

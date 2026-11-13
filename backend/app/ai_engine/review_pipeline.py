@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from sqlalchemy.orm import Session
 from app.ai_engine.rule_engine import RuleEngine
 from app.ai_engine.llm_engine import LLMEngine
@@ -6,6 +6,7 @@ from app.ai_engine.citation_validator import CitationValidator
 from app.ai_engine.confidence_scorer import ConfidenceScorer
 from app.ai_engine.grounding import validate_finding
 from app.models.guideline import BrandGuideline, ApprovedFact, ApprovedSource
+from app.services.kb_retrieval import retrieve_kb_chunks
 
 class AIReviewPipeline:
     def __init__(self, db: Session):
@@ -14,18 +15,30 @@ class AIReviewPipeline:
         self.llm_engine = LLMEngine(db)
         self.citation_validator = CitationValidator(db)
 
-    async def execute_review(self, text: str) -> Dict[str, Any]:
-        # 0. Retrieve active knowledge set for this review context
-        guidelines = self.db.query(BrandGuideline).filter(BrandGuideline.is_active == True).all()
-        facts = self.db.query(ApprovedFact).filter(ApprovedFact.is_active == True).all()
-        sources = self.db.query(ApprovedSource).all()
+    async def execute_review(self, text: str, org: Optional[str] = None) -> Dict[str, Any]:
+        # 0. Retrieve active knowledge set for this review context, isolated by organization
+        g_query = self.db.query(BrandGuideline).filter(BrandGuideline.is_active == True)
+        f_query = self.db.query(ApprovedFact).filter(ApprovedFact.is_active == True)
+        s_query = self.db.query(ApprovedSource).filter(ApprovedSource.is_verified == True)
+        if org:
+            g_query = g_query.filter(BrandGuideline.organization == org)
+            f_query = f_query.filter(ApprovedFact.organization == org)
+            s_query = s_query.filter(ApprovedSource.organization == org)
+
+        guidelines = g_query.all()
+        facts = f_query.all()
+        sources = s_query.all()
+        chunks = retrieve_kb_chunks(self.db, org=org, query_text=text, top_k=5) if org else []
+
         retrieved_knowledge = {
             "guideline_ids": {g.id for g in guidelines},
             "fact_ids": {f.id for f in facts},
             "source_ids": {s.id for s in sources},
+            "chunk_ids": {c.id for c in chunks},
             "guidelines": guidelines,
             "facts": facts,
-            "sources": sources
+            "sources": sources,
+            "chunks": chunks
         }
 
         # 1. Run Rule Engine

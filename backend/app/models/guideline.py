@@ -81,3 +81,17 @@ class ApprovedTerminology(Base):
     # Relationships
     guideline = relationship("BrandGuideline", back_populates="terminologies")
 
+
+class KBChunk(Base):
+    __tablename__ = "kb_chunks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    source_doc_name = Column(String(255), nullable=False)
+    source_doc_id = Column(Integer, nullable=True)
+    organization = Column(String(100), default="BrandGuard Demo Enterprise", nullable=False, index=True)
+    text = Column(Text, nullable=False)
+    chunk_index = Column(Integer, default=0, nullable=False)
+    offset = Column(Integer, default=0, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+

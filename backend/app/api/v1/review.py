@@ -93,7 +93,7 @@ async def trigger_ai_review(
         raise HTTPException(status_code=404, detail="Content not found")
 
     pipeline = AIReviewPipeline(db)
-    review_result = await pipeline.execute_review(c.current_body)
+    review_result = await pipeline.execute_review(c.current_body, org=org)
 
     review = AIReview(
         content_id=c.id,
